@@ -1,0 +1,744 @@
+{
+ "spec": "expert-timeline-v1",
+ "built": "2026-09-16",
+ "note": "Per commentator: what they SAID (dated, with our resolution criteria), what HAPPENED inside each claim's window, whether their view MOVED across statements, and which claims CONFLICT with another commentator's. NOTHING IS GRADED — every claim is open until its date arrives, so no commentator has a track record yet and this file does not imply one. Accuracy is reported per domain when it exists: a unit-economics claim and a capability forecast are different difficulties and must not be pooled.",
+ "experts": 8,
+ "claims": 23,
+ "resolved": 0,
+ "conflicts": [
+  {
+   "a": {
+    "commentator": "Dylan Patel",
+    "id": "patel-anthropic-profit",
+    "said": "Anthropic started turning a profit in Q2",
+    "said_on": "2026-08-25"
+   },
+   "b": {
+    "commentator": "Richard Campbell",
+    "id": "campbell-not-profitable",
+    "said": "None of these companies are profitable, not even close",
+    "said_on": "2026-06-18"
+   },
+   "decider": "Is this corroborated by reporting or disclosure? NOTE: a claim about the PAST - gradeable now, unlike the others. CONFLICT: Richard Campbell (2026-06-18) states no lab is profitable. Decider is company-wide net income, not segment margin.",
+   "resolve_by": "2026-12-31"
+  }
+ ],
+ "roster": [
+  {
+   "slug": "dwarkesh-patel",
+   "commentator": "Dwarkesh Patel",
+   "role": "podcast host / analyst",
+   "registered": "2026-09-16",
+   "note": "Predictions are conditional on continual learning arriving; each names its trigger.",
+   "domains": [
+    "capability-trajectory",
+    "compute-economics",
+    "lab-economics",
+    "lab-strategy",
+    "policy"
+   ],
+   "n_claims": 7,
+   "n_open": 7,
+   "n_resolved": 0,
+   "n_conflicts": 0,
+   "next_resolution": "2027-06-30",
+   "moved": {
+    "spoke_on": [
+     "2026",
+     "2026-08-07"
+    ],
+    "span_days": null,
+    "note": "Positions are listed in date order. A later claim that contradicts an earlier one is a CHANGED VIEW and should be recorded as such, not treated as a correction of the record."
+   },
+   "claims": [
+    {
+     "id": "dwarkesh-compute-price-10x",
+     "said": "smarter AI models could drive up compute prices 10x",
+     "said_on": "2026",
+     "domain": "compute-economics",
+     "resolve_by": "2028-12-31",
+     "status": "open",
+     "criteria": "By 2028-12-31, is the frontier-grade compute price per GPU-hour at least 5x the February 2026 spot trough? (10x is the headline; 5x is the generous test.)",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/oZBGAuANX6I",
+     "happened_since": [
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 837
+    },
+    {
+     "id": "dwarkesh-margins-capped",
+     "said": "it's just really wild for me to consider that the margins for something like intelligence will be greater than 90% and they don't get competed away",
+     "said_on": "2026",
+     "domain": "lab-economics",
+     "resolve_by": "2028-12-31",
+     "status": "open",
+     "criteria": "By 2028-12-31, do reported frontier inference gross margins exceed 90% on a sustained basis?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/oZBGAuANX6I",
+     "happened_since": [
+      {
+       "date": "2026-06-18",
+       "item": "Richard Campbell (NDC keynote): 'None of these companies are profitable, not even close'; places AI in the trough of disillusionment",
+       "source": "https://youtu.be/uWnUnMphmPM"
+      },
+      {
+       "date": "2026-08-04",
+       "item": "Reporting: ~$1.65 trillion of off-balance-sheet AI commitments across the five biggest US tech firms; Alphabet completes a ~$85bn equity raise (June)",
+       "source": "https://youtu.be/NufJ7g63KSY"
+      },
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 837
+    },
+    {
+     "id": "dwarkesh-anthropic-revenue",
+     "said": "I think they'll probably end this year with somewhere between one hundred billion to one hundred and fifty billion dollars in revenue",
+     "said_on": "2026",
+     "domain": "lab-economics",
+     "resolve_by": "2027-06-30",
+     "status": "open",
+     "criteria": "Does Anthropic's 2026 exit revenue land in the $100-150bn range, per reporting or disclosure?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/oZBGAuANX6I",
+     "happened_since": [
+      {
+       "date": "2026-06-18",
+       "item": "Richard Campbell (NDC keynote): 'None of these companies are profitable, not even close'; places AI in the trough of disillusionment",
+       "source": "https://youtu.be/uWnUnMphmPM"
+      },
+      {
+       "date": "2026-08-04",
+       "item": "Reporting: ~$1.65 trillion of off-balance-sheet AI commitments across the five biggest US tech firms; Alphabet completes a ~$85bn equity raise (June)",
+       "source": "https://youtu.be/NufJ7g63KSY"
+      },
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 287
+    },
+    {
+     "id": "dwarkesh-cl-moat",
+     "said": "continual learning will create a clear moat for the leading AI labs that they currently lack",
+     "said_on": "2026-08-07",
+     "domain": "lab-economics",
+     "resolve_by": "2028-08-07",
+     "status": "open",
+     "criteria": "By 2028-08-07, conditional on continual learning shipping: do enterprise switching rates between frontier providers fall measurably vs 2026 baseline?",
+     "conflicts_with": null,
+     "conditional_on": "continual learning ships",
+     "source": "https://youtu.be/iewm45atodE",
+     "happened_since": [
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 691
+    },
+    {
+     "id": "dwarkesh-cl-gap-closes",
+     "said": "You could not keep a four-month gap between internal and external deployment and still be competitive",
+     "said_on": "2026-08-07",
+     "domain": "lab-strategy",
+     "resolve_by": "2028-08-07",
+     "status": "open",
+     "criteria": "By 2028-08-07: does the median internal-to-public deployment gap at frontier labs fall below one month, where observable?",
+     "conflicts_with": null,
+     "conditional_on": "continual learning ships",
+     "source": "https://youtu.be/iewm45atodE",
+     "happened_since": [
+      {
+       "date": "2026-08-12",
+       "item": "xAI releases Grok 4.6",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-01",
+       "item": "Anthropic ships Claude Fable 5.1 and Mythos 5.1, and cuts cache-read pricing by 75%",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-02",
+       "item": "Google DeepMind ships Gemini 3.8 Flash plus a defenders-only Cyber variant; Meta ships Muse Spark 1.3",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-03",
+       "item": "OpenAI releases GPT-6 Astra — reported as the first model to trigger its critical-cyber safeguard threshold",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-12",
+       "item": "Dario Amodei publishes 'We Must Pace the Frontier'; Anthropic unilaterally commits to embedded third-party evaluators with permanent employee-level access",
+       "source": "https://darioamodei.com/post/we-must-pace-the-frontier"
+      },
+      {
+       "date": "2026-09-13",
+       "item": "Amodei on CBS: 'we need to slow down'; Altman and Musk publicly endorse the pacing principle without matching the commitment",
+       "source": "https://youtu.be/hQR_VJF6ukk"
+      }
+     ],
+     "days_to_resolve": 691
+    },
+    {
+     "id": "dwarkesh-cl-diversity",
+     "said": "the diversity of AI minds will increase",
+     "said_on": "2026-08-07",
+     "domain": "capability-trajectory",
+     "resolve_by": "2028-08-07",
+     "status": "open",
+     "criteria": "By 2028-08-07: do instances of the same base model demonstrably diverge in behaviour based on deployment history, as documented by the provider?",
+     "conflicts_with": null,
+     "conditional_on": "continual learning ships",
+     "source": "https://youtu.be/iewm45atodE",
+     "happened_since": [
+      {
+       "date": "2026-08-07",
+       "item": "Dwarkesh Patel publishes 8 predictions for the era of continual learning",
+       "source": "https://youtu.be/iewm45atodE"
+      },
+      {
+       "date": "2026-08-12",
+       "item": "xAI releases Grok 4.6",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-01",
+       "item": "Anthropic ships Claude Fable 5.1 and Mythos 5.1, and cuts cache-read pricing by 75%",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-02",
+       "item": "Google DeepMind ships Gemini 3.8 Flash plus a defenders-only Cyber variant; Meta ships Muse Spark 1.3",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-03",
+       "item": "OpenAI releases GPT-6 Astra — reported as the first model to trigger its critical-cyber safeguard threshold",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-11",
+       "item": "Schulman, Millidge and O'Neill argue research judgment — not code volume — is the binding constraint, and continual learning is unsolved",
+       "source": "https://youtu.be/PrSf7IOYu-I"
+      }
+     ],
+     "days_to_resolve": 691
+    },
+    {
+     "id": "dwarkesh-predeploy-obsolete",
+     "said": "pre-deployment evaluation will not be a meaningfully distinct category in the future",
+     "said_on": "2026-08-07",
+     "domain": "policy",
+     "resolve_by": "2028-08-07",
+     "status": "open",
+     "criteria": "By 2028-08-07: has any major regulator shifted from pre-deployment gating to periodic provider inspection, citing continuous model updating?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/iewm45atodE",
+     "happened_since": [
+      {
+       "date": "2026-09-15",
+       "item": "EU: GPAI providers above the 10^25 FLOP threshold file their first systemic-risk evaluations; first inspection wave with 24 national authorities",
+       "source": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august"
+      }
+     ],
+     "days_to_resolve": 691
+    }
+   ]
+  },
+  {
+   "slug": "dario-amodei",
+   "commentator": "Dario Amodei",
+   "role": "CEO, Anthropic",
+   "registered": "2026-09-16",
+   "note": "",
+   "domains": [
+    "capability-trajectory",
+    "geopolitics",
+    "research-trajectory"
+   ],
+   "n_claims": 4,
+   "n_open": 4,
+   "n_resolved": 0,
+   "n_conflicts": 0,
+   "next_resolution": "2027-09-12",
+   "moved": null,
+   "claims": [
+    {
+     "id": "amodei-rsi-swarm",
+     "said": "in 6-12 months such a swarm could be capable of taking over the entire internet",
+     "said_on": "2026-09-12",
+     "domain": "capability-trajectory",
+     "resolve_by": "2027-09-12",
+     "status": "open",
+     "criteria": "By 2027-09-12, has any AI system or swarm demonstrated capability to compromise internet-scale infrastructure, as assessed by a government CERT or equivalent neutral body? Vendor claims do not count.",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
+     "happened_since": [],
+     "days_to_resolve": 361
+    },
+    {
+     "id": "amodei-interp-1-2y",
+     "said": "interpretability improvements possible in 1-2 years with focused effort",
+     "said_on": "2026-09-12",
+     "domain": "research-trajectory",
+     "resolve_by": "2028-09-12",
+     "status": "open",
+     "criteria": "By 2028-09-12, has a frontier lab published interpretability results it characterises as enabling reliable detection of deceptive or misaligned behaviour in a deployed frontier model?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
+     "happened_since": [],
+     "days_to_resolve": 727
+    },
+    {
+     "id": "amodei-chip-window",
+     "said": "3-5 year window to execute chip restrictions before AI becomes geopolitically most important",
+     "said_on": "2026-09-12",
+     "domain": "geopolitics",
+     "resolve_by": "2029-09-12",
+     "status": "open",
+     "criteria": "By 2029-09-12, is the US-China frontier compute gap wider, narrower, or unchanged vs 2026-09-12 baseline (est. China at 1/8 to 1/10 of US)?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
+     "happened_since": [
+      {
+       "date": "2026-09-15",
+       "item": "Matt Sheehan (Carnegie): China diffuses compute to applications rather than consolidating behind one lab; the race model lacks its US chokehold there",
+       "source": "https://youtu.be/U2O0sdpuFRQ"
+      }
+     ],
+     "days_to_resolve": 1092
+    },
+    {
+     "id": "amodei-rsi-began",
+     "said": "AI has been advancing drastically faster since roughly this summer, driven primarily by AI's growing ability to build the next generation",
+     "said_on": "2026-09-12",
+     "domain": "capability-trajectory",
+     "resolve_by": "2027-09-12",
+     "status": "open",
+     "criteria": "By 2027-09-12, do frontier labs publicly attribute a named capability gain primarily to AI-driven research rather than to human researchers?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
+     "happened_since": [],
+     "days_to_resolve": 361
+    }
+   ]
+  },
+  {
+   "slug": "dylan-patel",
+   "commentator": "Dylan Patel",
+   "role": "SemiAnalysis",
+   "registered": "2026-09-16",
+   "note": "",
+   "domains": [
+    "compute-economics"
+   ],
+   "n_claims": 3,
+   "n_open": 3,
+   "n_resolved": 0,
+   "n_conflicts": 1,
+   "next_resolution": "2026-12-31",
+   "moved": null,
+   "claims": [
+    {
+     "id": "patel-capex-2t",
+     "said": "We're at a little bit over a trillion dollars of CapEx this year. As we go out into '28, it's going to be more than $2 trillion",
+     "said_on": "2026-08-25",
+     "domain": "compute-economics",
+     "resolve_by": "2029-03-31",
+     "status": "open",
+     "criteria": "Does reported aggregate AI capex for 2028 exceed $2T, per two independent published estimates?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/aV26V1UvkJw",
+     "happened_since": [
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 927
+    },
+    {
+     "id": "patel-half-incremental",
+     "said": "by the end of next year half of the incremental compute is already going to Anthropic and OpenAI",
+     "said_on": "2026-08-25",
+     "domain": "compute-economics",
+     "resolve_by": "2028-03-31",
+     "status": "open",
+     "criteria": "By 2027-12-31, do credible estimates place OpenAI+Anthropic at >=45% of incremental compute additions?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/aV26V1UvkJw",
+     "happened_since": [
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 562
+    },
+    {
+     "id": "patel-anthropic-profit",
+     "said": "Anthropic started turning a profit in Q2",
+     "said_on": "2026-08-25",
+     "domain": "compute-economics",
+     "resolve_by": "2026-12-31",
+     "status": "open",
+     "criteria": "Is this corroborated by reporting or disclosure? NOTE: a claim about the PAST - gradeable now, unlike the others. CONFLICT: Richard Campbell (2026-06-18) states no lab is profitable. Decider is company-wide net income, not segment margin.",
+     "conflicts_with": "richard-campbell/campbell-not-profitable",
+     "conditional_on": null,
+     "source": "https://youtu.be/aV26V1UvkJw",
+     "happened_since": [
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 106
+    }
+   ]
+  },
+  {
+   "slug": "richard-campbell",
+   "commentator": "Richard Campbell",
+   "role": "practitioner, conference speaker (NDC)",
+   "registered": "2026-09-16",
+   "note": "Skeptic-side counterweight to the lab-adjacent sources in this register.",
+   "domains": [
+    "capability-trajectory",
+    "lab-economics",
+    "market-sentiment"
+   ],
+   "n_claims": 3,
+   "n_open": 3,
+   "n_resolved": 0,
+   "n_conflicts": 1,
+   "next_resolution": "2027-06-18",
+   "moved": null,
+   "claims": [
+    {
+     "id": "campbell-not-profitable",
+     "said": "None of these companies are profitable, not even close",
+     "said_on": "2026-06-18",
+     "domain": "lab-economics",
+     "resolve_by": "2027-06-30",
+     "status": "open",
+     "criteria": "DIRECTLY CONTRADICTS dylan-patel/patel-anthropic-profit. Decider: audited or disclosed COMPANY-WIDE net income for a frontier lab, not segment or inference margin. If only margin data emerges, grade BOTH unresolvable rather than picking a winner.",
+     "conflicts_with": "dylan-patel/patel-anthropic-profit",
+     "conditional_on": null,
+     "source": "https://youtu.be/uWnUnMphmPM",
+     "happened_since": [
+      {
+       "date": "2026-06-18",
+       "item": "Richard Campbell (NDC keynote): 'None of these companies are profitable, not even close'; places AI in the trough of disillusionment",
+       "source": "https://youtu.be/uWnUnMphmPM"
+      },
+      {
+       "date": "2026-08-04",
+       "item": "Reporting: ~$1.65 trillion of off-balance-sheet AI commitments across the five biggest US tech firms; Alphabet completes a ~$85bn equity raise (June)",
+       "source": "https://youtu.be/NufJ7g63KSY"
+      },
+      {
+       "date": "2026-08-25",
+       "item": "Dylan Patel: lab compute tripling annually; Anthropic turned a profit in Q2 2026; ~$1T capex this year rising above $2T by 2028",
+       "source": "https://youtu.be/aV26V1UvkJw"
+      }
+     ],
+     "days_to_resolve": 287
+    },
+    {
+     "id": "campbell-same-promises",
+     "said": "they're the same promises every month. They aren't progressing that quickly",
+     "said_on": "2026-06-18",
+     "domain": "capability-trajectory",
+     "resolve_by": "2027-06-18",
+     "status": "open",
+     "criteria": "By 2027-06-18, compare lab roadmap promises month over month: do stated capability commitments repeat without delivery, or do they resolve? NOTE the Sept 2026 release cluster is prima facie evidence against this claim.",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/uWnUnMphmPM",
+     "happened_since": [
+      {
+       "date": "2026-08-03",
+       "item": "Alibaba releases Qwen3.8-Max",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-08-07",
+       "item": "Dwarkesh Patel publishes 8 predictions for the era of continual learning",
+       "source": "https://youtu.be/iewm45atodE"
+      },
+      {
+       "date": "2026-08-12",
+       "item": "xAI releases Grok 4.6",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-01",
+       "item": "Anthropic ships Claude Fable 5.1 and Mythos 5.1, and cuts cache-read pricing by 75%",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-02",
+       "item": "Google DeepMind ships Gemini 3.8 Flash plus a defenders-only Cyber variant; Meta ships Muse Spark 1.3",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-03",
+       "item": "OpenAI releases GPT-6 Astra — reported as the first model to trigger its critical-cyber safeguard threshold",
+       "source": "https://local-ai-zone.github.io/blog/September_2026_AI_Model_Updates.html"
+      },
+      {
+       "date": "2026-09-11",
+       "item": "Schulman, Millidge and O'Neill argue research judgment — not code volume — is the binding constraint, and continual learning is unsolved",
+       "source": "https://youtu.be/PrSf7IOYu-I"
+      }
+     ],
+     "days_to_resolve": 275
+    },
+    {
+     "id": "campbell-trough",
+     "said": "we're headed down the trough of disillusionment just fine, far from bottomed out, but on our way down",
+     "said_on": "2026-06-18",
+     "domain": "market-sentiment",
+     "resolve_by": "2027-12-31",
+     "status": "open",
+     "criteria": "By 2027-12-31: has AI investment sentiment measurably declined from the 2026-06 level (funding volume, valuations, or a >25% drawdown in AI-linked equities)? See ai-bubble-thesis consequence 1.",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/uWnUnMphmPM",
+     "happened_since": [
+      {
+       "date": "2026-06-18",
+       "item": "Richard Campbell (NDC keynote): 'None of these companies are profitable, not even close'; places AI in the trough of disillusionment",
+       "source": "https://youtu.be/uWnUnMphmPM"
+      },
+      {
+       "date": "2026-08-04",
+       "item": "Reporting: ~$1.65 trillion of off-balance-sheet AI commitments across the five biggest US tech firms; Alphabet completes a ~$85bn equity raise (June)",
+       "source": "https://youtu.be/NufJ7g63KSY"
+      }
+     ],
+     "days_to_resolve": 471
+    }
+   ]
+  },
+  {
+   "slug": "jim-vandehei",
+   "commentator": "Jim VandeHei",
+   "role": "CEO, Axios",
+   "registered": "2026-09-16",
+   "note": "",
+   "domains": [
+    "labor",
+    "policy"
+   ],
+   "n_claims": 2,
+   "n_open": 2,
+   "n_resolved": 0,
+   "n_conflicts": 0,
+   "next_resolution": "2027-12-31",
+   "moved": null,
+   "claims": [
+    {
+     "id": "vandehei-society-effort",
+     "said": "If we keep doing what we're doing, you're going to end up with China winning the AI war or the rich getting richer",
+     "said_on": "2026-08-26",
+     "domain": "policy",
+     "resolve_by": "2028-08-26",
+     "status": "open",
+     "criteria": "By 2028-08-26, has any national AI coordinating framework of the kind described been established in the US?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/WCLCfhvxrOo",
+     "happened_since": [
+      {
+       "date": "2026-09-15",
+       "item": "EU: GPAI providers above the 10^25 FLOP threshold file their first systemic-risk evaluations; first inspection wave with 24 national authorities",
+       "source": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august"
+      }
+     ],
+     "days_to_resolve": 710
+    },
+    {
+     "id": "vandehei-no-job-data",
+     "said": "There's very little data that AI is destroying tons of jobs in real time",
+     "said_on": "2026-08-26",
+     "domain": "labor",
+     "resolve_by": "2027-12-31",
+     "status": "open",
+     "criteria": "Corroborate against ai-labor-attribution's aggregate evidence; consistent with that model's P1 as of 2026-09.",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/WCLCfhvxrOo",
+     "happened_since": [],
+     "days_to_resolve": 471
+    }
+   ]
+  },
+  {
+   "slug": "matt-sheehan",
+   "commentator": "Matt Sheehan",
+   "role": "Senior Fellow, Carnegie Endowment",
+   "registered": "2026-09-16",
+   "note": "",
+   "domains": [
+    "china-policy"
+   ],
+   "n_claims": 2,
+   "n_open": 2,
+   "n_resolved": 0,
+   "n_conflicts": 0,
+   "next_resolution": "2027-12-31",
+   "moved": null,
+   "claims": [
+    {
+     "id": "sheehan-diffuse-compute",
+     "said": "China's major AI policy documents take a diffuse approach to compute, prioritising applications over consolidation",
+     "said_on": "2026-09-15",
+     "domain": "china-policy",
+     "resolve_by": "2027-12-31",
+     "status": "open",
+     "criteria": "Through 2027-12-31, does China announce consolidation of frontier compute behind a single national champion lab? If yes, Sheehan's read fails.",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/U2O0sdpuFRQ",
+     "happened_since": [
+      {
+       "date": "2026-09-15",
+       "item": "Matt Sheehan (Carnegie): China diffuses compute to applications rather than consolidating behind one lab; the race model lacks its US chokehold there",
+       "source": "https://youtu.be/U2O0sdpuFRQ"
+      }
+     ],
+     "days_to_resolve": 471
+    },
+    {
+     "id": "sheehan-race-not-dominant",
+     "said": "the race-to-takeoff model doesn't have the chokehold in China that it does in the US",
+     "said_on": "2026-09-15",
+     "domain": "china-policy",
+     "resolve_by": "2027-12-31",
+     "status": "open",
+     "criteria": "By 2027-12-31, do official Chinese AI policy documents adopt explicit takeoff/AGI-race framing?",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/U2O0sdpuFRQ",
+     "happened_since": [
+      {
+       "date": "2026-09-15",
+       "item": "Matt Sheehan (Carnegie): China diffuses compute to applications rather than consolidating behind one lab; the race model lacks its US chokehold there",
+       "source": "https://youtu.be/U2O0sdpuFRQ"
+      }
+     ],
+     "days_to_resolve": 471
+    }
+   ]
+  },
+  {
+   "slug": "jen-easterly",
+   "commentator": "Jen Easterly",
+   "role": "former Director, CISA",
+   "registered": "2026-09-16",
+   "note": "",
+   "domains": [
+    "cyber"
+   ],
+   "n_claims": 1,
+   "n_open": 1,
+   "n_resolved": 0,
+   "n_conflicts": 0,
+   "next_resolution": "2027-06-30",
+   "moved": null,
+   "claims": [
+    {
+     "id": "easterly-imagination-gap",
+     "said": "the greatest danger is not the failure of technology, it's the failure to imagine how this technology can be weaponized",
+     "said_on": "2026-07-30",
+     "domain": "cyber",
+     "resolve_by": "2027-06-30",
+     "status": "open",
+     "criteria": "Recorded 2026-07-30, BEFORE the September 2026 autonomous-agent incidents. Did those incidents involve attack modes not anticipated in public threat modelling as of July 2026? A clean prior-claim test.",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/VmV-Yg4Ljls",
+     "happened_since": [
+      {
+       "date": "2026-07-30",
+       "item": "Jen Easterly (former CISA director) warns the greatest danger is the failure to imagine how AI can be weaponized — recorded BEFORE the September incidents",
+       "source": "https://youtu.be/VmV-Yg4Ljls"
+      },
+      {
+       "date": "2026-09-15",
+       "item": "Reported: autonomous AI agents compromise other AI companies — incidents at OpenAI, Anthropic and Meta; New York enacts a one-year data centre moratorium",
+       "source": "https://youtu.be/rbgvTlt1VB8"
+      }
+     ],
+     "days_to_resolve": 287
+    }
+   ]
+  },
+  {
+   "slug": "john-schulman",
+   "commentator": "John Schulman",
+   "role": "Chief Scientist, Thinking Machines",
+   "registered": "2026-09-16",
+   "note": "",
+   "domains": [
+    "capability-trajectory"
+   ],
+   "n_claims": 1,
+   "n_open": 1,
+   "n_resolved": 0,
+   "n_conflicts": 0,
+   "next_resolution": "2027-12-31",
+   "moved": null,
+   "claims": [
+    {
+     "id": "schulman-no-100x",
+     "said": "even if the model can write way more code than a person, it doesn't make you 100X more productive",
+     "said_on": "2026-09-11",
+     "domain": "capability-trajectory",
+     "resolve_by": "2027-12-31",
+     "status": "open",
+     "criteria": "Through 2027-12-31, does any frontier lab publish a credible claim of >=10x AI research productivity? Directly opposes Amodei's RSI timeline.",
+     "conflicts_with": null,
+     "conditional_on": null,
+     "source": "https://youtu.be/PrSf7IOYu-I",
+     "happened_since": [
+      {
+       "date": "2026-09-11",
+       "item": "Schulman, Millidge and O'Neill argue research judgment — not code volume — is the binding constraint, and continual learning is unsolved",
+       "source": "https://youtu.be/PrSf7IOYu-I"
+      }
+     ],
+     "days_to_resolve": 471
+    }
+   ]
+  }
+ ]
+}

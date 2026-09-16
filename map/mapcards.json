@@ -705,10 +705,135 @@
    },
    "tier": "declared",
    "updated": "2026-09-16"
+  },
+  {
+   "model": "expert-amodei",
+   "instance": "this-instance",
+   "kind": "mirror",
+   "aspects": [
+    "science-epistemics",
+    "institutions"
+   ],
+   "e_span": [
+    10,
+    13
+   ],
+   "level": 1,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "expert-dylan-patel",
+   "instance": "this-instance",
+   "kind": "mirror",
+   "aspects": [
+    "science-epistemics",
+    "economy-markets"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 1,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "expert-sheehan",
+   "instance": "this-instance",
+   "kind": "mirror",
+   "aspects": [
+    "science-epistemics",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 1,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "expert-dwarkesh",
+   "instance": "this-instance",
+   "kind": "mirror",
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 1,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "expert-campbell",
+   "instance": "this-instance",
+   "kind": "mirror",
+   "aspects": [
+    "science-epistemics",
+    "culture-narrative"
+   ],
+   "e_span": [
+    8,
+    11
+   ],
+   "level": 1,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
   }
  ],
  "coverage": {
-  "cells_covered": 38,
+  "cells_covered": 40,
   "cells_total": 180,
   "empty_floors": [
    "E0",

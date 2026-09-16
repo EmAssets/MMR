@@ -523,6 +523,7 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
   <div class="navgroup"><span class="navlabel">atlas</span>
     <button data-t="entities">Entities</button>
     <button data-t="timeline">Timeline</button>
+    <button data-t="experts">Experts</button>
     <button data-t="visuals">Visuals</button>
     <button data-t="map">Map</button>
     <button data-t="garden">Garden</button>
@@ -750,9 +751,17 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
   </div>
 </section>
 
+<section id="experts">
+  <div class="card">
+    <h3>Experts &mdash; what they said, what happened, how the view moved</h3>
+    <p class="muted" id="ex-note">loading&hellip;</p>
+    <div id="ex-body"><p class="muted">loading&hellip;</p></div>
+  </div>
+</section>
+
 <section id="timeline">
   <div class="card">
-    <h3>Event history</h3>
+    <h3>Timeline &mdash; what happened, what each model expects next</h3>
     <p class="muted" id="tl-note">loading…</p>
     <input id="tl-q" placeholder="filter by subject or text…"
            style="width:100%;max-width:32rem;margin:.6rem 0 1rem">
@@ -1006,7 +1015,7 @@ async function loadModels(){
   }
   $('#mlist').innerHTML = [0,1,2].filter(l => groups[l].length).map(l =>
     `<h3 style="font-size:.85rem;color:var(--accd);margin:1.1rem 0 .3rem;`+
-    `font-family:'IBM Plex Mono',monospace;letter-spacing:.06em">${LEVEL_LABEL[l]} `+
+    `font-family:IBM Plex Mono,monospace;letter-spacing:.06em">${LEVEL_LABEL[l]} `+
     `<span class="muted" style="font-weight:400">· ${groups[l].length}</span></h3>`+
     '<table><tr><th>model</th><th>kind</th><th>open</th>'+
     '<th>graded</th><th>discipline</th></tr>' + groups[l].map(m =>
@@ -1550,7 +1559,7 @@ async function loadMap(){
   m.cards.forEach(c => c.aspects.forEach(a => (byAspect[a] = byAspect[a]||[]).push(c)));
   const scale = e => (e/14*100);
   $('#mapbody').innerHTML =
-    `<div style="display:flex;font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--sub);`+
+    `<div style="display:flex;font-family:IBM Plex Mono,monospace;font-size:.62rem;color:var(--sub);`+
     `margin:0 0 .3rem 11rem;justify-content:space-between"><span>E0</span><span>E4</span>`+
     `<span>E8</span><span>E9</span><span>E12</span><span>E14</span></div>` +
     m.aspects.map(a => {
@@ -1568,7 +1577,7 @@ async function loadMap(){
           `background:${canon?'transparent':col};border:1px ${canon?'dashed var(--base)':'solid transparent'};`+
           `${refuted?'box-shadow:inset 0 0 0 1px var(--miss);':''}"'></div>`+
           `<span style="position:absolute;left:${l}%;margin-left:.2rem;font-size:.6rem;`+
-          `font-family:'IBM Plex Mono',monospace;color:var(--ink);line-height:.9rem;`+
+          `font-family:IBM Plex Mono,monospace;color:var(--ink);line-height:.9rem;`+
           `white-space:nowrap;pointer-events:none">${esc(c.model)}</span></div>`;
       }).join('');
       return `<div style="display:flex;align-items:flex-start;border-top:1px solid var(--line);padding:.35rem 0">`+
@@ -1602,14 +1611,14 @@ async function loadBrainstorm(){
   }
   $('#blist').innerHTML = bs.length ? bs.map(b =>
     b.status === 'queued' ?
-    `<div class="claim" style="border-style:dashed"><div class="chead" style="font-family:'IBM Plex Mono',monospace;`+
+    `<div class="claim" style="border-style:dashed"><div class="chead" style="font-family:IBM Plex Mono,monospace;`+
     `font-size:.72rem;color:var(--sub);display:flex;gap:.7rem;flex-wrap:wrap">`+
     `<span class="badge" style="background:var(--base);animation:pulse 1.4s ease-in-out infinite">running</span>`+
     `<span>${esc(b.id)}</span><span>${esc(b.models.join(' + '))}</span></div>`+
     `<div class="ctext" style="font-weight:400;font-size:.88rem">${esc(b.event)}</div>`+
     `<div class="muted" style="font-size:.8rem;margin-top:.3rem">lenses + adversary + synthesis in progress — `+
     `this card updates itself when the result lands.</div></div>` :
-    `<div class="claim"><div class="chead" style="font-family:'IBM Plex Mono',monospace;`+
+    `<div class="claim"><div class="chead" style="font-family:IBM Plex Mono,monospace;`+
     `font-size:.72rem;color:var(--sub);display:flex;gap:.7rem;flex-wrap:wrap">`+
     `<span>${esc(b.id)}</span><span>${esc(b.models.join(' + '))}</span></div>`+
     `<div class="ctext" style="font-weight:400;font-size:.88rem">${esc(b.event)}</div>`+
@@ -1666,7 +1675,7 @@ async function loadEvents(){
   const evs = await (await fetch('/api/events')).json();
   $('#elist').innerHTML = evs.length ? evs.map(e =>
     `<div class="claim"><div class="chead" style="display:flex;gap:.7rem;flex-wrap:wrap;`+
-    `font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--sub)">`+
+    `font-family:IBM Plex Mono,monospace;font-size:.72rem;color:var(--sub)">`+
     `<span class="badge ${e.status==='queued'?'':'ok'}">${esc(e.status)}</span>`+
     `<span>${esc(e.id)}</span><span>${esc(e.source_type)}</span>`+
     `<span>${esc((e.models||[]).join(', ')||'session picks')}</span></div>`+
@@ -1770,6 +1779,65 @@ async function loadGloss(){
   relinkAll();
   if (location.hash.startsWith('#g-')) setTimeout(()=>openGloss(location.hash.slice(1)), 250);
 }
+async function loadExperts(){
+  let d;
+  try { d = await (await fetch('/api/experts')).json(); }
+  catch(e){ $('#ex-body').innerHTML = '<p class="muted">experts unavailable</p>'; return; }
+  if (d.error){ $('#ex-note').textContent=''; $('#ex-body').innerHTML='<p class="muted">'+esc(d.error)+'</p>'; return; }
+  $('#ex-note').textContent = d.experts + ' commentators · ' + d.claims + ' dated claims · '
+    + d.resolved + ' resolved — ' + (d.note||'').slice(0,200);
+
+  const conf = (d.conflicts||[]).map(c =>
+    '<div style="border-left:3px solid #d98a5a;padding:.4rem 0 .4rem .7rem;margin:.5rem 0">'
+    + '<code style="color:#d98a5a">CONFLICT · decider by ' + esc(c.resolve_by||'—') + '</code>'
+    + '<div style="font-size:.88rem;margin:.25rem 0"><b>' + esc(c.a.commentator) + '</b> ('
+    + esc(c.a.said_on) + '): "' + esc((c.a.said||'').slice(0,160)) + '"</div>'
+    + '<div style="font-size:.88rem;margin:.25rem 0"><b>' + esc(c.b.commentator||c.b.ref||'?') + '</b> ('
+    + esc(c.b.said_on||'') + '): "' + esc((c.b.said||'').slice(0,160)) + '"</div>'
+    + '<code style="color:var(--muted);font-size:.72rem">decider: ' + esc((c.decider||'').slice(0,240)) + '</code>'
+    + '</div>').join('');
+
+  const card = (e) => {
+    const claims = (e.claims||[]).map(c => {
+      const ev = (c.happened_since||[]).map(x =>
+        '<li style="margin:.15rem 0 .15rem 1rem;color:var(--sub);font-size:.8rem">'
+        + esc(x.date) + ' — ' + esc(x.item.slice(0,150))
+        + (x.source?' <a href="'+esc(x.source)+'" target="_blank" rel="noopener">src</a>':'') + '</li>').join('');
+      return '<div style="border-bottom:1px solid var(--line);padding:.5rem 0">'
+        + '<code style="color:var(--muted)">' + esc(c.said_on||'?') + ' → resolves '
+        + esc(c.resolve_by||'—')
+        + (c.days_to_resolve!==null&&c.days_to_resolve!==undefined ? ' ('+c.days_to_resolve+'d)' : '')
+        + ' · <span style="color:#d4b45a">' + esc(c.domain||'') + '</span>'
+        + ' · <span class="badge">' + esc(c.status||'open') + '</span></code>'
+        + '<div style="font-size:.9rem;margin:.2rem 0">&ldquo;' + esc(c.said||'') + '&rdquo;'
+        + (c.source?' <a href="'+esc(c.source)+'" target="_blank" rel="noopener" style="font-size:.75rem">source</a>':'')
+        + '</div>'
+        + (c.conditional_on?'<code style="color:var(--muted);font-size:.72rem">conditional on: '+esc(c.conditional_on)+'</code><br>':'')
+        + (c.conflicts_with?'<code style="color:#d98a5a;font-size:.72rem">conflicts with '+esc(c.conflicts_with)+'</code><br>':'')
+        + '<code style="color:var(--muted);font-size:.72rem">decider: ' + esc((c.criteria||'').slice(0,260)) + '</code>'
+        + (ev?'<div style="margin-top:.3rem"><code style="color:var(--muted);font-size:.72rem">what happened inside this window:</code><ul style="margin:.1rem 0">'+ev+'</ul></div>':'')
+        + '</div>';
+    }).join('');
+    const mv = e.moved
+      ? '<code style="color:var(--muted);font-size:.75rem">spoke on ' + e.moved.spoke_on.join(', ')
+        + (e.moved.span_days? ' · view tracked over '+e.moved.span_days+' days':'') + '</code>'
+      : '<code style="color:var(--muted);font-size:.75rem">one dated statement — no trajectory yet</code>';
+    return '<div class="card" style="margin:.8rem 0"><h3 style="margin-bottom:.15rem">'
+      + esc(e.commentator) + ' <span class="muted" style="font-weight:400;font-size:.8rem">· '
+      + esc(e.role||'') + '</span></h3>'
+      + '<code style="color:var(--muted);font-size:.75rem">' + e.n_claims + ' claims · '
+      + e.n_open + ' open · ' + e.n_resolved + ' resolved · domains: '
+      + esc((e.domains||[]).join(', ')) + '</code><br>' + mv
+      + (e.note?'<p class="muted" style="font-size:.8rem;margin:.3rem 0">'+esc(e.note)+'</p>':'')
+      + claims + '</div>';
+  };
+
+  $('#ex-body').innerHTML =
+    (conf ? '<div class="card" style="margin:.6rem 0"><h3 style="font-size:.9rem">Registered conflicts</h3>'
+            + '<p class="muted" style="font-size:.78rem">Claims explicitly registered as contradicting '
+            + 'another commentator, each with the observation that settles it.</p>' + conf + '</div>' : '')
+    + (d.roster||[]).map(card).join('');
+}
 async function loadTimeline(q){
   let d;
   try { d = await (await fetch('/api/timeline' + (q ? '?subject='+encodeURIComponent(q) : ''))).json(); }
@@ -1780,15 +1848,83 @@ async function loadTimeline(q){
     $('#tl-body').innerHTML = '<p class="muted">'+esc(d.error)+'</p>';
     return;
   }
-  $('#tl-note').textContent = d.events + ' of ' + d.of_total + ' events from ' + d.source
+  $('#tl-note').textContent = (d.past!==undefined
+      ? (d.past + ' past · ' + d.future + ' future (' + (d.with_probability||0)
+         + ' with a probability) · ' + d.events + ' shown')
+      : (d.events + ' of ' + d.of_total + ' events'))
+      + ' · from ' + d.source
       + (d.undated ? ' · ' + d.undated + ' undated' : '')
-      + (d.note ? ' — ' + d.note.slice(0,180) : '');
-  $('#tl-body').innerHTML = (d.timeline||[]).map(e =>
-    '<div style="border-bottom:1px solid var(--line);padding:.6rem 0">'
-    + '<code style="color:var(--muted)">' + esc(e.id) + ' · ' + esc(e.date||'undated')
-    + (e.approx ? '~' : '') + '</code><div>' + esc(e.item||'') + '</div>'
-    + '<code style="color:var(--muted)">observed by: ' + esc((e.observers||[]).join(', ')) + '</code>'
-    + '</div>').join('') || '<p class="muted">no events match</p>';
+      + (d.note ? ' — ' + d.note.slice(0,240) : '');
+  const rows = d.timeline || [];
+  if (!rows.length){ $('#tl-body').innerHTML = '<p class="muted">no events match</p>'; return; }
+
+  // Row types are NOT merged: they have different evidentiary status. An
+  // observed fact, a consequence a model asserts, a commentator's dated claim
+  // and an LLM panel's confidence are four different things, and a timeline
+  // that renders them identically is lying about what it knows.
+  const TY = {
+    'observed':     {c:'#4fc3a1', label:'observed'},
+    'model-expect': {c:'#7aa7e0', label:'model expects'},
+    'expert-claim': {c:'#d4b45a', label:'expert claim'},
+    'joint-claim':  {c:'#c07ad0', label:'brainstorm'}
+  };
+  const past = rows.filter(r => !r.future), future = rows.filter(r => r.future);
+  // window bar geometry spans the whole forward horizon
+  const ends = future.map(r=>r.end).filter(Boolean).sort();
+  const T0 = (d.built || new Date().toISOString().slice(0,10));
+  const T1 = ends.length ? ends[ends.length-1] : T0;
+  const ms = x => Date.parse(x+'T00:00:00Z');
+  const span = Math.max(1, ms(T1)-ms(T0));
+  const pct = x => Math.max(0, Math.min(100, 100*(ms(x)-ms(T0))/span));
+
+  const row = (e) => {
+    const t = TY[e.type] || {c:'var(--sub)', label:e.type||''};
+    const conf = (e.confidence!==null && e.confidence!==undefined)
+      ? '<span class="badge" style="border-color:'+t.c+';color:'+t.c+'">p='+e.confidence+'</span>' : '';
+    const who = e.commentator ? esc(e.commentator)
+              : (e.model_title ? esc(e.model_title) : esc(e.observer||''));
+    let bar = '';
+    if (e.future && e.start && e.end){
+      const a = pct(e.start), b = pct(e.end);
+      bar = '<div style="position:relative;height:6px;background:var(--line);'
+          + 'border-radius:3px;margin:.35rem 0 .2rem">'
+          + '<div style="position:absolute;left:'+a.toFixed(1)+'%;width:'
+          + Math.max(1.2,(b-a)).toFixed(1)+'%;top:0;bottom:0;background:'+t.c
+          + ';opacity:.75;border-radius:3px"></div></div>';
+    }
+    return '<div style="border-bottom:1px solid var(--line);padding:.55rem 0">'
+      + '<code style="color:var(--muted)">'+esc(e.id)+' · '
+      + '<span style="color:'+t.c+'">'+t.label+'</span> · '
+      + esc(e.end||e.date||'undated')+(e.approx?'~':'')
+      + (e.model_kind?' · '+esc(e.model_kind):'')+'</code> '+conf
+      + bar
+      + '<div style="font-size:.9rem">'+esc(e.item||'')+'</div>'
+      + '<code style="color:var(--muted);font-size:.72rem">'+who
+      + (e.ref?' · '+esc(e.ref):'')
+      + (e.conflicts_with?' · <span style="color:#d98a5a">conflicts: '+esc(e.conflicts_with)+'</span>':'')
+      + (e.conditional_on?' · conditional on '+esc(e.conditional_on):'')
+      + (e.source?' · <a href="'+esc(e.source)+'" target="_blank" rel="noopener">source</a>':'')
+      + '</code></div>';
+  };
+
+  const legend = Object.entries(TY).map(([k,v]) =>
+    '<span style="margin-right:.8rem"><span style="display:inline-block;width:.6rem;height:.6rem;'
+    + 'border-radius:50%;background:'+v.c+';vertical-align:-.03rem"></span> '+v.label+'</span>').join('');
+
+  $('#tl-body').innerHTML =
+    '<p class="muted" style="font-size:.75rem;margin:.2rem 0 .8rem">'+legend
+    + " · bar = the window the claim may resolve in, not a point. p = an LLM panel’s"
+    + ' confidence (brainstorm rows only); model expectations carry no probability.</p>'
+    + (past.length ? '<h3 style="font-size:.85rem;color:var(--accd);margin:.6rem 0 .3rem;'
+        + 'font-family:IBM Plex Mono,monospace;letter-spacing:.06em">ALREADY HAPPENED '
+        + '<span class="muted" style="font-weight:400">· '+past.length+'</span></h3>'
+        + past.map(row).join('') : '')
+    + (future.length ? '<h3 style="font-size:.85rem;color:var(--accd);margin:1.4rem 0 .3rem;'
+        + 'font-family:IBM Plex Mono,monospace;letter-spacing:.06em">'
+        + '&#9660; NOW &#183; '+esc(T0)+' &#8212; EXPECTED NEXT '
+        + '<span class="muted" style="font-weight:400">· '+future.length
+        + ' open, none graded</span></h3>'
+        + future.map(row).join('') : '');
 }
 async function loadVisuals(){
   try {
@@ -1813,7 +1949,7 @@ async function loadVisuals(){
     + '<p class="muted">Make one: <code>' + esc(d.how||'') + '</code> — views: '
     + esc((d.views||[]).join(', ')) + '</p>';
 }
-loadGardenPage(); loadHome(); loadVerdict(); loadModels(); loadTasks(); loadAssess(); loadEvents(); loadGloss(); loadBrainstorm(); loadMap();
+loadGardenPage(); loadHome(); loadVerdict(); loadModels(); loadTasks(); loadAssess(); loadEvents(); loadGloss(); loadBrainstorm(); loadMap(); loadExperts();
 loadTimeline(); loadVisuals();
 loadEntities(); loadMindmap();
 {
@@ -2377,10 +2513,19 @@ class H(BaseHTTPRequestHandler):
             # directory. Hardcoding one ("f1-events") is the same bug as the
             # hardcoded instance name fixed twice already -- it works for whoever
             # wrote it and silently shows nothing to everyone else.
+            # This instance's own fleet timeline (suites.fleet_timeline) is the
+            # preferred source: it carries future expectations as well as past
+            # events. Fall back to a sibling model repo's timeline.json, which
+            # is what event_history writes.
             found = None
-            for cand in sorted(ROOT.parent.glob("*/timeline.json")):
-                found = cand
-                break
+            for pref in (ROOT / "timeline.json", TOOLS / "entity-atlas" / "timeline.json"):
+                if pref.exists():
+                    found = pref
+                    break
+            if not found:
+                for cand in sorted(ROOT.parent.glob("*/timeline.json")):
+                    found = cand
+                    break
             if not found:
                 return self._send(404, {"error": "no event history yet — run "
                                                  "python -m suites.event_history --build"})
@@ -2396,6 +2541,12 @@ class H(BaseHTTPRequestHandler):
                       or q in " ".join(e.get("observers", [])).lower()]
             return self._send(200, {
                 "source": found.parent.name,
+                "spec": data.get("spec", ""),
+                "built": data.get("built", ""),
+                "counts": data.get("counts"),
+                "future": data.get("future"),
+                "past": data.get("past"),
+                "with_probability": data.get("with_probability"),
                 "events": len(tl),
                 "of_total": len(data.get("timeline", [])),
                 "corroborated": data.get("corroborated"),
@@ -2404,6 +2555,17 @@ class H(BaseHTTPRequestHandler):
                 # reader of this endpoint will never open.
                 "note": data.get("note", ""),
                 "timeline": tl})
+        if p == "/api/experts":
+            # Per-commentator view: what each said, what happened inside the
+            # claim window, whether the view moved, and registered conflicts.
+            f = ROOT / "expert_timeline.json"
+            if not f.exists():
+                return self._send(404, {"error": "no expert timeline yet — run "
+                                                 "python -m suites.expert_timeline --build"})
+            try:
+                return self._send(200, json.loads(f.read_text(encoding="utf-8")))
+            except ValueError:
+                return self._send(500, {"error": "expert_timeline.json is not valid JSON"})
         if p == "/api/mindmap":
             f = TOOLS / "entity-atlas" / "mindmap.json"
             if not f.exists():

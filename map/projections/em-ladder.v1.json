@@ -367,6 +367,66 @@
    ],
    "kind": "attributor",
    "level": 0
+  },
+  "expert-amodei": {
+   "aspects": [
+    "science-epistemics",
+    "institutions"
+   ],
+   "e_span": [
+    10,
+    13
+   ],
+   "kind": "mirror",
+   "level": 1
+  },
+  "expert-dylan-patel": {
+   "aspects": [
+    "science-epistemics",
+    "economy-markets"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "mirror",
+   "level": 1
+  },
+  "expert-sheehan": {
+   "aspects": [
+    "science-epistemics",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "kind": "mirror",
+   "level": 1
+  },
+  "expert-dwarkesh": {
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "mirror",
+   "level": 1
+  },
+  "expert-campbell": {
+   "aspects": [
+    "science-epistemics",
+    "culture-narrative"
+   ],
+   "e_span": [
+    8,
+    11
+   ],
+   "kind": "mirror",
+   "level": 1
   }
  },
  "level_note": "Each assignment carries a level: 0 models the world, 1 models the instance's own models, 2 models the modelling process. Consolidation runs bottom-up and never compresses what a live higher level reads.",

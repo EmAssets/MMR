@@ -26,7 +26,12 @@
   "ai-rsi-timeline",
   "ai-compute-concentration",
   "ai-cyber-offense-defense",
-  "ai-expert-calibration"
+  "ai-expert-calibration",
+  "expert-amodei",
+  "expert-dylan-patel",
+  "expert-sheehan",
+  "expert-dwarkesh",
+  "expert-campbell"
  ],
  "classifiers": [],
  "decision_repo": "",
