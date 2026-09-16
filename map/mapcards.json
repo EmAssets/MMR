@@ -1,5 +1,5 @@
 {
- "built": "2026-09-15",
+ "built": "2026-09-16",
  "unmapped": [],
  "phantom": [],
  "projection": {
@@ -30,9 +30,685 @@
   "infrastructure-logistics",
   "civilization-longterm"
  ],
- "cards": [],
+ "cards": [
+  {
+   "model": "my-predictions",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "institutions"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-frontier-cadence",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "technology-tools",
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-compute-buildout",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "infrastructure-logistics",
+    "economy-markets"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-lab-revealed-priorities",
+   "instance": "this-instance",
+   "kind": "decision-model",
+   "aspects": [
+    "institutions",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-us-policy-direction",
+   "instance": "this-instance",
+   "kind": "decision-model",
+   "aspects": [
+    "states-geopolitics",
+    "institutions"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-china-strategy",
+   "instance": "this-instance",
+   "kind": "decision-model",
+   "aspects": [
+    "states-geopolitics",
+    "economy-markets"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-capex-signal",
+   "instance": "this-instance",
+   "kind": "tracker",
+   "aspects": [
+    "economy-markets",
+    "infrastructure-logistics"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-open-weights-lag",
+   "instance": "this-instance",
+   "kind": "tracker",
+   "aspects": [
+    "technology-tools",
+    "culture-narrative"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-incident-severity",
+   "instance": "this-instance",
+   "kind": "classifier",
+   "aspects": [
+    "science-epistemics",
+    "institutions"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-regulation-teeth",
+   "instance": "this-instance",
+   "kind": "classifier",
+   "aspects": [
+    "institutions",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-scaling-orthodoxy",
+   "instance": "this-instance",
+   "kind": "adversary",
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 1,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-bubble-thesis",
+   "instance": "this-instance",
+   "kind": "adversary",
+   "aspects": [
+    "economy-markets",
+    "culture-narrative"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-influence-chain",
+   "instance": "this-instance",
+   "kind": "tracer",
+   "aspects": [
+    "institutions",
+    "attention-media"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-adoption-phases",
+   "instance": "this-instance",
+   "kind": "timer",
+   "aspects": [
+    "economy-markets",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-labor-attribution",
+   "instance": "this-instance",
+   "kind": "attributor",
+   "aspects": [
+    "economy-markets",
+    "culture-narrative"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-rising-powers",
+   "instance": "this-instance",
+   "kind": "finder",
+   "aspects": [
+    "states-geopolitics",
+    "institutions"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-liability-pricing",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "economy-markets",
+    "institutions"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-courts-decide",
+   "instance": "this-instance",
+   "kind": "decision-model",
+   "aspects": [
+    "institutions",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-chokepoint-physics",
+   "instance": "this-instance",
+   "kind": "tracker",
+   "aspects": [
+    "infrastructure-logistics",
+    "technology-tools"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-benchmark-legitimacy",
+   "instance": "this-instance",
+   "kind": "adversary",
+   "aspects": [
+    "science-epistemics",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-option-space",
+   "instance": "this-instance",
+   "kind": "option-space",
+   "aspects": [
+    "institutions",
+    "states-geopolitics",
+    "economy-markets"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-china-argument",
+   "instance": "this-instance",
+   "kind": "classifier",
+   "aspects": [
+    "states-geopolitics",
+    "attention-media"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-public-backlash",
+   "instance": "this-instance",
+   "kind": "tracker",
+   "aspects": [
+    "culture-narrative",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-rsi-timeline",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    10,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-compute-concentration",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "economy-markets",
+    "infrastructure-logistics"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-cyber-offense-defense",
+   "instance": "this-instance",
+   "kind": "tracker",
+   "aspects": [
+    "technology-tools",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  },
+  {
+   "model": "ai-expert-calibration",
+   "instance": "this-instance",
+   "kind": "attributor",
+   "aspects": [
+    "science-epistemics",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-16"
+  }
+ ],
  "coverage": {
-  "cells_covered": 0,
+  "cells_covered": 38,
   "cells_total": 180,
   "empty_floors": [
    "E0",
@@ -43,26 +719,12 @@
    "E5",
    "E6",
    "E7",
-   "E8",
-   "E9",
-   "E10",
-   "E11",
-   "E12",
-   "E13",
    "E14"
   ],
   "empty_aspects": [
    "matter-energy",
    "life",
    "individual-minds",
-   "attention-media",
-   "institutions",
-   "economy-markets",
-   "states-geopolitics",
-   "science-epistemics",
-   "technology-tools",
-   "culture-narrative",
-   "infrastructure-logistics",
    "civilization-longterm"
   ]
  }

@@ -1,0 +1,582 @@
+{
+ "id": "bs-2026-09-16-3",
+ "at": "2026-09-16",
+ "event": "New York enacts a one-year data centre construction moratorium and 100+ local/statewide moratorium proposals spread; voter opposition to local data centres rose from 4-in-10 to 7-in-10 in nine months (Heatmap), with Sanders and DeSantis aligned against",
+ "models": [
+  "ai-public-backlash",
+  "ai-compute-buildout",
+  "ai-rising-powers",
+  "ai-us-policy-direction"
+ ],
+ "lenses": {
+  "ai-public-backlash": {
+   "grip": "strong",
+   "read": "The mechanism holds and the compression is confirmed, not just suspected: the sentiment-to-legislation lag P1 predicted at 12-24 months is running far shorter for this issue — NH's governor moved within roughly a month of a grid operator confirming a concrete price impact. This is P3's proximate-material-harm channel operating at unusually high speed because the harm (electricity bills) is immediate, quantified by a credible third party (grid operators/EIA), and hits before the next election cycle — not diffuse or speculative like most tech-policy backlash. The scale is also larger than the brief implied: 321 tracked actions across 32 states is a genuine multi-state cascade, not a New York outlier, and three more governors moved in the single week before this event, suggesting NY's moratorium is a leading domino, not an aberration. Sanders-DeSantis alignment is real and specifically anchored to electricity costs, which is the sharpest, least-ideological wedge issue available — cost-of-living framing beats both AI-safety and NIMBY framings for cross-partisan durability. Revise P1's lag estimate downward specifically for issues with (a) a quantifiable individual cost and (b) a credible third-party validator (utility regulators, grid operators) — that combination seems to cut the lag to weeks-to-months rather than 12-24 months.",
+   "unique": "Other lenses will read this as an energy-policy or grid-capacity story; this model is the only one asking whether the sentiment-to-legislation lag is compressing — a 100+ jurisdiction proposal wave in under a year is unusually fast, which either means the 12-24 month estimate in P1 needs revision downward for salient local-harm issues, or that this is an outlier driven by an unusually sharp, visible cost (electricity bills) rather than diffuse harm.",
+   "expectation": {
+    "claim": "By 2027-06-30, at least 15 of the 100+ moratorium/restriction proposals will have been enacted (not just proposed), and at least one enacted measure or its legislative record will explicitly cite the sentiment shift (e.g., 'rising electricity costs,' 'community opposition') rather than existential-risk or safety framing",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.6
+   },
+   "research": {
+    "changed": "yes",
+    "what_i_found": "NY's moratorium was signed by Hochul on 2026-07-14 (first-in-nation), targeting data centers ≥20MW, tied to a mandated environmental impact study — not a standalone panic move but a structured pause. The Heatmap poll shift is more precise than the brief's '4-in-10 to 7-in-10': 42% opposed/43% supported a year ago, now 75% oppose (61% strongly), and opposition is bipartisan (78% Harris voters, 63% Trump voters). The moratorium count is far larger than '100+': 321 tracked moratorium actions across 32 states, led by New Jersey (72), Ohio (35), Michigan (35), Georgia (28). Sanders-DeSantis alignment is explicitly electricity-price-driven (EIA forecasts 4% residential rate rise in 2026 after ~5% in 2025), confirmed by NBC/NPR/CNBC as genuine cross-party statehouse cooperation, not just rhetorical overlap. Critically, the week of Sept 7-14, 2026 (just before this event) saw NH, CT, and OR governors independently announce statewide restrictions — NH's Ayotte cited ISO-New England confirming a specific project would raise regional energy prices, showing the local-harm-to-legislation pipeline operating in near-real-time, not on a 12-24 month lag.",
+    "revised_read": "The mechanism holds and the compression is confirmed, not just suspected: the sentiment-to-legislation lag P1 predicted at 12-24 months is running far shorter for this issue — NH's governor moved within roughly a month of a grid operator confirming a concrete price impact. This is P3's proximate-material-harm channel operating at unusually high speed because the harm (electricity bills) is immediate, quantified by a credible third party (grid operators/EIA), and hits before the next election cycle — not diffuse or speculative like most tech-policy backlash. The scale is also larger than the brief implied: 321 tracked actions across 32 states is a genuine multi-state cascade, not a New York outlier, and three more governors moved in the single week before this event, suggesting NY's moratorium is a leading domino, not an aberration. Sanders-DeSantis alignment is real and specifically anchored to electricity costs, which is the sharpest, least-ideological wedge issue available — cost-of-living framing beats both AI-safety and NIMBY framings for cross-partisan durability. Revise P1's lag estimate downward specifically for issues with (a) a quantifiable individual cost and (b) a credible third-party validator (utility regulators, grid operators) — that combination seems to cut the lag to weeks-to-months rather than 12-24 months.",
+    "expectation": {
+     "claim": "By 2026-12-31, at least 3 additional states (beyond NY, and beyond NH/CT/OR's September actions) will enact governor- or legislature-level statewide data center moratoriums or hard capacity/permit freezes (not just tax-incentive rollbacks), each citing electricity price or grid-capacity impact as a primary justification.",
+     "resolve_by": "2026-12-31",
+     "confidence": 0.6
+    },
+    "sources": [
+     {
+      "url": "https://www.governor.ny.gov/news/first-statewide-moratorium-new-hyperscale-data-centers-launched-governor-kathy-hochul",
+      "what_it_supports": "NY moratorium signed 2026-07-14, 20MW threshold, tied to environmental impact study"
+     },
+     {
+      "url": "https://heatmap.news/politics/americans-oppose-data-centers-poll",
+      "what_it_supports": "Precise sentiment swing: 42%/43% a year ago to 75% opposed now, bipartisan breakdown by 2024 vote"
+     },
+     {
+      "url": "https://goodjobsfirst.org/data-center-moratorium-bills-are-spreading-in-2026/",
+      "what_it_supports": "321 moratorium actions across 32 states, state-by-state leaderboard (NJ, OH, MI, GA)"
+     },
+     {
+      "url": "https://www.cnbc.com/2026/01/01/ai-data-centers-bernie-sanders-ron-desantis-electricity-prices.html",
+      "what_it_supports": "Sanders-DeSantis alignment explicitly framed around electricity prices"
+     },
+     {
+      "url": "https://www.npr.org/2026/02/26/nx-s1-5726431/data-centers-ai-trump-housing-states",
+      "what_it_supports": "Cross-partisan statehouse cooperation on data center regulation, contrasted with congressional gridlock"
+     },
+     {
+      "url": "https://writing.strisker.com/data-centers-weekly-briefing-september-7-10-2026/",
+      "what_it_supports": "NH, CT, OR governors' statewide actions in the week of Sept 7-14, 2026, including NH's ISO-New England price linkage"
+     }
+    ],
+    "_grounded": [
+     "https://www.governor.ny.gov/news/first-statewide-moratorium-new-hyperscale-data-centers-launched-governor-kathy-hochul",
+     "https://heatmap.news/politics/americans-oppose-data-centers-poll",
+     "https://goodjobsfirst.org/data-center-moratorium-bills-are-spreading-in-2026/",
+     "https://www.cnbc.com/2026/01/01/ai-data-centers-bernie-sanders-ron-desantis-electricity-prices.html",
+     "https://www.npr.org/2026/02/26/nx-s1-5726431/data-centers-ai-trump-housing-states",
+     "https://writing.strisker.com/data-centers-weekly-briefing-september-7-10-2026/"
+    ],
+    "_invented": [],
+    "_retrieved": [
+     "https://heatmap.news/politics/americans-oppose-data-centers-poll",
+     "https://heatmap.news/plus/the-fight/spotlight/data-center-support-plummets-poll",
+     "https://heatmap.news/daily/data-center-opposition-poll-collapse",
+     "https://www.blackengineer.com/sample-section/ai-news/local-data-centers-face-opposition-new-surveys-show/",
+     "https://www.commondreams.org/news/data-center-poll-collapse",
+     "https://www.nationofchange.org/2026/08/21/three-quarters-of-americans-would-oppose-a-data-center-near-their-home-new-polling-finds/",
+     "https://americanvoterpolls.com/three-quarters-oppose-data-centers-gop-sounds-alarm/",
+     "https://www.yahoo.com/news/articles/poll-wisconsin-voters-believe-data-185200230.html",
+     "https://www.mintz.com/insights-center/viewpoints/55076/2026-06-12-new-york-legislature-passes-first-nation-data-center",
+     "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+     "https://www.dlapiper.com/en-us/insights/publications/2026/07/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium",
+     "https://phillipslytle.com/new-york-state-legislature-passes-bill-to-examine-data-center-impacts-including-one-year-moratorium/",
+     "https://www.clm.com/new-yorks-data-center-moratorium-a-practical-roadmap-through-the-one-year-pause/",
+     "https://www.cnbc.com/2026/07/14/new-york-ai-data-center-ban.html",
+     "https://earthjustice.org/press/2026/nys-legislature-passes-data-center-moratorium",
+     "https://www.governor.ny.gov/news/first-statewide-moratorium-new-hyperscale-data-centers-launched-governor-kathy-hochul",
+     "https://www.harrisbeachmurtha.com/insights/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium/",
+     "https://goodjobsfirst.org/data-center-moratorium-bills-are-spreading-in-2026/",
+     "https://www.multistate.us/resources/state-data-center-policy-101",
+     "https://www.electricchoice.com/datacenters/moratoriums/",
+     "https://www.rockinst.org/blog/updates-on-the-cloud-more-moratoriums-on-data-centers/",
+     "https://www.datacenterbans.com/",
+     "https://programs.com/resources/data-center-moratoriums-tracker/",
+     "https://savrn.com/data-center-moratorium-tracker",
+     "https://www.ailawsbystate.com/blog/data-center-moratorium-by-state-2026",
+     "https://axis-intelligence.com/data-center-moratorium-tracker/",
+     "https://introl.com/blog/sanders-desantis-data-center-opposition-bipartisan",
+     "https://www.cnbc.com/2026/01/01/ai-data-centers-bernie-sanders-ron-desantis-electricity-prices.html",
+     "https://www.npr.org/2026/02/26/nx-s1-5726431/data-centers-ai-trump-housing-states",
+     "https://www.nbcnews.com/politics/politics-news/reining-data-centers-sparks-rare-bipartisanship-statehouses-rcna262990",
+     "https://www.eenews.net/articles/desantis-signs-bill-aimed-at-regulating-florida-data-centers/",
+     "https://www.hawley.senate.gov/hawley-blumenthal-introduce-bill-to-prevent-data-centers-from-increasing-electricity-costs-for-americans",
+     "https://www.brookings.edu/articles/how-rising-electric-rates-could-affect-the-2026-midterms",
+     "https://www.canarymedia.com/articles/data-centers/data-centers-2026-elections",
+     "https://www.multistate.us/insider/2026/6/4/are-governors-changing-course-on-state-data-center-policy",
+     "https://www.multistate.us/insider/2026/6/22/state-data-center-policy-shifts-as-governors-impose-new-restrictions",
+     "https://capstonedc.com/insights/this-years-governors-races-will-give-data-center-investors-a-message/",
+     "https://en.wikipedia.org/wiki/2026_United_States_gubernatorial_elections",
+     "https://writing.strisker.com/data-centers-weekly-briefing-august-31-september-3-2026/",
+     "https://writing.strisker.com/data-centers-daily-notes-september-07-2026/",
+     "https://writing.strisker.com/data-centers-weekly-briefing-september-7-10-2026/"
+    ],
+    "_researched": true
+   },
+   "read_brief_only": "This is P1/P2/P3/P4 converging simultaneously. The 4-in-10 to 7-in-10 sentiment swing on local data centres in nine months is the leading indicator moving fast, and NY's one-year moratorium plus 100+ proposals is legislation catching up on roughly the predicted lag — but faster than 12-24 months, driven by concrete, local harms (electricity prices, water, noise, land use) rather than existential-risk framing, exactly per P3. Sanders-DeSantis alignment signals the backlash is cross-partisan and concentrated on material proximate costs, not ideology — which is what makes it politically potent and hard for industry to dismiss as one side's issue. Industry's continued build-out through the sentiment shift (P2) is why the moratorium reads as a surprise/overcorrection rather than a negotiated slowdown."
+  },
+  "ai-compute-buildout": {
+   "grip": "moderate",
+   "read": "Confirmed and sharpened, not refuted: the moratorium wave is a real, already-binding constraint on P2, running well ahead of my first read's caution. It's no longer '100+ proposals' but enacted state law in NY and Maine plus 261 local moratoriums currently in force, and the capex-delay linkage is now directly measurable (30-50% of 2026 capacity at risk) rather than inferential. The Sanders-DeSantis alignment is real but importantly asymmetric in motive (justice/tax vs. grid/price), which matters for durability — a coalition united only by opposite complaints can fracture once either side's specific grievance (property tax capture, or grid relief) is addressed piecemeal by industry concessions. The stacking-constraint thesis holds: this is a faster-moving veto than interconnect queues, can flip from proposal to law within a single legislative session (NY: introduced and signed within ~6 weeks), and is now hitting capex-committed projects, not just future pipeline.",
+   "unique": "Other lenses (bubble/financial, chip-supply) read this as sentiment or demand-destruction; this mechanism reads it as a new binding constraint stacking on top of P2 — even fully-funded, fully-chipped capex can't land if the sites it's aimed at can't get built, and unlike interconnect queues this constraint can appear overnight via ballot initiative or state legislature rather than years of utility planning.",
+   "expectation": {
+    "claim": "By 2027-06-30, at least two additional US states (beyond New York) will have enacted binding data-centre construction moratoria or multi-year permitting freezes (not just proposals), forcing at least one hyperscaler in the P1 list to publicly relocate or delay a named project citing local/political opposition rather than power or supply constraints",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.45
+   },
+   "research": {
+    "changed": "yes",
+    "what_i_found": "NY's moratorium is confirmed real and specific: Gov. Hochul signed Executive Order 62 on 2026-07-14 plus the Responsible Data Center Development Act, barring new state permits for data centers ≥20-50MW for one year, explicitly to study grid/water impact (Al Jazeera, DLA Piper, Davis Polk). Moratorium activity has moved far past 'proposals' into enacted law elsewhere too — Maine's legislature passed an 82-62 moratorium through Nov 2027 on centers over 20MW, and one tracker counts 321 local/state moratorium actions across 32 states with 261 currently in force as of early September 2026 (Good Jobs First, MultiState, Rockefeller Institute). Sanders-DeSantis alignment is corroborated with distinct rationales — Sanders on energy justice/taxation, DeSantis on grid stability/electricity prices — and Sanders+AOC have a federal moratorium bill pending, though most lawmakers of both parties still reject a moratorium (CNBC, Introl, PBS). Most importantly: this is no longer just a siting-veto risk — industry-side reporting now puts 30-50% of 2026 US data center capacity at risk of delay or cancellation, with ~75 projects (~$130B) already impacted in Q1 2026 alone (Network World, Latitude Media, tech-insider.org), even as the five largest hyperscalers still plan >$750B capex this year (up 67% YoY).",
+    "revised_read": "Confirmed and sharpened, not refuted: the moratorium wave is a real, already-binding constraint on P2, running well ahead of my first read's caution. It's no longer '100+ proposals' but enacted state law in NY and Maine plus 261 local moratoriums currently in force, and the capex-delay linkage is now directly measurable (30-50% of 2026 capacity at risk) rather than inferential. The Sanders-DeSantis alignment is real but importantly asymmetric in motive (justice/tax vs. grid/price), which matters for durability — a coalition united only by opposite complaints can fracture once either side's specific grievance (property tax capture, or grid relief) is addressed piecemeal by industry concessions. The stacking-constraint thesis holds: this is a faster-moving veto than interconnect queues, can flip from proposal to law within a single legislative session (NY: introduced and signed within ~6 weeks), and is now hitting capex-committed projects, not just future pipeline.",
+    "expectation": {
+     "claim": "By 2026-12-31, at least 3 more states (beyond NY and Maine) will have enacted statewide data center moratoriums or binding permitting pauses (not just proposals/study bills), and cumulative reporting will show hyperscalers have publicly delayed or relocated at least 5 specific named US projects citing local/state political or permitting opposition (not power supply or chip supply) as a primary driver.",
+     "resolve_by": "2026-12-31",
+     "confidence": 0.6
+    },
+    "sources": [
+     {
+      "url": "https://www.aljazeera.com/economy/2026/7/14/new-york-imposes-landmark-one-year-ban-on-large-data-centres",
+      "what_it_supports": "NY one-year ban details, first state to do so"
+     },
+     {
+      "url": "https://www.dlapiper.com/en-us/insights/publications/2026/07/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium",
+      "what_it_supports": "Legislative specifics: S10642/A11560, 20MW threshold, timeline"
+     },
+     {
+      "url": "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+      "what_it_supports": "Executive Order 62 signed 2026-07-14, permitting/rate-class details"
+     },
+     {
+      "url": "https://goodjobsfirst.org/data-center-moratorium-bills-are-spreading-in-2026/",
+      "what_it_supports": "Scale of local moratorium bill spread in 2026"
+     },
+     {
+      "url": "https://www.multistate.us/insider/2026/3/13/local-data-center-regulations-gain-ground-as-state-bills-falter",
+      "what_it_supports": "321 moratoriums/32 states, 261 in force count; state bills stalling vs local success"
+     },
+     {
+      "url": "https://www.rockinst.org/blog/updates-on-the-cloud-more-moratoriums-on-data-centers/",
+      "what_it_supports": "Confirms continued spread and tracking of moratorium wave"
+     },
+     {
+      "url": "https://introl.com/blog/sanders-desantis-data-center-opposition-bipartisan",
+      "what_it_supports": "Sanders-DeSantis alignment and differing rationale"
+     },
+     {
+      "url": "https://www.cnbc.com/2026/01/01/ai-data-centers-bernie-sanders-ron-desantis-electricity-prices.html",
+      "what_it_supports": "Sanders/DeSantis framing on electricity prices and grid stability"
+     },
+     {
+      "url": "https://www.pbs.org/newshour/politics/ocasio-cortez-and-sanders-push-bill-to-impose-ai-data-center-moratorium",
+      "what_it_supports": "Federal moratorium bill from Sanders/AOC; most lawmakers still reject moratorium"
+     },
+     {
+      "url": "https://www.networkworld.com/article/4201941/up-to-50-of-data-center-capacity-slated-for-2026-could-be-delayed.html",
+      "what_it_supports": "30-50% of 2026 US data center capacity at risk of delay/cancellation"
+     },
+     {
+      "url": "https://www.latitudemedia.com/news/up-to-half-of-the-worlds-data-centers-may-be-delayed-this-year/",
+      "what_it_supports": "Corroborates delay/cancellation scale, ~75 projects/$130B impacted Q1 2026"
+     }
+    ],
+    "_grounded": [
+     "https://www.aljazeera.com/economy/2026/7/14/new-york-imposes-landmark-one-year-ban-on-large-data-centres",
+     "https://www.dlapiper.com/en-us/insights/publications/2026/07/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium",
+     "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+     "https://goodjobsfirst.org/data-center-moratorium-bills-are-spreading-in-2026/",
+     "https://www.multistate.us/insider/2026/3/13/local-data-center-regulations-gain-ground-as-state-bills-falter",
+     "https://www.rockinst.org/blog/updates-on-the-cloud-more-moratoriums-on-data-centers/",
+     "https://introl.com/blog/sanders-desantis-data-center-opposition-bipartisan",
+     "https://www.cnbc.com/2026/01/01/ai-data-centers-bernie-sanders-ron-desantis-electricity-prices.html",
+     "https://www.pbs.org/newshour/politics/ocasio-cortez-and-sanders-push-bill-to-impose-ai-data-center-moratorium",
+     "https://www.networkworld.com/article/4201941/up-to-50-of-data-center-capacity-slated-for-2026-could-be-delayed.html",
+     "https://www.latitudemedia.com/news/up-to-half-of-the-worlds-data-centers-may-be-delayed-this-year/"
+    ],
+    "_invented": [],
+    "_retrieved": [
+     "https://www.aljazeera.com/economy/2026/7/14/new-york-imposes-landmark-one-year-ban-on-large-data-centres",
+     "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+     "https://www.cnbc.com/2026/07/14/new-york-ai-data-center-ban.html",
+     "https://www.dlapiper.com/en-us/insights/publications/2026/07/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium",
+     "https://www.nysenate.gov/newsroom/press-releases/2026/kristen-gonzalez/ny-state-senator-kristen-gonzalez-passes-data-center",
+     "https://www.governor.ny.gov/news/first-statewide-moratorium-new-hyperscale-data-centers-launched-governor-kathy-hochul",
+     "https://www.harrisbeachmurtha.com/insights/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium/",
+     "https://www.nbcnews.com/news/us-news/new-york-impose-countrys-first-statewide-moratorium-data-centers-rcna587429",
+     "https://goodjobsfirst.org/data-center-moratorium-bills-are-spreading-in-2026/",
+     "https://www.multistate.us/insider/2026/8/19/the-local-fight-over-data-centers-a-texas-case-study",
+     "https://www.multistate.us/insider/2026/3/13/local-data-center-regulations-gain-ground-as-state-bills-falter",
+     "https://www.electricchoice.com/datacenters/moratoriums/",
+     "https://programs.com/resources/data-center-moratoriums-tracker/",
+     "https://www.datacenterbans.com/",
+     "https://www.ailawsbystate.com/blog/data-center-moratorium-by-state-2026",
+     "https://savrn.com/data-center-moratorium-tracker",
+     "https://introl.com/blog/sanders-data-center-moratorium-politics-2026",
+     "https://www.cnbc.com/2026/01/01/ai-data-centers-bernie-sanders-ron-desantis-electricity-prices.html",
+     "https://introl.com/blog/sanders-desantis-data-center-opposition-bipartisan",
+     "https://nolabels.org/the-latest/the-bipartisan-backlash-against-data-centers/",
+     "https://www.nbcnews.com/politics/politics-news/reining-data-centers-sparks-rare-bipartisanship-statehouses-rcna262990",
+     "https://www.pbs.org/newshour/amp/politics/ocasio-cortez-and-sanders-push-bill-to-impose-ai-data-center-moratorium",
+     "https://www.pbs.org/newshour/politics/ocasio-cortez-and-sanders-push-bill-to-impose-ai-data-center-moratorium",
+     "https://www.axios.com/2026/08/25/data-centers-ai-electricity-water-politics",
+     "https://commercialobserver.com/2026/07/new-york-data-center-moratorium-investment-decline/",
+     "https://www.networkworld.com/article/4201941/up-to-50-of-data-center-capacity-slated-for-2026-could-be-delayed.html",
+     "https://www.latitudemedia.com/news/up-to-half-of-the-worlds-data-centers-may-be-delayed-this-year/",
+     "https://www.rockinst.org/blog/updates-on-the-cloud-more-moratoriums-on-data-centers/",
+     "https://www.datacenterknowledge.com/data-center-construction/new-data-center-developments-august-2026",
+     "https://maslansky.com/2026/07/07/do-hyperscalers-understand-the-severity-of-the-data-center-challenge-they-better-figure-it-out-fast/",
+     "https://tech-insider.org/us-ai-data-center-delays-cancellations-7gw-capacity-crisis-2026/",
+     "https://www.theaiconsultingnetwork.com/blog/us-data-centers-2026-half-delayed-canceled-cre-investors"
+    ],
+    "_researched": true
+   },
+   "read_brief_only": "This is a demand-side political shock, not a capex or power-supply shock per se — but it hits directly on P2's binding constraint: moratoria are a second, faster-moving veto on the same siting/interconnect bottleneck that grid buildout already imposes. NY's one-year halt plus 100+ proposals and the 4-in-10→7-in-10 opposition swing signal that local political consent is becoming as scarce as transformers and turbines. Sanders-DeSantis alignment means this isn't a partisan-blockable veto — it can pass in both red and blue jurisdictions, which is what makes it structurally dangerous to the buildout timeline."
+  },
+  "ai-rising-powers": {
+   "grip": "moderate",
+   "read": "Partially refuted on the flagship case, confirmed elsewhere. My read predicted the moratorium would create/reveal a new state-level chokepoint (PUC/siting regulator) forced to arbitrate the local-vs-grid conflict. New York — the actual named event — does the opposite: it centralizes only environmental permitting (DEC) under a governor's executive order, explicitly carves out and preserves local authority, and doesn't route through the state PUC (NYSPSC) at all. Oklahoma matches my prediction (PUC explicitly empowered to study and gatekeep), but South Dakota moves the other way, entrenching local control by statute. So there's no single emerging chokepoint — the moratorium wave is fragmenting into at least three distinct institutional patterns (governor/environmental-agency in NY, PUC in OK, protected localism in SD), and the actor to watch isn't one state regulator but depends entirely on which state's model spreads. The voter-coalition signal is stronger than I had it (75%, genuinely bipartisan, 530+ local actions already banked) — grip should move from moderate toward moderate-high given how broad and cross-partisan the base already is, but the 'new chokepoint' framing needs to be state-specific, not generic.",
+   "unique": "Other lenses will read this as politics or backlash; this mechanism flags that the moratorium itself creates a new chokepoint — state siting/PUC authorities who now arbitrate the local-vs-grid conflict — that will matter more than the headline vote.",
+   "expectation": {
+    "claim": "At least one state public utility commission or siting board (not the legislature) will be named in mainstream coverage by mid-2027 as the de facto decision point for data centre buildout, following NY's precedent.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.55
+   },
+   "research": {
+    "changed": "yes",
+    "what_i_found": "1) NY's moratorium is Gov. Hochul's July 14, 2026 Executive Order No. 62 directing DEC to hold state permits in abeyance for data centers ≥20MW — explicitly does NOT touch local government permits (Governor's office; DavisPolk; DLAPiper). 2) Legislature had passed the same one-year moratorium (S10642/A11560) on June 4, 2026 as the Responsible Data Center Development Act (Phillips Lytle, Harris Beach). 3) Oklahoma SB 1488 (100MW+ threshold, moratorium to Nov 2029) explicitly tasks the state PUC with studying water/rate/property-value impacts — a real case of a state regulator becoming the arbiter (MultiState). 4) South Dakota's SB 135 went the opposite direction: it safeguards LOCAL governments' authority to regulate/ban data centers rather than centralizing at the state level. 5) Heatmap's August 2026 poll (Embold Research, n=2045) puts opposition at ~75%, not 70%, and it's bipartisan (78% Harris voters, 63% Trump voters) with 530+ counties/municipalities already having restricted or banned data centers (Heatmap News).",
+    "revised_read": "Partially refuted on the flagship case, confirmed elsewhere. My read predicted the moratorium would create/reveal a new state-level chokepoint (PUC/siting regulator) forced to arbitrate the local-vs-grid conflict. New York — the actual named event — does the opposite: it centralizes only environmental permitting (DEC) under a governor's executive order, explicitly carves out and preserves local authority, and doesn't route through the state PUC (NYSPSC) at all. Oklahoma matches my prediction (PUC explicitly empowered to study and gatekeep), but South Dakota moves the other way, entrenching local control by statute. So there's no single emerging chokepoint — the moratorium wave is fragmenting into at least three distinct institutional patterns (governor/environmental-agency in NY, PUC in OK, protected localism in SD), and the actor to watch isn't one state regulator but depends entirely on which state's model spreads. The voter-coalition signal is stronger than I had it (75%, genuinely bipartisan, 530+ local actions already banked) — grip should move from moderate toward moderate-high given how broad and cross-partisan the base already is, but the 'new chokepoint' framing needs to be state-specific, not generic.",
+    "expectation": {
+     "claim": "By 2026-12-31, at least 3 more states will have enacted data center moratorium or siting-control legislation, and a majority of these will assign the primary gatekeeping/study role to a state PUC or energy regulator (Oklahoma-style) rather than to a governor/environmental-permitting body (New York-style) or to protected local control (South Dakota-style).",
+     "resolve_by": "2026-12-31",
+     "confidence": 0.45
+    },
+    "sources": [
+     {
+      "url": "https://www.governor.ny.gov/executive-order/no-62-establishing-temporary-moratorium-data-centers-new-york-while-state-develops",
+      "what_it_supports": "NY moratorium is a gubernatorial EO directing DEC to hold permits in abeyance; does not cover local permits"
+     },
+     {
+      "url": "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+      "what_it_supports": "Confirms EO 62 mechanics, 20MW threshold, DEC role, local carve-out"
+     },
+     {
+      "url": "https://www.multistate.us/insider/2026/2/20/state-data-center-legislation-in-2026-tackles-energy-and-tax-issues",
+      "what_it_supports": "Oklahoma SB 1488: 100MW threshold, moratorium to Nov 2029, state PUC tasked with studying water/rate/property impacts"
+     },
+     {
+      "url": "https://programs.com/resources/data-center-moratoriums-tracker/",
+      "what_it_supports": "South Dakota SB 135 protects local government authority to regulate/prohibit data centers; SB 232 (state-level moratorium) stalled in committee"
+     },
+     {
+      "url": "https://heatmap.news/daily/data-center-opposition-poll-collapse",
+      "what_it_supports": "August 2026 Heatmap/Embold poll: ~75% opposition, bipartisan breakdown (78% Harris voters, 63% Trump voters), 530+ counties/municipalities with restrictions"
+     }
+    ],
+    "_grounded": [
+     "https://www.governor.ny.gov/executive-order/no-62-establishing-temporary-moratorium-data-centers-new-york-while-state-develops",
+     "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+     "https://www.multistate.us/insider/2026/2/20/state-data-center-legislation-in-2026-tackles-energy-and-tax-issues",
+     "https://programs.com/resources/data-center-moratoriums-tracker/",
+     "https://heatmap.news/daily/data-center-opposition-poll-collapse"
+    ],
+    "_invented": [],
+    "_retrieved": [
+     "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+     "https://www.dlapiper.com/en-us/insights/publications/2026/07/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium",
+     "https://www.nbcnews.com/news/us-news/new-york-impose-countrys-first-statewide-moratorium-data-centers-rcna587429",
+     "https://www.governor.ny.gov/news/first-statewide-moratorium-new-hyperscale-data-centers-launched-governor-kathy-hochul",
+     "https://www.governor.ny.gov/executive-order/no-62-establishing-temporary-moratorium-data-centers-new-york-while-state-develops",
+     "https://phillipslytle.com/new-york-state-legislature-passes-bill-to-examine-data-center-impacts-including-one-year-moratorium/",
+     "https://www.harrisbeachmurtha.com/insights/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium/",
+     "https://www.sheppard.com/insights/blogs/new-york-enacts-first-in-the-nation-statewide-data-center-moratorium",
+     "https://datacenterwatch.substack.com/p/briefing-02062026",
+     "https://heatmap.news/daily/data-center-opposition-poll-collapse",
+     "https://heatmap.news/plus/the-fight/spotlight/data-center-moratorium-poll",
+     "https://heatmap.news/plus/the-fight/spotlight/data-center-midterms",
+     "https://heatmap.news/politics/americans-oppose-data-centers-poll",
+     "https://www.nbcnews.com/politics/2026-election/trump-data-centers-voters-key-midterm-races-rcna594914",
+     "https://www.brookings.edu/articles/why-data-centers-are-a-top-issue-in-the-2026-midterms/",
+     "https://americanvoterpolls.com/three-quarters-oppose-data-centers-gop-sounds-alarm/",
+     "https://datacenterwatch.substack.com/p/briefing-02272026",
+     "https://datacenterwatch.substack.com/p/briefing-03132026",
+     "https://www.multistate.us/insider/2026/2/20/state-data-center-legislation-in-2026-tackles-energy-and-tax-issues",
+     "https://www.multistate.us/insider/2026/8/19/the-local-fight-over-data-centers-a-texas-case-study",
+     "https://programs.com/resources/data-center-moratoriums-tracker/",
+     "https://www.wilmerhale.com/en/insights/client-alerts/using-temporary-pauses-to-develop-permanent-regulation",
+     "https://dcmap.us/insights/policy/",
+     "https://www.datacenterbans.com/",
+     "https://savrn.com/data-center-moratorium-tracker",
+     "https://www.brockovichdatacenter.com/community-and-legislation.html",
+     "https://www.afslaw.com/perspectives/alerts/state-regulation-data-centers-2026-shifting-landscape",
+     "https://goodjobsfirst.org/data-center-moratorium-bills-are-spreading-in-2026/",
+     "https://news.lee.net/why-states-are-hitting-pause-on-new-data-centers/article_49e8e695-633d-5655-ae34-66f054761f43.html",
+     "https://www.ailawsbystate.com/blog/data-center-moratorium-by-state-2026",
+     "https://www.yahoo.com/news/articles/lawmakers-move-protect-oklahoma-ratepayers-210009701.html"
+    ],
+    "_researched": true
+   },
+   "read_brief_only": "This is recognition catching up to leverage, not a chokepoint reveal — the actual power centres (grid operators, interconnection queues, state utility regulators) were findable via P1 well before Sanders/DeSantis alignment made it press-worthy. The moratorium wave shows the entity to watch is now the voter/local-zoning coalition and the statewide regulator forced to referee it — a collective (P2) under-covered relative to the hyperscalers everyone already names."
+  },
+  "ai-us-policy-direction": {
+   "grip": "moderate",
+   "read": "Refutes the 'no federal executive decision embedded' framing: a federal preemption EO already exists (Dec 11, 2025) and it deliberately exempted data-center/infrastructure moratoria — meaning the administration pre-emptively ceded this exact fight rather than being caught flat-footed by it. That reframes NY's moratorium not as a naive test of P1 vs P2 but as P2 expanding into a lane the federal EO already marked as off-limits for preemption, which is a much lower-friction state move than my first read assumed (I'd overstated the 'higher friction' framing — the carve-out means states aren't defying federal preemption here, they're operating inside a gap the EO left open). The real live question is whether DOJ's Litigation Task Force tries a Dormant Commerce Clause end-run around that carve-out now that the wave has gone multi-state and bipartisan (NH, CT, OR joining NY within the same week) — that's the P1 escalation to watch, not a preemption fight over AI-conduct law.",
+   "unique": "This model uniquely flags that a federal preemption push (P1) now has an escalating, cross-partisan, voter-backed state counter-force (P2) whose growth rate (4-in-10→7-in-10 in nine months) is accelerating rather than plateauing — meaning any future executive preemption EO targeting data-center moratoria specifically would be a much higher-friction P1 move than prior preemption attempts against AI-content/liability laws.",
+   "expectation": {
+    "claim": "By 2027-12-31, at least 5 additional states will enact data-center-specific moratorium or siting-restriction statutes (distinct from general AI-conduct statutes), counting toward and likely exceeding the P2 falsifier threshold of 5 new state AI enactments in 2027",
+    "resolve_by": "2027-12-31",
+    "confidence": 0.6
+   },
+   "research": {
+    "changed": "yes",
+    "what_i_found": "1) Trump's Dec 11, 2025 AI preemption EO ('Ensuring A National Policy Framework for AI') explicitly excludes data-center/infrastructure moratoria from preemption scope, carving out exactly the category this event falls into (williamfry.com, paulhastings.com). 2) NY's action is codified two ways: legislature passed the Responsible Data Center Development Act (S10642/A11560) June 4, 2026, and Gov. Hochul separately signed Executive Order 62 on July 14, 2026 pausing DEC discretionary permits for data centers ≥50MW (davispolk.com, governor.ny.gov, dwt.com). 3) The state-moratorium wave is now bipartisan and accelerating past NY: in the week of Sept 7-14, 2026 alone, NH (Ayotte), CT (Lamont), and OR (Kotek) all announced statewide restrictions (statescoop.com). 4) Heatmap/Embold polling confirms the 4-in-10→7-in-10 (nine months) swing, and shows opposition is genuinely cross-partisan: 78% of Harris voters and 63% of Trump voters oppose local data centers (heatmap.news). 5) No confirmed DOJ AI Litigation Task Force suit against NY's moratorium has surfaced in search results — commentary (natlawreview.com) says litigation exposure is being 'closely monitored' but uncertain, i.e., P1 hasn't yet fired against this specific P2 action.",
+    "revised_read": "Refutes the 'no federal executive decision embedded' framing: a federal preemption EO already exists (Dec 11, 2025) and it deliberately exempted data-center/infrastructure moratoria — meaning the administration pre-emptively ceded this exact fight rather than being caught flat-footed by it. That reframes NY's moratorium not as a naive test of P1 vs P2 but as P2 expanding into a lane the federal EO already marked as off-limits for preemption, which is a much lower-friction state move than my first read assumed (I'd overstated the 'higher friction' framing — the carve-out means states aren't defying federal preemption here, they're operating inside a gap the EO left open). The real live question is whether DOJ's Litigation Task Force tries a Dormant Commerce Clause end-run around that carve-out now that the wave has gone multi-state and bipartisan (NH, CT, OR joining NY within the same week) — that's the P1 escalation to watch, not a preemption fight over AI-conduct law.",
+    "expectation": {
+     "claim": "DOJ's AI Litigation Task Force will not file suit challenging New York's EO 62 or the Responsible Data Center Development Act on preemption/Dormant Commerce Clause grounds before 2026-12-31, because the underlying federal EO already exempted data-center infrastructure moratoria from its preemption theory",
+     "resolve_by": "2026-12-31",
+     "confidence": 0.68
+    },
+    "sources": [
+     {
+      "url": "https://www.williamfry.com/knowledge/trump-administration-issues-executive-order-on-federal-ai-policy-framework-and-state-law-pre-emption/",
+      "what_it_supports": "Federal EO (Dec 11, 2025) explicitly excludes data-center/infrastructure moratoria from preemption scope"
+     },
+     {
+      "url": "https://www.paulhastings.com/insights/client-alerts/president-trump-signs-executive-order-challenging-state-ai-laws",
+      "what_it_supports": "Confirms EO date and DOJ AI Litigation Task Force creation, effective Jan 10, 2026"
+     },
+     {
+      "url": "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+      "what_it_supports": "NY legislature passed Responsible Data Center Development Act June 4, 2026"
+     },
+     {
+      "url": "https://www.governor.ny.gov/executive-order/no-62-establishing-temporary-moratorium-data-centers-new-york-while-state-develops",
+      "what_it_supports": "Hochul's EO 62 signed July 14, 2026, scope of DEC permit pause"
+     },
+     {
+      "url": "https://www.dwt.com/blogs/energy--environmental-law-blog/2026/07/ny-data-center-permitting-pause-executive-order-62",
+      "what_it_supports": "EO 62 mechanics: pauses discretionary DEC approvals for data centers ≥50MW, not a blanket ban"
+     },
+     {
+      "url": "https://statescoop.com/state-ai-law-moratorium-omitted-2026-defense-bill-trump-eo/",
+      "what_it_supports": "NH, CT, OR statewide moratorium/restriction announcements in week of Sept 7-14, 2026"
+     },
+     {
+      "url": "https://heatmap.news/politics/americans-oppose-data-centers-poll",
+      "what_it_supports": "4-in-10 to 7-in-10 voter opposition swing over nine months; cross-partisan breakdown (78% Harris voters, 63% Trump voters)"
+     },
+     {
+      "url": "https://natlawreview.com/article/new-york-enacts-first-statewide-moratorium-data-centers",
+      "what_it_supports": "No confirmed DOJ litigation yet against NY moratorium; litigation exposure described as uncertain/monitored"
+     }
+    ],
+    "_grounded": [
+     "https://www.williamfry.com/knowledge/trump-administration-issues-executive-order-on-federal-ai-policy-framework-and-state-law-pre-emption/",
+     "https://www.paulhastings.com/insights/client-alerts/president-trump-signs-executive-order-challenging-state-ai-laws",
+     "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+     "https://www.governor.ny.gov/executive-order/no-62-establishing-temporary-moratorium-data-centers-new-york-while-state-develops",
+     "https://www.dwt.com/blogs/energy--environmental-law-blog/2026/07/ny-data-center-permitting-pause-executive-order-62",
+     "https://statescoop.com/state-ai-law-moratorium-omitted-2026-defense-bill-trump-eo/",
+     "https://heatmap.news/politics/americans-oppose-data-centers-poll",
+     "https://natlawreview.com/article/new-york-enacts-first-statewide-moratorium-data-centers"
+    ],
+    "_invented": [],
+    "_retrieved": [
+     "https://www.davispolk.com/insights/client-update/new-york-state-enacts-data-center-moratorium",
+     "https://www.dlapiper.com/en-us/insights/publications/2026/07/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium",
+     "https://www.nbcnews.com/news/us-news/new-york-impose-countrys-first-statewide-moratorium-data-centers-rcna587429",
+     "https://www.governor.ny.gov/news/first-statewide-moratorium-new-hyperscale-data-centers-launched-governor-kathy-hochul",
+     "https://www.governor.ny.gov/executive-order/no-62-establishing-temporary-moratorium-data-centers-new-york-while-state-develops",
+     "https://phillipslytle.com/new-york-state-legislature-passes-bill-to-examine-data-center-impacts-including-one-year-moratorium/",
+     "https://www.harrisbeachmurtha.com/insights/new-york-state-legislature-passes-first-in-the-nation-data-center-moratorium/",
+     "https://www.sheppard.com/insights/blogs/new-york-enacts-first-in-the-nation-statewide-data-center-moratorium",
+     "https://datacenterwatch.substack.com/p/briefing-02062026",
+     "https://heatmap.news/plus/the-fight/spotlight/data-center-moratorium-poll",
+     "https://heatmap.news/politics/americans-oppose-data-centers-poll",
+     "https://heatmap.news/daily/data-center-opposition-poll-collapse",
+     "https://heatmap.news/politics/pallone-data-center-moratorium",
+     "https://www.newsweek.com/republicans-turn-on-data-centers-after-gop-warns-of-election-risk-12353751",
+     "https://heatmap.news/plus/the-fight/spotlight/data-center-midterms",
+     "https://www.canarymedia.com/articles/data-centers/data-centers-2026-elections",
+     "https://www.nationofchange.org/2026/08/21/three-quarters-of-americans-would-oppose-a-data-center-near-their-home-new-polling-finds/",
+     "https://americanvoterpolls.com/three-quarters-oppose-data-centers-gop-sounds-alarm/",
+     "https://www.americanprogress.org/article/president-trumps-ai-national-policy-executive-order-is-an-unambiguous-threat-to-states-beyond-just-ai/",
+     "https://statescoop.com/state-ai-law-moratorium-omitted-2026-defense-bill-trump-eo/",
+     "https://www.paulhastings.com/insights/client-alerts/president-trump-signs-executive-order-challenging-state-ai-laws",
+     "https://www.multistate.us/insider/2026/4/14/federal-ai-data-center-policy-meets-resistance-from-state-lawmakers",
+     "https://www.williamfry.com/knowledge/trump-administration-issues-executive-order-on-federal-ai-policy-framework-and-state-law-pre-emption/",
+     "https://www.ropesgray.com/en/insights/alerts/2026/03/examining-the-landscape-and-limitations-of-the-federal-push-to-override-state-ai-regulation",
+     "https://www.datacenterbans.com/",
+     "https://www.shrm.org/topics-tools/news/technology/trump-moves-to-preempt-state-ai-laws-with-executive-order",
+     "https://www.lawfaremedia.org/article/trump-signs-executive-order-to-preempt-state-ai-laws",
+     "https://www.dwt.com/blogs/energy--environmental-law-blog/2026/07/ny-data-center-permitting-pause-executive-order-62",
+     "https://natlawreview.com/article/new-york-enacts-first-statewide-moratorium-data-centers",
+     "https://hselaw.com/news-and-information/legalcurrents/data-center-development-in-new-york-faces-immediate-pause-under-executive-order-62/",
+     "https://www.hodgsonruss.com/newsroom/publications/governor-hochul-signs-first-statewide-data-center-moratorium-in-the-u-s"
+    ],
+    "_researched": true
+   },
+   "read_brief_only": "This event is state-level action (NY moratorium, local proposals, voter sentiment) with no federal executive decision embedded in it — the model's mechanism (P1-P3) tracks executive preemption vs. federal-standard choices, none of which fired here. What it does speak to is P2: states keep legislating/restricting despite executive pressure toward preemption, and this is a stronger data point than typical state AI statutes since it's driven by bottom-up voter revolt (4-in-10 to 7-in-10) rather than just legislative initiative. The Sanders-DeSantis alignment signals the restriction impulse is cross-partisan and infrastructure-focused (data centers, not model behavior), which is adjacent to but distinct from the AI-conduct statutes P2 was built on."
+  }
+ },
+ "adversary": {
+  "shared_prior": "All four lenses lean on the same small citation cluster — the NY governor's office press release/EO text, the Heatmap poll, Good Jobs First's tracker, and the law-firm client alerts (DLA Piper/Davis Polk/Paul Hastings) summarizing the same NY statute. Mean pairwise Jaccard of 0.086 looks low, but that's because each lens cites 1-2 unique 'flavor' sources on top of a shared spine of NY-official and law-firm coverage — the same handful of PR-driven, already-synthesized items (governor's office, three near-identical law-firm alerts, one advocacy tracker) that all pre-package the 'moratorium wave = backlash cascade' narrative. Law-firm client alerts and advocacy trackers are optimized to make regulatory change look sweeping and fast (that's their business model — alerts drive billable engagements, trackers drive donor urgency), so convergence here is partly convergence on a shared marketing/advocacy framing, not four independent readings of primary legislative text.",
+  "counter_case": "(1) Base rate for state legislative 'waves': hundreds of bills get introduced every session on every hot-button issue (see: 2021 crypto-mining moratoria, 2018-19 5G/cell-tower moratoria, 2023 short-term-rental bans) and the overwhelming majority die in committee or lapse — 'proposals' and even 'local ordinances' are cheap, reversible, and routinely superseded once a single high-profile economic-development deal is on the table; counting 100+ proposals as a cascade conflates bill introduction (near-zero cost, near-zero signal) with enactment (costly, rare). (2) NY's own law is explicitly temporary (one-year) and carves out DEC/executive-order authority rather than durable statute — that's the signature of a pressure-release valve designed to expire quietly once headlines move on, not a structural regime change; one-year moratoria are a classic legislative stalling tactic, not evidence of a sentiment-to-policy mechanism compressing. (3) Sanders-DeSantis alignment is being read as a powerful cross-partisan wedge, but the more mundane explanation is that both are opportunistically attaching to a local NIMBY fight that long predates AI salience — data-center/warehouse siting opposition (noise, water, tax abatements, land use) has been a live local issue since well before generative AI was a talking point, and re-labeling a land-use backlash as 'AI backlash' is a framing choice by the lenses, not a fact about voter motivation. (4) Selection effect: journalists and trackers (Heatmap, Good Jobs First, law firms) have strong incentives to cover the dramatic cases and ignore the much larger number of jurisdictions where data centers were approved without incident in the same nine months — the denominator (total siting decisions nationally) is never reported, so '100+ moratorium proposals' has no base rate to compare against and may just be normal land-use friction scaled to an industry that's building at record pace.",
+  "weakest_convergence": "The 'sentiment-to-legislation lag is compressing to weeks-to-months' claim (ai-public-backlash, echoed by ai-us-policy-direction's 'accelerating growth rate') is the weakest link. It rests on a single anecdote (NH governor moving ~1 month after a grid-operator price signal) generalized into a revised universal lag parameter, and it's the claim every other lens quietly imports without re-deriving — ai-compute-buildout calls the wave 'faster-moving than interconnect queues' and ai-us-policy-direction calls it 'accelerating' largely by citing the same NY timeline. This is a textbook single-case-to-general-rule extrapolation dressed up as a parameter revision, and it's exactly the kind of claim that four lenses reading the same three law-firm alerts would independently launder into 'confirmed, not just suspected.'",
+  "null_claims": [
+   {
+    "claim": "By 2027-06-30, fewer than 10 of the 100+ tracked moratorium/restriction proposals will have been enacted into binding, still-in-force law (i.e., not expired, repealed, or superseded by a negotiated industry carve-out) — the great majority will have died in committee, lapsed, or been narrowed to non-binding studies.",
+    "resolution_criteria": "Count enacted-and-currently-in-force data-center-specific moratorium/construction-restriction statutes or binding local ordinances across all US states/localities as of 2027-06-30, using the Good Jobs First tracker or equivalent successor as the count source; claim resolves true if the in-force count is below 10.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.55,
+    "backed_by": [
+     "devils-advocate"
+    ]
+   },
+   {
+    "claim": "New York's one-year moratorium will not be renewed, extended, or converted into permanent statute before its original expiration date; it will lapse or be replaced by a narrower permitting/negotiated framework that allows data-center construction to resume in NY by 2027-06-30.",
+    "resolution_criteria": "Track NY executive order/statute status via governor's office and NY state legislature records; claim resolves true if by 2027-06-30 the moratorium has expired without renewal or been replaced by a framework permitting new data-center construction (even with conditions), and resolves false if NY extends or makes the ban permanent.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.6,
+    "backed_by": [
+     "devils-advocate"
+    ]
+   }
+  ]
+ },
+ "librarian": {
+  "reference_class": "State/local moratoria or bans on a specific, newly-controversial land-use/infrastructure type, enacted in response to a fast-rising, geographically diffuse public grievance (e.g., fracking bans/moratoria 2010-2014, cell tower/5G siting moratoria, LNG export terminal and pipeline local bans, big-box/Walmart siting bans 1990s-2000s, casino and landfill siting moratoria, short-term rental bans post-2015)",
+  "class_size": "roughly 15-25 comparable multi-state infrastructure-siting backlash waves since 1990, each spawning dozens to hundreds of local/state proposals within 1-2 years of the grievance becoming salient",
+  "base_rate": "in this class, the great majority of proposals never become enacted, binding law (most die in committee, get watered down to studies/setbacks, or are preempted/struck down); a minority (roughly 1-in-4 to 1-in-3) of jurisdictions that propose a moratorium actually enact one, and enacted moratoria are usually temporary, narrow, or later relaxed once the industry offers concessions (tax revenue sharing, price caps, remote siting) or the acute cost driver eases; full sector-wide multi-state bans that stick for years are rare (fracking bans in NY/VT persisted, but most fracking-state proposals didn't ban outright, and most cell-tower/5G moratoria were struck down or expired)",
+  "outside_view": "Base rates say expect a fast proposal wave to keep growing in count for another 6-18 months, then plateau and fragment as industry buys off the sharpest grievance (electricity price relief, tax-sharing, remote siting) state by state; expect maybe 3-8 of the 100+ proposals to become real enacted law in the next year, not a cascade of 15+, and expect the coalition (Sanders-DeSantis) to fracture once concessions target each side's specific complaint, since cross-partisan alliances in this class are typically united by convenience rather than shared diagnosis and rarely survive contact with sector lobbying.",
+  "disagreement": "The lenses treat the current velocity (100+ proposals in under a year, NY-to-law in ~6 weeks) as evidence the sentiment-to-law lag is structurally compressing for this issue; the outside view treats that velocity as normal early-wave enthusiasm that historically decelerates once industry concessions peel off the coalition, making the lenses' 15+ enactments and multi-state-law expectations likely overconfident on both count and durability."
+ },
+ "occam": {
+  "boring_explanation": "Electricity bills went up, people noticed, and politicians in an election year did the easy popular thing. Data centers are large, visible, unpopular new industrial neighbors (noise, water, land, grid strain) that make an easy local target regardless of AI hype — this is standard NIMBY-plus-utility-rate politics, the same pattern seen historically with power plants, landfills, and cell towers. Sanders and DeSantis agreeing on 'my constituents' bills went up, blame the nearby industrial facility' requires zero coordination — it's two populists independently reading the same polling.",
+  "complexity_saved": "Drops: a compressing 'sentiment-to-legislation lag' constant requiring revision, a deliberate federal EO 'carve-out' strategy, an emergent multi-state institutional taxonomy (PUC vs DEC vs local-control models), a stacking-constraint theory of capex risk, and any claim that this is a coordinated or structurally novel backlash mechanism rather than default legislative reflex to a cost-of-living complaint. None of the four lenses' machinery is needed to explain politicians responding to angry ratepayers within one legislative cycle — that's how legislatures normally work.",
+  "where_boring_loses": "If moratorium language explicitly targets AI/safety framing rather than electricity costs or land use in most enacted statutes (not just NY), or if the moratoriums keep spreading in states with flat/falling electricity prices, that would mean this is about AI specifically rather than ordinary utility-rate NIMBYism wearing an AI costume.",
+  "bet": "3:1 boring: this is ordinary rate-shock NIMBYism, not a novel backlash-mechanism or federal-preemption chess match — track electricity price data against moratorium adoption, not AI sentiment polls."
+ },
+ "synthesis": {
+  "convergences": [
+   {
+    "models": [
+     "ai-public-backlash",
+     "ai-compute-buildout"
+    ],
+    "point": "Both read the moratorium wave as running faster and larger than their own priors expected — public-backlash revises its sentiment-to-law lag downward, compute-buildout upgrades from '100+ proposals' to enacted NY/Maine law plus 261 local moratoria already binding on capex."
+   },
+   {
+    "models": [
+     "ai-compute-buildout",
+     "ai-us-policy-direction"
+    ],
+    "point": "Both flag the Sanders-DeSantis coalition as real but fragile/asymmetric — united by opposite grievances (grid price vs. tax/justice framing) rather than a shared diagnosis, which bears on durability even though both treat the current wave as significant."
+   },
+   {
+    "models": [
+     "ai-rising-powers",
+     "ai-us-policy-direction"
+    ],
+    "point": "Both center NY's executive-order mechanism (Governor + DEC) rather than the legislature or PUC as the operative institutional lever, and both note it deliberately avoids/predates a federal collision rather than triggering one."
+   }
+  ],
+  "tensions": [
+   {
+    "models": [
+     "ai-public-backlash / ai-us-policy-direction",
+     "BASE-RATE LIBRARIAN / DEVIL'S ADVOCATE"
+    ],
+    "sides": "Lens models say the sentiment-to-legislation lag is structurally compressing to weeks-to-months for issues with quantifiable individual harm plus a credible third-party validator, and expect 15+ enactments by mid-2027; the outside view says this is normal early-wave proposal enthusiasm (bill introduction is cheap) that historically decelerates once industry buys off the sharpest grievance, predicting only 3-8 real enactments.",
+    "decider": "The actual enacted (not proposed) count of binding, still-in-force data-center moratorium statutes as of 2027-06-30 — above ~10-15 favors the compression thesis, below 10 favors the base rate."
+   },
+   {
+    "models": [
+     "ai-rising-powers",
+     "DEVIL'S ADVOCATE / SIMPLICITY JUDGE"
+    ],
+    "sides": "ai-rising-powers reads NY's EO + state fragmentation (NY/DEC vs OK/PUC vs SD/localism) as evidence of a novel, AI-specific institutional realignment in siting authority; the simplicity judge says this is boring rate-shock NIMBYism with no new mechanism, just states reaching for whatever existing institutional lever (governor, PUC, or local council) was already closest at hand.",
+    "decider": "Whether enacted statutes explicitly cite AI/safety framing versus electricity-cost/land-use framing — and whether the same institutional pattern (PUC, DEC, or local control) recurs as a deliberate template in the next 2-3 states, versus each state independently reusing whatever generic siting tool it already had."
+   },
+   {
+    "models": [
+     "ai-us-policy-direction",
+     "DEVIL'S ADVOCATE"
+    ],
+    "sides": "ai-us-policy-direction reads the Dec 2025 federal preemption EO's data-center carve-out as a deliberate strategic concession that lowers friction for state moratoria; the devil's advocate implies simpler explanations (ordinary land-use politics, no coordination) are sufficient and don't require reading strategic intent into the EO's scope.",
+    "decider": "Whether DOJ's Litigation Task Force attempts a Dormant Commerce Clause challenge to state moratoria within the carve-out's scope — an actual legal challenge would confirm the carve-out was contested terrain, not settled indifference."
+   }
+  ],
+  "crossed": [
+   {
+    "pair": [
+     "ai-compute-buildout",
+     "ai-rising-powers"
+    ],
+    "insight": "Combining the two reveals that the 'stacking constraint' on capex isn't uniform across states — because siting authority is fragmenting into at least three institutional models (NY governor/DEC, OK PUC, SD local-statute), the capex risk to any given hyperscaler project depends on which state-specific chokepoint applies, meaning national capex-at-risk estimates (30-50%) likely mask sharp state-by-state variance in how fast a moratorium can be reversed or negotiated around."
+   },
+   {
+    "pair": [
+     "ai-us-policy-direction",
+     "ai-public-backlash"
+    ],
+    "insight": "The federal EO's deliberate carve-out for data-center moratoria, combined with backlash's finding that this issue compresses the sentiment-to-law lag unusually fast, implies the administration may have inadvertently ceded the single fastest-moving state AI-adjacent policy lane to bipartisan populism — a federal preemption move here would now face a harder, faster-hardening target than when the carve-out was drafted."
+   }
+  ],
+  "joint_claims": [
+   {
+    "claim": "By 2027-06-30, fewer than 10 US states will have enacted (not merely proposed) binding, still-in-force data-center-specific construction moratoria or multi-year permitting freezes.",
+    "resolution_criteria": "Count via Good Jobs First tracker or equivalent successor; count only statutes/EOs currently in force (not expired, repealed, or reduced to non-binding studies). Resolves true if count <10.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.5,
+    "backed_by": [
+     "BASE-RATE LIBRARIAN",
+     "DEVIL'S ADVOCATE"
+    ]
+   },
+   {
+    "claim": "New York's one-year moratorium will lapse or be replaced by a narrower permitting framework allowing new construction to resume by 2027-06-30, rather than being extended or made permanent.",
+    "resolution_criteria": "Track via NY governor's office and legislature records; true if construction can resume (even conditionally) by the date; false if extended/made permanent.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.55,
+    "backed_by": [
+     "DEVIL'S ADVOCATE",
+     "ai-rising-powers"
+    ]
+   },
+   {
+    "claim": "At least one enacted 2026-2027 state moratorium statute will explicitly cite electricity-cost or ratepayer-protection language in its legislative record, and none will primarily cite AI-safety/existential-risk framing.",
+    "resolution_criteria": "Review legislative findings/preambles of all enacted data-center moratorium statutes through 2027-06-30; true if cost/ratepayer framing dominates and safety framing is absent or marginal.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.65,
+    "backed_by": [
+     "ai-public-backlash",
+     "SIMPLICITY JUDGE"
+    ]
+   },
+   {
+    "claim": "By 2027-06-30, fewer than 10 of the 100+ tracked moratorium/restriction proposals will have been enacted into binding, still-in-force law (i.e., not expired, repealed, or superseded by a negotiated industry carve-out) — the great majority will have died in committee, lapsed, or been narrowed to non-binding studies.",
+    "resolution_criteria": "Count enacted-and-currently-in-force data-center-specific moratorium/construction-restriction statutes or binding local ordinances across all US states/localities as of 2027-06-30, using the Good Jobs First tracker or equivalent successor as the count source; claim resolves true if the in-force count is below 10.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.55,
+    "backed_by": [
+     "devils-advocate"
+    ]
+   },
+   {
+    "claim": "New York's one-year moratorium will not be renewed, extended, or converted into permanent statute before its original expiration date; it will lapse or be replaced by a narrower permitting/negotiated framework that allows data-center construction to resume in NY by 2027-06-30.",
+    "resolution_criteria": "Track NY executive order/statute status via governor's office and NY state legislature records; claim resolves true if by 2027-06-30 the moratorium has expired without renewal or been replaced by a framework permitting new data-center construction (even with conditions), and resolves false if NY extends or makes the ban permanent.",
+    "resolve_by": "2027-06-30",
+    "confidence": 0.6,
+    "backed_by": [
+     "devils-advocate"
+    ]
+   }
+  ],
+  "load_bearing": {
+   "model": "ai-public-backlash",
+   "why": "Every other lens's read of speed, durability, and institutional response is downstream of whether the sentiment-to-law lag is actually compressing — if that's wrong (per the base-rate outside view), the buildout, rising-powers, and policy-direction readings all overstate structural novelty rather than describing an ordinary, decelerating NIMBY wave."
+  },
+  "da_response": "Concede to BASE-RATE LIBRARIAN: the 15+ enactment expectations from backlash/policy-direction are likely overconfident — added a null joint_claim (<10 enacted) at 0.5 confidence to hedge this directly. Concede to DEVIL'S ADVOCATE on shared-source risk: the four lenses do lean on the same NY-official/law-firm spine, so 'confirmed, not suspected' language in the lens reads should be downgraded to 'suggestive, pending enactment data.' Rebut SIMPLICITY JUDGE's full reduction: even if the underlying driver is ordinary rate-shock NIMBYism, ai-rising-powers' finding of genuinely divergent institutional responses (DEC vs PUC vs local-statute) across only three states in weeks is a real structural detail the boring story doesn't predict or explain — that variance is worth tracking regardless of motive. Rebut on cross-partisan alignment: even if Sanders-DeSantis convergence needs no coordination, its existence still lowers future federal preemption's political cost, which is a real, checkable claim independent of whether the underlying grievance is 'about AI' or not.",
+  "honest_note": "The whole ensemble under-weights the base rate that most legislative waves die in committee; the joint_claims lean on the same shared citation cluster (NY press releases, three near-identical law-firm alerts, one advocacy tracker) that the devil's advocate flagged, so 'four lenses agree' is closer to 'four lenses read the same three sources' than independent confirmation."
+ },
+ "status": "done",
+ "researched": true,
+ "source_overlap": {
+  "mean_jaccard": 0.086,
+  "distinct_urls": 24,
+  "lenses_with_sources": 4
+ }
+}
