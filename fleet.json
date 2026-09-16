@@ -1,0 +1,28 @@
+{
+ "models": [
+  "my-predictions",
+  "ai-frontier-cadence",
+  "ai-compute-buildout",
+  "ai-lab-revealed-priorities",
+  "ai-us-policy-direction",
+  "ai-china-strategy",
+  "ai-capex-signal",
+  "ai-open-weights-lag",
+  "ai-incident-severity",
+  "ai-regulation-teeth",
+  "ai-scaling-orthodoxy",
+  "ai-bubble-thesis",
+  "ai-influence-chain",
+  "ai-adoption-phases",
+  "ai-labor-attribution",
+  "ai-rising-powers",
+  "ai-liability-pricing",
+  "ai-courts-decide",
+  "ai-chokepoint-physics",
+  "ai-benchmark-legitimacy",
+  "ai-option-space"
+ ],
+ "classifiers": [],
+ "decision_repo": "",
+ "extra_ledgers": []
+}

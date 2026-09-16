@@ -1,0 +1,65 @@
+$ python -m suites.mindmap --build
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9913.34it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+[mindmap v2] 36 nodes · 76 edges of 630 possible
+
+  nodes (fragments = mentions + semantic):
+  European AI Office                          26 =   4m +  22s · 14 repos
+  Hyperscaler capex bloc                      22 =  22m +   0s · 6 repos
+  Sovereign AI investment vehicles                    18 =   0m +  18s · 12 repos
+  US state legislatures                       12 =   4m +   8s · 4 repos
+  Model evaluation organisations                    12 =  12m +   0s · 5 repos
+  US Congress                                 10 =  10m +   0s · 5 repos
+  Enterprise and government buyers                     9 =   9m +   0s · 6 repos
+  OpenAI                                       7 =   7m +   0s · 2 repos
+  DeepSeek                                     7 =   7m +   0s · 4 repos
+  Dedicated AI infrastructure operators                     7 =   0m +   7s · 7 repos
+  AI Safety Institutes                         7 =   0m +   7s · 5 repos
+  AI liability insurers                        7 =   2m +   5s · 4 repos
+  Anthropic                                    6 =   6m +   0s · 3 repos
+  Google DeepMind                              6 =   6m +   0s · 3 repos
+  Meta                                         6 =   6m +   0s · 4 repos
+  Alibaba / Qwen                               6 =   6m +   0s · 3 repos
+  US executive branch                          6 =   6m +   0s · 3 repos
+  US federal courts                            6 =   4m +   2s · 2 repos
+  Public evaluation leaderboards                     6 =   5m +   1s · 2 repos
+  Nvidia                                       5 =   5m +   0s · 3 repos
+  Chinese frontier lab cohort                     5 =   5m +   0s · 2 repos
+  Custom accelerator programmes                     5 =   3m +   2s · 2 repos
+  Grid operators and utility regulators                     5 =   5m +   0s · 3 repos
+  Lithography, packaging and HBM suppliers                     5 =   5m +   0s · 2 repos
+  BIS / Dept of Commerce                       5 =   5m +   0s · 3 repos
+  Open-weight maintainer communities                     5 =   5m +   0s · 4 repos
+  Labour economics researchers                     4 =   3m +   1s · 3 repos
+  xAI                                          3 =   3m +   0s · 1 repos
+  EU national market surveillance authorities                     3 =   0m +   3s · 2 repos
+  PRC party-state organs                       3 =   3m +   0s · 1 repos
+  Standards and agent-identity consortia                     3 =   2m +   1s · 1 repos
+  Microsoft                                    2 =   2m +   0s · 1 repos
+  Amazon                                       2 =   2m +   0s · 1 repos
+  Chinese domestic accelerators                     2 =   0m +   2s · 2 repos
+  Policy intermediaries and think tanks                     2 =   2m +   0s · 1 repos
+  State attorneys-general acting jointly                     0 =   0m +   0s · 0 repos
+
+  declared but not yet produced (4):
+    ai-courts-decide watches State attorneys-general acting jointly, and has written nothing about it
+    ai-us-policy-direction watches State attorneys-general acting jointly, and has written nothing about it
+    ai-lab-revealed-priorities watches AI Safety Institutes, and has written nothing about it
+    ai-rising-powers watches Standards and agent-identity consortia, and has written nothing about it
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "I:\Personal projects\MMR\suites\mindmap.py", line 296, in <module>
+    main()
+  File "I:\Personal projects\MMR\suites\mindmap.py", line 267, in main
+    orphan = sorted(set(watches) - node_ids)
+                        ^^^^^^^
+NameError: name 'watches' is not defined
