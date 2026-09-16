@@ -295,6 +295,78 @@
    ],
    "kind": "option-space",
    "level": 0
+  },
+  "ai-china-argument": {
+   "aspects": [
+    "states-geopolitics",
+    "attention-media"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "kind": "classifier",
+   "level": 0
+  },
+  "ai-public-backlash": {
+   "aspects": [
+    "culture-narrative",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "tracker",
+   "level": 0
+  },
+  "ai-rsi-timeline": {
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    10,
+    13
+   ],
+   "kind": "forecaster",
+   "level": 0
+  },
+  "ai-compute-concentration": {
+   "aspects": [
+    "economy-markets",
+    "infrastructure-logistics"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "forecaster",
+   "level": 0
+  },
+  "ai-cyber-offense-defense": {
+   "aspects": [
+    "technology-tools",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "tracker",
+   "level": 0
+  },
+  "ai-expert-calibration": {
+   "aspects": [
+    "science-epistemics",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "attributor",
+   "level": 0
   }
  },
  "level_note": "Each assignment carries a level: 0 models the world, 1 models the instance's own models, 2 models the modelling process. Consolidation runs bottom-up and never compresses what a live higher level reads.",

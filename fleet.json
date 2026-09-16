@@ -20,7 +20,13 @@
   "ai-courts-decide",
   "ai-chokepoint-physics",
   "ai-benchmark-legitimacy",
-  "ai-option-space"
+  "ai-option-space",
+  "ai-china-argument",
+  "ai-public-backlash",
+  "ai-rsi-timeline",
+  "ai-compute-concentration",
+  "ai-cyber-offense-defense",
+  "ai-expert-calibration"
  ],
  "classifiers": [],
  "decision_repo": "",
