@@ -65,15 +65,19 @@ BUILT = datetime.date.today().isoformat()
 # Kept explicit rather than inferred: a loose keyword match would attach
 # irrelevant events to claims and manufacture the appearance of evidence.
 DOMAIN_OBSERVERS = {
- "capability-trajectory": {"ai-frontier-cadence", "ai-rsi-timeline", "ai-scaling-orthodoxy"},
+ "capability-trajectory": {"ai-frontier-cadence", "ai-rsi-timeline", "ai-scaling-orthodoxy",
+                           "ai-capability-tracker"},
  "research-trajectory":   {"ai-rsi-timeline", "ai-scaling-orthodoxy"},
  "compute-economics":     {"ai-compute-concentration", "ai-compute-buildout", "ai-capex-signal"},
  "lab-economics":         {"ai-bubble-thesis", "ai-compute-concentration"},
- "lab-strategy":          {"ai-lab-revealed-priorities", "ai-frontier-cadence"},
+ "lab-strategy":          {"ai-lab-revealed-priorities", "ai-frontier-cadence",
+                           "lab-moves", "ai-pressure"},
  "china-policy":          {"ai-china-strategy", "ai-china-argument"},
  "geopolitics":           {"ai-us-policy-direction", "ai-china-strategy"},
- "policy":                {"ai-us-policy-direction", "ai-regulation-teeth"},
- "cyber":                 {"ai-cyber-offense-defense", "ai-incident-severity"},
+ "policy":                {"ai-us-policy-direction", "ai-regulation-teeth",
+                           "overton-tracker", "ai-pressure"},
+ "cyber":                 {"ai-cyber-offense-defense", "ai-incident-severity",
+                           "ai-oversight-lag"},
  "market-sentiment":      {"ai-bubble-thesis", "ai-public-backlash"},
  "labor":                 {"ai-labor-attribution"},
  "media":                 {"ai-public-backlash"},

@@ -31,7 +31,15 @@
   "expert-dylan-patel",
   "expert-sheehan",
   "expert-dwarkesh",
-  "expert-campbell"
+  "expert-campbell",
+  "ai-pressure",
+  "ai-capability-tracker",
+  "ai-possibility-finder",
+  "ai-oversight-lag",
+  "overton-tracker",
+  "pattern-candidates",
+  "pattern-evaluator",
+  "lab-moves"
  ],
  "classifiers": [],
  "decision_repo": "",

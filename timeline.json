@@ -4,11 +4,11 @@
  "note": "Past events and forward expectations from the AI monitoring fleet. FOUR ROW TYPES, deliberately not merged: 'observed' are dated facts with a source; 'model-expect' are numbered consequences a model ASSERTS (no probability — the kinds do not produce one); 'expert-claim' are dated claims by named commentators, registered before resolution with criteria we wrote, not theirs; 'joint-claim' are brainstorm synthesis claims and are the ONLY rows carrying a number — an LLM panel's confidence, not a calibrated forecast. Every future row is a WINDOW (start..end), not a point: 'by <date>' means any time up to that date. NOTHING IS GRADED — every future row is open.",
  "counts": {
   "observed": 21,
-  "model-expect": 76,
+  "model-expect": 88,
   "expert-claim": 23,
   "joint-claim": 20
  },
- "future": 119,
+ "future": 131,
  "past": 21,
  "with_probability": 20,
  "timeline": [
@@ -345,6 +345,40 @@
    "id": "tl022"
   },
   {
+   "type": "model-expect",
+   "item": "**By 2026-12-31**, at least one of OpenAI or Anthropic will have publicly confirmed a substantive response to the EU AI Office's Article 91 request, rather than contesting its scope or declining. *Falsified by:* either lab publicly contesting or refusing.",
+   "date_raw": "2026-12-31",
+   "date": "2026-12-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2026-12-31",
+   "confidence": null,
+   "observer": "ai-pressure",
+   "model_kind": "decision-model",
+   "model_title": "AI labs under installed pressure",
+   "ref": "consequence 1",
+   "source": "",
+   "future": true,
+   "id": "tl023"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2026-12-31**, no frontier lab named in the RFI will have withdrawn a general-purpose model from the EU market in response to enforcement. *Falsified by:* any such withdrawal. This is the branch the labs' own compliance ordering says they will not take, so it is the sharpest test of P1.",
+   "date_raw": "2026-12-31",
+   "date": "2026-12-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2026-12-31",
+   "confidence": null,
+   "observer": "ai-pressure",
+   "model_kind": "decision-model",
+   "model_title": "AI labs under installed pressure",
+   "ref": "consequence 2",
+   "source": "",
+   "future": true,
+   "id": "tl024"
+  },
+  {
    "type": "expert-claim",
    "item": "Dylan Patel: \"Anthropic started turning a profit in Q2\"",
    "date_raw": "2026-12-31",
@@ -364,7 +398,7 @@
    "source": "https://youtu.be/aV26V1UvkJw",
    "status": "open",
    "future": true,
-   "id": "tl023"
+   "id": "tl025"
   },
   {
    "type": "joint-claim",
@@ -386,7 +420,7 @@
    "ref": "bs-2026-09-16-1",
    "source": "",
    "future": true,
-   "id": "tl024"
+   "id": "tl026"
   },
   {
    "type": "model-expect",
@@ -403,7 +437,24 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl025"
+   "id": "tl027"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-01-31**, the AI Office will have taken at least one publicly reported enforcement step tied to the 2026-12-02 legacy deadline — a fine, a formal finding, or a named non-compliance proceeding. *Falsified by:* the deadline passing with only further information requests.",
+   "date_raw": "2027-01-31",
+   "date": "2027-01-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-01-31",
+   "confidence": null,
+   "observer": "ai-pressure",
+   "model_kind": "decision-model",
+   "model_title": "AI labs under installed pressure",
+   "ref": "consequence 3",
+   "source": "",
+   "future": true,
+   "id": "tl028"
   },
   {
    "type": "joint-claim",
@@ -425,7 +476,7 @@
    "ref": "bs-2026-09-16-4",
    "source": "",
    "future": true,
-   "id": "tl026"
+   "id": "tl029"
   },
   {
    "type": "joint-claim",
@@ -447,7 +498,7 @@
    "ref": "bs-2026-09-16-1",
    "source": "",
    "future": true,
-   "id": "tl027"
+   "id": "tl030"
   },
   {
    "type": "joint-claim",
@@ -469,7 +520,7 @@
    "ref": "bs-2026-09-16-1",
    "source": "",
    "future": true,
-   "id": "tl028"
+   "id": "tl031"
   },
   {
    "type": "joint-claim",
@@ -491,7 +542,7 @@
    "ref": "bs-2026-09-16-1",
    "source": "",
    "future": true,
-   "id": "tl029"
+   "id": "tl032"
   },
   {
    "type": "joint-claim",
@@ -513,7 +564,126 @@
    "ref": "bs-2026-09-16-4",
    "source": "",
    "future": true,
-   "id": "tl030"
+   "id": "tl033"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-03-31**, **rejected** candidates outnumber accepted ones by at least 3:1. *Falsified by:* a looser ratio, which would indicate the test is not discriminating and is being bent to fit.",
+   "date_raw": "2027-03-31",
+   "date": "2027-03-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-03-31",
+   "confidence": null,
+   "observer": "ai-possibility-finder",
+   "model_kind": "finder",
+   "model_title": "New possibilities — tools that could not exist before",
+   "ref": "consequence 3",
+   "source": "",
+   "future": true,
+   "id": "tl034"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-03-31**, at least **one** qualifying instance was NOT already the subject of major coverage when surfaced. *Falsified by:* all qualifying instances being famous first. This is the sharpest consequence: it tests whether the model finds or merely retrieves.",
+   "date_raw": "2027-03-31",
+   "date": "2027-03-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-03-31",
+   "confidence": null,
+   "observer": "ai-possibility-finder",
+   "model_kind": "finder",
+   "model_title": "New possibilities — tools that could not exist before",
+   "ref": "consequence 2",
+   "source": "",
+   "future": true,
+   "id": "tl035"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-03-31**, at least one further agent-to-agent incident is documented in which the correcting response arrived after irreversible effects completed. *Falsified by:* no such incident, which would weaken P2's generality — recorded as evidence against, not quietly dropped.",
+   "date_raw": "2027-03-31",
+   "date": "2027-03-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-03-31",
+   "confidence": null,
+   "observer": "ai-oversight-lag",
+   "model_kind": "loop-delay",
+   "model_title": "AI-AI interaction and the oversight loop",
+   "ref": "consequence 2",
+   "source": "",
+   "future": true,
+   "id": "tl036"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-03-31**, no open-weight model reaches a capability tier before any closed frontier model reaches it. *Falsified by:* one documented instance — this is the ordering claim itself, and the sharpest test of P1.",
+   "date_raw": "2027-03-31",
+   "date": "2027-03-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-03-31",
+   "confidence": null,
+   "observer": "ai-capability-tracker",
+   "model_kind": "tracker",
+   "model_title": "AI capability signals — what leads what",
+   "ref": "consequence 2",
+   "source": "",
+   "future": true,
+   "id": "tl037"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-03-31**, the defined search surfaces **at least 3** candidates passing all three tests. *Falsified by:* fewer than 3 — the pattern is rarer than claimed, or the method cannot find it.",
+   "date_raw": "2027-03-31",
+   "date": "2027-03-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-03-31",
+   "confidence": null,
+   "observer": "ai-possibility-finder",
+   "model_kind": "finder",
+   "model_title": "New possibilities — tools that could not exist before",
+   "ref": "consequence 1",
+   "source": "",
+   "future": true,
+   "id": "tl038"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-03-31**, the measured open-vs-closed capability gap stays within **2-8 months**. *Falsified by:* a published measurement outside that band.",
+   "date_raw": "2027-03-31",
+   "date": "2027-03-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-03-31",
+   "confidence": null,
+   "observer": "ai-capability-tracker",
+   "model_kind": "tracker",
+   "model_title": "AI capability signals — what leads what",
+   "ref": "consequence 1",
+   "source": "",
+   "future": true,
+   "id": "tl039"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-03-31**, the next published measurement of pre-execution human review of high-risk AI actions is **at or below 25%**. *Falsified by:* a measurement above 25% — the loop would be tightening, not loosening.",
+   "date_raw": "2027-03-31",
+   "date": "2027-03-31",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-03-31",
+   "confidence": null,
+   "observer": "ai-oversight-lag",
+   "model_kind": "loop-delay",
+   "model_title": "AI-AI interaction and the oversight loop",
+   "ref": "consequence 1",
+   "source": "",
+   "future": true,
+   "id": "tl040"
   },
   {
    "type": "model-expect",
@@ -530,7 +700,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl031"
+   "id": "tl041"
   },
   {
    "type": "joint-claim",
@@ -552,7 +722,7 @@
    "ref": "bs-2026-09-16-4",
    "source": "",
    "future": true,
-   "id": "tl032"
+   "id": "tl042"
   },
   {
    "type": "joint-claim",
@@ -574,7 +744,7 @@
    "ref": "bs-2026-09-16-4",
    "source": "",
    "future": true,
-   "id": "tl033"
+   "id": "tl043"
   },
   {
    "type": "joint-claim",
@@ -596,7 +766,7 @@
    "ref": "bs-2026-09-16-4",
    "source": "",
    "future": true,
-   "id": "tl034"
+   "id": "tl044"
   },
   {
    "type": "expert-claim",
@@ -618,7 +788,7 @@
    "source": "https://youtu.be/uWnUnMphmPM",
    "status": "open",
    "future": true,
-   "id": "tl035"
+   "id": "tl045"
   },
   {
    "type": "model-expect",
@@ -635,7 +805,41 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl036"
+   "id": "tl046"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-06-30**, no major agent interoperability protocol (MCP, A2A, ACP) has added an expressible human-approval-timing guarantee. *Falsified by:* any of them shipping one.",
+   "date_raw": "2027-06-30",
+   "date": "2027-06-30",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-06-30",
+   "confidence": null,
+   "observer": "ai-oversight-lag",
+   "model_kind": "loop-delay",
+   "model_title": "AI-AI interaction and the oversight loop",
+   "ref": "consequence 3",
+   "source": "",
+   "future": true,
+   "id": "tl047"
+  },
+  {
+   "type": "model-expect",
+   "item": "**By 2027-06-30**, the agentic-evaluation gap remains wider than the coding gap in at least one published comparison. *Falsified by:* a comparison showing agentic closed first.",
+   "date_raw": "2027-06-30",
+   "date": "2027-06-30",
+   "approx": false,
+   "start": "2026-09-16",
+   "end": "2027-06-30",
+   "confidence": null,
+   "observer": "ai-capability-tracker",
+   "model_kind": "tracker",
+   "model_title": "AI capability signals — what leads what",
+   "ref": "consequence 3",
+   "source": "",
+   "future": true,
+   "id": "tl048"
   },
   {
    "type": "model-expect",
@@ -652,7 +856,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl037"
+   "id": "tl049"
   },
   {
    "type": "model-expect",
@@ -669,7 +873,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl038"
+   "id": "tl050"
   },
   {
    "type": "model-expect",
@@ -686,7 +890,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl039"
+   "id": "tl051"
   },
   {
    "type": "model-expect",
@@ -703,7 +907,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl040"
+   "id": "tl052"
   },
   {
    "type": "model-expect",
@@ -720,7 +924,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl041"
+   "id": "tl053"
   },
   {
    "type": "model-expect",
@@ -737,7 +941,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl042"
+   "id": "tl054"
   },
   {
    "type": "model-expect",
@@ -754,7 +958,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl043"
+   "id": "tl055"
   },
   {
    "type": "model-expect",
@@ -771,7 +975,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl044"
+   "id": "tl056"
   },
   {
    "type": "model-expect",
@@ -788,7 +992,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl045"
+   "id": "tl057"
   },
   {
    "type": "model-expect",
@@ -805,7 +1009,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl046"
+   "id": "tl058"
   },
   {
    "type": "model-expect",
@@ -822,7 +1026,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl047"
+   "id": "tl059"
   },
   {
    "type": "model-expect",
@@ -839,7 +1043,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl048"
+   "id": "tl060"
   },
   {
    "type": "model-expect",
@@ -856,7 +1060,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl049"
+   "id": "tl061"
   },
   {
    "type": "joint-claim",
@@ -878,7 +1082,7 @@
    "ref": "bs-2026-09-16-2",
    "source": "",
    "future": true,
-   "id": "tl050"
+   "id": "tl062"
   },
   {
    "type": "joint-claim",
@@ -900,7 +1104,7 @@
    "ref": "bs-2026-09-16-2",
    "source": "",
    "future": true,
-   "id": "tl051"
+   "id": "tl063"
   },
   {
    "type": "joint-claim",
@@ -922,7 +1126,7 @@
    "ref": "bs-2026-09-16-3",
    "source": "",
    "future": true,
-   "id": "tl052"
+   "id": "tl064"
   },
   {
    "type": "joint-claim",
@@ -944,7 +1148,7 @@
    "ref": "bs-2026-09-16-3",
    "source": "",
    "future": true,
-   "id": "tl053"
+   "id": "tl065"
   },
   {
    "type": "joint-claim",
@@ -966,7 +1170,7 @@
    "ref": "bs-2026-09-16-3",
    "source": "",
    "future": true,
-   "id": "tl054"
+   "id": "tl066"
   },
   {
    "type": "joint-claim",
@@ -988,7 +1192,7 @@
    "ref": "bs-2026-09-16-1",
    "source": "",
    "future": true,
-   "id": "tl055"
+   "id": "tl067"
   },
   {
    "type": "joint-claim",
@@ -1010,7 +1214,7 @@
    "ref": "bs-2026-09-16-2",
    "source": "",
    "future": true,
-   "id": "tl056"
+   "id": "tl068"
   },
   {
    "type": "joint-claim",
@@ -1032,7 +1236,7 @@
    "ref": "bs-2026-09-16-2",
    "source": "",
    "future": true,
-   "id": "tl057"
+   "id": "tl069"
   },
   {
    "type": "expert-claim",
@@ -1054,7 +1258,7 @@
    "source": "https://youtu.be/oZBGAuANX6I",
    "status": "open",
    "future": true,
-   "id": "tl058"
+   "id": "tl070"
   },
   {
    "type": "expert-claim",
@@ -1076,7 +1280,7 @@
    "source": "https://youtu.be/VmV-Yg4Ljls",
    "status": "open",
    "future": true,
-   "id": "tl059"
+   "id": "tl071"
   },
   {
    "type": "joint-claim",
@@ -1098,7 +1302,7 @@
    "ref": "bs-2026-09-16-3",
    "source": "",
    "future": true,
-   "id": "tl060"
+   "id": "tl072"
   },
   {
    "type": "joint-claim",
@@ -1120,7 +1324,7 @@
    "ref": "bs-2026-09-16-3",
    "source": "",
    "future": true,
-   "id": "tl061"
+   "id": "tl073"
   },
   {
    "type": "expert-claim",
@@ -1142,7 +1346,7 @@
    "source": "https://youtu.be/uWnUnMphmPM",
    "status": "open",
    "future": true,
-   "id": "tl062"
+   "id": "tl074"
   },
   {
    "type": "expert-claim",
@@ -1164,7 +1368,7 @@
    "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
    "status": "open",
    "future": true,
-   "id": "tl063"
+   "id": "tl075"
   },
   {
    "type": "expert-claim",
@@ -1186,7 +1390,7 @@
    "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
    "status": "open",
    "future": true,
-   "id": "tl064"
+   "id": "tl076"
   },
   {
    "type": "model-expect",
@@ -1203,7 +1407,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl065"
+   "id": "tl077"
   },
   {
    "type": "model-expect",
@@ -1220,7 +1424,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl066"
+   "id": "tl078"
   },
   {
    "type": "model-expect",
@@ -1237,7 +1441,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl067"
+   "id": "tl079"
   },
   {
    "type": "model-expect",
@@ -1254,7 +1458,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl068"
+   "id": "tl080"
   },
   {
    "type": "model-expect",
@@ -1271,7 +1475,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl069"
+   "id": "tl081"
   },
   {
    "type": "model-expect",
@@ -1288,7 +1492,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl070"
+   "id": "tl082"
   },
   {
    "type": "model-expect",
@@ -1305,7 +1509,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl071"
+   "id": "tl083"
   },
   {
    "type": "model-expect",
@@ -1322,7 +1526,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl072"
+   "id": "tl084"
   },
   {
    "type": "model-expect",
@@ -1339,7 +1543,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl073"
+   "id": "tl085"
   },
   {
    "type": "model-expect",
@@ -1356,7 +1560,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl074"
+   "id": "tl086"
   },
   {
    "type": "model-expect",
@@ -1373,7 +1577,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl075"
+   "id": "tl087"
   },
   {
    "type": "model-expect",
@@ -1390,7 +1594,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl076"
+   "id": "tl088"
   },
   {
    "type": "model-expect",
@@ -1407,7 +1611,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl077"
+   "id": "tl089"
   },
   {
    "type": "model-expect",
@@ -1424,7 +1628,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl078"
+   "id": "tl090"
   },
   {
    "type": "model-expect",
@@ -1441,7 +1645,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl079"
+   "id": "tl091"
   },
   {
    "type": "model-expect",
@@ -1458,7 +1662,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl080"
+   "id": "tl092"
   },
   {
    "type": "model-expect",
@@ -1475,7 +1679,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl081"
+   "id": "tl093"
   },
   {
    "type": "model-expect",
@@ -1492,7 +1696,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl082"
+   "id": "tl094"
   },
   {
    "type": "model-expect",
@@ -1509,7 +1713,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl083"
+   "id": "tl095"
   },
   {
    "type": "model-expect",
@@ -1526,7 +1730,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl084"
+   "id": "tl096"
   },
   {
    "type": "model-expect",
@@ -1543,7 +1747,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl085"
+   "id": "tl097"
   },
   {
    "type": "model-expect",
@@ -1560,7 +1764,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl086"
+   "id": "tl098"
   },
   {
    "type": "model-expect",
@@ -1577,7 +1781,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl087"
+   "id": "tl099"
   },
   {
    "type": "model-expect",
@@ -1594,7 +1798,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl088"
+   "id": "tl100"
   },
   {
    "type": "model-expect",
@@ -1611,7 +1815,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl089"
+   "id": "tl101"
   },
   {
    "type": "model-expect",
@@ -1628,7 +1832,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl090"
+   "id": "tl102"
   },
   {
    "type": "model-expect",
@@ -1645,7 +1849,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl091"
+   "id": "tl103"
   },
   {
    "type": "model-expect",
@@ -1662,7 +1866,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl092"
+   "id": "tl104"
   },
   {
    "type": "model-expect",
@@ -1679,7 +1883,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl093"
+   "id": "tl105"
   },
   {
    "type": "model-expect",
@@ -1696,7 +1900,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl094"
+   "id": "tl106"
   },
   {
    "type": "model-expect",
@@ -1713,7 +1917,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl095"
+   "id": "tl107"
   },
   {
    "type": "model-expect",
@@ -1730,7 +1934,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl096"
+   "id": "tl108"
   },
   {
    "type": "model-expect",
@@ -1747,7 +1951,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl097"
+   "id": "tl109"
   },
   {
    "type": "model-expect",
@@ -1764,7 +1968,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl098"
+   "id": "tl110"
   },
   {
    "type": "model-expect",
@@ -1781,7 +1985,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl099"
+   "id": "tl111"
   },
   {
    "type": "model-expect",
@@ -1798,7 +2002,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl100"
+   "id": "tl112"
   },
   {
    "type": "model-expect",
@@ -1815,7 +2019,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl101"
+   "id": "tl113"
   },
   {
    "type": "model-expect",
@@ -1832,7 +2036,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl102"
+   "id": "tl114"
   },
   {
    "type": "model-expect",
@@ -1849,7 +2053,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl103"
+   "id": "tl115"
   },
   {
    "type": "model-expect",
@@ -1866,7 +2070,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl104"
+   "id": "tl116"
   },
   {
    "type": "model-expect",
@@ -1883,7 +2087,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl105"
+   "id": "tl117"
   },
   {
    "type": "model-expect",
@@ -1900,7 +2104,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl106"
+   "id": "tl118"
   },
   {
    "type": "model-expect",
@@ -1917,7 +2121,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl107"
+   "id": "tl119"
   },
   {
    "type": "model-expect",
@@ -1934,7 +2138,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl108"
+   "id": "tl120"
   },
   {
    "type": "model-expect",
@@ -1951,7 +2155,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl109"
+   "id": "tl121"
   },
   {
    "type": "model-expect",
@@ -1968,7 +2172,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl110"
+   "id": "tl122"
   },
   {
    "type": "model-expect",
@@ -1985,7 +2189,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl111"
+   "id": "tl123"
   },
   {
    "type": "model-expect",
@@ -2002,7 +2206,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl112"
+   "id": "tl124"
   },
   {
    "type": "model-expect",
@@ -2019,7 +2223,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl113"
+   "id": "tl125"
   },
   {
    "type": "model-expect",
@@ -2036,7 +2240,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl114"
+   "id": "tl126"
   },
   {
    "type": "model-expect",
@@ -2053,7 +2257,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl115"
+   "id": "tl127"
   },
   {
    "type": "model-expect",
@@ -2070,7 +2274,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl116"
+   "id": "tl128"
   },
   {
    "type": "model-expect",
@@ -2087,7 +2291,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl117"
+   "id": "tl129"
   },
   {
    "type": "model-expect",
@@ -2104,7 +2308,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl118"
+   "id": "tl130"
   },
   {
    "type": "model-expect",
@@ -2121,7 +2325,7 @@
    "ref": "consequence 3",
    "source": "",
    "future": true,
-   "id": "tl119"
+   "id": "tl131"
   },
   {
    "type": "model-expect",
@@ -2138,7 +2342,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl120"
+   "id": "tl132"
   },
   {
    "type": "model-expect",
@@ -2155,7 +2359,7 @@
    "ref": "consequence 2",
    "source": "",
    "future": true,
-   "id": "tl121"
+   "id": "tl133"
   },
   {
    "type": "model-expect",
@@ -2172,7 +2376,7 @@
    "ref": "consequence 1",
    "source": "",
    "future": true,
-   "id": "tl122"
+   "id": "tl134"
   },
   {
    "type": "model-expect",
@@ -2189,7 +2393,7 @@
    "ref": "consequence 4",
    "source": "",
    "future": true,
-   "id": "tl123"
+   "id": "tl135"
   },
   {
    "type": "joint-claim",
@@ -2211,7 +2415,7 @@
    "ref": "bs-2026-09-16-2",
    "source": "",
    "future": true,
-   "id": "tl124"
+   "id": "tl136"
   },
   {
    "type": "expert-claim",
@@ -2233,7 +2437,7 @@
    "source": "https://youtu.be/WCLCfhvxrOo",
    "status": "open",
    "future": true,
-   "id": "tl125"
+   "id": "tl137"
   },
   {
    "type": "expert-claim",
@@ -2255,7 +2459,7 @@
    "source": "https://youtu.be/PrSf7IOYu-I",
    "status": "open",
    "future": true,
-   "id": "tl126"
+   "id": "tl138"
   },
   {
    "type": "expert-claim",
@@ -2277,7 +2481,7 @@
    "source": "https://youtu.be/U2O0sdpuFRQ",
    "status": "open",
    "future": true,
-   "id": "tl127"
+   "id": "tl139"
   },
   {
    "type": "expert-claim",
@@ -2299,7 +2503,7 @@
    "source": "https://youtu.be/U2O0sdpuFRQ",
    "status": "open",
    "future": true,
-   "id": "tl128"
+   "id": "tl140"
   },
   {
    "type": "expert-claim",
@@ -2321,7 +2525,7 @@
    "source": "https://youtu.be/uWnUnMphmPM",
    "status": "open",
    "future": true,
-   "id": "tl129"
+   "id": "tl141"
   },
   {
    "type": "expert-claim",
@@ -2343,7 +2547,7 @@
    "source": "https://youtu.be/aV26V1UvkJw",
    "status": "open",
    "future": true,
-   "id": "tl130"
+   "id": "tl142"
   },
   {
    "type": "expert-claim",
@@ -2365,7 +2569,7 @@
    "source": "https://youtu.be/iewm45atodE",
    "status": "open",
    "future": true,
-   "id": "tl131"
+   "id": "tl143"
   },
   {
    "type": "expert-claim",
@@ -2387,7 +2591,7 @@
    "source": "https://youtu.be/iewm45atodE",
    "status": "open",
    "future": true,
-   "id": "tl132"
+   "id": "tl144"
   },
   {
    "type": "expert-claim",
@@ -2409,7 +2613,7 @@
    "source": "https://youtu.be/iewm45atodE",
    "status": "open",
    "future": true,
-   "id": "tl133"
+   "id": "tl145"
   },
   {
    "type": "expert-claim",
@@ -2431,7 +2635,7 @@
    "source": "https://youtu.be/iewm45atodE",
    "status": "open",
    "future": true,
-   "id": "tl134"
+   "id": "tl146"
   },
   {
    "type": "expert-claim",
@@ -2453,7 +2657,7 @@
    "source": "https://youtu.be/WCLCfhvxrOo",
    "status": "open",
    "future": true,
-   "id": "tl135"
+   "id": "tl147"
   },
   {
    "type": "expert-claim",
@@ -2475,7 +2679,7 @@
    "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
    "status": "open",
    "future": true,
-   "id": "tl136"
+   "id": "tl148"
   },
   {
    "type": "expert-claim",
@@ -2497,7 +2701,7 @@
    "source": "https://youtu.be/oZBGAuANX6I",
    "status": "open",
    "future": true,
-   "id": "tl137"
+   "id": "tl149"
   },
   {
    "type": "expert-claim",
@@ -2519,7 +2723,7 @@
    "source": "https://youtu.be/oZBGAuANX6I",
    "status": "open",
    "future": true,
-   "id": "tl138"
+   "id": "tl150"
   },
   {
    "type": "expert-claim",
@@ -2541,7 +2745,7 @@
    "source": "https://youtu.be/aV26V1UvkJw",
    "status": "open",
    "future": true,
-   "id": "tl139"
+   "id": "tl151"
   },
   {
    "type": "expert-claim",
@@ -2563,7 +2767,7 @@
    "source": "https://darioamodei.com/post/we-must-pace-the-frontier",
    "status": "open",
    "future": true,
-   "id": "tl140"
+   "id": "tl152"
   }
  ]
 }
