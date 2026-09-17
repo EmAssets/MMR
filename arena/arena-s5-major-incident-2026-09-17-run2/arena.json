@@ -1,0 +1,116 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-s5-major-incident-2026-09-17-run2",
+ "built": "2026-09-17",
+ "case": "s5-major-incident",
+ "case_title": "Scenario 5 — A severe, clearly attributable incident",
+ "as_of": "2026-09-17",
+ "question": "Assume a severe AI-attributable incident occurs within 12 months. Over the following 12-18 months, what changes, and why? Give a dated, checkable claim.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-incident-severity",
+   "title": "Systemic vs One-Off Incidents — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "624e2bb",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-liability-pricing",
+   "title": "Liability as the Real Regulator — (v1)",
+   "kind": "forecaster",
+   "version": "v1",
+   "commit": "543078f",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "The binding consequence lands narrowly and fast on the incident's own domain and its insurers/courts, not as cross-domain regulation or a measurable shift in public opinion, and frontier development continues unpaused.",
+    "because": "Four of five minutes converge on domain-narrow, non-systemic consequence (litigation and/or a sector-specific rule, insurer repricing, elite response outpacing public opinion) while none argue for cross-domain binding regulation or a development pause; lab-moves adds the one distinct mechanism (labs self-gating the specific capability while keeping weights/API broadly available) that the others don't contest. The round-2 defenses show the real fault line is not 'will consequences be narrow' (all agree) but which narrow channel dominates — litigation/statute, insurance pricing, or voluntary lab restriction — and none of the defenses actually resolves that ordering, they just assert their own channel is fastest.",
+    "strongest_minute": "ai-liability-pricing, because it is the only one with a concrete causal mechanism for speed (annual renewal cycles, claims data flowing directly into underwriting) rather than an assertion about political or corporate incentives, and it's the only 'strong' grip in the set.",
+    "weakest_minute": "ai-public-backlash, because its claim is a restatement of its own premise (it's told sentiment is already muted, then predicts sentiment stays muted relative to elite response) rather than an inference from a mechanism, and it never engages with the insurer/lab-restriction channels the other minutes foreground.",
+    "shared_assumption": "All five minutes assume the regulatory/legal response is domain-bound rather than triggering cross-domain AI regulation or a development pause — none argues for this from a mechanism about political contagion versus containment, they just all read the single-incident premise as insufficient to generalize.",
+    "unresolved": "Which narrow channel actually dominates — litigation/sector rule, insurance repricing, or voluntary lab capability-gating — since ai-liability-pricing, ai-pressure, and lab-moves each claim their own channel is fastest without a shared test that could adjudicate between them.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 5,
+    "distinct_claims": 5,
+    "distinct_ratio": 1.0,
+    "revised": 0,
+    "confidence_spread": 0.08,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 11,
+   "chain": {
+    "ok": true,
+    "rows": 11,
+    "head": "9cb9887f6b450a77a25b99534fc97e05d4128091bb3eab04b245b273ab4567f0",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 11,
+     "total_rows": 11,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario",
+ "note_replication": "Unintended REPLICATION of s5. A first backgrounded launch was presumed dead and its dry-run artifacts deleted; it was in fact alive and completed hours later, overwriting the committed s5 directory (same-day runs reuse the directory name unless given a run tag). Both runs are live and valid. Preserved as a separate run because an independent second pass over the same brief with the same panel is evidence about run-to-run stability, which this engine otherwise has no way to measure."
+}
