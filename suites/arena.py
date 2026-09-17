@@ -323,11 +323,63 @@ def candidate_cases() -> dict:
     return out
 
 
+def scenario_cases() -> dict:
+    """Forward, conditional cases: "assume X, then what?"
+
+    The other two case types both have something the arena can eventually be
+    checked against -- a backtest has a sealed outcome, a candidate has an
+    evaluator verdict behind it. A scenario has NEITHER, and pretending
+    otherwise would be the worst thing this file could do. So:
+
+      * `sealed_outcome` is empty and `--score` refuses the mode outright.
+        There is nothing to reveal; a scenario is scored by waiting.
+      * the branch assumption is stated IN the brief as an assumption, so a
+        reader of the minutes can see what was granted rather than inferring
+        it from the ruling.
+      * the brief carries NO conclusion. Same lesson as the 2026-09-16 leak:
+        a brief that says what the branch causes hands the panel an answer to
+        paraphrase, and the ruling then measures copying.
+
+    A scenario's honest status is "an argument about a conditional", and only
+    the branch that actually materialises can ever be graded.
+
+    Case files: MMR/arena/cases/*.md. First line is the title; an optional
+    `as of: YYYY-MM-DD` and `question:` line follow; the rest is the brief.
+    """
+    out = {}
+    d = ADIR / "cases"
+    if not d.exists():
+        return out
+    for f in sorted(d.glob("*.md")):
+        t = f.read_text(encoding="utf-8", errors="replace")
+        lines = t.splitlines()
+        if not lines:
+            continue
+        title = lines[0].lstrip("# ").strip()
+        as_of, question, body_at = TODAY, "", 1
+        for i, ln in enumerate(lines[1:8], 1):
+            low = ln.strip().lower()
+            if low.startswith("as of:"):
+                as_of, body_at = ln.split(":", 1)[1].strip(), i + 1
+            elif low.startswith("question:"):
+                question, body_at = ln.split(":", 1)[1].strip(), i + 1
+        brief = "\n".join(lines[body_at:]).strip()
+        out[f.stem] = {
+            "slug": f.stem, "title": title, "as_of": as_of,
+            "brief": brief, "question": question,
+            "sealed_outcome": "", "origin_prediction_withheld": False,
+            "thin_setup": len(brief) < 200, "origin_score": None,
+            "mode": "scenario", "source": str(f),
+        }
+    return out
+
+
 def all_cases() -> dict:
     c = backtest_cases()
     for k, v in c.items():
         v.setdefault("mode", "backtest")
     c.update(candidate_cases())
+    c.update(scenario_cases())
     return c
 
 
@@ -417,6 +469,16 @@ AUTO_PANELS = {
 }
 
 
+SCENARIO_CORE = ["ai-pressure", "lab-moves", "ai-public-backlash"]
+SCENARIO_PANELS = {
+    "s1-hard-regulation":  SCENARIO_CORE + ["ai-regulation-teeth", "ai-us-policy-direction"],
+    "s2-unregulated":      SCENARIO_CORE + ["ai-regulation-teeth", "ai-courts-decide"],
+    "s3-public-pressure":  SCENARIO_CORE + ["overton-tracker", "ai-adoption-phases"],
+    "s4-asi-emergence":    SCENARIO_CORE + ["ai-rsi-timeline", "ai-oversight-lag"],
+    "s5-major-incident":   SCENARIO_CORE + ["ai-incident-severity", "ai-liability-pricing"],
+}
+
+
 def resolve_panel(case: str, spec: str) -> list:
     if spec and spec != "auto":
         want = [s.strip() for s in spec.split(",") if s.strip()]
@@ -427,6 +489,15 @@ def resolve_panel(case: str, spec: str) -> list:
         # deliberately EXCLUDED: it already ruled, and re-seating it as a
         # panelist would let it confirm its own verdict.
         want = ["attention-substrate", "pressure-model", "pattern-candidates"]
+    elif case in SCENARIO_PANELS:
+        # A shared core across every scenario, so rulings are comparable
+        # branch-to-branch, plus the models whose mechanism actually has grip
+        # on that branch. attention-substrate and pressure-model are
+        # deliberately NOT seated: both state their mechanism as prose rather
+        # than under a kind/domain header, and both abstained as "mechanism
+        # unstated" in the candidate runs. A panelist with no grip adds a vote,
+        # not a perspective.
+        want = SCENARIO_PANELS[case]
     else:
         want = AUTO_PANELS.get(case, ["attention-substrate", "pressure-model"])
     panel, missing = [], []
@@ -763,6 +834,12 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
         question = ("Does this cross-layer pattern name a MECHANISM that carries between "
                     "levels, or a RESEMBLANCE? If a mechanism, what dated prediction does "
                     "it produce at the other level?")
+    elif mode == "scenario":
+        # The case file states its own question, because a conditional's
+        # question IS the branch. Falls back to the backtest phrasing only if
+        # the file omitted one.
+        question = case.get("question") or (
+            "Given the assumption stated in the brief: what follows, and why?")
     else:
         question = "As of %s: what happens next, and why?" % (case["as_of"] or "the case date")
     premise = None
@@ -951,6 +1028,14 @@ def score(run_id: str, dry: bool, model_hint: str) -> None:
     if not f.exists():
         raise SystemExit("no such run: %s" % run_id)
     payload = json.loads(f.read_text(encoding="utf-8"))
+    # A scenario has no sealed outcome to reveal. Scoring one would have to
+    # invent the outcome it claims to be scoring against, so it is refused
+    # rather than allowed to produce a number that means nothing.
+    if payload.get("mode") == "scenario":
+        raise SystemExit(
+            "%s is a SCENARIO run: there is no sealed outcome to score against.\n"
+            "A conditional is graded by waiting for the branch to materialise, "
+            "not by revealing an answer that was never written." % run_id)
     case = backtest_cases()[payload["case"]]
     final = payload["rounds"][-1]["ruling"]
     prompt = (
@@ -1093,6 +1178,15 @@ def main() -> None:
             print("  %-26s %s" % (s, c["title"]))
         if not cd:
             print("  (none — run pattern-candidates then pattern-evaluator to fill quarantine)")
+        sc = scenario_cases()
+        print("\n[arena] %d scenario cases — forward conditionals ('assume X, then what?')." % len(sc))
+        print("  These have NO sealed outcome and NO evaluator behind them. --score refuses")
+        print("  them: a conditional is graded by waiting for the branch, not by revealing")
+        print("  an answer nobody wrote. Only the branch that materialises is ever gradeable.")
+        for s, c in sc.items():
+            print("  %-26s %s" % (s, c["title"]))
+        if not sc:
+            print("  (none — add a case file to arena/cases/*.md)")
         return
     if a.score:
         return score(a.score, a.dry_run, a.model)
