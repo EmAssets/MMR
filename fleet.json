@@ -39,7 +39,10 @@
   "overton-tracker",
   "pattern-candidates",
   "pattern-evaluator",
-  "lab-moves"
+  "lab-moves",
+  "attention-substrate",
+  "pressure-model",
+  "canon"
  ],
  "classifiers": [],
  "decision_repo": "",

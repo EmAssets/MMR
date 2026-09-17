@@ -515,6 +515,39 @@
    ],
    "kind": "forecaster",
    "level": 0
+  },
+  "attention-substrate": {
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "kind": "forecaster",
+   "level": 0
+  },
+  "pressure-model": {
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "kind": "forecaster",
+   "level": 0
+  },
+  "canon": {
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "kind": "forecaster",
+   "level": 0
   }
  },
  "level_note": "Each assignment carries a level: 0 models the world, 1 models the instance's own models, 2 models the modelling process. Consolidation runs bottom-up and never compresses what a live higher level reads.",
