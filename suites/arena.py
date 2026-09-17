@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -75,6 +76,33 @@ def _load_env() -> None:
         if "=" in line and not line.strip().startswith("#"):
             k, v = line.split("=", 1)
             os.environ.setdefault(k.strip(), v.strip())
+
+
+def _sha(data) -> str:
+    """sha256 of a string or of a canonicalised object.
+
+    Canonical form is sorted-key, tight-separator JSON so the same content
+    always hashes the same way regardless of dict ordering.
+    """
+    if not isinstance(data, str):
+        data = json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(data.encode("utf-8")).hexdigest()
+
+
+def _tree_dirty(slug: str) -> bool:
+    """Does the model's MODEL.md differ from what its HEAD commit records?
+
+    This is the flag that makes a commit hash honest. Demonstrated on
+    2026-09-16: editing ai-pressure/MODEL.md without committing left the
+    reported commit unchanged, so a minute could cite a commit whose content
+    was not what the model read.
+    """
+    try:
+        r = subprocess.run(["git", "status", "--porcelain", "--", "MODEL.md"],
+                           cwd=str(TOOLS / slug), capture_output=True, text=True, timeout=10)
+        return bool(r.stdout.strip())
+    except Exception:
+        return False
 
 
 def _models_dir(root: Path) -> Path:
@@ -249,7 +277,12 @@ def mechanism(slug: str) -> dict | None:
     p = TOOLS / slug / "MODEL.md"
     if not p.exists():
         return None
-    t = p.read_text(encoding="utf-8", errors="replace")
+    raw = p.read_bytes()
+    t = raw.decode("utf-8", errors="replace")
+    # Hash the EXACT bytes just read, here, rather than re-opening the file
+    # later: a read-then-rehash is a race, and the whole point is to attest to
+    # what this run actually saw.
+    md_sha = hashlib.sha256(raw).hexdigest()
     lines = t.splitlines()
     title = lines[0].lstrip("# ").strip() if lines else slug
     k = re.search(r"\*\*The kind:\*\*\s*(.+)", t)
@@ -281,6 +314,10 @@ def mechanism(slug: str) -> dict | None:
         "one_line": dom or thesis or title,
         "version": _version_line(t),
         "commit": _commit(slug),
+        # content identity, not a pointer to it
+        "model_md_sha256": md_sha,
+        "model_md_bytes": len(raw),
+        "tree_dirty": _tree_dirty(slug),
     }
 
 
@@ -482,17 +519,76 @@ def _call(model_hint: str, prompt: str, dry: bool) -> dict:
         return {"_unparsed": txt[:800]}
 
 
-def _minute(kind: str, who: dict, cycle: int, rnd: int, body: dict) -> dict:
-    """A signed minute. The signature is what makes the record auditable."""
-    return {
+def _minute(kind: str, who: dict, cycle: int, rnd: int, body: dict,
+            prompt: str = "", prev_sha: str = "") -> dict:
+    """A signed, chained minute.
+
+    WHAT "SIGNED" MEANS HERE, stated precisely because it is easy to overclaim:
+
+      * `model_md_sha256` is the hash of the MODEL.md bytes this run actually
+        read. Unlike `model_commit`, which is only a pointer, it changes the
+        moment the document changes -- committed or not.
+      * `tree_dirty` says whether that content differed from the model's HEAD.
+        A dirty minute is still valid; it is just not reproducible from git
+        alone, and it says so.
+      * `prev_minute_sha` chains each minute to the one before it, so editing
+        or deleting any minute breaks every `minute_sha` that follows.
+
+    This is TAMPER-EVIDENCE, not authorship proof. It shows that a record was
+    not altered after the fact. It does not prove WHO produced it -- that needs
+    a private key, and a timestamp is not a key because everyone knows the date.
+    """
+    m = {
         "cycle": cycle, "round": rnd, "type": kind,
         "signed_by": who.get("slug"),
         "model_title": who.get("title", ""),
         "model_version": who.get("version", ""),
         "model_commit": who.get("commit", ""),
+        "model_md_sha256": who.get("model_md_sha256", ""),
+        "model_md_bytes": who.get("model_md_bytes", 0),
+        "tree_dirty": bool(who.get("tree_dirty", False)),
         "at": datetime.datetime.now().isoformat(timespec="seconds"),
+        "prompt_sha256": _sha(prompt) if prompt else "",
+        "body_sha256": _sha(body),
+        "prev_minute_sha": prev_sha,
         "body": body,
     }
+    # The minute's own hash covers everything above it, including the
+    # timestamp and the previous link. Computed over the record WITHOUT
+    # minute_sha itself, which cannot contain its own hash.
+    m["minute_sha"] = _sha({k: v for k, v in m.items() if k != "body"} | {"body": body})
+    return m
+
+
+def verify_chain(rows: list) -> dict:
+    """Recompute every minute's hash and every link. Returns the first break.
+
+    A run whose minutes were written before signing existed has no hashes;
+    that is reported as UNSIGNED rather than as a failure, because a
+    pre-signing record is not a tampered one.
+    """
+    if not rows:
+        return {"ok": False, "reason": "no minutes"}
+    if not any(r.get("minute_sha") for r in rows):
+        return {"ok": None, "reason": "unsigned (pre-chain run)", "rows": len(rows)}
+    prev = ""
+    for i, r in enumerate(rows):
+        want_body = _sha(r.get("body"))
+        if r.get("body_sha256") != want_body:
+            return {"ok": False, "reason": "body altered", "row": i,
+                    "signed_by": r.get("signed_by")}
+        if r.get("prev_minute_sha", "") != prev:
+            return {"ok": False, "reason": "chain link broken (a minute was "
+                                           "inserted, removed or reordered)",
+                    "row": i, "signed_by": r.get("signed_by")}
+        recomputed = _sha({k: v for k, v in r.items()
+                           if k not in ("minute_sha", "body")} | {"body": r.get("body")})
+        if r.get("minute_sha") != recomputed:
+            return {"ok": False, "reason": "minute hash mismatch", "row": i,
+                    "signed_by": r.get("signed_by")}
+        prev = r["minute_sha"]
+    return {"ok": True, "rows": len(rows), "head": prev,
+            "dirty_minutes": sum(1 for r in rows if r.get("tree_dirty"))}
 
 
 # ---------------------------------------------------------------- disagreement
@@ -560,6 +656,7 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
         question = "As of %s: what happens next, and why?" % (case["as_of"] or "the case date")
     premise = None
     all_cycles = []
+    chain_head = ""   # links cycle N's first minute to cycle N-1's last
 
     for cyc in range(1, cycles + 1):
         print("\n  -- cycle %d --" % cyc)
@@ -572,10 +669,12 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
 
         # round 1 — claim, written before anyone sees anyone else
         for p in panel:
-            body = _call(model_hint, CLAIM.format(
+            prompt = CLAIM.format(
                 title=p["title"], slug=p["slug"], kind=p["kind"],
-                one_line=p["one_line"], as_of=case["as_of"], brief=brief), dry)
-            minutes.append(_minute("claim", p, cyc, 1, body))
+                one_line=p["one_line"], as_of=case["as_of"], brief=brief)
+            body = _call(model_hint, prompt, dry)
+            minutes.append(_minute("claim", p, cyc, 1, body, prompt,
+                                   minutes[-1]["minute_sha"] if minutes else chain_head))
             print("     r1 %-26s grip=%-8s conf=%s" % (p["slug"], body.get("grip"), body.get("confidence")))
 
         # round 2 — defend or revise, now seeing the others
@@ -585,11 +684,13 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
         for p in panel:
             mine = next((m for m in minutes if m["signed_by"] == p["slug"] and m["round"] == 1), None)
             others = "\n".join(l for l in board.splitlines() if not l.startswith("- [%s]" % p["slug"]))
-            body = _call(model_hint, DEFEND.format(
+            prompt = DEFEND.format(
                 title=p["title"], slug=p["slug"],
                 mine=json.dumps(mine["body"], ensure_ascii=False)[:700] if mine else "",
-                others=others or "(no other minutes)"), dry)
-            minutes.append(_minute("defence", p, cyc, 2, body))
+                others=others or "(no other minutes)")
+            body = _call(model_hint, prompt, dry)
+            minutes.append(_minute("defence", p, cyc, 2, body, prompt,
+                                   minutes[-1]["minute_sha"]))
             print("     r2 %-26s %-8s moved_by=%s" % (p["slug"], body.get("move"), body.get("moved_by")))
 
         # the judge — minutes only. No MODEL.md, no sealed outcome.
@@ -599,18 +700,33 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
                m["round"], json.dumps(m["body"], ensure_ascii=False)[:600])
             for m in minutes)
         jtmpl = JUDGE_CANDIDATE if mode == "candidate" else JUDGE
-        jbody = _call(model_hint, jtmpl.format(question=question, minutes=jtext), dry)
-        judge_who = {"slug": JUDGE_SLUG, "title": "Independent judge", "version": "", "commit": ""}
-        ruling = _minute("ruling", judge_who, cyc, 3, jbody)
+        jprompt = jtmpl.format(question=question, minutes=jtext)
+        jbody = _call(model_hint, jprompt, dry)
+        # The judge has no MODEL.md, so what identifies its "version" is the
+        # prompt template it ruled under. Hashing that makes a later change to
+        # the judging standard visible in the record.
+        judge_who = {"slug": JUDGE_SLUG, "title": "Independent judge",
+                     "version": "candidate-v1" if mode == "candidate" else "backtest-v1",
+                     "commit": "", "model_md_sha256": _sha(jtmpl),
+                     "model_md_bytes": len(jtmpl), "tree_dirty": False}
+        ruling = _minute("ruling", judge_who, cyc, 3, jbody, jprompt,
+                         minutes[-1]["minute_sha"])
         minutes.append(ruling)
         print("     JUDGE  %s" % str(jbody.get("ruling", ""))[:88])
         if jbody.get("shared_assumption"):
             print("     judge flags shared assumption: %s" % str(jbody["shared_assumption"])[:80])
 
+        chain_head = minutes[-1]["minute_sha"]
+        chain = verify_chain(minutes)
         dis = disagreement(minutes)
         print("     disagreement: %d/%d distinct (ratio %.2f) · %d revised · spread %.2f"
               % (dis["distinct_claims"], dis["panelists"], dis["distinct_ratio"],
                  dis["revised"], dis["confidence_spread"]))
+        print("     chain: %s · head %s%s"
+              % ("verified" if chain.get("ok") else str(chain.get("reason")),
+                 str(chain.get("head", ""))[:12],
+                 ("  · %d minute(s) spoke from an UNCOMMITTED MODEL.md"
+                  % chain["dirty_minutes"]) if chain.get("dirty_minutes") else ""))
 
         cdir = outdir / ("cycle-%d" % cyc)
         cdir.mkdir(exist_ok=True)
@@ -619,16 +735,26 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
                 fh.write(json.dumps(m, ensure_ascii=False) + "\n")
         (cdir / "ruling.json").write_text(json.dumps(jbody, ensure_ascii=False, indent=1), encoding="utf-8")
         all_cycles.append({"cycle": cyc, "ruling": jbody, "disagreement": dis,
-                           "minutes": len(minutes)})
+                           "minutes": len(minutes), "chain": chain})
 
         # the judge's ruling — NOT the panel's consensus — carries forward
         premise = jbody.get("ruling")
 
     payload = {
-        "spec": "arena-v1", "run_id": run_id, "built": TODAY, "case": case_slug,
+        "spec": "arena-v2-signed", "run_id": run_id, "built": TODAY, "case": case_slug,
         "case_title": case["title"], "as_of": case["as_of"], "question": question,
         "cycles": len(all_cycles), "dry_run": bool(dry),
         "panel": [{k: p[k] for k in ("slug", "title", "kind", "version", "commit", "derived")} for p in panel],
+        "signing": {
+            "scheme": "sha256 content hash + minute hash chain",
+            "attests": ["the MODEL.md bytes each model actually read",
+                        "the exact prompt sent", "the response body",
+                        "the order of minutes", "the timestamp of each minute"],
+            "does_not_attest": ["WHO produced the record — that needs a private "
+                                "key, and a timestamp is not a key",
+                                "that a dirty working tree matched any commit"],
+            "verify": "python -m suites.arena --report <run_id>",
+        },
         "judge": {"slug": JUDGE_SLUG,
                   "blind_to": ["every MODEL.md", "the case's sealed outcome",
                                "which model is which beyond its name"]},
@@ -752,6 +878,27 @@ def report(run_id: str) -> None:
         print("   %-5d  %d/%-6d %-8d %-8.2f %s"
               % (r["cycle"], d["distinct_claims"], d["panelists"], d["revised"],
                  d["confidence_spread"], str(r["ruling"].get("ruling", ""))[:60]))
+    # Re-verify from the minutes on disk rather than trusting the stored
+    # verdict: a stored "ok" that is never recomputed attests to nothing.
+    print("\n  chain verification (recomputed from minutes.jsonl):")
+    for r in p["rounds"]:
+        f = ADIR / run_id / ("cycle-%d" % r["cycle"]) / "minutes.jsonl"
+        rows = []
+        if f.exists():
+            rows = [json.loads(l) for l in f.read_text(encoding="utf-8").splitlines() if l.strip()]
+        v = verify_chain(rows)
+        if v.get("ok") is None:
+            print("   cycle %d  UNSIGNED — written before signing existed (%s rows). "
+                  "Content is not attested." % (r["cycle"], v.get("rows", 0)))
+        elif v.get("ok"):
+            print("   cycle %d  VERIFIED  %d minutes · head %s%s"
+                  % (r["cycle"], v["rows"], v["head"][:16],
+                     ("  · %d from an uncommitted MODEL.md" % v["dirty_minutes"])
+                     if v["dirty_minutes"] else ""))
+        else:
+            print("   cycle %d  *** BROKEN *** %s at row %d (%s)"
+                  % (r["cycle"], v.get("reason"), v.get("row", -1), v.get("signed_by")))
+
     ratios = [r["disagreement"]["distinct_ratio"] for r in p["rounds"]]
     if len(ratios) > 1 and ratios[-1] < 0.5 and ratios[-1] < ratios[0]:
         print("\n  CONVERGED. Read this as an echo, not a consensus: the panel is one LLM over "

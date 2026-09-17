@@ -153,6 +153,79 @@ def main() -> int:
         print("  minutes: %d rows, %d signed by panelists, %d by the judge"
               % (len(rows), len(panel_rows), len(rows) - len(panel_rows)))
 
+    # ---- signing: content hash, tamper evidence, and the dirty-tree flag ----
+    # These are the proof that the traceability claim is real. Without them
+    # "every minute is signed" is a docstring assertion.
+    rows = [json.loads(l) for l in mfile.read_text(encoding="utf-8").splitlines() if l.strip()]
+
+    v = arena.verify_chain(rows)
+    if not v.get("ok"):
+        fails.append("fresh chain did not verify: %s" % v.get("reason"))
+    else:
+        print("  chain verifies over %d minutes, head %s" % (v["rows"], v["head"][:12]))
+
+    missing = [r["signed_by"] for r in rows if not r.get("model_md_sha256")]
+    if missing:
+        fails.append("minutes with no MODEL.md content hash: %s" % sorted(set(missing)))
+    else:
+        print("  every minute carries a MODEL.md content hash (judge: prompt-template hash)")
+
+    # TAMPER 1: alter a body. Its own hash and every later link must break.
+    import copy
+    bad = copy.deepcopy(rows)
+    bad[1]["body"]["claim"] = "silently altered after the fact"
+    vb = arena.verify_chain(bad)
+    if vb.get("ok"):
+        fails.append("TAMPERING WENT UNDETECTED — an edited body still verified")
+    else:
+        print("  tamper detected: edited body -> %s at row %d"
+              % (vb.get("reason"), vb.get("row", -1)))
+
+    # TAMPER 2: delete a minute. The chain must break at the join.
+    bad2 = copy.deepcopy(rows)
+    del bad2[2]
+    vd = arena.verify_chain(bad2)
+    if vd.get("ok"):
+        fails.append("DELETION WENT UNDETECTED — a removed minute still verified")
+    else:
+        print("  tamper detected: removed minute -> %s" % vd.get("reason"))
+
+    # TAMPER 3: reorder. Order is part of the record: who spoke before whom.
+    bad3 = copy.deepcopy(rows)
+    bad3[0], bad3[1] = bad3[1], bad3[0]
+    vr = arena.verify_chain(bad3)
+    if vr.get("ok"):
+        fails.append("REORDERING WENT UNDETECTED")
+    else:
+        print("  tamper detected: reordered minutes -> %s" % vr.get("reason"))
+
+    # ---- the dirty-tree gap this whole feature exists to close ----
+    # Demonstrated 2026-09-16: editing ai-pressure/MODEL.md without committing
+    # left the reported commit unchanged, so a minute could cite a commit whose
+    # content was not what the model read.
+    mdp = arena.TOOLS / "ai-pressure" / "MODEL.md"
+    if mdp.exists():
+        original = mdp.read_bytes()
+        clean = arena.mechanism("ai-pressure")
+        try:
+            mdp.write_bytes(original + b"\n<!-- uncommitted edit, selftest -->\n")
+            dirty = arena.mechanism("ai-pressure")
+            if dirty["model_md_sha256"] == clean["model_md_sha256"]:
+                fails.append("content hash did NOT change when MODEL.md was edited")
+            elif dirty["commit"] != clean["commit"]:
+                fails.append("test invalid: commit changed, so this is not the dirty-tree case")
+            elif not dirty["tree_dirty"]:
+                fails.append("tree_dirty was False for a modified MODEL.md")
+            else:
+                print("  dirty-tree gap closed: same commit %s, DIFFERENT content hash "
+                      "(%s -> %s), tree_dirty=True"
+                      % (clean["commit"], clean["model_md_sha256"][:8],
+                         dirty["model_md_sha256"][:8]))
+        finally:
+            mdp.write_bytes(original)
+        if arena.mechanism("ai-pressure")["model_md_sha256"] != clean["model_md_sha256"]:
+            fails.append("failed to restore ai-pressure/MODEL.md after the dirty-tree test")
+
     # ---- premise carry-forward: cycle 2 must quote the judge, not the panel ----
     c2 = [c["prompt"] for c in CAPTURED if "PREMISE CARRIED FROM THE PREVIOUS CYCLE" in c["prompt"]]
     if not c2:

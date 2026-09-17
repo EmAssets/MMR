@@ -44,17 +44,59 @@ appears in *any* prompt, that every minute is signed, and that cycle 2 carries
 the judge's ruling forward. If a future change leaks either blindness, the test
 fails rather than the run quietly becoming worthless.
 
-## Signed minutes
+## Signed minutes — what is and is not attested
 
-Every minute carries the speaking model's slug, its version line, and its repo
-commit at the moment it spoke:
+Every minute carries:
 
 ```
-DEFENCE · r2 · signed ai-lab-revealed-priorities v1 @d95eb3b
+CLAIM · r1 · signed attention-substrate v5.1 @14c1b8b · md 3f9a1c22 · minute 9a58fc20
 ```
 
-So "the model changed its mind" and "the model was edited" can never be
-confused, and a claim is attributable to a specific state of a specific model.
+| field | what it pins |
+|---|---|
+| `signed_by` / `model_version` | which model spoke, at what version |
+| `model_commit` | the repo's HEAD — a **pointer** |
+| `model_md_sha256` | the hash of the MODEL.md bytes this run **actually read** |
+| `tree_dirty` | whether that content differed from HEAD |
+| `prompt_sha256` / `body_sha256` | the exact prompt sent and answer returned |
+| `prev_minute_sha` / `minute_sha` | the chain — order is part of the record |
+| `at` | ISO timestamp, bound into the minute hash |
+
+**Why the content hash exists, and the bug that forced it.** A git commit is a
+*pointer*, not a hash of what was read. Demonstrated 2026-09-16: with
+`ai-pressure/MODEL.md` edited but not committed, the arena reported commit
+`fd9d837` unchanged — so a minute would have attested to content the model never
+spoke from. `model_md_sha256` closes that; the regression test asserts *same
+commit, different content hash, `tree_dirty=True`*.
+
+The judge has no MODEL.md, so its "version" is the **hash of the judging prompt
+template** it ruled under. Changing the judging standard is therefore visible in
+the record.
+
+### What this is, stated precisely
+
+It is **tamper-evidence**, not authorship proof.
+
+- ✅ Proves a record was not altered after the fact. Edit any body, delete a
+  minute, or reorder two, and every later `minute_sha` breaks. All three are
+  covered by tests in `arena_test.py`.
+- ✅ Proves which MODEL.md content each model reasoned from, so "did v2 argue
+  better than v1" is answerable — and aligns with `suites/trajectory.py`, which
+  already keys graded claims by MODEL.md version from git history.
+- ❌ Does **not** prove *who* produced the record. That needs a private key.
+  **A timestamp cannot be a key** — everyone knows the date, so anyone could
+  recompute the same hashes. The datetime here is *content being signed*, not
+  the secret doing the signing.
+
+If instance-level authorship is ever wanted, an HMAC with a secret in `.env`
+would prove "this instance produced it"; real public-key signing (ed25519) needs
+a library the stdlib-only engine does not ship.
+
+Verify any run with `python -m suites.arena --report <run_id>`, which
+**recomputes** the chain from `minutes.jsonl` rather than trusting the stored
+verdict. Runs written before signing existed report `UNSIGNED`, not `verified` —
+a pre-signing record is not a tampered one, and must not be presented as
+attested.
 
 ## Two kinds of case
 

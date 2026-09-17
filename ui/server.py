@@ -1825,14 +1825,29 @@ async function loadArena(runId){
       + " · " + g.revised + " revised · confidence spread " + g.confidence_spread
       + (conv ? " <b style=\"color:#d98a5a\">— CONVERGED: read as a shared-source echo, not a consensus</b>" : "")
       + "</div>";
+    var ch = rd.chain || {};
+    if (ch.reason || ch.ok !== undefined){
+      var okc = (ch.ok === true) ? "#4fc3a1" : (ch.ok === null ? "var(--muted)" : "#d98a5a");
+      html += "<div style=\"font-size:.78rem;color:"+okc+";margin-bottom:.5rem\">chain: "
+        + (ch.ok === true ? ("VERIFIED · " + ch.rows + " minutes · head " + esc(String(ch.head||"").slice(0,16)))
+           : esc(String(ch.reason||"unknown")))
+        + (ch.dirty_minutes ? " · " + ch.dirty_minutes + " from an uncommitted MODEL.md" : "")
+        + "</div>";
+    }
 
     (rd.minutes_rows||[]).forEach(function(m){
       var col = TY[m.type] || "var(--muted)";
       var b = m.body || {};
+      var sha = m.model_md_sha256 ? String(m.model_md_sha256).slice(0,8) : "";
       var head = "<code style=\"color:"+col+"\">" + esc((m.type||"").toUpperCase())
         + " · r" + m.round + " · signed " + esc(m.signed_by)
         + (m.model_version ? " " + esc(m.model_version) : "")
-        + " @" + esc(m.model_commit||"uncommitted") + "</code>";
+        + " @" + esc(m.model_commit||"uncommitted")
+        + (sha ? " · md " + esc(sha) : "")
+        + (m.minute_sha ? " · minute " + esc(String(m.minute_sha).slice(0,8)) : "")
+        + "</code>"
+        + (m.tree_dirty ? "<div style=\"font-size:.74rem;color:#d98a5a\">spoke from an "
+           + "UNCOMMITTED MODEL.md — content hash attests it, git does not</div>" : "");
       var lines = "";
       if (b.ruling) lines += "<div style=\"font-size:.9rem;margin:.25rem 0\"><b>"+esc(b.ruling)+"</b></div>";
       if (b.claim)  lines += "<div style=\"font-size:.9rem;margin:.25rem 0\">"+esc(b.claim)+"</div>";
