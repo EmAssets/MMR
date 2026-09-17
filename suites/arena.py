@@ -137,6 +137,76 @@ def backtest_cases() -> dict:
     return out
 
 
+def candidate_cases() -> dict:
+    """Survivors of pattern-evaluator, as arena cases.
+
+    THE PIPELINE, and where the arena sits in it:
+
+        pattern-candidates  proposes into quarantine
+        pattern-evaluator   kills what is analogy rather than mechanism
+        THE ARENA           argues each survivor's TRANSFER PREDICTION
+        the operator        promotes, or does not
+
+    The arena does NOT promote. `pattern-evaluator/MODEL.md` is explicit --
+    "nothing leaves quarantine without passing here, and promotion is the
+    operator's call even then" -- and its consequence 3 is falsified by any
+    candidate leaving quarantine without a recorded transfer prediction. So the
+    arena adds a gate; it never opens one. Rulings are written back INTO
+    quarantine, and a human still decides.
+
+    Only candidates with an evaluator verdict are eligible. Raw quarantine that
+    has never faced the evaluator has not "passed here" and is not a case.
+    """
+    out = {}
+    f = TOOLS / "pattern-evaluator" / "verdicts.json"
+    if not f.exists():
+        return out
+    try:
+        d = json.loads(f.read_text(encoding="utf-8"))
+    except ValueError:
+        return out
+    src = d.get("source", "")
+    for i, v in enumerate(d.get("verdicts", []), 1):
+        if str(v.get("verdict", "")).lower() == "killed":
+            continue
+        claim = str(v.get("claim", "")).strip()
+        if not claim:
+            continue
+        slug = "cand-%02d" % i
+        brief = (
+            "A cross-layer pattern candidate that SURVIVED the pattern-evaluator.\n\n"
+            "CLAIM:\n%s\n\n"
+            "WHY THE EVALUATOR DID NOT KILL IT:\n%s\n\n"
+            "THE BORING EXPLANATION IT HAD TO BEAT:\n%s\n\n"
+            "TRANSFER PREDICTION ON RECORD:\n%s\n\n"
+            "The question is NOT whether the claim is true. It is whether the pattern "
+            "names a MECHANISM that carries between two levels of organisation, or a "
+            "RESEMBLANCE that two levels share because they borrowed the same "
+            "mathematics, the same describing language, or because a human found a "
+            "shape in noise."
+            % (claim, v.get("why", "(not recorded)"),
+               v.get("boring", "(not recorded)"), v.get("transfer", "(none recorded)"))
+        )
+        out[slug] = {
+            "slug": slug, "mode": "candidate",
+            "title": "Candidate %d from %s" % (i, src or "quarantine"),
+            "as_of": TODAY, "brief": brief,
+            "sealed_outcome": "",          # a candidate has no outcome to seal
+            "origin_score": None,
+            "evaluator_transfer": v.get("transfer", ""),
+            "source": str(f),
+        }
+    return out
+
+
+def all_cases() -> dict:
+    c = backtest_cases()
+    for k, v in c.items():
+        v.setdefault("mode", "backtest")
+    c.update(candidate_cases())
+    return c
+
+
 # ---------------------------------------------------------------- panel
 
 def mechanism(slug: str) -> dict | None:
@@ -201,6 +271,13 @@ AUTO_PANELS = {
 def resolve_panel(case: str, spec: str) -> list:
     if spec and spec != "auto":
         want = [s.strip() for s in spec.split(",") if s.strip()]
+    elif case.startswith("cand-"):
+        # A candidate case asks "mechanism or resemblance?", which is a question
+        # about inference, not about any model's subject matter. The panel is
+        # therefore the models that argue about structure. pattern-evaluator is
+        # deliberately EXCLUDED: it already ruled, and re-seating it as a
+        # panelist would let it confirm its own verdict.
+        want = ["attention-substrate", "pressure-model", "pattern-candidates"]
     else:
         want = AUTO_PANELS.get(case, ["attention-substrate", "pressure-model"])
     panel, missing = [], []
@@ -290,6 +367,44 @@ Return STRICT JSON:
 }}"""
 
 
+JUDGE_CANDIDATE = """You are an INDEPENDENT JUDGE. You have not seen any model's
+documentation. You know nothing about this candidate except what the minutes
+below contain.
+
+THE QUESTION: {question}
+
+THE MINUTES:
+{minutes}
+
+You are ruling on ONE thing: does this pattern name a MECHANISM that carries
+between two levels of organisation, or is it a RESEMBLANCE?
+
+A resemblance is not worthless, it is just not a law. Two systems look alike when
+they borrowed the same mathematics, when the describing language is shared, or
+when a human found a shape in noise. None of those transfers.
+
+If four models agree because they share an assumption, that is ONE argument, not
+four. Say so.
+
+If you rule MECHANISM, you must supply the transfer prediction it produces: a
+dated, checkable claim at the OTHER level. A mechanism that cannot produce one is
+a resemblance with better vocabulary, and you should rule accordingly.
+
+Return STRICT JSON:
+{{
+ "ruling": "MECHANISM" | "RESEMBLANCE" | "UNDECIDED",
+ "because": "<what in the minutes decided it, 2-4 sentences>",
+ "transfer_prediction": "<dated checkable claim at the other level, or null if not MECHANISM>",
+ "resolve_by": "<YYYY-MM-DD for that prediction, or null>",
+ "strongest_minute": "<slug and why>",
+ "weakest_minute": "<slug and why>",
+ "shared_assumption": "<assumption relied on without argument, or null>",
+ "evaluator_should_have_killed": true|false,
+ "unresolved": "<what the minutes could not settle>",
+ "confidence": <0.0-1.0>
+}}"""
+
+
 # ---------------------------------------------------------------- llm
 
 def _call(model_hint: str, prompt: str, dry: bool) -> dict:
@@ -370,10 +485,11 @@ def disagreement(minutes: list) -> dict:
 # ---------------------------------------------------------------- run
 
 def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str) -> None:
-    cases = backtest_cases()
+    cases = all_cases()
     if case_slug not in cases:
         raise SystemExit("unknown case %r — try --list-cases" % case_slug)
     case = cases[case_slug]
+    mode = case.get("mode", "backtest")
     panel = resolve_panel(case_slug, panel_spec)
     if len(panel) < 2:
         raise SystemExit("need >=2 panelists, got %d" % len(panel))
@@ -388,7 +504,12 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
     for p in panel:
         print("     %-28s %-14s %s %s" % (p["slug"], p["kind"], p["version"], p["commit"]))
 
-    question = "As of %s: what happens next, and why?" % (case["as_of"] or "the case date")
+    if mode == "candidate":
+        question = ("Does this cross-layer pattern name a MECHANISM that carries between "
+                    "levels, or a RESEMBLANCE? If a mechanism, what dated prediction does "
+                    "it produce at the other level?")
+    else:
+        question = "As of %s: what happens next, and why?" % (case["as_of"] or "the case date")
     premise = None
     all_cycles = []
 
@@ -429,7 +550,8 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
             % (m["signed_by"], m["model_version"] or "unversioned", m["model_commit"] or "uncommitted",
                m["round"], json.dumps(m["body"], ensure_ascii=False)[:600])
             for m in minutes)
-        jbody = _call(model_hint, JUDGE.format(question=question, minutes=jtext), dry)
+        jtmpl = JUDGE_CANDIDATE if mode == "candidate" else JUDGE
+        jbody = _call(model_hint, jtmpl.format(question=question, minutes=jtext), dry)
         judge_who = {"slug": JUDGE_SLUG, "title": "Independent judge", "version": "", "commit": ""}
         ruling = _minute("ruling", judge_who, cyc, 3, jbody)
         minutes.append(ruling)
@@ -472,10 +594,64 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
                  "because this fleet is one LLM over one corpus and will converge for reasons "
                  "that have nothing to do with the world."),
     }
+    payload["mode"] = mode
     (outdir / "arena.json").write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
     print("\n  -> %s" % (outdir / "arena.json"))
-    if not dry:
+
+    if mode == "candidate":
+        _record_candidate_ruling(case, payload)
+    if not dry and mode == "backtest":
         print("  score it against the sealed outcome with: python -m suites.arena --score %s" % run_id)
+
+
+def _record_candidate_ruling(case: dict, payload: dict) -> None:
+    """Write the ruling back INTO quarantine. This never promotes anything.
+
+    pattern-evaluator/MODEL.md: "nothing leaves quarantine without passing here,
+    and promotion is the operator's call even then." The arena is a gate added
+    before the operator, not a replacement for them. Its consequence 3 is
+    falsified by any candidate leaving quarantine without a recorded transfer
+    prediction, so the ruling's transfer_prediction is stored alongside the
+    evaluator's own -- and a ruling of RESEMBLANCE is stored too, because "the
+    arena could not make the case for this one" is exactly what the operator
+    needs to see.
+    """
+    final = payload["rounds"][-1]["ruling"]
+    f = TOOLS / "pattern-candidates" / "candidates" / "arena-rulings.json"
+    f.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        doc = json.loads(f.read_text(encoding="utf-8"))
+    except Exception:
+        doc = {"spec": "arena-candidate-rulings-v1",
+               "note": ("Arena rulings on pattern-evaluator survivors. STILL QUARANTINED: "
+                        "a ruling here is an argument about a candidate, not a promotion. "
+                        "Promotion remains the operator's call, and a MECHANISM ruling "
+                        "without a transfer_prediction must not be promoted -- that is the "
+                        "leak pattern-evaluator consequence 3 is written to catch."),
+               "rulings": []}
+    doc["rulings"] = [r for r in doc.get("rulings", []) if r.get("case") != case["slug"]]
+    doc["rulings"].append({
+        "case": case["slug"],
+        "run_id": payload["run_id"],
+        "ruled_on": TODAY,
+        "ruling": final.get("ruling"),
+        "because": final.get("because"),
+        "transfer_prediction": final.get("transfer_prediction"),
+        "resolve_by": final.get("resolve_by"),
+        "evaluator_transfer": case.get("evaluator_transfer", ""),
+        "evaluator_should_have_killed": final.get("evaluator_should_have_killed"),
+        "shared_assumption": final.get("shared_assumption"),
+        "panel": [x["slug"] for x in payload["panel"]],
+        "promoted": False,
+        "promotion_note": "NOT PROMOTED. The arena does not promote; the operator does.",
+    })
+    doc["updated"] = TODAY
+    f.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
+    print("  ruling recorded in quarantine -> %s" % f)
+    print("     NOT PROMOTED — promotion is the operator's call")
+    if final.get("evaluator_should_have_killed"):
+        print("     JUDGE SAYS THE EVALUATOR SHOULD HAVE KILLED THIS — a gate leak to log "
+              "against pattern-evaluator")
 
 
 # ---------------------------------------------------------------- score
@@ -552,13 +728,21 @@ def main() -> None:
     _load_env()
 
     if a.list_cases:
-        cs = backtest_cases()
-        print("[arena] %d backtest cases (each has a SEALED outcome)" % len(cs))
-        for s, c in cs.items():
+        bt = backtest_cases()
+        print("[arena] %d backtest cases (each has a SEALED outcome to score against)" % len(bt))
+        for s, c in bt.items():
             o = c["origin_score"] or {}
             print("  %-26s T=%-22s origin_accuracy=%s"
                   % (s, c["as_of"][:22], o.get("outcome_accuracy", "unscored")))
             print("      panel: %s" % ", ".join(AUTO_PANELS.get(s, ["(default)"])))
+        cd = candidate_cases()
+        print("\n[arena] %d candidate cases — survivors of pattern-evaluator." % len(cd))
+        print("  These have NO sealed outcome: the judge rules mechanism-or-resemblance,")
+        print("  the ruling returns to quarantine, and the operator still decides.")
+        for s, c in cd.items():
+            print("  %-26s %s" % (s, c["title"]))
+        if not cd:
+            print("  (none — run pattern-candidates then pattern-evaluator to fill quarantine)")
         return
     if a.score:
         return score(a.score, a.dry_run, a.model)

@@ -146,6 +146,58 @@ def main() -> int:
         else:
             print("  premise carry-forward: cycle 2 quotes the judge's ruling — correct")
 
+    # ---- candidate mode: the arena must NOT promote ----
+    CAPTURED.clear()
+    cands = arena.candidate_cases()
+    if not cands:
+        print("  note: quarantine is empty — candidate-mode test skipped")
+    else:
+        cslug = sorted(cands)[0]
+        rulings = arena.TOOLS / "pattern-candidates" / "candidates" / "arena-rulings.json"
+        before = rulings.read_text(encoding="utf-8") if rulings.exists() else None
+        arena.run(cslug, "attention-substrate,pressure-model", 1, False, "test-model")
+
+        jp = [c["prompt"] for c in CAPTURED if c["prompt"].startswith("You are an INDEPENDENT JUDGE")]
+        if not jp:
+            fails.append("candidate mode produced no judge prompt")
+        elif "MECHANISM" not in jp[0] or "RESEMBLANCE" not in jp[0]:
+            fails.append("candidate mode used the backtest judge prompt")
+        else:
+            print("  candidate mode: judge asked mechanism-or-resemblance — correct")
+
+        # the evaluator must never sit on a panel judging its own verdict
+        payload = json.loads((arena.ADIR / ("arena-%s-%s" % (cslug, arena.TODAY)) / "arena.json")
+                             .read_text(encoding="utf-8"))
+        if any(x["slug"] == "pattern-evaluator" for x in payload.get("panel", [])):
+            fails.append("pattern-evaluator seated on a panel judging its own verdict")
+        else:
+            print("  candidate mode: pattern-evaluator excluded from the panel — correct")
+
+        # the ruling must land in quarantine, unpromoted
+        if not rulings.exists():
+            fails.append("candidate ruling was not written back to quarantine")
+        else:
+            doc = json.loads(rulings.read_text(encoding="utf-8"))
+            row = next((r for r in doc.get("rulings", []) if r.get("case") == cslug), None)
+            if not row:
+                fails.append("no ruling row for %s" % cslug)
+            elif row.get("promoted") is not False:
+                fails.append("ARENA PROMOTED A CANDIDATE — the gate leaked")
+            else:
+                print("  candidate mode: ruling recorded, promoted=False — the gate held")
+            if before is None:
+                rulings.unlink(missing_ok=True)
+            else:
+                rulings.write_text(before, encoding="utf-8")
+
+        # verdicts.json is the evaluator's record; the arena must not touch it
+        vf = arena.TOOLS / "pattern-evaluator" / "verdicts.json"
+        vmt = vf.stat().st_mtime if vf.exists() else 0
+        if vf.exists() and vmt > __import__("time").time() - 120:
+            fails.append("arena modified pattern-evaluator/verdicts.json")
+        else:
+            print("  candidate mode: evaluator verdicts.json untouched — correct")
+
     print()
     if fails:
         print("FAILED (%d):" % len(fails))

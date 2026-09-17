@@ -59,6 +59,11 @@ transcripts).
   model VERSION (from your git history of MODEL.md), so "did v2 beat v1" is a query.
 - `python -m suites.postmortem --run` — why correct / why wrong per graded claim;
   earned vs LUCKY hits split; lessons feed back into the model's next rounds.
+- `python -m suites.arena --case <case>` — the **Arena**: models claim in public
+  before seeing each other, defend or revise under challenge, and a judge that
+  has read no MODEL.md rules on the minutes alone. The ruling, not the panel's
+  consensus, becomes the next cycle's premise. Blindness is enforced by
+  `python -m suites.arena_test`, not asserted. See `docs/ARENA.md`.
 
 ## Modeling people (optional)
 
