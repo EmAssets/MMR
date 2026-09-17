@@ -88,9 +88,43 @@ It is **tamper-evidence**, not authorship proof.
   recompute the same hashes. The datetime here is *content being signed*, not
   the secret doing the signing.
 
-If instance-level authorship is ever wanted, an HMAC with a secret in `.env`
-would prove "this instance produced it"; real public-key signing (ed25519) needs
-a library the stdlib-only engine does not ship.
+### Authorship: HMAC-SHA256
+
+Integrity and authorship are different claims, so they are separate mechanisms.
+
+```bash
+python -m suites.arena --keygen     # 256-bit key into .env, never overwrites
+```
+
+Each minute then carries `hmac_sha256` (a tag over its `minute_sha`) and
+`key_fingerprint` — a hash of the key's hash, so publishing it in a record
+leaks nothing. `--report` recomputes and states one of:
+
+| status | meaning |
+|---|---|
+| `verified` | every minute was signed by the configured key |
+| `unsigned` | integrity only — who produced this is not attested |
+| `signed by a DIFFERENT key` | a valid record from another instance |
+| `FORGED OR ALTERED` | a tag did not verify |
+
+**Why the HMAC catches what the chain cannot.** A forger can edit a body,
+recompute its hash, and re-chain every later minute so the plain hashes are
+internally consistent — the chain alone would accept it. It cannot produce a
+valid HMAC tag without the secret. `arena_test` performs exactly that
+re-chained forgery and asserts the authorship check fails.
+
+**What it proves and what it does not.** It proves *the instance holding the key
+produced this record*. It does not prove a particular person did, and because
+the key is a shared secret, anyone who can read `.env` can sign as this instance
+— and verification requires that same secret, so a third party cannot check a
+record without also being handed the ability to forge one. Public-key signing
+(ed25519) removes that trade-off and needs a library this stdlib-only engine
+does not ship.
+
+The key never enters git (`.env` is gitignored and untracked, verified before
+the feature was built) and never appears in a run artifact — only its
+fingerprint does. Rotating orphans every minute signed with the old key, so
+`--keygen` refuses to overwrite.
 
 Verify any run with `python -m suites.arena --report <run_id>`, which
 **recomputes** the chain from `minutes.jsonl` rather than trusting the stored

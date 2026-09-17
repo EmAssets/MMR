@@ -1833,6 +1833,16 @@ async function loadArena(runId){
            : esc(String(ch.reason||"unknown")))
         + (ch.dirty_minutes ? " · " + ch.dirty_minutes + " from an uncommitted MODEL.md" : "")
         + "</div>";
+      var au = ch.authorship || {};
+      if (au.status){
+        var auOk = (au.status === "verified");
+        var auc = auOk ? "#4fc3a1" : (au.status === "unsigned" ? "var(--muted)" : "#d98a5a");
+        html += "<div style=\"font-size:.78rem;color:"+auc+";margin-bottom:.5rem\">authorship: "
+          + esc(au.status)
+          + (au.key_fingerprint ? " · key " + esc(au.key_fingerprint) : "")
+          + (au.status === "unsigned" ? " — integrity only; who produced this is not attested" : "")
+          + "</div>";
+      }
     }
 
     (rd.minutes_rows||[]).forEach(function(m){

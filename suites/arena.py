@@ -44,6 +44,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import hashlib
+import hmac
 import json
 import os
 import re
@@ -76,6 +77,72 @@ def _load_env() -> None:
         if "=" in line and not line.strip().startswith("#"):
             k, v = line.split("=", 1)
             os.environ.setdefault(k.strip(), v.strip())
+
+
+# --- HMAC authorship signing ------------------------------------------------
+#
+# The hash chain proves a record was not ALTERED. It cannot prove WHO wrote it,
+# because every input to a plain sha256 is public and anyone can recompute it.
+# An HMAC mixes in a secret, so a valid tag can only be produced by a holder of
+# that secret.
+#
+# WHAT THIS PROVES: the instance holding ARENA_HMAC_KEY produced this record.
+# WHAT IT DOES NOT: that any particular person did, or that the key was not
+# copied. It is a shared secret, so anyone who can read .env can sign as this
+# instance, and verification requires that same secret -- a third party cannot
+# check it without being handed the ability to forge it. Public-key signing
+# (ed25519) is what removes that trade-off, and it needs a library this
+# stdlib-only engine does not ship.
+
+_KEY_ENV = "ARENA_HMAC_KEY"
+
+
+def _hmac_key() -> bytes | None:
+    """The signing key, loading .env on demand.
+
+    Loading here rather than only in main() matters: run() can be called
+    programmatically (the test suite does), and without this every minute from
+    such a call would be silently UNSIGNED while .env sat there correctly
+    configured. That is the same failure the backend hit earlier in this file,
+    and it fails quietly in exactly the same way.
+    """
+    if not os.environ.get(_KEY_ENV):
+        _load_env()
+    k = os.environ.get(_KEY_ENV, "").strip()
+    return k.encode("utf-8") if k else None
+
+
+def key_fingerprint(key: bytes) -> str:
+    """A public, non-reversible label for which key signed.
+
+    The fingerprint is the hash of the key's hash -- never the key itself, and
+    never a prefix of it, so publishing it in a record leaks nothing usable.
+    """
+    return hashlib.sha256(hashlib.sha256(key).digest()).hexdigest()[:16]
+
+
+def sign_tag(payload: str, key: bytes) -> str:
+    return hmac.new(key, payload.encode("utf-8"), hashlib.sha256).hexdigest()
+
+
+def verify_tag(payload: str, tag: str, key: bytes) -> bool:
+    # compare_digest, not ==, so verification time does not leak the tag.
+    return hmac.compare_digest(sign_tag(payload, key), tag or "")
+
+
+def _copy_signed_with_key(rows: list, key: bytes) -> list:
+    """Re-sign a copy of `rows` with a different key. Test support only.
+
+    Used to prove that a record signed by someone else's key is reported as
+    such, rather than quietly verifying.
+    """
+    import copy
+    out = copy.deepcopy(rows)
+    for r in out:
+        if r.get("hmac_sha256"):
+            r["hmac_sha256"] = sign_tag(r["minute_sha"], key)
+            r["key_fingerprint"] = key_fingerprint(key)
+    return out
 
 
 def _sha(data) -> str:
@@ -557,6 +624,14 @@ def _minute(kind: str, who: dict, cycle: int, rnd: int, body: dict,
     # timestamp and the previous link. Computed over the record WITHOUT
     # minute_sha itself, which cannot contain its own hash.
     m["minute_sha"] = _sha({k: v for k, v in m.items() if k != "body"} | {"body": body})
+
+    # Authorship tag over the minute hash. Absent when no key is configured --
+    # an unsigned minute is honest about being unsigned rather than carrying an
+    # empty field that looks like a signature.
+    key = _hmac_key()
+    if key:
+        m["hmac_sha256"] = sign_tag(m["minute_sha"], key)
+        m["key_fingerprint"] = key_fingerprint(key)
     return m
 
 
@@ -581,14 +656,50 @@ def verify_chain(rows: list) -> dict:
             return {"ok": False, "reason": "chain link broken (a minute was "
                                            "inserted, removed or reordered)",
                     "row": i, "signed_by": r.get("signed_by")}
+        # The tag fields are added AFTER minute_sha is computed, so they must be
+        # excluded when recomputing it -- otherwise a correctly signed minute
+        # fails its own integrity check.
         recomputed = _sha({k: v for k, v in r.items()
-                           if k not in ("minute_sha", "body")} | {"body": r.get("body")})
+                           if k not in ("minute_sha", "body", "hmac_sha256",
+                                        "key_fingerprint")} | {"body": r.get("body")})
         if r.get("minute_sha") != recomputed:
             return {"ok": False, "reason": "minute hash mismatch", "row": i,
                     "signed_by": r.get("signed_by")}
         prev = r["minute_sha"]
+
+    # authorship, checked separately from integrity: a record can be intact and
+    # unsigned, or intact and signed by a key we do not hold. Those are three
+    # different states and are reported as such rather than collapsed to a bool.
+    key = _hmac_key()
+    tagged = [r for r in rows if r.get("hmac_sha256")]
+    auth = {"signed_rows": len(tagged), "total_rows": len(rows)}
+    if not tagged:
+        auth["status"] = "unsigned"
+    elif not key:
+        auth["status"] = "signed, but no key configured to verify"
+        auth["key_fingerprint"] = tagged[0].get("key_fingerprint", "")
+    else:
+        fp = key_fingerprint(key)
+        wrong = [r.get("signed_by") for r in tagged if r.get("key_fingerprint") != fp]
+        if wrong:
+            auth["status"] = "signed by a DIFFERENT key"
+            auth["their_fingerprint"] = tagged[0].get("key_fingerprint", "")
+            auth["our_fingerprint"] = fp
+        else:
+            bad = [r.get("signed_by") for r in tagged
+                   if not verify_tag(r["minute_sha"], r["hmac_sha256"], key)]
+            if bad:
+                auth["status"] = "FORGED OR ALTERED — hmac did not verify"
+                auth["rows"] = bad[:5]
+            elif len(tagged) != len(rows):
+                auth["status"] = "partially signed"
+            else:
+                auth["status"] = "verified"
+                auth["key_fingerprint"] = fp
+
     return {"ok": True, "rows": len(rows), "head": prev,
-            "dirty_minutes": sum(1 for r in rows if r.get("tree_dirty"))}
+            "dirty_minutes": sum(1 for r in rows if r.get("tree_dirty")),
+            "authorship": auth}
 
 
 # ---------------------------------------------------------------- disagreement
@@ -895,6 +1006,15 @@ def report(run_id: str) -> None:
                   % (r["cycle"], v["rows"], v["head"][:16],
                      ("  · %d from an uncommitted MODEL.md" % v["dirty_minutes"])
                      if v["dirty_minutes"] else ""))
+            a = v.get("authorship", {})
+            st = a.get("status", "unsigned")
+            if st == "verified":
+                print("            authorship: signed by key %s (all %d minutes)"
+                      % (a.get("key_fingerprint", "?"), a.get("signed_rows", 0)))
+            elif st == "unsigned":
+                print("            authorship: UNSIGNED - integrity only. Who produced\n                      this record is not attested.")
+            else:
+                print("            authorship: *** %s ***" % st)
         else:
             print("   cycle %d  *** BROKEN *** %s at row %d (%s)"
                   % (r["cycle"], v.get("reason"), v.get("row", -1), v.get("signed_by")))
@@ -909,6 +1029,39 @@ def report(run_id: str) -> None:
               % (s.get("outcome_accuracy"), s.get("reasoning_quality"), s.get("beat_origin")))
 
 
+def keygen() -> None:
+    """Write a fresh ARENA_HMAC_KEY into .env. Never overwrites an existing one.
+
+    Overwriting would silently orphan every minute already signed with the old
+    key -- they would verify as "signed by a DIFFERENT key", which is correct
+    but unrecoverable. Rotating is therefore a deliberate manual act.
+    """
+    import secrets
+    f = ROOT / ".env"
+    existing = f.read_text(encoding="utf-8") if f.exists() else ""
+    if _KEY_ENV in existing:
+        key = _hmac_key()
+        print("[arena] %s already set in .env - not overwriting." % _KEY_ENV)
+        if key:
+            print("  fingerprint: %s" % key_fingerprint(key))
+        print("  Rotating orphans every minute signed with the old key; to rotate,")
+        print("  remove the line by hand first and keep a note of the old fingerprint.")
+        return
+    key = secrets.token_hex(32)
+    lines = [
+        "",
+        "# Authorship signing for suites.arena. SECRET -- .env is gitignored.",
+        "# Anyone holding this can sign as this instance; verification needs it too.",
+        "%s=%s" % (_KEY_ENV, key),
+        "",
+    ]
+    with f.open("a", encoding="utf-8") as fh:
+        fh.write("\n".join(lines))
+    print("[arena] wrote %s to .env (256-bit, from secrets.token_hex)" % _KEY_ENV)
+    print("  fingerprint: %s" % key_fingerprint(key.encode("utf-8")))
+    print("  .env is gitignored and untracked - verified before this feature was built.")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Public arena: claim, defend, be judged blind.")
     ap.add_argument("--case")
@@ -919,6 +1072,8 @@ def main() -> None:
     ap.add_argument("--list-cases", action="store_true")
     ap.add_argument("--score")
     ap.add_argument("--report")
+    ap.add_argument("--keygen", action="store_true",
+                    help="generate an ARENA_HMAC_KEY into .env (never overwrites)")
     a = ap.parse_args()
     _load_env()
 
@@ -941,6 +1096,8 @@ def main() -> None:
         return
     if a.score:
         return score(a.score, a.dry_run, a.model)
+    if a.keygen:
+        return keygen()
     if a.report:
         return report(a.report)
     if not a.case:

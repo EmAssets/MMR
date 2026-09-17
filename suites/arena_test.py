@@ -226,6 +226,64 @@ def main() -> int:
         if arena.mechanism("ai-pressure")["model_md_sha256"] != clean["model_md_sha256"]:
             fails.append("failed to restore ai-pressure/MODEL.md after the dirty-tree test")
 
+    # ---- HMAC authorship signing ----
+    # The chain proves a record was not altered; the HMAC proves who produced
+    # it. These are different claims and are tested separately.
+    import copy as _copy
+    key = arena._hmac_key()
+    if not key:
+        print("  note: no ARENA_HMAC_KEY set — authorship tests skipped "
+              "(generate one with: python -m suites.arena --keygen)")
+    else:
+        fp = arena.key_fingerprint(key)
+        signed = [r for r in rows if r.get("hmac_sha256")]
+        if len(signed) != len(rows):
+            fails.append("only %d of %d minutes carry an HMAC tag" % (len(signed), len(rows)))
+        else:
+            print("  all %d minutes HMAC-signed, key fingerprint %s" % (len(rows), fp))
+
+        auth = arena.verify_chain(rows).get("authorship", {})
+        if auth.get("status") != "verified":
+            fails.append("authorship did not verify: %s" % auth.get("status"))
+        else:
+            print("  authorship verified against the configured key")
+
+        # The fingerprint must not reveal the key.
+        if key.decode("utf-8", "replace")[:16] in fp or fp in key.decode("utf-8", "replace"):
+            fails.append("KEY FINGERPRINT LEAKS THE KEY")
+        else:
+            print("  fingerprint is a hash, not a prefix of the key — leaks nothing")
+
+        # FORGERY 1: alter a body and re-chain it so the plain hashes are
+        # internally consistent. Only the HMAC can catch this, because the
+        # forger cannot recompute a valid tag without the secret.
+        forged = _copy.deepcopy(rows)
+        forged[1]["body"]["claim"] = "forged claim, re-hashed to look consistent"
+        forged[1]["body_sha256"] = arena._sha(forged[1]["body"])
+        prev = forged[0]["minute_sha"]
+        for r in forged[1:]:
+            r["prev_minute_sha"] = prev
+            r["minute_sha"] = arena._sha(
+                {k: v for k, v in r.items()
+                 if k not in ("minute_sha", "body", "hmac_sha256", "key_fingerprint")}
+                | {"body": r["body"]})
+            prev = r["minute_sha"]
+        vf = arena.verify_chain(forged)
+        a2 = vf.get("authorship", {})
+        if a2.get("status") == "verified":
+            fails.append("FORGERY UNDETECTED — a re-chained edit still verified as authored")
+        else:
+            print("  forgery detected: re-chained edit -> authorship %s" % a2.get("status"))
+
+        # FORGERY 2: a record signed by someone else's key.
+        other = arena._copy_signed_with_key(rows, b"an-attackers-different-key")
+        vo = arena.verify_chain(other)
+        ao = vo.get("authorship", {})
+        if ao.get("status") not in ("signed by a DIFFERENT key", "FORGED OR ALTERED — hmac did not verify"):
+            fails.append("wrong-key signature not flagged: %s" % ao.get("status"))
+        else:
+            print("  wrong-key signature flagged: %s" % ao.get("status"))
+
     # ---- premise carry-forward: cycle 2 must quote the judge, not the panel ----
     c2 = [c["prompt"] for c in CAPTURED if "PREMISE CARRIED FROM THE PREVIOUS CYCLE" in c["prompt"]]
     if not c2:
