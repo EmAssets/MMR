@@ -120,6 +120,20 @@ def main() -> int:
             if len(v) > 25 and any(v in c["prompt"] for c in CAPTURED):
                 fails.append("ORIGIN ASSESSMENT (%s) leaked into a prompt" % key)
 
+    # ---- blindness 2b: the ORIGIN MODEL'S PREDICTION must not leak either ----
+    # Found 2026-09-16: splitting only on "## Real outcome" left the origin's
+    # own prediction in the brief, so the panel was paraphrasing an answer.
+    for slug, c in arena.backtest_cases().items():
+        for probe in ("3. OUTCOME", "CONFIDENCE & FALSIFIABILITY", "Strategy:",
+                      "Reasoning:", "## Prediction"):
+            if probe in c["brief"]:
+                fails.append("ORIGIN PREDICTION LEAKED into %s brief: %r" % (slug, probe))
+    leaked_live = [c["prompt"] for c in CAPTURED if "Sam Altman is formally rehired" in c["prompt"]]
+    if leaked_live:
+        fails.append("origin prediction text reached a live prompt")
+    else:
+        print("  origin prediction withheld from every brief and prompt — correct")
+
     # ---- signatures ----
     run_id = "arena-%s-%s-%s" % (case_slug, arena.TODAY, TAG)
     mfile = arena.ADIR / run_id / "cycle-1" / "minutes.jsonl"

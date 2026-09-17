@@ -61,13 +61,19 @@ confused, and a claim is attributable to a specific state of a specific model.
 ### Backtest cases — the only reality signal before 2026-10-01
 
 Six historical cases from `attention-substrate/predict/backtest_*.md`, each with
-a **sealed outcome** written before the run. The brief is split so the outcome
-never travels with it. After the judge rules, the outcome is revealed and the
-ruling is scored against it.
+a **sealed outcome** written before the run. Both the outcome **and the origin
+model's own prediction** are withheld — see the bug below; leaving the
+prediction in the brief let the panel paraphrase an answer. After the judge
+rules, the sealed material is revealed and the ruling is scored against it.
+
+Because the case files are *only* predictions, what remains as a brief is the
+title and the date (`thin_setup: true` on all six). The panel reasons from the
+framing and general knowledge, which is the harder and more honest test.
 
 Four carry an origin score from a single model, so the arena has a number to
 beat — but the scorer prints a warning with every result: *different graders at
-different times, a gap under ~10 points is noise.*
+different times, a gap under ~10 points is noise.* Any real comparison needs
+the same grader on both arms, and the origin scores re-scored with it.
 
 ### Candidate cases — the arena as the target of the candidate pipeline
 
@@ -114,25 +120,45 @@ The measure is deliberately crude (distinct claim stems, not semantics) because
 a precise number would imply the arena can tell agreement from paraphrase, and
 it cannot.
 
-## What the first run found
+## What the first runs found
 
-`openai-nov-2023`, six panelists, 13 signed minutes, one cycle.
+**Two bugs, found by looking rather than by the tests, and both invalidating.**
 
-The ruling scored **90 accuracy / 85 reasoning** against the sealed outcome; the
-origin single model scored 85/90. Inside the noise band — **comparable, not
-better**, and one case proves nothing either way.
+1. **The brief leaked the origin model's answer.** The case split withheld
+   `## Real outcome` but left `## Prediction`, whose numbered `3. OUTCOME`
+   states the origin's conclusion verbatim. The panel was paraphrasing an
+   answer, and the first run's 90/100 accuracy partly measured copying. Now
+   withheld; `arena_test` fails if any origin-prediction marker reaches a brief
+   or a prompt. **Consequence:** every case file is *only* a prediction, so the
+   remaining setup is a title and a date. The arena now asks models to reason
+   from "OpenAI board fires Altman, 17 Nov 2023" and general knowledge — a
+   harder test, and scores from before the fix are not comparable to scores
+   after it.
 
-More useful than the score, the judge did two things unprompted:
+2. **Two panelists were briefed with a title instead of a mechanism.**
+   `attention-substrate` and `pressure-model` state their mechanism as prose,
+   not under `**The domain:**`. Both replied "mechanism unstated" and abstained
+   — so in the `cand-05` run two of three panelists contributed nothing and the
+   judge ruled on a single voice. A briefing bug, not model reticence. Fixed
+   with a thesis-paragraph fallback.
 
-- **Named a shared assumption across all six panelists:** an unargued
-  "attention/leverage is a conserved, zero-sum pool" framing that no minute
-  justified against the alternative of treating board legitimacy and employee
-  leverage as separate, non-fungible resources.
-- **Named the weakest minute and why:** a panelist called Microsoft's payroll
-  floor decisive in round 1, then reversed to a hedge in round 2 "without
-  resolving why the floor it called decisive didn't in fact decide the outcome."
+**What survives from the first backtest run.** The score does not (the artifact
+was destroyed by a test-isolation bug, since fixed by namespacing test runs).
+What was independently verifiable at the time, and is the behaviour worth
+keeping, is what the judge did unprompted: it named a **shared assumption across
+all six panelists** — an unargued "attention/leverage is a conserved, zero-sum
+pool" framing — and named the weakest minute as one that called a factor
+decisive in round 1 then hedged in round 2 without resolving why.
 
-Disagreement was **5/6 distinct (ratio 0.83)** — the panel did not converge.
+**The first candidate run (`cand-05`) stands.** The judge ruled **RESEMBLANCE**
+and set `evaluator_should_have_killed: true` — a gate leak logged against
+`pattern-evaluator` on the arena's first candidate case. Its reasoning: the
+candidate "never derives a term-by-term correspondence showing why this move
+must recur." No transfer prediction, so nothing is promotable. That is the
+pipeline working.
+
+Tuning scenarios, with the experiments and their costs, are in
+`analysis/ARENA_TUNING_2026-09-16.md`.
 
 ## Honest limits
 

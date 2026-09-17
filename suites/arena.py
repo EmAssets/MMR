@@ -114,9 +114,26 @@ def backtest_cases() -> dict:
         if "## Real outcome" in t:
             head, rest = t.split("## Real outcome", 1)
             outcome = "## Real outcome" + rest
-        # The brief is the setup only: strip the model's own prediction so the
-        # panel argues the case, not a marking scheme.
         title = head.splitlines()[0].lstrip("# ").strip()
+
+        # WITHHOLD THE ORIGIN MODEL'S PREDICTION TOO.
+        #
+        # This was a real leak, found 2026-09-16: splitting only on "## Real
+        # outcome" left `## Prediction` in the brief, and that section ends with
+        # a numbered OUTCOME stating the origin's conclusion verbatim ("Sam
+        # Altman is formally rehired..."). The panel was reading an answer and
+        # paraphrasing it, so the first run's 90/100 accuracy partly measured
+        # copying rather than reasoning.
+        #
+        # The brief is now the SETUP ONLY. Everything from the origin's
+        # prediction onward travels with the sealed material, and a case whose
+        # setup cannot be separated is marked so rather than silently shipped.
+        origin_prediction = ""
+        m_pred = re.search(r"^##+\s*Prediction\b", head, re.M)
+        if m_pred:
+            origin_prediction = head[m_pred.start():]
+            head = head[:m_pred.start()]
+        setup = head.strip()
         m = re.search(r"\(T=([^)]+)\)", title)
         prior = None
         jm = re.search(r"```json(.*?)```", outcome, re.S)
@@ -125,12 +142,24 @@ def backtest_cases() -> dict:
                 prior = json.loads(jm.group(1))
             except ValueError:
                 prior = None
+        # A backtest file that is only a title plus a prediction leaves nothing
+        # to brief with. Rather than hand the panel an empty case, synthesise
+        # the minimum framing from the title and flag that the setup was thin.
+        thin = len(setup) < 200
+        if thin:
+            setup = ("%s\n\nYou are reasoning as of %s. No further setup is "
+                     "recorded in the case file; reason from what a well-informed "
+                     "observer would have known at that date."
+                     % (title, (m.group(1).strip() if m else "the case date")))
+
         out[slug] = {
             "slug": slug,
             "title": title,
             "as_of": (m.group(1).strip() if m else ""),
-            "brief": head.strip(),
-            "sealed_outcome": outcome.strip(),
+            "brief": setup,
+            "sealed_outcome": (origin_prediction + "\n\n" + outcome).strip(),
+            "origin_prediction_withheld": bool(origin_prediction),
+            "thin_setup": thin,
             "origin_score": prior,
             "source": str(f),
         }
@@ -227,13 +256,29 @@ def mechanism(slug: str) -> dict | None:
     dm = re.search(r"\*\*The domain:\*\*\s*(.+)", t)
     kind = (k.group(1).strip() if k else "").split("(")[0].strip()
     dom = dm.group(1).strip() if dm else ""
+
+    # A model with no "**The domain:**" header is not a model without a
+    # mechanism -- the parent theory models (attention-substrate, pressure-model)
+    # state theirs as prose under a thesis heading. Before this fallback they
+    # were briefed with only their title, correctly answered "mechanism
+    # unstated", and abstained: in the first cand-05 run two of three panelists
+    # contributed nothing and the judge ruled on a single voice. That was a bug
+    # in the briefing, not reticence in the models.
+    thesis = ""
+    if not dom:
+        mm = re.search(r"^##+\s*(?:The core thesis|The hypothesis[^\n]*|Premises)\s*$",
+                       t, re.M | re.I)
+        if mm:
+            para = t[mm.end():mm.end() + 700].strip().split("\n\n")[0]
+            thesis = " ".join(para.split())[:420]
+
     return {
         "slug": slug,
         "title": title,
         "kind": kind or "unstated",
         "domain": dom,
-        "derived": "headers" if dom else "title",
-        "one_line": dom or title,
+        "derived": "headers" if dom else ("thesis" if thesis else "title"),
+        "one_line": dom or thesis or title,
         "version": _version_line(t),
         "commit": _commit(slug),
     }
