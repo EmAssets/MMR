@@ -1,0 +1,110 @@
+{
+ "spec": "arena-v1",
+ "run_id": "arena-openai-nov-2023-2026-09-16",
+ "built": "2026-09-16",
+ "case": "openai-nov-2023",
+ "case_title": "Backtest openai-nov-2023 (T=November 17, 2023)",
+ "as_of": "November 17, 2023",
+ "question": "As of November 17, 2023: what happens next, and why?",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "attention-substrate",
+   "title": "The Attention Substrate — the model (v5.1)",
+   "kind": "unstated",
+   "version": "v5.1",
+   "commit": "14c1b8b",
+   "derived": "thesis"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-lab-revealed-priorities",
+   "title": "What Labs Choose When It Costs Them — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "d95eb3b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-option-space",
+   "title": "Option Space and Awareness - (v1)",
+   "kind": "option-space",
+   "version": "v1",
+   "commit": "44f1be6",
+   "derived": "headers"
+  }
+ ],
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": true,
+ "origin_score": {
+  "outcome_accuracy": 85,
+  "reasoning_quality": 90,
+  "biggest_error": "Underestimated the speed and completeness of employee coordination - predicted ~80% solidarity but actual was ~95% within days",
+  "recalibration": "Increase the 'mutual-sight amplification factor' for high-skill organizations under existential threat - when elite workers face potential dissolution, their coordination speed and completeness exceeds baseline organizational parameters",
+  "reasoning_wins": "Correctly identified that Microsoft's coercive floor + employee collective action would overwhelm the board's institution-based legitimacy, and that Altman's memeplex would serve as the coordination focal point"
+ },
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "OpenAI's board crisis resolves with Sam Altman reinstated as CEO and the old board replaced, driven by the commercial/operational side of the org (staff, Microsoft, customers) reasserting control over the safety-board faction that ousted him.",
+    "because": "Six of seven minutes converge on this outcome, but attention-substrate, ai-pressure, ai-lab-revealed-priorities, and lab-moves all lean on the same underlying premise — that operational/commercial leverage (staff loyalty, Microsoft's backing, customer dependence) outweighs the old board's formal authority — merely relabeling it as 'observability pooling,' 'operational leverage,' or 'positioning dominance.' Only pressure-model and ai-option-space argued a materially different claim (a product/pricing counter-move), and pressure-model's own round-2 defense conceded its claim was about a separate, less-dominant axis than the leadership resolution the other four were describing.",
+    "strongest_minute": "attention-substrate — it specifies a falsifiable mechanism (observability recongealing around Altman before the old board could consolidate an alternative center) rather than just asserting leverage wins, giving it more predictive content than the other reinstatement arguments.",
+    "weakest_minute": "ai-option-space — its claim (DevDay platform lead) was largely orthogonal to the actual Nov 17 event, and by round 2 it was already conceding its 'lead' was just one reactive round in pressure-model's cycle rather than a standalone claim.",
+    "shared_assumption": "That commercial/operational control (staff, Microsoft, customers) necessarily overrides formal board/governance authority in a leverage conflict — none of the four convergent minutes independently argued why observability, operations, and revealed-priorities all cash out the same way rather than being three separate hypotheses.",
+    "unresolved": "Whether the reinstatement happened because of a specific mechanism (observability pooling, operational leverage, or revealed prioritization) or simply because Microsoft and staff exerted brute commercial pressure — the minutes never adjudicate between these framings, only restate the same prediction under different vocabulary.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 0,
+    "confidence_spread": 0.23,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "backtest",
+ "score": {
+  "outcome_accuracy": 88,
+  "reasoning_quality": 70,
+  "biggest_error": "The ruling frames it as clean 'board replaced' when the actual resolution was messier and briefly routed through Altman/Brockman joining Microsoft before reversing into reinstatement with a mostly-new board — the ruling gets the endpoint right but glosses the Microsoft-hire detour as if it never mattered",
+  "what_it_got_right": "Correctly identified that staff/Microsoft/customer commercial leverage would overpower the safety-board faction and that Altman would end up back on top with the board reconstituted, which matches the real outcome's core dynamic",
+  "beat_origin": true,
+  "why": "The ruling's outcome and causal mechanism (commercial leverage beats formal board authority) match reality closely enough to count as correct despite compressing the Microsoft-offer detour."
+ }
+}

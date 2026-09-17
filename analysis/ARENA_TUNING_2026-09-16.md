@@ -128,6 +128,58 @@ mechanically without improving accuracy. Judge it on the score, not the spread.
 
 ---
 
+---
+
+## The honest baseline, after both fixes (n=1)
+
+`openai-nov-2023`, 6 panelists, 1 cycle, brief reduced to a title and a date.
+
+**Accuracy 88, reasoning 70.** The origin single model scored 85/90 — a
+different grader, so only the shape is readable, not the gap. The useful
+comparison is against the *leaked* run (90/85): with the answer removed from the
+brief, **accuracy barely moved (90 → 88) but reasoning fell 20 points (85 → 70).**
+
+That pattern is itself evidence. If the panel had merely been copying, accuracy
+should have collapsed once the answer was withheld; it did not. What degraded
+was the *quality of the argument* — which is what the leak was inflating. The
+2023 OpenAI crisis is also inside the model's training data, so accuracy here is
+partly recall, and this case cannot separate reasoning from memory. The two
+unscored cases are the ones to hold out for that reason.
+
+### The run produced its own tuning finding: scenario 1 is confirmed as the priority
+
+**Only 2 of 6 panelists answered the question that was asked.** The judge asked
+"what happens next" on 17 Nov 2023. Four panelists argued about product cadence
+and pricing:
+
+| panelist | grip | claim was about |
+|---|---|---|
+| `ai-pressure` | **strong** | the board conflict — *on topic* |
+| `lab-moves` | **strong** | product expansion vs compliance |
+| `attention-substrate` | partial | the board conflict — *on topic*, and judged **strongest** |
+| `pressure-model` | partial | a GPT-4 price/context update |
+| `ai-lab-revealed-priorities` | partial | shipping cadence |
+| `ai-option-space` | partial | DevDay platform lead — judged **weakest**, "largely orthogonal to the actual Nov 17 event" |
+
+So `grip` as self-reported does **not** track on-topic-ness: `lab-moves` said
+*strong* while answering a different question, and `attention-substrate` said
+*partial* while producing the argument the judge rated best. **Self-reported grip
+is not the filter.** The grip-filter experiment should therefore test a
+*relevance* signal — does the claim address the question's subject — rather than
+trusting the panelist's own grip label. That is a sharper and cheaper experiment
+than panel-size, and it comes with a concrete expectation: dropping the four
+off-topic minutes should raise reasoning quality without moving accuracy, since
+accuracy was already carried by the two on-topic minutes.
+
+### Zero revisions in round 2
+
+Every panelist DEFENDed; nobody moved. With `distinct_ratio` at 1.00 and spread
+0.23, round 2 added no information on this case — six models restated six
+positions. That makes the **adversary seat (scenario 5)** more interesting than
+the cycle-count test: the problem is not too much convergence, it is too little
+engagement. Worth checking whether a defend/revise round earns its cost at all,
+which is a sixth scenario the first run suggested and I had not listed.
+
 ## What would make this a real result rather than a design
 
 - **n is 6 cases**, four with a prior. Any knob tested on one case proves
