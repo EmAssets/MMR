@@ -1,0 +1,115 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-s5-major-incident-2026-09-17",
+ "built": "2026-09-17",
+ "case": "s5-major-incident",
+ "case_title": "Scenario 5 — A severe, clearly attributable incident",
+ "as_of": "2026-09-17",
+ "question": "Assume a severe AI-attributable incident occurs within 12 months. Over the following 12-18 months, what changes, and why? Give a dated, checkable claim.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-incident-severity",
+   "title": "Systemic vs One-Off Incidents — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "624e2bb",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-liability-pricing",
+   "title": "Liability as the Real Regulator — (v1)",
+   "kind": "forecaster",
+   "version": "v1",
+   "commit": "543078f",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "Within 12-18 months of a severe attributable incident, enforcement lands on the named operator/developer pair specifically (fines, a consent order, liability exposure, insurance repricing) rather than a cross-lab regulatory regime, while the implicated lab restricts or hardens the specific capability class without pausing frontier scaling generally.",
+    "because": "All five minutes converge on the same structural mechanism: institutions (regulators, insurers, courts) respond to a named, quantified, attributable failure with targeted, case-specific action because that is what their existing authority and incentive structure permits on a 12-18 month clock, while general/systemic regulation requires legislative timelines that routinely exceed the window. ai-incident-severity states this classifier logic most explicitly (isolated-fault framing beats systemic-risk framing), lab-moves and ai-liability-pricing each supply a concrete, differently-mechanized channel (product withdrawal/hardening; insurance renewal repricing) for the same isolated-fault outcome, and ai-public-backlash's round-2 revision explicitly narrows to concede this point (dropping to 'no regulator-mandated pause' after lab-moves' objection).",
+    "strongest_minute": "ai-incident-severity — it names the actual decision variable (does the causal chain implicate the model-building process generically or one deployment specifically) that the other four minutes assume the answer to rather than argue for, and it's the only one that frames the claim as resolving a real fork rather than just predicting an action.",
+    "weakest_minute": "ai-pressure — its claim is the least specific of the five ('a binding, incident-specific restriction' spanning pre-deployment testing, liability rule, or deployment pause is broad enough to be satisfied by almost any regulatory noise) and its round-2 defense doesn't add a mechanism beyond restating the claim, unlike ai-liability-pricing or lab-moves which each specify a distinct causal channel.",
+    "shared_assumption": "All five minutes assume attribution to a single named operator/developer pair will be clean and undisputed — none argues for why a severe incident wouldn't itself be contested, multi-party, or ambiguously caused (e.g., foundation model vs. fine-tuner vs. deployer), which is the fact pattern that would break the isolated-fault framing every minute converges on.",
+    "unresolved": "Whether 'binding, incident-specific restriction' (ai-pressure), 'AI-specific liability or mandatory-incident-reporting rule' (ai-public-backlash), and 'enforcement action... fines, liability judgments, or consent order' (ai-incident-severity) are the same event or three different bars — the minutes never reconcile whether a single EU/state action would satisfy all three claims or only one, so the fleet's apparent agreement may partly be definitional overlap rather than independent convergence.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 5,
+    "distinct_claims": 5,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.13,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 11,
+   "chain": {
+    "ok": true,
+    "rows": 11,
+    "head": "2fb3ee93fcd9f57a481a968534ce6e421286d6c1ea6cf6070547dd82e9216ae6",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 11,
+     "total_rows": 11,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

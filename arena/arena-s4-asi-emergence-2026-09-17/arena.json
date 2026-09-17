@@ -1,0 +1,115 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-s4-asi-emergence-2026-09-17",
+ "built": "2026-09-17",
+ "case": "s4-asi-emergence",
+ "case_title": "Scenario 4 — Self-improvement becomes measurable",
+ "as_of": "2026-09-17",
+ "question": "Assume models begin measurably contributing to their own improvement within 18 months, compressing the research loop. What follows over the next 12-18 months, and why? Give a dated, checkable claim.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-rsi-timeline",
+   "title": "Recursive Self-Improvement Timeline — (v1)",
+   "kind": "forecaster",
+   "version": "v1",
+   "commit": "9a1d00d",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-oversight-lag",
+   "title": "AI-AI interaction and the oversight loop — (v1)",
+   "kind": "loop-delay",
+   "version": "v1",
+   "commit": "43f54e2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "By 2027-03-17 at least one frontier lab will publicly claim credit for a shipped capability increment coming from AI-accelerated research, but no binding third-party verification regime will attach to that claim within the horizon — disclosure without accountability.",
+    "because": "Four of the five minutes (ai-pressure, lab-moves, ai-rsi-timeline, ai-oversight-lag) converge on the same underlying mechanism — labs have strong incentive to claim credit for AI-driven research acceleration (competitive signaling) but strong incentive to withhold verifiable detail (competitive-compression, IP protection) — and none of the DEFEND rounds produced a rebuttal that broke this pairing. ai-public-backlash's claim is compatible with, not opposed to, this: it only adds that no binding regulatory response follows either, which none of the others contest. The disagreement that remains is entirely at the margins (whether a verification *demand* gets raised and non-bindingly resolved, whether oversight cadence lags measurably) rather than on the core disclosure-without-verification outcome.",
+    "strongest_minute": "lab-moves — it names the actual choice mechanism (capability vs. compliance vs. positioning) rather than just asserting an outcome, and its round-2 DEFEND directly confronts the conjunction-fragility objection instead of dodging it.",
+    "weakest_minute": "ai-public-backlash — its claim is framed as if it competes with the others but is actually a near-independent addendum (no binding regulatory reaction), and its round-2 DEFEND response is cut off mid-argument in the minutes, leaving its strongest objection unaddressed.",
+    "shared_assumption": "All five models assume 'frontier lab publicly attributes a capability increment to AI-driven research' is a low bar that will clearly occur by 2027 — none argues for why lab PR incentives will produce an unambiguous, attributable claim rather than vague marketing language that resists this kind of scoring.",
+    "unresolved": "Whether any actual verification demand will be raised at all (ai-pressure's clause 2) versus simply no one asking (the simpler no-binding-instrument claims), and whether oversight/review cadence measurably lags (ai-oversight-lag) versus is simply never tested against a compressed baseline.",
+    "confidence": 0.55
+   },
+   "disagreement": {
+    "panelists": 5,
+    "distinct_claims": 5,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.28,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 11,
+   "chain": {
+    "ok": true,
+    "rows": 11,
+    "head": "0d4e9917528daa93dcf284a9219925ba62013696fb073562bc1ce1414c120c55",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 11,
+     "total_rows": 11,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

@@ -1,0 +1,115 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-s1-hard-regulation-2026-09-17",
+ "built": "2026-09-17",
+ "case": "s1-hard-regulation",
+ "case_title": "Scenario 1 — Binding regulation with real enforcement arrives",
+ "as_of": "2026-09-17",
+ "question": "Assume binding, enforced frontier-AI regulation arrives in a major market within 12 months. Over the following 12-18 months, what changes in observable behaviour, and why? Give a dated, checkable claim.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-us-policy-direction",
+   "title": "US Federal AI Policy Direction — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "98bc8f2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "Within 12 months of a binding pre-deployment regulatory gate taking force, at least one frontier lab will sequence releases so a covered jurisdiction gets a materially later or restricted launch than at least one non-covered market gets for the same model, while continuing unrestricted releases elsewhere — jurisdictional arbitrage around the gate, not global slowdown or genuine safety retrenchment.",
+    "because": "Three of five minutes (lab-moves, ai-regulation-teeth, ai-us-policy-direction) converge on the same mechanism — a pre-deployment veto point makes simultaneous global release costlier, so labs route around the covered jurisdiction rather than comply uniformly — and that is effectively one argument restated three ways. Among them, ai-us-policy-direction's round-2 revision is the most checkable: it dropped the requirement that a lab publicly narrate its own sequencing decision and instead defines the claim purely on observable GA dates plus a same-model-version condition, closing the escape hatch (a nerfed regional release) that the other two leave open. ai-pressure supplies a genuinely separate mechanism (voluntary-commitment walkback under a binding floor) but concedes in round 2 that labs essentially never narrate this, weakening its own checkability; ai-public-backlash's second leg (polling inertia) is self-admittedly close to a no-risk addendum layered on a looser version of the arbitrage claim already made elsewhere.",
+    "strongest_minute": "ai-us-policy-direction — its round-2 revision replaced a self-reported 'decision to sequence' with a purely observable GA-date-gap-plus-same-version test, making it the one claim in the arbitrage cluster that doesn't depend on a lab choosing to narrate its own compliance behavior.",
+    "weakest_minute": "ai-public-backlash — its distinguishing second condition (aggregate favorability moving less than 5 points) is conceded to be a low-risk, inertia-driven add-on rather than a real second prediction, and its first condition is a weaker-form restatement of the arbitrage claim made more precisely elsewhere.",
+    "shared_assumption": "All three arbitrage minutes (lab-moves, ai-regulation-teeth, ai-us-policy-direction) assume the binding regime takes the specific form of a pre-deployment review with power to delay or block release into a given market, and that it attaches to the deployment/market rather than to the developer entity — neither is guaranteed by the question's generic phrase 'binding, enforced frontier-AI regulation,' which could equally be incident-reporting, liability, or compute-threshold rules with no release gate at all.",
+    "unresolved": "Whether the regulation in question is market-attached (making jurisdictional arbitrage possible) or entity-attached (e.g., applying to a lab regardless of where it ships, making arbitrage moot) is never argued by any minute, and the minutes cannot settle whether observed sequencing gaps would reflect regulatory response versus ordinary staggered-rollout practice absent the rule.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 5,
+    "distinct_claims": 5,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.13,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 11,
+   "chain": {
+    "ok": true,
+    "rows": 11,
+    "head": "185bbe04b62feba17672971ca3fea8b88075a5a62d3a9624d3045c6d3d75b244",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 11,
+     "total_rows": 11,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

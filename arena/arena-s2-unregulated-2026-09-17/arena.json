@@ -1,0 +1,115 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-s2-unregulated-2026-09-17",
+ "built": "2026-09-17",
+ "case": "s2-unregulated",
+ "case_title": "Scenario 2 — Binding regulation does not arrive",
+ "as_of": "2026-09-17",
+ "question": "Assume no binding frontier-AI regulation arrives through 2028 and constraint stays voluntary, contractual or judicial. Over the next 12-18 months, what actually constrains behaviour, and why? Give a dated, checkable claim.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-courts-decide",
+   "title": "Courts as the Deciding Branch — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "4810a2d",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "Export-control-driven compute constraints will be the only mechanism that visibly and checkably changes a frontier lab's behavior on a dated action in this window, while voluntary safety commitments erode under competitive pressure and litigation/state-level moves are too slow or too indirect to bite by comparable dates.",
+    "because": "ai-regulation-teeth's claim is the only one that names a mechanism with an existing, demonstrated causal channel (export controls have already forced compute/location decisions) and sets a falsification bar that requires comparing it against contracts/insurers/voluntary standards producing zero equivalent instances — this is a stronger, comparative claim than the others' single-event claims. ai-pressure and lab-moves are effectively the same argument (a lab loosening or breaching its own voluntary safety commitment under reputational-only enforcement) reached independently, so they count as one thesis, not two independently corroborating ones. ai-courts-decide and ai-public-backlash both concede in round 2 that their channels (litigation, state infrastructure law) are plausible but slower or narrower than export controls, without landing a rebuttal that beats the export-control claim's specificity and precedent.",
+    "strongest_minute": "ai-regulation-teeth — the only claim built as a comparative/relative test (X will happen, Y and Z will not) rather than a single existence claim, which makes it both riskier to assert and more informative if it holds; it also grounds itself in an already-observed causal mechanism (export controls forcing dated compute/deployment decisions) rather than an extrapolated one.",
+    "weakest_minute": "ai-public-backlash — it retreats from the actual question (what constrains frontier-lab *behavior*) to a claim about state-level data-center infrastructure law, which regulates real estate/utilities, not model behavior, and its round-2 defense against ai-regulation-teeth never establishes that infrastructure statutes change what a lab ships or how.",
+    "shared_assumption": "ai-pressure and lab-moves both assume, without arguing it, that a lab's RSP/Preparedness Framework revision or breach is legible and attributable from the outside on a specific date — i.e., that labs will either announce framework changes clearly or that observers can cleanly detect a 'loosening' relative to a 2025-2026 baseline.",
+    "unresolved": "Whether a lab weakening or bypassing its own voluntary safety framework (ai-pressure/lab-moves) is a materially different, more decision-relevant event than a court forcing a product change (ai-courts-decide) or export controls forcing a compute change (ai-regulation-teeth) — the minutes never rank these against each other on decision-relevance, only on likelihood and checkability.",
+    "confidence": 0.55
+   },
+   "disagreement": {
+    "panelists": 5,
+    "distinct_claims": 5,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.2,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 11,
+   "chain": {
+    "ok": true,
+    "rows": 11,
+    "head": "db270a14d25c68f3cd984dbb5ae93d633a71d0cd9183b5d24b6ef81ead631f25",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 11,
+     "total_rows": 11,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

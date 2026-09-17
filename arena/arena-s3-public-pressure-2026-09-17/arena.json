@@ -1,0 +1,115 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-s3-public-pressure-2026-09-17",
+ "built": "2026-09-17",
+ "case": "s3-public-pressure",
+ "case_title": "Scenario 3 — Public opinion becomes the binding constraint",
+ "as_of": "2026-09-17",
+ "question": "Assume public opposition to AI becomes politically binding within 12 months. Over the following 12-18 months, what changes, and why? Give a dated, checkable claim.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "overton-tracker",
+   "title": "Overton tracker — which positions move, and how fast — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "9b9c9a4",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-adoption-phases",
+   "title": "Enterprise Agent Adoption Phases — (v1)",
+   "kind": "timer",
+   "version": "v1",
+   "commit": "e2061cf",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "Within 12-18 months of public opposition becoming politically binding, the concession will land on siting/energy/infrastructure and on named consumer-facing product features (deployment cosmetics), not on frontier model releases or capability-training pace — labs will publicly walk back a specific deployment, datacenter, or product tier while training/scaling continues unchanged.",
+    "because": "Five independently-argued minutes converge on the same structural claim: opposition attaches first to whichever decision surface is locally blockable and politically legible (siting/permitting, a named consumer product, an enterprise agent tier) rather than to the frontier-training pipeline itself, which no minute predicts will slow. The round-2 exchange between ai-pressure, lab-moves, and ai-public-backlash sharpened rather than resolved the dispute over which concession surface moves first (product vs. datacenter), which is the one place real disagreement survived contact.",
+    "strongest_minute": "lab-moves — its claim explicitly separates the two axes (deployment/siting rationale vs. capability-training pace) and defends that split against the near-identical ai-public-backlash claim by committing to the stronger, falsifiable second half (no lab slows a training run for opposition reasons), which the others leave vaguer.",
+    "weakest_minute": "overton-tracker — after its round-2 REVISE, its own mechanism argument undercuts its round-1 claim (it admits opposition binds by attaching to one concrete, locally-blockable harm), so the framing-migration claim is doing less independent work than the others and mostly restates the siting mechanism in discourse terms.",
+    "shared_assumption": "All five minutes assume binding public opposition decomposes into a 'positioning/compliance-lite' pressure that firms can satisfy with a visible but reversible concession, rather than a pressure capable of forcing an actual capability-training slowdown — none argues for this, they just build claims on top of it as a shared premise.",
+    "unresolved": "Whether the first visible concession will be on the datacenter/siting side (ai-public-backlash, overton-tracker) or the consumer-product side (ai-pressure) — the minutes assert competing sequencing but no minute supplies a mechanism to adjudicate which channel actually moves first.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 5,
+    "distinct_claims": 5,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.2,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 11,
+   "chain": {
+    "ok": true,
+    "rows": 11,
+    "head": "b621d55371150757432f1e74bd7651db563ecae1da1c4f7bfdea3b5b7acd5d75",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 11,
+     "total_rows": 11,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}
