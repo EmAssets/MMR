@@ -1,0 +1,9 @@
+{
+ "ruling": "Sam Altman is reinstated as OpenAI CEO within the week with a substantially reconstituted board, rather than a mass exodus to a Microsoft-run entity.",
+ "because": "Six of seven models converge on Altman regaining control of the original shell; the two-way split among them (reinstatement vs. a Microsoft-hosted absorption) collapses once ai-lab-revealed-priorities REVISED off its Microsoft-only claim, leaving 'Altman back at OpenAI, board reconstituted' as the only claim nobody retracted. No minute produced a mechanism explaining why capturing the existing brand/compute/customer shell would be discarded in favor of rebuilding elsewhere, which is the concrete reason lab-moves gave for preferring reinstatement over relocation.",
+ "strongest_minute": "lab-moves — the only argument that engages the actual choice at stake (recapture the existing high-value shell vs. rebuild at Microsoft) rather than just re-asserting which channel 'wins' abstractly.",
+ "weakest_minute": "ai-lab-revealed-priorities — asserted Microsoft's payroll floor was decisive in round 1, then reversed to a disjunctive hedge in round 2 without resolving why the floor it called decisive didn't in fact decide the outcome.",
+ "shared_assumption": "All seven share an unargued 'attention/leverage is a conserved, zero-sum pool that flows to whichever actor synchronizes cheapest' framing — none independently justifies this conserved-pool model versus treating board legitimacy and employee/Microsoft leverage as separate, non-fungible resources.",
+ "unresolved": "Whether the decisive mechanism is employee mutual-sight coordination, Microsoft's coercive payroll floor, or Altman's personal option set — the minutes never adjudicate between these three causal stories, only between their outcome predictions.",
+ "confidence": 0.55
+}

@@ -1,0 +1,109 @@
+{
+ "spec": "arena-v1",
+ "run_id": "arena-openai-nov-2023-2026-09-16",
+ "built": "2026-09-16",
+ "case": "openai-nov-2023",
+ "case_title": "Backtest openai-nov-2023 (T=November 17, 2023)",
+ "as_of": "November 17, 2023",
+ "question": "As of November 17, 2023: what happens next, and why?",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "attention-substrate",
+   "title": "The Attention Substrate — the model (v5.1)",
+   "kind": "unstated",
+   "version": "v5.1",
+   "commit": "14c1b8b",
+   "derived": "title"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "title"
+  },
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-lab-revealed-priorities",
+   "title": "What Labs Choose When It Costs Them — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "d95eb3b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-option-space",
+   "title": "Option Space and Awareness - (v1)",
+   "kind": "option-space",
+   "version": "v1",
+   "commit": "44f1be6",
+   "derived": "headers"
+  }
+ ],
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": true,
+ "origin_score": {
+  "outcome_accuracy": 85,
+  "reasoning_quality": 90,
+  "biggest_error": "Underestimated the speed and completeness of employee coordination - predicted ~80% solidarity but actual was ~95% within days",
+  "recalibration": "Increase the 'mutual-sight amplification factor' for high-skill organizations under existential threat - when elite workers face potential dissolution, their coordination speed and completeness exceeds baseline organizational parameters",
+  "reasoning_wins": "Correctly identified that Microsoft's coercive floor + employee collective action would overwhelm the board's institution-based legitimacy, and that Altman's memeplex would serve as the coordination focal point"
+ },
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "Sam Altman is reinstated as OpenAI CEO within the week with a substantially reconstituted board, rather than a mass exodus to a Microsoft-run entity.",
+    "because": "Six of seven models converge on Altman regaining control of the original shell; the two-way split among them (reinstatement vs. a Microsoft-hosted absorption) collapses once ai-lab-revealed-priorities REVISED off its Microsoft-only claim, leaving 'Altman back at OpenAI, board reconstituted' as the only claim nobody retracted. No minute produced a mechanism explaining why capturing the existing brand/compute/customer shell would be discarded in favor of rebuilding elsewhere, which is the concrete reason lab-moves gave for preferring reinstatement over relocation.",
+    "strongest_minute": "lab-moves — the only argument that engages the actual choice at stake (recapture the existing high-value shell vs. rebuild at Microsoft) rather than just re-asserting which channel 'wins' abstractly.",
+    "weakest_minute": "ai-lab-revealed-priorities — asserted Microsoft's payroll floor was decisive in round 1, then reversed to a disjunctive hedge in round 2 without resolving why the floor it called decisive didn't in fact decide the outcome.",
+    "shared_assumption": "All seven share an unargued 'attention/leverage is a conserved, zero-sum pool that flows to whichever actor synchronizes cheapest' framing — none independently justifies this conserved-pool model versus treating board legitimacy and employee/Microsoft leverage as separate, non-fungible resources.",
+    "unresolved": "Whether the decisive mechanism is employee mutual-sight coordination, Microsoft's coercive payroll floor, or Altman's personal option set — the minutes never adjudicate between these three causal stories, only between their outcome predictions.",
+    "confidence": 0.55
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 5,
+    "distinct_ratio": 0.833,
+    "revised": 1,
+    "confidence_spread": 0.06,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "score": {
+  "outcome_accuracy": 90,
+  "reasoning_quality": 85,
+  "biggest_error": "Framed the mechanism as institution-vs-organization legitimacy transfer rather than the more direct causal chain of employee revolt plus Microsoft's job offer forcing the board's hand, though this is a framing nuance rather than a factual miss",
+  "what_it_got_right": "Correctly called reinstatement with a reconstituted board over the Microsoft-absorption scenario, and correctly identified that no one could explain why the existing brand/compute/customer shell would be abandoned",
+  "beat_origin": true,
+  "why": "The ruling correctly predicted the core outcome (Altman reinstated, board reconstituted) and correctly rejected the Microsoft-exodus alternative, matching the real outcome closely enough to beat a naive baseline."
+ }
+}

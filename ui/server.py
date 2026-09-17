@@ -524,6 +524,7 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
     <button data-t="entities">Entities</button>
     <button data-t="timeline">Timeline</button>
     <button data-t="experts">Experts</button>
+    <button data-t="arena">Arena</button>
     <button data-t="visuals">Visuals</button>
     <button data-t="map">Map</button>
     <button data-t="garden">Garden</button>
@@ -749,6 +750,13 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
     carry aspects, span, mechanism, and record COUNTS only; never claims or
     reasoning. See <kbd>docs/REALITY_MAP.md</kbd> for the federation protocol.</p>
   </div>
+</section>
+
+<section id="arena">
+  <h2>Arena — claim, defend, be judged blind</h2>
+  <p id="ar-note" class="muted"></p>
+  <div id="ar-pick" style="margin:.6rem 0"></div>
+  <div id="ar-body"></div>
 </section>
 
 <section id="experts">
@@ -1779,6 +1787,88 @@ async function loadGloss(){
   relinkAll();
   if (location.hash.startsWith('#g-')) setTimeout(()=>openGloss(location.hash.slice(1)), 250);
 }
+async function loadArena(runId){
+  let d;
+  try { d = await (await fetch("/api/arena" + (runId ? "?run=" + encodeURIComponent(runId) : ""))).json(); }
+  catch(e){ $("#ar-body").innerHTML = "<p class=\"muted\">arena unavailable</p>"; return; }
+  if (d.error){ $("#ar-note").textContent=""; $("#ar-body").innerHTML="<p class=\"muted\">"+esc(d.error)+"</p>"; return; }
+
+  if (d.runs && d.runs.length > 1){
+    $("#ar-pick").innerHTML = d.runs.map(function(r){
+      return "<button class=\"ar-run\" data-run=\""+esc(r)+"\" style=\"margin-right:.4rem\">"+esc(r)+"</button>"; }).join("");
+    document.querySelectorAll(".ar-run").forEach(function(b){
+      b.onclick = function(){ loadArena(b.dataset.run); }; });
+  }
+
+  $("#ar-note").textContent = d.case_title + "  ·  " + d.cycles + " cycle(s)  ·  panel of "
+    + (d.panel||[]).length + (d.dry_run ? "  ·  DRY RUN" : "");
+
+  var TY = {claim:"#7aa7e0", defence:"#d4b45a", ruling:"#c07ad0"};
+
+  var panel = (d.panel||[]).map(function(p){
+    return "<code style=\"color:var(--muted);font-size:.72rem;margin-right:.7rem\">"
+      + esc(p.slug) + " " + esc(p.version||"") + " @" + esc(p.commit||"uncommitted") + "</code>"; }).join("");
+
+  var blind = "<div style=\"border-left:3px solid #c07ad0;padding:.4rem 0 .4rem .7rem;margin:.6rem 0\">"
+    + "<code style=\"color:#c07ad0\">JUDGE IS BLIND TO</code><div style=\"font-size:.84rem\">"
+    + esc((d.judge && d.judge.blind_to || []).join(" · ")) + "</div></div>";
+
+  var html = "<div style=\"margin:.5rem 0\">" + panel + "</div>" + blind;
+
+  (d.rounds||[]).forEach(function(rd){
+    var g = rd.disagreement || {};
+    var conv = (g.distinct_ratio !== undefined && g.distinct_ratio < 0.5);
+    html += "<h3 style=\"margin-top:1.2rem\">Cycle " + rd.cycle + "</h3>";
+    html += "<div style=\"font-size:.82rem;color:var(--muted);margin-bottom:.5rem\">"
+      + "disagreement: " + g.distinct_claims + "/" + g.panelists + " distinct claims"
+      + " (ratio " + (g.distinct_ratio!==undefined?g.distinct_ratio:"—") + ")"
+      + " · " + g.revised + " revised · confidence spread " + g.confidence_spread
+      + (conv ? " <b style=\"color:#d98a5a\">— CONVERGED: read as a shared-source echo, not a consensus</b>" : "")
+      + "</div>";
+
+    (rd.minutes_rows||[]).forEach(function(m){
+      var col = TY[m.type] || "var(--muted)";
+      var b = m.body || {};
+      var head = "<code style=\"color:"+col+"\">" + esc((m.type||"").toUpperCase())
+        + " · r" + m.round + " · signed " + esc(m.signed_by)
+        + (m.model_version ? " " + esc(m.model_version) : "")
+        + " @" + esc(m.model_commit||"uncommitted") + "</code>";
+      var lines = "";
+      if (b.ruling) lines += "<div style=\"font-size:.9rem;margin:.25rem 0\"><b>"+esc(b.ruling)+"</b></div>";
+      if (b.claim)  lines += "<div style=\"font-size:.9rem;margin:.25rem 0\">"+esc(b.claim)+"</div>";
+      if (b.move)   lines += "<div style=\"font-size:.82rem\"><b>"+esc(b.move)+"</b>"
+        + (b.moved_by ? " — moved by " + esc(b.moved_by) : "") + "</div>";
+      if (b.because) lines += "<div style=\"font-size:.82rem;color:var(--muted)\">"+esc(String(b.because).slice(0,420))+"</div>";
+      if (b.answer)  lines += "<div style=\"font-size:.82rem;color:var(--muted)\">"+esc(String(b.answer).slice(0,360))+"</div>";
+      if (b.falsifier) lines += "<div style=\"font-size:.78rem;color:var(--muted)\">falsifier: "+esc(String(b.falsifier).slice(0,240))+"</div>";
+      if (b.blind_spot) lines += "<div style=\"font-size:.78rem;color:var(--muted)\">blind spot: "+esc(String(b.blind_spot).slice(0,220))+"</div>";
+      if (b.shared_assumption) lines += "<div style=\"font-size:.82rem;color:#d98a5a;margin-top:.3rem\">shared assumption: "
+        + esc(String(b.shared_assumption).slice(0,320)) + "</div>";
+      if (b.strongest_minute) lines += "<div style=\"font-size:.78rem;color:var(--muted)\">strongest: "+esc(String(b.strongest_minute).slice(0,200))+"</div>";
+      if (b.weakest_minute) lines += "<div style=\"font-size:.78rem;color:var(--muted)\">weakest: "+esc(String(b.weakest_minute).slice(0,200))+"</div>";
+      if (b._error) lines += "<div style=\"font-size:.82rem;color:#d98a5a\">backend error: "+esc(String(b._error).slice(0,200))+"</div>";
+      html += "<div style=\"border-left:3px solid "+col+";padding:.35rem 0 .35rem .7rem;margin:.4rem 0\">"
+        + head + lines + "</div>";
+    });
+  });
+
+  if (d.score){
+    var s = d.score, o = d.origin_score || {};
+    html += "<h3 style=\"margin-top:1.2rem\">Scored against the sealed outcome</h3>"
+      + "<div style=\"border-left:3px solid #4fc3a1;padding:.4rem 0 .4rem .7rem;margin:.5rem 0\">"
+      + "<div>arena ruling — accuracy <b>" + esc(s.outcome_accuracy) + "</b>, reasoning <b>"
+      + esc(s.reasoning_quality) + "</b></div>"
+      + "<div style=\"color:var(--muted)\">origin single model — accuracy " + esc(o.outcome_accuracy||"—")
+      + ", reasoning " + esc(o.reasoning_quality||"—") + "</div>"
+      + "<div style=\"font-size:.82rem;margin-top:.3rem\">got right: " + esc(String(s.what_it_got_right||"").slice(0,320)) + "</div>"
+      + "<div style=\"font-size:.82rem\">biggest error: " + esc(String(s.biggest_error||"").slice(0,320)) + "</div>"
+      + "<div style=\"font-size:.78rem;color:var(--muted);margin-top:.3rem\">Different graders at different times. "
+      + "A gap under ~10 points is noise, not the arena beating a single model.</div>"
+      + "</div>";
+  }
+  $("#ar-body").innerHTML = html;
+}
+
 async function loadExperts(){
   let d;
   try { d = await (await fetch('/api/experts')).json(); }
@@ -1949,7 +2039,7 @@ async function loadVisuals(){
     + '<p class="muted">Make one: <code>' + esc(d.how||'') + '</code> — views: '
     + esc((d.views||[]).join(', ')) + '</p>';
 }
-loadGardenPage(); loadHome(); loadVerdict(); loadModels(); loadTasks(); loadAssess(); loadEvents(); loadGloss(); loadBrainstorm(); loadMap(); loadExperts();
+loadGardenPage(); loadHome(); loadVerdict(); loadModels(); loadTasks(); loadAssess(); loadEvents(); loadGloss(); loadBrainstorm(); loadMap(); loadExperts(); loadArena();
 loadTimeline(); loadVisuals();
 loadEntities(); loadMindmap();
 {
@@ -2555,6 +2645,38 @@ class H(BaseHTTPRequestHandler):
                 # reader of this endpoint will never open.
                 "note": data.get("note", ""),
                 "timeline": tl})
+        if p == "/api/arena":
+            # Arena runs: signed minutes, the blind judge's ruling, and the
+            # disagreement score per cycle. Minutes live in per-cycle .jsonl
+            # files and are attached here so the renderer gets one payload.
+            adir = ROOT / "arena"
+            if not adir.exists():
+                return self._send(404, {"error": "no arena runs yet — run "
+                                                 "python -m suites.arena --case openai-nov-2023"})
+            runs = sorted([d.name for d in adir.iterdir()
+                           if d.is_dir() and (d / "arena.json").exists()], reverse=True)
+            if not runs:
+                return self._send(404, {"error": "no completed arena runs yet"})
+            want = (parse_qs(urlparse(self.path).query).get("run") or [runs[0]])[0]
+            if want not in runs:
+                return self._send(404, {"error": "no such run"})
+            try:
+                data = json.loads((adir / want / "arena.json").read_text(encoding="utf-8"))
+            except ValueError:
+                return self._send(500, {"error": "arena.json is not valid JSON"})
+            for rd in data.get("rounds", []):
+                f = adir / want / ("cycle-%d" % rd.get("cycle", 0)) / "minutes.jsonl"
+                rows = []
+                if f.exists():
+                    for line in f.read_text(encoding="utf-8").splitlines():
+                        if line.strip():
+                            try:
+                                rows.append(json.loads(line))
+                            except ValueError:
+                                pass
+                rd["minutes_rows"] = rows
+            data["runs"] = runs
+            return self._send(200, data)
         if p == "/api/experts":
             # Per-commentator view: what each said, what happened inside the
             # claim window, whether the view moved, and registered conflicts.
