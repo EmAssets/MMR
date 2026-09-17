@@ -42,9 +42,10 @@
   "lab-moves",
   "attention-substrate",
   "pressure-model",
-  "canon"
+  "canon",
+  "ai-pressure-field"
  ],
  "classifiers": [],
- "decision_repo": "",
+ "decision_repo": "ai-pressure-field",
  "extra_ledgers": []
 }

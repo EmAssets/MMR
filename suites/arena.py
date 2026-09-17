@@ -364,9 +364,22 @@ def scenario_cases() -> dict:
             elif low.startswith("question:"):
                 question, body_at = ln.split(":", 1)[1].strip(), i + 1
         brief = "\n".join(lines[body_at:]).strip()
+        # A SEQUENCED scenario: `## Stage N` sections are argued one per cycle,
+        # each carrying the previous stage's ruling forward as its premise --
+        # which is the carry-forward run() already does, pointed at a moving
+        # brief instead of a fixed one. Everything before the first stage header
+        # is shared setting, prepended to every stage, so the pressure table and
+        # the no-conclusions setting are stated once rather than per section.
+        stages = []
+        mstage = list(re.finditer(r"^##\s*Stage\s+\d+\b.*$", brief, re.M))
+        if mstage:
+            shared = brief[:mstage[0].start()].strip()
+            for i, mm in enumerate(mstage):
+                end = mstage[i + 1].start() if i + 1 < len(mstage) else len(brief)
+                stages.append((shared + "\n\n" + brief[mm.start():end].strip()).strip())
         out[f.stem] = {
             "slug": f.stem, "title": title, "as_of": as_of,
-            "brief": brief, "question": question,
+            "brief": brief, "question": question, "stages": stages,
             "sealed_outcome": "", "origin_prediction_withheld": False,
             "thin_setup": len(brief) < 200, "origin_score": None,
             "mode": "scenario", "source": str(f),
@@ -476,6 +489,18 @@ SCENARIO_PANELS = {
     "s3-public-pressure":  SCENARIO_CORE + ["overton-tracker", "ai-adoption-phases"],
     "s4-asi-emergence":    SCENARIO_CORE + ["ai-rsi-timeline", "ai-oversight-lag"],
     "s5-major-incident":   SCENARIO_CORE + ["ai-incident-severity", "ai-liability-pricing"],
+    # SEQUENCED cases. pressure-model IS seated here, unlike s1-s5: the brief now
+    # carries a measured installed-stake table, which is what its P6 bridge is
+    # about ("E9+ forms install branches with stakes"). It still briefs from its
+    # thesis paragraph (P1, felt pressure) rather than from P6, because its
+    # MODEL.md states no kind/domain header -- so whether it grips or abstains is
+    # itself the finding, and is reported per stage rather than assumed.
+    "seq-a-reactive": SCENARIO_CORE + ["pressure-model", "ai-incident-severity",
+                                       "ai-regulation-teeth"],
+    "seq-b-outrun":   SCENARIO_CORE + ["pressure-model", "ai-rsi-timeline",
+                                       "ai-courts-decide"],
+    "seq-c-stress":   SCENARIO_CORE + ["pressure-model", "ai-regulation-teeth",
+                                       "ai-oversight-lag"],
 }
 
 
@@ -582,6 +607,46 @@ Return STRICT JSON:
  "strongest_minute": "<slug whose argument was best, and why>",
  "weakest_minute": "<slug whose argument was weakest, and why>",
  "shared_assumption": "<an assumption multiple models relied on without arguing for it, or null>",
+ "unresolved": "<what the minutes could not settle>",
+ "confidence": <0.0-1.0>
+}}"""
+
+
+JUDGE_SCENARIO = """You are an INDEPENDENT JUDGE. You have not seen any model's
+documentation and you do not know which model is which beyond its name. You know
+nothing about this situation except what the minutes below contain.
+
+THE QUESTION: {question}
+
+THE MINUTES:
+{minutes}
+
+Rule on the ARGUMENT AS ARGUED. You are not scoring who sounds confident, and
+you must not reward a claim for being popular -- if four models agree because
+they share an assumption, say so and treat it as ONE argument, not four.
+
+This is a CONDITIONAL. The branch in the brief is granted; the question is what
+follows from it. Do not re-litigate whether the branch happens. Do rule on
+whether a minute smuggled in a SECOND assumption the brief did not grant.
+
+Two fields are specific to this mode:
+ - `threat_live`: what becomes newly dangerous, or newly safe, on this branch --
+   the risk the minutes identify as arriving WITH the assumed change rather than
+   as a background condition. If the minutes identify none, say so; do not
+   invent one.
+ - `resolve_by`: the single date by which your ruling is checkable. A ruling with
+   no date is not a ruling, it is a mood.
+
+Return STRICT JSON:
+{{
+ "ruling": "<your single best answer to the question, one sentence>",
+ "because": "<what in the minutes decided it, 2-4 sentences>",
+ "resolve_by": "<YYYY-MM-DD by which this ruling is checkable>",
+ "threat_live": "<what becomes newly dangerous or newly safe on this branch, or null>",
+ "strongest_minute": "<slug whose argument was best, and why>",
+ "weakest_minute": "<slug whose argument was weakest, and why>",
+ "shared_assumption": "<an assumption multiple models relied on without arguing for it, or null>",
+ "smuggled_assumption": "<a premise a minute used that the brief did not grant, or null>",
  "unresolved": "<what the minutes could not settle>",
  "confidence": <0.0-1.0>
 }}"""
@@ -814,6 +879,14 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
         raise SystemExit("unknown case %r — try --list-cases" % case_slug)
     case = cases[case_slug]
     mode = case.get("mode", "backtest")
+    stages = case.get("stages") or []
+    if stages and cycles < len(stages):
+        # A sequence argued short of its last stage is not that sequence.
+        # Raising the count is the honest fix: stopping halfway, or arguing
+        # stage 1 repeatedly, would both file something else under this name.
+        print("  [note] %d stages in this case; running %d cycles (asked %d)"
+              % (len(stages), len(stages), cycles))
+        cycles = len(stages)
     panel = resolve_panel(case_slug, panel_spec)
     if len(panel) < 2:
         raise SystemExit("need >=2 panelists, got %d" % len(panel))
@@ -849,7 +922,7 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
     for cyc in range(1, cycles + 1):
         print("\n  -- cycle %d --" % cyc)
         minutes = []
-        brief = case["brief"]
+        brief = stages[cyc - 1] if stages and cyc <= len(stages) else case["brief"]
         if premise:
             brief += ("\n\nPREMISE CARRIED FROM THE PREVIOUS CYCLE (an independent judge's "
                       "ruling on the prior round's minutes — not a fact, and you may argue "
@@ -887,14 +960,16 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
             % (m["signed_by"], m["model_version"] or "unversioned", m["model_commit"] or "uncommitted",
                m["round"], json.dumps(m["body"], ensure_ascii=False)[:600])
             for m in minutes)
-        jtmpl = JUDGE_CANDIDATE if mode == "candidate" else JUDGE
+        jtmpl = (JUDGE_CANDIDATE if mode == "candidate"
+                 else JUDGE_SCENARIO if mode == "scenario" else JUDGE)
         jprompt = jtmpl.format(question=question, minutes=jtext)
         jbody = _call(model_hint, jprompt, dry)
         # The judge has no MODEL.md, so what identifies its "version" is the
         # prompt template it ruled under. Hashing that makes a later change to
         # the judging standard visible in the record.
         judge_who = {"slug": JUDGE_SLUG, "title": "Independent judge",
-                     "version": "candidate-v1" if mode == "candidate" else "backtest-v1",
+                     "version": ("candidate-v1" if mode == "candidate"
+                                 else "scenario-v1" if mode == "scenario" else "backtest-v1"),
                      "commit": "", "model_md_sha256": _sha(jtmpl),
                      "model_md_bytes": len(jtmpl), "tree_dirty": False}
         ruling = _minute("ruling", judge_who, cyc, 3, jbody, jprompt,
@@ -1154,6 +1229,8 @@ def main() -> None:
     ap.add_argument("--cycles", type=int, default=1)
     ap.add_argument("--model", default="openai/gpt-4o", help="backend model hint")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--tag", default="", help="namespace this run: arena-<case>-<date>-<tag>. "
+                    "Use it for a re-run so a same-day run does not overwrite the first.")
     ap.add_argument("--list-cases", action="store_true")
     ap.add_argument("--score")
     ap.add_argument("--report")
@@ -1197,7 +1274,7 @@ def main() -> None:
     if not a.case:
         ap.print_help()
         return
-    run(a.case, a.panel, max(1, a.cycles), a.dry_run, a.model)
+    run(a.case, a.panel, max(1, a.cycles), a.dry_run, a.model, a.tag)
 
 
 if __name__ == "__main__":
