@@ -484,7 +484,8 @@ def disagreement(minutes: list) -> dict:
 
 # ---------------------------------------------------------------- run
 
-def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str) -> None:
+def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str,
+        run_tag: str = "") -> None:
     cases = all_cases()
     if case_slug not in cases:
         raise SystemExit("unknown case %r — try --list-cases" % case_slug)
@@ -494,7 +495,9 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
     if len(panel) < 2:
         raise SystemExit("need >=2 panelists, got %d" % len(panel))
 
-    run_id = "arena-%s-%s" % (case_slug, TODAY)
+    # run_tag namespaces test runs so a test can never overwrite a real run's
+    # artifacts -- which it did once, silently, while a live run was in flight.
+    run_id = "arena-%s-%s%s" % (case_slug, TODAY, ("-" + run_tag) if run_tag else "")
     outdir = ADIR / run_id
     outdir.mkdir(parents=True, exist_ok=True)
 

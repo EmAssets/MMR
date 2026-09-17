@@ -1,0 +1,12 @@
+{
+ "ruling": "RESEMBLANCE",
+ "because": "Two of the three participating models (attention-substrate, pressure-model) explicitly declared their mechanism 'unstated' and refused to produce any claim — they contribute zero evidence either way. The only model that engaged, pattern-candidates, describes a substrate-independent structural template (sum-to-integral substitution triggered by comparing a discreteness scale to a thermal/characteristic scale) but never derives a term-by-term correspondence showing why this move must recur, nor states what physical quantity plays the role of 'thermal energy' at the other level — it asserts the move 'recurs' rather than showing the recurrence is forced by shared underlying physics rather than by both problems being solved with the same piece of applied mathematics (Debye's own T^3 law is itself just Planck's quantization argument reapplied to phonons, a known historical borrowing, not an independent mechanism transfer).",
+ "transfer_prediction": null,
+ "resolve_by": null,
+ "strongest_minute": "pattern-candidates round 1 — the only minute that attempts to name the actual invariant (discreteness-scale-vs-kT comparison) rather than abstaining, even though it doesn't close the mechanism case.",
+ "weakest_minute": "attention-substrate round 2 DEFEND — concedes its own mechanism is unstated yet still argues about what 'an unstated mechanism could in principle recognize,' which is incoherent: a model with no mechanism cannot defend a claim about pattern transfer, only describe what a hypothetical different evaluator might do.",
+ "shared_assumption": "All three treat 'the same mathematical move appears in both derivations' as if it settles the mechanism-vs-resemblance question, without arguing why a shared mathematical technique (sum-to-integral substitution under a cutoff) implies a shared underlying causal mechanism rather than two independent applications of the same general-purpose math to different physical substrates.",
+ "evaluator_should_have_killed": true,
+ "unresolved": "Whether the discreteness-scale-vs-thermal-scale comparison is forced by a common physical mechanism (e.g., both being consequences of a deeper quantization principle) or is simply the same textbook technique (Debye explicitly modeled his derivation on Planck's) applied twice — no minute distinguishes 'shared math' from 'shared mechanism,' and none produces a dated prediction at the other level.",
+ "confidence": 0.78
+}

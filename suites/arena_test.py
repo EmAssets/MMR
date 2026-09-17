@@ -35,6 +35,10 @@ from suites import arena  # noqa: E402
 
 CAPTURED: list[dict] = []
 
+# Every artifact this test writes is namespaced. Without this the test wrote to
+# the same directory as a real run and silently destroyed it mid-flight.
+TAG = "selftest"
+
 
 def fake_call(model_hint, prompt, dry):
     """Echo backend: records the prompt, returns a well-formed minute."""
@@ -75,7 +79,8 @@ def main() -> int:
     if not case["sealed_outcome"] or len(case["sealed_outcome"]) < 80:
         fails.append("case has no sealed outcome to withhold — test is vacuous")
 
-    arena.run(case_slug, "attention-substrate,pressure-model,ai-pressure", 2, False, "test-model")
+    arena.run(case_slug, "attention-substrate,pressure-model,ai-pressure", 2, False, "test-model",
+              run_tag=TAG)
 
     print("\n=== captured %d prompts ===" % len(CAPTURED))
 
@@ -116,7 +121,7 @@ def main() -> int:
                 fails.append("ORIGIN ASSESSMENT (%s) leaked into a prompt" % key)
 
     # ---- signatures ----
-    run_id = "arena-%s-%s" % (case_slug, arena.TODAY)
+    run_id = "arena-%s-%s-%s" % (case_slug, arena.TODAY, TAG)
     mfile = arena.ADIR / run_id / "cycle-1" / "minutes.jsonl"
     if not mfile.exists():
         fails.append("no minutes written")
@@ -155,7 +160,7 @@ def main() -> int:
         cslug = sorted(cands)[0]
         rulings = arena.TOOLS / "pattern-candidates" / "candidates" / "arena-rulings.json"
         before = rulings.read_text(encoding="utf-8") if rulings.exists() else None
-        arena.run(cslug, "attention-substrate,pressure-model", 1, False, "test-model")
+        arena.run(cslug, "attention-substrate,pressure-model", 1, False, "test-model", run_tag=TAG)
 
         jp = [c["prompt"] for c in CAPTURED if c["prompt"].startswith("You are an INDEPENDENT JUDGE")]
         if not jp:
@@ -166,7 +171,7 @@ def main() -> int:
             print("  candidate mode: judge asked mechanism-or-resemblance — correct")
 
         # the evaluator must never sit on a panel judging its own verdict
-        payload = json.loads((arena.ADIR / ("arena-%s-%s" % (cslug, arena.TODAY)) / "arena.json")
+        payload = json.loads((arena.ADIR / ("arena-%s-%s-%s" % (cslug, arena.TODAY, TAG)) / "arena.json")
                              .read_text(encoding="utf-8"))
         if any(x["slug"] == "pattern-evaluator" for x in payload.get("panel", [])):
             fails.append("pattern-evaluator seated on a panel judging its own verdict")
@@ -197,6 +202,10 @@ def main() -> int:
             fails.append("arena modified pattern-evaluator/verdicts.json")
         else:
             print("  candidate mode: evaluator verdicts.json untouched — correct")
+
+    import shutil
+    for d in arena.ADIR.glob("arena-*-%s" % TAG):
+        shutil.rmtree(d, ignore_errors=True)
 
     print()
     if fails:
