@@ -1,0 +1,12 @@
+{
+ "ruling": "MECHANISM",
+ "because": "pattern-candidates is the only minute that actually engages the object-level question, and its claim ties fringe visibility to mass, thermal/collisional emission rate, and environmental coupling strength — the same physical quantities acting as the same causal variables at both the microscopic and mesoscopic scale, not a borrowed equation with different variables underneath (which is what would mark a mere resemblance). Neither attention-substrate nor pressure-model rebuts this on the merits: attention-substrate declines because the case sits below its own substrate, and pressure-model declines because the distinction doesn't bear on its token-level stakes calculus — both are scope abstentions, not counterarguments to the physics claim.",
+ "transfer_prediction": "For a mesoscopic test mass in the 10^6-10^7 amu range held in vacuum below 1 nK effective temperature, matter-wave fringe visibility will decay with a rate predicted within a factor of 2 by the product of particle mass, residual thermal-photon emission rate, and background-gas collision rate, with no additional suppression term required for the object's size or 'macroscopicity' as such.",
+ "resolve_by": "2029-09-16",
+ "strongest_minute": "pattern-candidates round 1 (commit 8dffc87) — the only minute that states a mechanism claim with parameters that are the same causal variables at both scales, rather than merely reusing vocabulary.",
+ "weakest_minute": "pressure-model round 1/2 (commit ae0eaa5) — declines the object-level question entirely on the grounds that it doesn't affect 'next-token stakes,' which is a fact about the model's own decision procedure, not evidence about whether decoherence transfers across levels.",
+ "shared_assumption": "All three minutes treat 'environmental entanglement/decoherence' as the actual generative mechanism rather than as a mathematical model of one; none argues for this identification, they only argue about whether it's in scope.",
+ "evaluator_should_have_killed": false,
+ "unresolved": "The falsifier fields for all three minutes are truncated in what was provided, so it cannot be confirmed whether pattern-candidates' own falsifier already matches existing molecule-interferometry results (which would make its claim retrodiction rather than a fresh prediction) or points to a genuinely untested regime; the ruling assumes the latter by pushing the transfer prediction to an untested mass range.",
+ "confidence": 0.65
+}

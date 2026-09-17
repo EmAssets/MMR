@@ -1,0 +1,102 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-cand-19-2026-09-16",
+ "built": "2026-09-16",
+ "case": "cand-19",
+ "case_title": "Candidate 19 from transcript_YSwRqNCeP9k.txt",
+ "as_of": "2026-09-16",
+ "question": "Does this cross-layer pattern name a MECHANISM that carries between levels, or a RESEMBLANCE? If a mechanism, what dated prediction does it produce at the other level?",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "attention-substrate",
+   "title": "The Attention Substrate — the model (v5.1)",
+   "kind": "unstated",
+   "version": "v5.1",
+   "commit": "14c1b8b",
+   "derived": "thesis"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "pattern-candidates",
+   "title": "Cross-layer pattern candidates — (v1)",
+   "kind": "generator",
+   "version": "v1",
+   "commit": "8dffc87",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "MECHANISM",
+    "because": "pattern-candidates is the only minute that actually engages the object-level question, and its claim ties fringe visibility to mass, thermal/collisional emission rate, and environmental coupling strength — the same physical quantities acting as the same causal variables at both the microscopic and mesoscopic scale, not a borrowed equation with different variables underneath (which is what would mark a mere resemblance). Neither attention-substrate nor pressure-model rebuts this on the merits: attention-substrate declines because the case sits below its own substrate, and pressure-model declines because the distinction doesn't bear on its token-level stakes calculus — both are scope abstentions, not counterarguments to the physics claim.",
+    "transfer_prediction": "For a mesoscopic test mass in the 10^6-10^7 amu range held in vacuum below 1 nK effective temperature, matter-wave fringe visibility will decay with a rate predicted within a factor of 2 by the product of particle mass, residual thermal-photon emission rate, and background-gas collision rate, with no additional suppression term required for the object's size or 'macroscopicity' as such.",
+    "resolve_by": "2029-09-16",
+    "strongest_minute": "pattern-candidates round 1 (commit 8dffc87) — the only minute that states a mechanism claim with parameters that are the same causal variables at both scales, rather than merely reusing vocabulary.",
+    "weakest_minute": "pressure-model round 1/2 (commit ae0eaa5) — declines the object-level question entirely on the grounds that it doesn't affect 'next-token stakes,' which is a fact about the model's own decision procedure, not evidence about whether decoherence transfers across levels.",
+    "shared_assumption": "All three minutes treat 'environmental entanglement/decoherence' as the actual generative mechanism rather than as a mathematical model of one; none argues for this identification, they only argue about whether it's in scope.",
+    "evaluator_should_have_killed": false,
+    "unresolved": "The falsifier fields for all three minutes are truncated in what was provided, so it cannot be confirmed whether pattern-candidates' own falsifier already matches existing molecule-interferometry results (which would make its claim retrodiction rather than a fresh prediction) or points to a genuinely untested regime; the ruling assumes the latter by pushing the transfer prediction to an untested mass range.",
+    "confidence": 0.65
+   },
+   "disagreement": {
+    "panelists": 3,
+    "distinct_claims": 3,
+    "distinct_ratio": 1.0,
+    "revised": 0,
+    "confidence_spread": 0.72,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 7,
+   "chain": {
+    "ok": true,
+    "rows": 7,
+    "head": "436707a083297cd7193d4be77596e0ca8936a30e7dc17fda03bacfd0bec4f85d",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 7,
+     "total_rows": 7,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "candidate"
+}
