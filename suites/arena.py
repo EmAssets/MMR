@@ -549,12 +549,27 @@ Answer ONLY through your own mechanism. If your mechanism has no grip on this
 case, say so — "no grip" is a respectable answer and is better than a guess
 dressed as an inference.
 
+THE PIVOT. Beyond your claim, name the ONE variable this case actually turns
+on — the fact whose resolution would REORDER the outcomes, not merely shift
+confidence in them. Not your falsifier: a falsifier is what proves YOU wrong,
+while the pivot is what the SITUATION hinges on, and the two are often
+different. A pivot must be a thing that could go either way and that someone
+could check on a date; "how it plays out" is not a pivot.
+
+Most arguments are not pivots. An argument can be correct, well-evidenced and
+still sit entirely on one side of the real hinge — true but not load-bearing.
+Say plainly whether your own claim bears on the pivot you named, or falls to
+one side of it.
+
 Return STRICT JSON, no prose outside it:
 {{
  "grip": "strong" | "partial" | "none",
  "claim": "<your single falsifiable claim about what happens, one sentence>",
  "because": "<the mechanism step that produces it, 2-3 sentences>",
  "falsifier": "<the specific observation that would prove you wrong>",
+ "pivot": "<the ONE variable this case turns on, stated so it could resolve either way>",
+ "pivot_observable": "<what would settle that variable, and by when>",
+ "claim_bears_on_pivot": true | false,
  "confidence": <0.0-1.0>,
  "blind_spot": "<what your mechanism structurally CANNOT see about this case>"
 }}"""
@@ -629,16 +644,44 @@ This is a CONDITIONAL. The branch in the brief is granted; the question is what
 follows from it. Do not re-litigate whether the branch happens. Do rule on
 whether a minute smuggled in a SECOND assumption the brief did not grant.
 
-Two fields are specific to this mode:
+YOUR PRIMARY JOB IS THE PIVOT. Each minute named the variable it thinks this
+case turns on. Rule on which one is actually load-bearing: the single variable
+whose resolution REORDERS the outcome set, rather than merely shifting
+confidence within a fixed order. Test a candidate by asking whether the
+situation lands somewhere materially different if it resolves the other way. If
+it does not, it is not the pivot however well it was argued.
+
+You may name a pivot NO panelist named, if the minutes make one visible that
+they all argued around. Say so explicitly when you do.
+
+Then sort every minute by where it falls:
+ - "above"       — bears on the pivot and argues one side of it
+ - "below"       — bears on the pivot and argues the other side
+ - "not-bearing" — sits entirely to one side, or on a different axis
+
+"not-bearing" IS NOT A CRITICISM AND MUST NOT BE USED AS ONE. A minute can be
+correct, well-evidenced and decisive-sounding and still carry no weight on the
+hinge. Saying so is the useful part of this ruling: it separates what is true
+from what is load-bearing. Do not demote a minute to "not-bearing" because you
+disliked it, and do not promote a weak argument because it touched the pivot.
+
+Three further fields specific to this mode:
  - `threat_live`: what becomes newly dangerous, or newly safe, on this branch --
-   the risk the minutes identify as arriving WITH the assumed change rather than
-   as a background condition. If the minutes identify none, say so; do not
-   invent one.
+   the risk arriving WITH the assumed change rather than as a background
+   condition. If the minutes identify none, say so; do not invent one.
  - `resolve_by`: the single date by which your ruling is checkable. A ruling with
    no date is not a ruling, it is a mood.
+ - `smuggled_assumption`: a premise a minute used that the brief did not grant.
 
 Return STRICT JSON:
 {{
+ "pivot": "<the ONE variable this case turns on, stated so it could resolve either way>",
+ "pivot_observable": "<the concrete thing that settles it>",
+ "pivot_resolves_by": "<YYYY-MM-DD>",
+ "pivot_source": "<slug of the minute that named it, or 'judge' if none did>",
+ "pivot_because": "<why THIS variable reorders outcomes and the rivals do not, 2-4 sentences>",
+ "minutes_by_side": {{"<slug>": "above|below|not-bearing"}},
+ "rival_pivots_rejected": "<the other candidates named, and why each is not the hinge>",
  "ruling": "<your single best answer to the question, one sentence>",
  "because": "<what in the minutes decided it, 2-4 sentences>",
  "resolve_by": "<YYYY-MM-DD by which this ruling is checkable>",
@@ -969,13 +1012,24 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
         # the judging standard visible in the record.
         judge_who = {"slug": JUDGE_SLUG, "title": "Independent judge",
                      "version": ("candidate-v1" if mode == "candidate"
-                                 else "scenario-v1" if mode == "scenario" else "backtest-v1"),
+                                 else "scenario-v2-pivot" if mode == "scenario" else "backtest-v1"),
                      "commit": "", "model_md_sha256": _sha(jtmpl),
                      "model_md_bytes": len(jtmpl), "tree_dirty": False}
         ruling = _minute("ruling", judge_who, cyc, 3, jbody, jprompt,
                          minutes[-1]["minute_sha"])
         minutes.append(ruling)
         print("     JUDGE  %s" % str(jbody.get("ruling", ""))[:88])
+        if jbody.get("pivot"):
+            src = jbody.get("pivot_source") or "?"
+            print("     PIVOT [%s]: %s" % (src, str(jbody["pivot"])[:78]))
+            sides = jbody.get("minutes_by_side") or {}
+            if sides:
+                nb = [k for k, v in sides.items() if str(v).startswith("not-bear")]
+                print("       sides: %s" % ", ".join("%s=%s" % (k, v) for k, v in sides.items()))
+                if nb:
+                    # Not a demerit. A minute can be right and carry no weight on
+                    # the hinge, and separating those is the point of the field.
+                    print("       not bearing on the pivot (not a criticism): %s" % ", ".join(nb))
         if jbody.get("shared_assumption"):
             print("     judge flags shared assumption: %s" % str(jbody["shared_assumption"])[:80])
 
@@ -1149,6 +1203,19 @@ def report(run_id: str) -> None:
         print("   %-5d  %d/%-6d %-8d %-8.2f %s"
               % (r["cycle"], d["distinct_claims"], d["panelists"], d["revised"],
                  d["confidence_spread"], str(r["ruling"].get("ruling", ""))[:60]))
+        ru = r["ruling"]
+        if ru.get("pivot"):
+            print("          pivot [%s, by %s]: %s"
+                  % (ru.get("pivot_source") or "?", ru.get("pivot_resolves_by") or "undated",
+                     str(ru["pivot"])[:66]))
+            sides = ru.get("minutes_by_side") or {}
+            nb = [k for k, v in sides.items() if str(v).startswith("not-bear")]
+            if sides:
+                bear = len(sides) - len(nb)
+                # Printed as a COUNT, not as a verdict on any model: a minute off
+                # the hinge is not a worse minute, and the split is the finding.
+                print("          %d of %d minutes bear on it; off-hinge: %s"
+                      % (bear, len(sides), ", ".join(nb) if nb else "none"))
     # Re-verify from the minutes on disk rather than trusting the stored
     # verdict: a stored "ok" that is never recomputed attests to nothing.
     print("\n  chain verification (recomputed from minutes.jsonl):")
