@@ -88,9 +88,19 @@ def credibility_from_demonstration(demonstrated: str, today: str) -> tuple[float
     9-month-old demonstration from an 11-month-old one, and we cannot.
     """
     d = (demonstrated or "").strip().lower()
-    if not d or d in ("never", "none", "n/a", "-"):
-        # Announced but never imposed. Not zero: an undemonstrated threat from a
-        # body that plainly could impose it still moves behaviour. Just weak.
+    # "never" ANYWHERE wins, and it is checked before any date is looked for.
+    #
+    # The models do not answer with a bare "never" -- they explain: "never --
+    # law effective 2026-01-01, no AG enforcement action found", "never (only
+    # preliminarily suspended 2026-04-27; no merits ruling)". Those are
+    # undemonstrated stakes that happen to cite a date for when the POWER
+    # arrived. Measured 2026-09-18: matching the date first gave all four such
+    # vectors 0.85, the top band, which is the exact inverse of what they say.
+    # Phi-attenuation is about whether the consequence LANDED, not whether the
+    # authority exists.
+    if not d or "never" in d or d in ("none", "n/a", "-", "not yet", "no"):
+        # Not zero: an undemonstrated threat from a body that plainly could
+        # impose it still moves behaviour. Just weak.
         return 0.25, "never demonstrated"
     m = re.search(r"(\d{4})-(\d{2})", d)
     if not m:
