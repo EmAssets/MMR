@@ -1,0 +1,26 @@
+{
+ "pivot": "Does SB 53's disclosure duty reach a frontier model deployed internally for research and never publicly released, or does it attach only to the released artifact?",
+ "pivot_observable": "A frontier lab's SB 53 filing, AG interpretive action, or system card either discloses evals/specs/capability data for an internal-only research model, or a regulator states the duty does not reach it",
+ "pivot_resolves_by": "2027-06-30",
+ "pivot_source": "ai-regulation-teeth",
+ "pivot_because": "This is the one binary that reorders the outcome set rather than shifting confidence within it. If SB 53 reaches internal deployment, the deliberative/development-gated installers keep bite on the actual frontier, ai-pressure's and lab-moves's claims are falsified by their own stated dates, and pressure-model's predicted shift toward BIS doesn't occur because release-gated and development-gated channels haven't gone slack. If it doesn't reach internal deployment, release-gated rules become theatre against the true frontier, SB 53 collapses into the release-gated category in practice, and BIS/export-control becomes the only channel that still bites. Rival candidates (correction latency, public sentiment) only matter downstream of this fork.",
+ "minutes_by_side": {
+  "ai-pressure": "above",
+  "lab-moves": "above",
+  "ai-public-backlash": "not-bearing",
+  "pressure-model": "above",
+  "ai-regulation-teeth": "above",
+  "ai-oversight-lag": "not-bearing"
+ },
+ "rival_pivots_rejected": "ai-oversight-lag's correction-latency-vs-loop-period framing is downstream, not the hinge: latency only determines how badly a channel lags once that channel is established to apply at all, and its own ruling holds on either side of the reach question. ai-public-backlash's labor-visible-symptom trigger sits on a public-sentiment axis orthogonal to the disclosure-regime question and doesn't reorder anything about which regulatory channel binds. pressure-model's 'shift toward fast installers' is a restatement of the same non-reach assumption the other three above-side minutes make, not an independent pivot — and its own round 2 concedes the rival reading (shrink, not shift) without resolving it, making it argument-by-formula rather than a distinct variable.",
+ "ruling": "Given Stage 1's release/deployment-gated correction channels and Stage 2's compression of the internal research cycle, the frontier stays inside the regulatory perimeter only if SB 53's duty is read to reach undisclosed internal deployment — and every minute that addresses this treats non-reach as the working assumption, making theatre-relative-to-the-frontier the operative near-term threat unless a filing or ruling closes that gap by 2027-06-30.",
+ "because": "Four minutes (ai-pressure, lab-moves, pressure-model, ai-regulation-teeth) converge on treating internal-only deployment as outside current disclosure obligations — this is one shared argument, not four independent ones, and none of them argues the other side. ai-regulation-teeth is the only one that names the reach question as genuinely open rather than settled, which is why it is the pivot source even though its practical conclusion sits on the same side as the others.",
+ "resolve_by": "2027-06-30",
+ "threat_live": "Newly dangerous: the leading edge of capability (the self-improving internal loop) sits outside every correction channel Stage 1 installed, while ai-oversight-lag's own timing shows correction latency already exceeds the release cadence — so even nominal jurisdiction would arrive late. Newly safe/unaffected: input-gated controls (BIS/export licensing), which choke compute regardless of who performs the research or whether it's disclosed, per ai-regulation-teeth and pressure-model.",
+ "strongest_minute": "ai-pressure — its round-2 revision replaced an unfalsifiable comparative claim ('faster than the duty') with a scoped claim resting on the actual gap in current filing regimes, and attached concrete, checkable falsifiers.",
+ "weakest_minute": "pressure-model — its round-2 defense of a 'shift' in tension conceded the strongest objection (that internalization shrinks rather than redirects the tension) without resolving it, leaving the claim's central mechanism argued by formula rather than settled.",
+ "shared_assumption": "ai-pressure, lab-moves, pressure-model, and ai-regulation-teeth all assume, without independently arguing it, that current disclosure regimes do not reach a model that is used internally and never publicly released — this is one load-bearing assumption asserted by four minutes, not four separate confirmations of it.",
+ "smuggled_assumption": "ai-regulation-teeth's claim depends on capability gains being 'attributable' to internal self-improvement in a way regulators or labs can quantify — the brief grants a compressed self-improvement cycle, not that its contribution to any given capability increment is measurable or attributed, so attributability is an added premise, not a granted one.",
+ "unresolved": "Whether SB 53 or the GPAI Code's development-gated triggers can as a legal matter reach a model that is deployed only internally — none of the minutes resolve this from statutory text or regulatory guidance, they only assume an answer and build forward from it.",
+ "confidence": 0.62
+}

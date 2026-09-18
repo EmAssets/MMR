@@ -1,0 +1,228 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-seq-c-stress-2026-09-18-pivot",
+ "built": "2026-09-18",
+ "case": "seq-c-stress",
+ "case_title": "Sequence C — Hard regulation first, then a capability jump, then an incident",
+ "as_of": "2026-09-17",
+ "question": "Stage by stage, what follows from this ordering, what threat becomes live at each step, and what dated observable would show it?",
+ "cycles": 3,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-oversight-lag",
+   "title": "AI-AI interaction and the oversight loop — (v1)",
+   "kind": "loop-delay",
+   "version": "v1",
+   "commit": "43f54e2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "pivot": "Is the enforced requirement separable by jurisdiction (a market-specific product/access control that can be geofenced) or inherently global (a developer-level disclosure/process obligation, like a safety-framework publication duty, that applies regardless of where the model ships)?",
+    "pivot_observable": "The content of the first compliance action taken: does the lab satisfy it by restricting or delaying access in the enforcing jurisdiction alone (separable), or by changing/publishing a global pre-deployment process document that governs releases everywhere (not separable)?",
+    "pivot_resolves_by": "2026-12-17",
+    "pivot_source": "judge",
+    "pivot_because": "If the obligation is separable, the outcome set is {geofence/delay in-market, pay-and-proceed globally} and global release cadence is untouched either way — this is what ai-pressure, ai-regulation-teeth, and pressure-model all assume. If it is not separable — e.g. SB 53's safety-framework disclosure duty, which lab-moves' round-2 objection notes attaches to the developer, not the shipment — there is no local branch to geofence, and the outcome set becomes {global gate/process change, or exit the regime entirely}, which does touch global mechanics. This is upstream of pressure-model's fine-to-release-value ratio: that ratio only picks a sub-branch within the separable outcome set (geofence vs. pay), so it cannot reorder anything if separability fails first — no local price to weigh, no branch to route around.",
+    "minutes_by_side": {
+     "ai-pressure": "above",
+     "ai-regulation-teeth": "above",
+     "pressure-model": "above",
+     "lab-moves": "below",
+     "ai-public-backlash": "not-bearing",
+     "ai-oversight-lag": "not-bearing"
+    },
+    "rival_pivots_rejected": "pressure-model's own named variable (fine-to-release-value ratio) fails the reorder test: both above- and below-threshold outcomes it describes (geofence vs. pay-and-proceed) leave global cadence intact — it's ai-regulation-teeth's claim restated as a spectrum, not a new outcome set. 'Enforcement exists vs. doesn't' (round-1 framing, ai-pressure/pressure-model) is granted by the brief and isn't in play. Sentiment framing (ai-public-backlash) and oversight-loop delay (ai-oversight-lag) are real but sit on axes orthogonal to which compliance mode a lab picks.",
+    "ruling": "Whether this enforcement action reshapes global release mechanics or only fragments one market depends on whether the enforced obligation can be satisfied locally — and three minutes assumed separability (geofencing SB 53) without arguing for it, while lab-moves' own objection shows SB 53 is a developer-level disclosure duty that a geofence doesn't satisfy.",
+    "because": "ai-pressure fixed the enforcing regime as California SB 53's chatbot-safety track and built a geofencing claim on it; lab-moves' round-2 rebuttal directly notes SB 53 already requires all three labs to publish a safety framework — a developer-level obligation, not a per-shipment one — which means the premise that this specific regime produces a geofenceable branch is contested within the minutes themselves, not just by me. pressure-model's round-2 retreat (from 'labs route to the weakest jurisdiction' to 'only above the fine/value threshold') is itself evidence that mere enforcement doesn't reorder outcomes; it only shifts confidence within the separable-outcome frame, which is exactly why it isn't the pivot.",
+    "resolve_by": "2026-12-17",
+    "threat_live": "Jurisdictional arbitrage in release timing (pressure-model's release-timing gap) becomes live only conditional on separability; if the obligation turns out to be global/developer-level instead, the threat that becomes live is the opposite one — a single enforcement action forcing a synchronized global process change (or regime exit) across all markets at once, which none of the 'geofence' minutes priced in.",
+    "strongest_minute": "lab-moves — its round-2 revision is the only one that engages the actual content of SB 53 (a framework-disclosure duty) rather than assuming it behaves like a product ban, and in doing so it surfaces the separability question the other three needed but didn't argue for.",
+    "weakest_minute": "ai-pressure — its claim depends entirely on SB 53 producing a geofenceable local branch, but it never argues that a disclosure-type regime can be geofenced at all, and lab-moves' own round-2 objection shows that assumption is live and contested, not settled.",
+    "shared_assumption": "ai-pressure, ai-regulation-teeth, and pressure-model all treat 'binding enforcement in one jurisdiction' as automatically producing a local/global split a lab can price and choose between — i.e., they assume separability rather than establishing it. This is one argument wearing three names.",
+    "smuggled_assumption": "The brief grants only 'a binding, enforced regime in one major market.' ai-pressure smuggles in a second premise: that the specific regime is California SB 53's chatbot-safety track, AND that this regime's obligations are structured as a product-level gate that can be geofenced — the brief granted neither the specific statute nor its separability.",
+    "unresolved": "Whether SB 53's actual enforcement mechanics (once a real action is filed) resolve as a geofenceable access condition or a global disclosure/process condition — none of the minutes settle this because none examine what an SB 53 enforcement order actually orders a lab to do.",
+    "confidence": 0.68
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.08,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": true,
+    "rows": 13,
+    "head": "cfd7bf7c846f8f8c9341bf531194c321b1658e28ebf267686a3c4b07a552451c",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 13,
+     "total_rows": 13,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  },
+  {
+   "cycle": 2,
+   "ruling": {
+    "pivot": "Does SB 53's disclosure duty reach a frontier model deployed internally for research and never publicly released, or does it attach only to the released artifact?",
+    "pivot_observable": "A frontier lab's SB 53 filing, AG interpretive action, or system card either discloses evals/specs/capability data for an internal-only research model, or a regulator states the duty does not reach it",
+    "pivot_resolves_by": "2027-06-30",
+    "pivot_source": "ai-regulation-teeth",
+    "pivot_because": "This is the one binary that reorders the outcome set rather than shifting confidence within it. If SB 53 reaches internal deployment, the deliberative/development-gated installers keep bite on the actual frontier, ai-pressure's and lab-moves's claims are falsified by their own stated dates, and pressure-model's predicted shift toward BIS doesn't occur because release-gated and development-gated channels haven't gone slack. If it doesn't reach internal deployment, release-gated rules become theatre against the true frontier, SB 53 collapses into the release-gated category in practice, and BIS/export-control becomes the only channel that still bites. Rival candidates (correction latency, public sentiment) only matter downstream of this fork.",
+    "minutes_by_side": {
+     "ai-pressure": "above",
+     "lab-moves": "above",
+     "ai-public-backlash": "not-bearing",
+     "pressure-model": "above",
+     "ai-regulation-teeth": "above",
+     "ai-oversight-lag": "not-bearing"
+    },
+    "rival_pivots_rejected": "ai-oversight-lag's correction-latency-vs-loop-period framing is downstream, not the hinge: latency only determines how badly a channel lags once that channel is established to apply at all, and its own ruling holds on either side of the reach question. ai-public-backlash's labor-visible-symptom trigger sits on a public-sentiment axis orthogonal to the disclosure-regime question and doesn't reorder anything about which regulatory channel binds. pressure-model's 'shift toward fast installers' is a restatement of the same non-reach assumption the other three above-side minutes make, not an independent pivot — and its own round 2 concedes the rival reading (shrink, not shift) without resolving it, making it argument-by-formula rather than a distinct variable.",
+    "ruling": "Given Stage 1's release/deployment-gated correction channels and Stage 2's compression of the internal research cycle, the frontier stays inside the regulatory perimeter only if SB 53's duty is read to reach undisclosed internal deployment — and every minute that addresses this treats non-reach as the working assumption, making theatre-relative-to-the-frontier the operative near-term threat unless a filing or ruling closes that gap by 2027-06-30.",
+    "because": "Four minutes (ai-pressure, lab-moves, pressure-model, ai-regulation-teeth) converge on treating internal-only deployment as outside current disclosure obligations — this is one shared argument, not four independent ones, and none of them argues the other side. ai-regulation-teeth is the only one that names the reach question as genuinely open rather than settled, which is why it is the pivot source even though its practical conclusion sits on the same side as the others.",
+    "resolve_by": "2027-06-30",
+    "threat_live": "Newly dangerous: the leading edge of capability (the self-improving internal loop) sits outside every correction channel Stage 1 installed, while ai-oversight-lag's own timing shows correction latency already exceeds the release cadence — so even nominal jurisdiction would arrive late. Newly safe/unaffected: input-gated controls (BIS/export licensing), which choke compute regardless of who performs the research or whether it's disclosed, per ai-regulation-teeth and pressure-model.",
+    "strongest_minute": "ai-pressure — its round-2 revision replaced an unfalsifiable comparative claim ('faster than the duty') with a scoped claim resting on the actual gap in current filing regimes, and attached concrete, checkable falsifiers.",
+    "weakest_minute": "pressure-model — its round-2 defense of a 'shift' in tension conceded the strongest objection (that internalization shrinks rather than redirects the tension) without resolving it, leaving the claim's central mechanism argued by formula rather than settled.",
+    "shared_assumption": "ai-pressure, lab-moves, pressure-model, and ai-regulation-teeth all assume, without independently arguing it, that current disclosure regimes do not reach a model that is used internally and never publicly released — this is one load-bearing assumption asserted by four minutes, not four separate confirmations of it.",
+    "smuggled_assumption": "ai-regulation-teeth's claim depends on capability gains being 'attributable' to internal self-improvement in a way regulators or labs can quantify — the brief grants a compressed self-improvement cycle, not that its contribution to any given capability increment is measurable or attributed, so attributability is an added premise, not a granted one.",
+    "unresolved": "Whether SB 53 or the GPAI Code's development-gated triggers can as a legal matter reach a model that is deployed only internally — none of the minutes resolve this from statutory text or regulatory guidance, they only assume an answer and build forward from it.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 3,
+    "confidence_spread": 0.17,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  },
+  {
+   "cycle": 3,
+   "ruling": {
+    "pivot": "Whether SB 53's frontier-developer obligations (framework disclosure, critical-safety-incident reporting to Cal OES) are pled, filed on, or ruled to reach the undisclosed internal-deployment conduct within ~90 days of attribution",
+    "pivot_observable": "A CA AG filing, Cal OES incident-report record, or court/agency ruling that names internal-deployment conduct as within SB 53's covered scope — versus the absence of any such filing by the date below",
+    "pivot_resolves_by": "2026-12-31",
+    "pivot_source": "pressure-model",
+    "pivot_because": "If this resolves YES, ai-regulation-teeth's clean operator/developer split breaks (a developer faces consequence under a pre-incident statute), ai-oversight-lag's anchoring claim breaks (trigger no longer confined to deployment status), and ai-pressure/lab-moves/ai-public-backlash's shared 'gap stays open' picture flips for all three at once, because they inherit the same unargued premise. If it resolves NO, the five-minute consensus stands intact. No rival variable does this: the federal-endorsement question (ai-pressure) is a signal about posture, not an instrument operating inside the 90-day window; the ~Dec-15 deployer-liability instrument (ai-public-backlash) lands the same either way; lab-moves' compliance-posture claim is downstream of, not independent from, this pivot.",
+    "minutes_by_side": {
+     "ai-pressure": "below",
+     "lab-moves": "below",
+     "ai-public-backlash": "below",
+     "pressure-model": "above",
+     "ai-regulation-teeth": "below",
+     "ai-oversight-lag": "below"
+    },
+    "rival_pivots_rejected": "ai-pressure's federal-preemption-vehicle question (does the executive flip to endorsing Thune/Cruz/Klobuchar) is not the hinge: even if it resolves either way, the five-minute bloc's 'gap stays open' claim and pressure-model's 'gap gets tested' claim are unaffected — the federal bill is a parallel track, not a determinant of whether SB 53 itself gets tested. ai-public-backlash's 'does a pre-drafted deployer instrument clear by ~12-15' is not the hinge either: it is compatible with both branches of the real pivot and several minutes treat it as background motion rather than the deciding fact. lab-moves' 'does the implicated developer take a public compliance posture' is a consequence of market/reputation pressure that plays out regardless of how the SB 53 reach question resolves, so it reorders confidence, not the outcome set.",
+    "ruling": "The case turns on whether SB 53's frontier-developer obligations get tested against the undisclosed-internal-deployment conduct within the 90-day window: if a filing or ruling reaches it, the five-minute consensus (gap stays open, correction hardens only at the release/operator gate) breaks across all five at once; if none does, that consensus holds and the incident's correction pressure stays confined to deployment-gated, operator-facing instruments.",
+    "because": "Five of six minutes rely on the same unargued premise — that existing and pre-drafted instruments scope to deployment status and identifiable operator, so undisclosed internal deployment stays outside reach — without any of them arguing why SB 53's text excludes it; they inherit rather than defend this. pressure-model is the only minute to attack that premise directly, and it is the only round-2 REVISE, sharpening from a vague 'duty of care' reference to SB 53's actual named obligations (framework disclosure, Cal OES incident reporting), which makes its claim the one that is both reorder-capable and checkable on a specific near-term clock.",
+    "resolve_by": "2027-06-30",
+    "threat_live": "Attributable-incident correction hardens at the release/operator gate and, in doing so, legitimizes the internal-deployment gap as outside scope — the regime looks responsive while AI-on-AI chains triggered by undisclosed internal deployment remain uncovered (ai-oversight-lag, lab-moves). Newly dangerous on the other branch: if the federal duty-of-care vehicle with express preemption advances (ai-pressure), it could foreclose the state-level test case pressure-model's pivot depends on, before SB 53 is ever tested against this conduct.",
+    "strongest_minute": "pressure-model — it is the only minute that names a variable capable of reordering the other five's outcomes rather than just shading confidence within their shared frame, and it is the only minute that revised its own claim in round 2 to sharpen the mechanism into something dated and checkable.",
+    "weakest_minute": "ai-pressure — its 'because' cites its own internal premise (P6, installer-credibility branching) rather than arguing the claim, and its federal-flip claim smuggles a second assumption (a specific named bill, a current unilateral-preemption posture) the brief never granted.",
+    "shared_assumption": "That SB 53 (or any pre-incident instrument) scopes by deployment status and identifiable operator, and therefore does not reach undisclosed internal deployment — asserted by five minutes as a starting condition rather than argued from the statute's text.",
+    "smuggled_assumption": "ai-pressure assumes a specific federal vehicle (the Thune/Cruz/Klobuchar bill) and a prior unilateral-preemption executive posture as background facts; the brief grants only the incident and its attribution, not the current state of federal legislative alignment.",
+    "unresolved": "Whether the incident's own causal chain runs through the undisclosed internal deployment (which would make the SB 53 reach question directly justiciable on these facts) or through an external/deployed surface only (which would make pressure-model's test case hypothetical) — the minutes assert both framings (oversight-lag's 'chained AI-on-AI action,' lab-moves' 'deployed-system incident') without reconciling them.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.07,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

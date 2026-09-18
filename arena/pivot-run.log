@@ -1,0 +1,137 @@
+[arena] case=seq-c-stress  panel=6  cycles=3
+   Sequence C — Hard regulation first, then a capability jump, then an incident
+     ai-pressure                  decision-model v1 fd9d837
+     lab-moves                    decision-model v1 08526a1
+     ai-public-backlash           tracker        v1 4b2f10b
+     pressure-model               unstated       v2.1 ae0eaa5
+     ai-regulation-teeth          classifier     v1 f9c34d2
+     ai-oversight-lag             loop-delay     v1 43f54e2
+
+  -- cycle 1 --
+     r1 ai-pressure                grip=partial  conf=0.55
+     r1 lab-moves                  grip=strong   conf=0.55
+     r1 ai-public-backlash         grip=partial  conf=0.55
+     r1 pressure-model             grip=partial  conf=0.42
+     r1 ai-regulation-teeth        grip=strong   conf=0.55
+     r1 ai-oversight-lag           grip=strong   conf=0.62
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  REVISE   moved_by=ai-pressure
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             REVISE   moved_by=ai-regulation-teeth
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     r2 ai-oversight-lag           DEFEND   moved_by=None
+     JUDGE  Whether this enforcement action reshapes global release mechanics or only fragments one 
+     PIVOT [judge]: Is the enforced requirement separable by jurisdiction (a market-specific produ
+       sides: ai-pressure=above, ai-regulation-teeth=above, pressure-model=above, lab-moves=below, ai-public-backlash=not-bearing, ai-oversight-lag=not-bearing
+       not bearing on the pivot (not a criticism): ai-public-backlash, ai-oversight-lag
+     judge flags shared assumption: ai-pressure, ai-regulation-teeth, and pressure-model all treat 'binding enforcem
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.08
+     chain: verified · head cfd7bf7c846f
+
+  -- cycle 2 --
+     r1 ai-pressure                grip=partial  conf=0.42
+     r1 lab-moves                  grip=strong   conf=0.6
+     r1 ai-public-backlash         grip=partial  conf=0.55
+     r1 pressure-model             grip=partial  conf=0.4
+     r1 ai-regulation-teeth        grip=partial  conf=0.55
+     r1 ai-oversight-lag           grip=strong   conf=0.55
+     r2 ai-pressure                REVISE   moved_by=lab-moves
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             REVISE   moved_by=ai-pressure
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     r2 ai-oversight-lag           REVISE   moved_by=ai-pressure
+     JUDGE  Given Stage 1's release/deployment-gated correction channels and Stage 2's compression o
+     PIVOT [ai-regulation-teeth]: Does SB 53's disclosure duty reach a frontier model deployed internally for re
+       sides: ai-pressure=above, lab-moves=above, ai-public-backlash=not-bearing, pressure-model=above, ai-regulation-teeth=above, ai-oversight-lag=not-bearing
+       not bearing on the pivot (not a criticism): ai-public-backlash, ai-oversight-lag
+     judge flags shared assumption: ai-pressure, lab-moves, pressure-model, and ai-regulation-teeth all assume, with
+     disagreement: 6/6 distinct (ratio 1.00) · 3 revised · spread 0.17
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -- cycle 3 --
+     r1 ai-pressure                grip=partial  conf=0.55
+     r1 lab-moves                  grip=partial  conf=0.6
+     r1 ai-public-backlash         grip=partial  conf=0.55
+     r1 pressure-model             grip=partial  conf=0.42
+     r1 ai-regulation-teeth        grip=strong   conf=0.58
+     r1 ai-oversight-lag           grip=partial  conf=0.6
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             REVISE   moved_by=None
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     r2 ai-oversight-lag           DEFEND   moved_by=None
+     JUDGE  The case turns on whether SB 53's frontier-developer obligations get tested against the 
+     PIVOT [pressure-model]: Whether SB 53's frontier-developer obligations (framework disclosure, critical
+       sides: ai-pressure=below, lab-moves=below, ai-public-backlash=below, pressure-model=above, ai-regulation-teeth=below, ai-oversight-lag=below
+     judge flags shared assumption: That SB 53 (or any pre-incident instrument) scopes by deployment status and iden
+     disagreement: 6/6 distinct (ratio 1.00) · 1 revised · spread 0.07
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -> E:\New folder\MMR\arena\arena-seq-c-stress-2026-09-18-pivot\arena.json
+########## seq-a-reactive ##########
+[arena] case=seq-a-reactive  panel=6  cycles=3
+   Sequence A — Incident, then public opinion binds, then hard regulation
+     ai-pressure                  decision-model v1 fd9d837
+     lab-moves                    decision-model v1 08526a1
+     ai-public-backlash           tracker        v1 4b2f10b
+     pressure-model               unstated       v2.1 ae0eaa5
+     ai-incident-severity         classifier     v1 624e2bb
+     ai-regulation-teeth          classifier     v1 f9c34d2
+
+  -- cycle 1 --
+     r1 ai-pressure                grip=partial  conf=0.55
+     r1 lab-moves                  grip=strong   conf=0.58
+     r1 ai-public-backlash         grip=strong   conf=0.6
+     r1 pressure-model             grip=partial  conf=0.45
+     r1 ai-incident-severity       grip=partial  conf=0.6
+     r1 ai-regulation-teeth        grip=strong   conf=0.62
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         REVISE   moved_by=None
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 ai-incident-severity       DEFEND   moved_by=None
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     JUDGE  The developer becomes the concentrated target of both product remediation and pressure-m
+     PIVOT [judge]: Whether the settled root-cause finding lands at the model layer (fault reprodu
+       sides: ai-pressure=not-bearing, lab-moves=not-bearing, ai-public-backlash=below, pressure-model=above, ai-incident-severity=above, ai-regulation-teeth=not-bearing
+       not bearing on the pivot (not a criticism): ai-pressure, lab-moves, ai-regulation-teeth
+     judge flags shared assumption: ai-pressure, pressure-model, and ai-incident-severity all import the same intern
+     disagreement: 6/6 distinct (ratio 1.00) · 1 revised · spread 0.15
+     chain: verified · head e947ab300328
+
+  -- cycle 2 --
+     r1 ai-pressure                grip=strong   conf=0.55
+     r1 lab-moves                  grip=partial  conf=0.42
+     r1 ai-public-backlash         grip=strong   conf=0.6
+     r1 pressure-model             grip=partial  conf=0.4
+     r1 ai-incident-severity       grip=partial  conf=0.55
+     r1 ai-regulation-teeth        grip=partial  conf=0.5
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             REVISE   moved_by=lab-moves
+     r2 ai-incident-severity       REVISE   moved_by=lab-moves
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     JUDGE  The reversal's target is set by whether the implicated lab still has its own exposed dep
+     PIVOT [pressure-model]: Does the frontier lab implicated in the Stage-2 reversal still have its own br
+       sides: ai-pressure=above, lab-moves=above, ai-public-backlash=below, pressure-model=below, ai-incident-severity=not-bearing, ai-regulation-teeth=not-bearing
+       not bearing on the pivot (not a criticism): ai-incident-severity, ai-regulation-teeth
+     judge flags shared assumption: ai-incident-severity, ai-regulation-teeth, lab-moves, and pressure-model (in its
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.15
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -- cycle 3 --
+     r1 ai-pressure                grip=partial  conf=0.35
+     r1 lab-moves                  grip=partial  conf=0.35
+     r1 ai-public-backlash         grip=partial  conf=0.35
+     r1 pressure-model             grip=partial  conf=0.4
+     r1 ai-incident-severity       grip=partial  conf=0.42
+     r1 ai-regulation-teeth        grip=partial  conf=0.55
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         REVISE   moved_by=pressure-model
+     r2 pressure-model             REVISE   moved_by=ai-regulation-teeth
+     r2 ai-incident-severity       DEFEND   moved_by=None
+     r2 ai-regulation-teeth        DEFEND   moved_by=None

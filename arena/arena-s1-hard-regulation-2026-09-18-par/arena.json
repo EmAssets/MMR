@@ -1,0 +1,131 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-s1-hard-regulation-2026-09-18-par",
+ "built": "2026-09-18",
+ "case": "s1-hard-regulation",
+ "case_title": "Scenario 1 — Binding regulation with real enforcement arrives",
+ "as_of": "2026-09-17",
+ "question": "Assume binding, enforced frontier-AI regulation arrives in a major market within 12 months. Over the following 12-18 months, what changes in observable behaviour, and why? Give a dated, checkable claim.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-us-policy-direction",
+   "title": "US Federal AI Policy Direction — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "98bc8f2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "pivot": "Does the regime gate deployment ex ante (pre-clearance/approval required before a frontier release enters the market) or does it impose only ex post obligations (documentation, disclosure, incident reporting, fines after launch)?",
+    "pivot_observable": "Whether the regime's operative text and its first enforcement actions require a lab to obtain clearance before shipping in the regulated jurisdiction, versus obligations that attach only after a model is already live",
+    "pivot_resolves_by": "2028-12-17",
+    "pivot_source": "judge",
+    "pivot_because": "This is the one variable that reorders rather than just re-weights the outcome set. Under ex ante gating, a staging gap between markets is near-mechanical — the lab cannot legally launch in the regulated market until cleared, so it launches elsewhere first, exactly as lab-moves and ai-pressure describe. Under ex post-only obligations, there is no legal reason for a gap at all — a lab can launch everywhere simultaneously and file paperwork alongside, which is what ai-regulation-teeth's mechanism implies. Critically, these are not opposite sides of the same claim already on the table: ai-regulation-teeth's 'no action blocked a release' and lab-moves' 'a 60+ day staging gap exists' can both be literally true at once (voluntary sequencing ahead of expected clearance, with zero formal blocking orders) — so 'does enforcement have teeth' does not actually reorder anything. Ex-ante-vs-ex-post does, because it is the fact pattern that decides whether a gap has to exist at all, independent of how any minute framed enforcement 'strength.'",
+    "minutes_by_side": {
+     "ai-pressure": "above",
+     "lab-moves": "above",
+     "ai-us-policy-direction": "above",
+     "ai-regulation-teeth": "below",
+     "ai-public-backlash": "not-bearing"
+    },
+    "rival_pivots_rejected": "‘Does enforcement have teeth’ (regulation-teeth's own framing) fails as pivot because it is compatible with lab-moves' outcome, not opposed to it — a paperwork-only regime can still produce a staging gap via voluntary anticipatory compliance, so this axis doesn't reorder the outcome set. ‘Domestic vs. foreign enforcement target’ (ai-us-policy-direction's frame) is a second-order question about who gets targeted, not about whether behavior changes at all, and its jurisdictional-restructuring claim is a special case that only arises under ex ante gating anyway. Public sentiment / financial impairment (ai-public-backlash) sits on an investor-relations axis orthogonal to the behavioral mechanism the question asks about.",
+    "ruling": "If the regime binds with ex ante clearance requirements, frontier labs will stage releases — shipping first in lighter-touch markets and trailing the regulated market by roughly 60+ days to a few months — while formal enforcement actions themselves stay concentrated on procedural filings rather than explicit blocking orders.",
+    "because": "lab-moves gave the most concrete, falsifiable mechanism (2-of-4 largest-compute labs, 60+ day gap, dated) and ai-pressure independently converges on the same staging behavior; ai-regulation-teeth's claim about enforcement-action content is not actually incompatible with this and can be read as the same underlying dynamic viewed from the enforcement side rather than the release side. ai-us-policy-direction adds a plausible but US-flavored second mechanism (jurisdictional restructuring against foreign labs) that only bites under the same ex ante branch. ai-public-backlash doesn't bear on which behavior emerges at all.",
+    "resolve_by": "2028-12-17",
+    "threat_live": "Frontier capability becomes newly likely to deploy first, and for longer, in whichever market has the weakest oversight — the safety regulation's protective intent inverts into a first-mover advantage for the least-scrutinized jurisdiction. Several minutes imply this without naming it directly.",
+    "strongest_minute": "lab-moves — the only claim with a specific lab count (2 of 4 largest-compute), an explicit gap threshold (60+ days), a named mechanism (pre-clearance), and an absolute resolve date fully inside the brief's 12-18 month observation window.",
+    "weakest_minute": "ai-public-backlash — argues an axis (investor/financial disclosure) the question didn't ask about, resolves on a date that is the branch's own deadline rather than inside the 12-18 month observation window, and stakes out a near-unfalsifiable null result in a short window.",
+    "shared_assumption": "ai-pressure, lab-moves, and ai-us-policy-direction all assume jurisdictional arbitrage is cheap and available — that a lab can costlessly sequence or restructure around the regulated market rather than the regulated market being large/mandatory enough (e.g., an EU-style regime with extraterritorial reach) that staging costs more than global conformance. None argues for this; treat these three as one shared bet, not three independent confirmations.",
+    "smuggled_assumption": "ai-public-backlash and ai-us-policy-direction both resolve on 2027-09-17, which is the brief's regime-binding deadline, not a point inside the 12-18 month post-binding observation window the question actually asks about — this smuggles in 'the regime binds immediately/early' rather than checking behavior 12-18 months after it binds. ai-us-policy-direction's 'preemption-vs-patchwork' mechanism also smuggles a US-specific federal/state structure into a brief that only specified 'a major market,' which could as easily be the EU.",
+    "unresolved": "Whether the actual regime that binds will be structured as ex ante gating or ex post-only obligations — none of the minutes commits to which one occurs, only to what follows conditional on each, so the question the case turns on is left open by the minutes themselves.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 5,
+    "distinct_claims": 5,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.1,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 11,
+   "chain": {
+    "ok": true,
+    "rows": 11,
+    "head": "f5f0d78f71c188dd77290d43933e60e2d95c941a87c1cc004a734d36facc698c",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 11,
+     "total_rows": 11,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

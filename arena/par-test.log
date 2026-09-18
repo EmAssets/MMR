@@ -1,0 +1,28 @@
+[arena] case=s1-hard-regulation  panel=5  cycles=1
+   Scenario 1 — Binding regulation with real enforcement arrives
+     ai-pressure                  decision-model v1 fd9d837
+     lab-moves                    decision-model v1 08526a1
+     ai-public-backlash           tracker        v1 4b2f10b
+     ai-regulation-teeth          classifier     v1 f9c34d2
+     ai-us-policy-direction       decision-model v1 98bc8f2
+
+  -- cycle 1 --
+     r1 ai-pressure                grip=partial  conf=0.55
+     r1 lab-moves                  grip=strong   conf=0.55
+     r1 ai-public-backlash         grip=partial  conf=0.55
+     r1 ai-regulation-teeth        grip=strong   conf=0.62
+     r1 ai-us-policy-direction     grip=strong   conf=0.62
+     r2 ai-pressure                REVISE   moved_by=ai-us-policy-direction
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     r2 ai-us-policy-direction     DEFEND   moved_by=None
+     JUDGE  If the regime binds with ex ante clearance requirements, frontier labs will stage releas
+     PIVOT [judge]: Does the regime gate deployment ex ante (pre-clearance/approval required befor
+       sides: ai-pressure=above, lab-moves=above, ai-us-policy-direction=above, ai-regulation-teeth=below, ai-public-backlash=not-bearing
+       not bearing on the pivot (not a criticism): ai-public-backlash
+     judge flags shared assumption: ai-pressure, lab-moves, and ai-us-policy-direction all assume jurisdictional arb
+     disagreement: 5/5 distinct (ratio 1.00) · 1 revised · spread 0.10
+     chain: verified · head f5f0d78f71c1
+
+  -> E:\New folder\MMR\arena\arena-s1-hard-regulation-2026-09-18-par\arena.json
