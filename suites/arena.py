@@ -765,6 +765,62 @@ def _call(model_hint: str, prompt: str, dry: bool) -> dict:
         return {"_unparsed": txt[:800]}
 
 
+def _call_many(model_hint: str, prompts: list, dry: bool, workers: int = 0) -> list:
+    """Run independent prompts concurrently, returning bodies IN INPUT ORDER.
+
+    Safe only where the prompts genuinely do not depend on each other, which in
+    this file is exactly two places and no others:
+
+      * round 1 -- every claim is written before its author sees anyone else.
+        That is the arena's first blindness, so the calls were already
+        independent; running them in sequence was a property of the loop, not
+        of the design.
+      * round 2 -- each defence sees ALL of round 1 and none of round 2. The
+        board is built once, before any call goes out.
+
+    The judge is NOT run through here: there is one of it, and it must see the
+    finished minutes.
+
+    WHY ORDER IS PRESERVED. Minutes are hashed into a chain, and the chain is
+    order-sensitive by design -- reordering two minutes is meant to break every
+    hash after them. So results are collected into a pre-sized list by index
+    and the chain is built afterwards, in panel order, exactly as the sequential
+    version did. A run's minutes are therefore byte-identical in structure
+    whether or not this ran concurrently; only `at` timestamps differ, and they
+    were never ordered by anything but call completion anyway.
+
+    Concurrency is bounded and overridable (ARENA_WORKERS), because each call on
+    the claude-code backend is a CLI subprocess billing one subscription: too
+    many at once trades a rate-limit error for the wall time it was meant to
+    save. On a dry run nothing is dispatched.
+    """
+    n = len(prompts)
+    if dry or n <= 1:
+        return [_call(model_hint, p, dry) for p in prompts]
+    if workers <= 0:
+        try:
+            workers = int(os.environ.get("ARENA_WORKERS", "4"))
+        except ValueError:
+            workers = 4
+    workers = max(1, min(workers, n))
+    if workers == 1:
+        return [_call(model_hint, p, dry) for p in prompts]
+    out: list = [None] * n
+    from concurrent.futures import ThreadPoolExecutor
+    # Threads, not processes: every backend here blocks on IO (a subprocess or
+    # an HTTP request), so the GIL is released while waiting and threads are
+    # both sufficient and far cheaper to reason about.
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        futs = {ex.submit(_call, model_hint, p, dry): i for i, p in enumerate(prompts)}
+        for f in list(futs):
+            i = futs[f]
+            try:
+                out[i] = f.result()
+            except Exception as e:  # a crashed worker is not an empty answer
+                out[i] = {"_error": "%s: %s" % (type(e).__name__, e)}
+    return out
+
+
 def _minute(kind: str, who: dict, cycle: int, rnd: int, body: dict,
             prompt: str = "", prev_sha: str = "") -> dict:
     """A signed, chained minute.
@@ -971,28 +1027,41 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
                       "ruling on the prior round's minutes — not a fact, and you may argue "
                       "against it):\n%s" % premise)
 
-        # round 1 — claim, written before anyone sees anyone else
-        for p in panel:
-            prompt = CLAIM.format(
-                title=p["title"], slug=p["slug"], kind=p["kind"],
-                one_line=p["one_line"], as_of=case["as_of"], brief=brief)
-            body = _call(model_hint, prompt, dry)
+        # round 1 — claim, written before anyone sees anyone else.
+        #
+        # Every prompt is built before any call goes out, which is the same
+        # thing the blindness already required: a round-1 prompt cannot contain
+        # another model's minute because no such minute exists yet. So these run
+        # concurrently, and the minutes are still chained in panel order below.
+        r1_prompts = [
+            CLAIM.format(title=p["title"], slug=p["slug"], kind=p["kind"],
+                         one_line=p["one_line"], as_of=case["as_of"], brief=brief)
+            for p in panel]
+        r1_bodies = _call_many(model_hint, r1_prompts, dry)
+        for p, prompt, body in zip(panel, r1_prompts, r1_bodies):
             minutes.append(_minute("claim", p, cyc, 1, body, prompt,
                                    minutes[-1]["minute_sha"] if minutes else chain_head))
             print("     r1 %-26s grip=%-8s conf=%s" % (p["slug"], body.get("grip"), body.get("confidence")))
 
-        # round 2 — defend or revise, now seeing the others
+        # round 2 — defend or revise, now seeing the others.
+        #
+        # The board is built once, from the completed round 1, so every defence
+        # sees the same material and none sees another defence. That was already
+        # true sequentially -- a later panelist never saw an earlier panelist's
+        # round-2 minute, because `board` is filtered to round 1.
         board = "\n".join(
             "- [%s] %s" % (m["signed_by"], str(m["body"].get("claim", ""))[:220])
             for m in minutes if m["round"] == 1)
+        r2_prompts = []
         for p in panel:
             mine = next((m for m in minutes if m["signed_by"] == p["slug"] and m["round"] == 1), None)
             others = "\n".join(l for l in board.splitlines() if not l.startswith("- [%s]" % p["slug"]))
-            prompt = DEFEND.format(
+            r2_prompts.append(DEFEND.format(
                 title=p["title"], slug=p["slug"],
                 mine=json.dumps(mine["body"], ensure_ascii=False)[:700] if mine else "",
-                others=others or "(no other minutes)")
-            body = _call(model_hint, prompt, dry)
+                others=others or "(no other minutes)"))
+        r2_bodies = _call_many(model_hint, r2_prompts, dry)
+        for p, prompt, body in zip(panel, r2_prompts, r2_bodies):
             minutes.append(_minute("defence", p, cyc, 2, body, prompt,
                                    minutes[-1]["minute_sha"]))
             print("     r2 %-26s %-8s moved_by=%s" % (p["slug"], body.get("move"), body.get("moved_by")))

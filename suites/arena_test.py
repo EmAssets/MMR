@@ -352,6 +352,54 @@ def main() -> int:
     for d in arena.ADIR.glob("arena-*-%s" % TAG):
         shutil.rmtree(d, ignore_errors=True)
 
+    # --- concurrency must not reorder minutes ------------------------------
+    #
+    # Rounds 1 and 2 run their calls concurrently. The minute chain is
+    # order-sensitive ON PURPOSE -- reordering two minutes is meant to break
+    # every hash after them -- so if completion order ever leaked into result
+    # order, runs would differ from each other for no reason and the chain
+    # would attest to an order nobody argued in. Random latency here is what
+    # makes the test meaningful: without it, a broken implementation would
+    # still usually return sorted results.
+    print("\n== concurrency: results keep INPUT order ==")
+    import random as _rnd
+    import time as _t
+    real_call = arena._call
+    try:
+        done = []
+
+        def jittered(model_hint, prompt, dry):
+            i = prompt.count("X")
+            _t.sleep(_rnd.uniform(0.01, 0.20))
+            done.append(i)
+            return {"marker": i, "grip": "strong", "claim": "c%d" % i,
+                    "confidence": 0.5, "move": "DEFEND", "moved_by": None}
+
+        arena._call = jittered
+        prompts = ["p " + "X" * i for i in range(8)]
+        got = [b["marker"] for b in arena._call_many("hint", prompts, False, workers=4)]
+        if got != list(range(8)):
+            fails.append("concurrency reordered results: %s" % got)
+            print("  x results came back in %s" % got)
+        else:
+            print("  completed in %s, returned in input order — correct" % (done,))
+
+        def boom(model_hint, prompt, dry):
+            raise RuntimeError("backend exploded")
+
+        arena._call = boom
+        crashed = arena._call_many("hint", ["a", "b"], False, workers=2)
+        # A crashed worker is not a model that said nothing. Recording {} would
+        # file silence as an answer, which is the same class of lie the
+        # sequential _call already refuses to tell.
+        if not all("_error" in b for b in crashed):
+            fails.append("a crashed worker did not surface as _error")
+            print("  x crashed worker returned %s" % crashed)
+        else:
+            print("  a crashed worker surfaces as _error, not an empty minute")
+    finally:
+        arena._call = real_call
+
     print()
     if fails:
         print("FAILED (%d):" % len(fails))
