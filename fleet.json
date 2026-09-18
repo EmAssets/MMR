@@ -43,7 +43,8 @@
   "attention-substrate",
   "pressure-model",
   "canon",
-  "ai-pressure-field"
+  "ai-pressure-field",
+  "adjacent-possible"
  ],
  "classifiers": [],
  "decision_repo": "ai-pressure-field",

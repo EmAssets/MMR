@@ -561,6 +561,19 @@
    ],
    "kind": "decision-model",
    "level": 0
+  },
+  "adjacent-possible": {
+   "aspects": [
+    "technology-tools",
+    "economy-markets",
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "kind": "timer",
+   "level": 0
   }
  },
  "level_note": "Each assignment carries a level: 0 models the world, 1 models the instance's own models, 2 models the modelling process. Consolidation runs bottom-up and never compresses what a live higher level reads.",
