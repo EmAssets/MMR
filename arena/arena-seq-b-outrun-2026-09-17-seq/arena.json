@@ -1,0 +1,186 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-seq-b-outrun-2026-09-17-seq",
+ "built": "2026-09-17",
+ "case": "seq-b-outrun",
+ "case_title": "Sequence B — Self-improvement, then no regulation arrives, then an incident",
+ "as_of": "2026-09-17",
+ "question": "Stage by stage, what follows from this ordering, what threat becomes live at each step, and what dated observable would show it?",
+ "cycles": 3,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-rsi-timeline",
+   "title": "Recursive Self-Improvement Timeline — (v1)",
+   "kind": "forecaster",
+   "version": "v1",
+   "commit": "9a1d00d",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-courts-decide",
+   "title": "Courts as the Deciding Branch — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "4810a2d",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "The live chain is: a lab attributes a capability jump to AI-generated research (the granted branch) → that disclosure is either framed defensively with a paired voluntary safety commitment (lab-moves) or stays illegible to the public (ai-public-backlash) → only a regulator or court with an existing binding vector (not a new rule, not a lawsuit from scratch) can convert it into an enforceable duty, and none of the minutes shows that conversion happening within the window.",
+    "because": "ai-courts-decide and ai-public-backlash both argue, on grounds the brief doesn't foreclose, that the attribution event by itself is legally and politically inert — courts need a pled injury and the public needs a legible harm, neither of which 'the research loop got faster' supplies. lab-moves adds the one live mechanism that actually moves: the lab's own hedge (pairing disclosure with a voluntary commitment) as a preemptive compliance play, not the regulator's action. ai-pressure and ai-rsi-timeline assert that an existing binding vector (EU AI Office, SB 53, a state AG) will act on the disclosure, but neither shows the mechanism by which an attribution claim satisfies that vector's existing trigger conditions — they assert the regulatory response rather than deriving it, which is why ai-pressure and lab-moves diverge sharply on date (2027-06-30 vs 2026-12-15) despite sharing the same triggering event.",
+    "resolve_by": "2026-12-15",
+    "threat_live": "What becomes newly dangerous on this branch is not the capability jump itself but an attribution-outpaces-oversight gap: once a lab can point to a measurable, dated compression of its research cycle, that fact becomes a lever any actor (regulator, court, or the lab itself) could use to justify new binding authority, safety-case demands, or investor/competitor pressure — but the minutes agree this lever sits unused during the window because no actor with standing or an existing trigger has yet pulled it. The risk is latency, not response: the compressed loop runs ungraded (ai-rsi-timeline's framing) while every downstream check (legal, regulatory, public) is still calibrated to pre-compression cycle times.",
+    "strongest_minute": "ai-courts-decide — it is the only minute that argues from an institutional constraint (standing, a pled cause of action) rather than from a prediction about what labs or regulators will choose to do, making it the hardest claim to dislodge within the window regardless of how the attribution event unfolds.",
+    "weakest_minute": "ai-pressure — its round-2 revision leans on 'a regulator with an existing binding vector... formally cites that disclosure' without specifying why an attribution claim satisfies SB 53 or EU AI Office trigger conditions already on the books; it asserts the regulatory reaction as the load-bearing step rather than arguing for it.",
+    "shared_assumption": "ai-pressure, lab-moves, pressure-model, and ai-rsi-timeline all assume that a lab publicly attributing a capability jump to AI-generated research is itself likely on this timeline and functions as the hinge event every downstream consequence hangs on — none independently argues for the disclosure's likelihood beyond the brief's grant; treat this as one shared premise, not four converging arguments.",
+    "smuggled_assumption": "ai-rsi-timeline's round-2 revision smuggles in a second, much stronger claim than the brief grants: not one attribution event but two, from the same lab, within 9 months, with a computable discovery-to-deployment interval — this narrows 'a capability jump gets attributed' into a specific institutional reporting pattern the brief never specified.",
+    "unresolved": "Whether an attribution disclosure would in fact meet the evidentiary/standing bar for an existing regulatory or judicial trigger (SB 53 reporting obligations, EU AI Office systemic-risk designation, or a cognizable legal injury) — no minute traces that mechanism step by step; they all stop at asserting the disclosure happens and then diverge on whether institutions react.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.35,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": true,
+    "rows": 13,
+    "head": "13c176ac6b9ed025ac8c7e488d86cb19ad862c57a599a3e9775b9324bda36e2d",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 13,
+     "total_rows": 13,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  },
+  {
+   "cycle": 2,
+   "ruling": {
+    "ruling": "Given no enforced AI statute through end-2028, control over frontier labs passes stage-by-stage from diffuse public sentiment (inert) to private-ordering instruments (contracts, insurance) and litigation-derived court orders, with courts producing the fastest-moving concrete enforcement action even though procurement/insurance terms are the broader standing constraint.",
+    "because": "All six minutes agree the statutory branch is empty and therefore does not decide; the disagreement is only about which non-statutory installer binds first. ai-courts-decide's argument that litigation converts pressure into enforceable duties through case-specific orders (not general prospective terms) is not rebutted on the merits — lab-moves concedes the objection but only replies that its own claim is broader/general, not that it resolves faster. ai-public-backlash is uncontested that sentiment alone never becomes a binding constraint absent legislation or adjudication, which forecloses 'public backlash' as a live threat on this branch.",
+    "resolve_by": "2028-06-30",
+    "threat_live": "The threat that goes live is private, uncontestable rule-making by whichever counterparty holds fastest enforcement latency (insurer, cloud/procurement counterparty, or court) — labs become answerable to parties with no public-interest mandate and no democratic process, while the public/legislative channel that would normally contest such rules is foreclosed by the branch's premise.",
+    "strongest_minute": "ai-courts-decide — it is the only minute that names a mechanism (case-specific court orders convert pressure into enforceable duties) that its objector (lab-moves) cannot actually rebut, only relativize by scope.",
+    "weakest_minute": "ai-rsi-timeline — it smuggles export controls/BIS licensing in as if compute-gating were the same class of event as the labs'-constraint question the other five are litigating, then in round 2 concedes its own installer may be slower than the contract/court actors without abandoning the claim.",
+    "shared_assumption": "ai-pressure, lab-moves, pressure-model, and ai-courts-decide all rely on the same unargued premise that private counterparties (insurers, cloud/procurement partners, courts) will actually choose to exercise the leverage their contracts/dockets give them against a frontier lab, rather than deferring to the lab's market position — this is one shared bet, not four independent confirmations.",
+    "smuggled_assumption": "ai-rsi-timeline imports a second, ungranted premise — that export-control/compute-licensing dynamics are the relevant 'fastest enforcement latency' actor for the question of what constrains labs generally, when the brief's branch is about the absence of an AI-specific statute, not about export-control policy, which is a separate and already-existing statutory regime.",
+    "unresolved": "Whether courts (case-specific, faster, narrower) or contracts/insurers (general, prospective, broader) become the dominant constraint first — the minutes name both as plausible and neither concedes priority beyond asserting their own mechanism moves first.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 0,
+    "confidence_spread": 0.17,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  },
+  {
+   "cycle": 3,
+   "ruling": {
+    "ruling": "The incident produces two near-simultaneous but distinct constraints — a judicial one (TRO/injunction against the named developer within roughly 8-12 weeks) and a contractual one (procurement/insurance riders within weeks) — with the contractual layer arriving first but the judicial layer being the one multiple minutes converge on as the more binding, citable constraint.",
+    "because": "Six minutes split into two camps that don't actually fully contest each other: ai-courts-decide, pressure-model, ai-rsi-timeline, and ai-pressure's round-2 revision all converge on courts issuing an injunction/TRO within 8-12 weeks via existing tort/product-liability causes of action; lab-moves and ai-public-backlash argue contract/insurance riders land within weeks, faster but narrower in force. Neither side fully rebuts the other's timing claim — lab-moves concedes courts can move fast via emergency motion, and the courts-camp doesn't deny contract riders arrive first, just that they're not the 'binding constraint' in the legal sense. ai-pressure's round-2 revision effectively synthesizes both, sequencing riders first and injunction second, which is the most complete account of what stage-by-stage actually means here.",
+    "resolve_by": "2026-12-17",
+    "threat_live": "A single-incident, single-defendant legal/contractual response becomes live in place of systemic regulatory or legislative constraint — the minutes agree this incident-driven branch produces narrow, developer-specific restrictions (one injunction, one set of contract riders) rather than any generalized rule, so the risk that becomes newly salient is fragmented, case-by-case constraint that leaves other developers and deployments untouched.",
+    "strongest_minute": "ai-pressure (round 2, commit fd9d837) — it is the only minute that resolves the courts-vs-contracts split by sequencing them (riders in 4-6 weeks, injunction citing those riders within ~90 days) rather than just asserting one channel wins, which is what the actual minutes collectively support.",
+    "weakest_minute": "ai-public-backlash (round 2, commit 4b2f10b) — its own claim is about contract riders and insurance repricing, but its 'strongest_objection' field concedes the courts camp is probably right about speed without revising its claim, leaving the minute internally unresolved.",
+    "shared_assumption": "All six minutes assume the incident produces exactly one named developer/operator defendant with settled attribution and a quantifiable victim class — none argue for this, they treat it as given from the brief and build timing claims on top of it.",
+    "smuggled_assumption": "lab-moves and ai-public-backlash smuggle in that labs/insurers will treat the Stage-2 public safety-body commitments as convertible into binding contract warranties even absent any court or regulator compelling that conversion — the brief grants the incident and attribution, not that commitments become contract terms voluntarily.",
+    "unresolved": "Whether the contract/insurance layer or the judicial layer is the one that actually constrains behavior first and more tightly — the minutes assert competing timelines (weeks vs. 8-12 weeks) but no minute produces a mechanism forcing labs to choose one lever over the other under real conflict.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.12,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

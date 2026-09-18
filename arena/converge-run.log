@@ -1,0 +1,46 @@
+[converge] US federal executive branch (White House, OSTP, Commerce/BIS) :: What the US federal executive does over the next 45 days on AI regulation, preemption of state law, and export controls
+  vectors: 12 (4 merges) · pressure saturated (8.95) · tension 0.497
+    35%  tighten export controls  (1 domains)
+    30%  delay/no-change
+    15%  loosen export controls  (1 domains)
+    14%  escalate preemption  (1 domains)
+    6%  endorse Senate safety-preemption bill  (1 domains)
+  -> converge/what-the-us-federal-executive-does-over-the-next-45-days-on-.json + .md (full reasoning trace)
+  -> ledger claim appended (p=0.35 'tighten export controls', by 2026-11-01)
+[converge] EU AI Office and European Commission :: What the EU does over the next 45 days on AI Act enforcement, GPAI obligations and any simplification or delay
+  vectors: 10 (2 merges) · pressure saturated (8.95) · tension 0.595
+    35%  delay/no-change
+    26%  announce further simplification or deferral  (1 domains)
+    24%  soft-governance move: frontier-lab dialogue / guidance / standards, no proceeding  (2 domains)
+    15%  open formal GPAI proceeding  (1 domains)
+  -> converge/what-the-eu-does-over-the-next-45-days-on-ai-act-enforcement.json + .md (full reasoning trace)
+  -> ledger claim appended (p=0.348 'delay/no-change', by 2026-11-01)
+[converge] US federal courts hearing AI cases :: What US courts do over the next 45 days on AI copyright, liability and injunctive relief against model developers
+  vectors: 12 (2 merges) · pressure high (7.85) · tension 0.394
+    52%  sj-denied-mixed-to-trial  (1 domains)
+    19%  fair-use-rejected-sj-for-plaintiffs  (2 domains)
+    15%  training-fair-use-sj-for-developers  (1 domains)
+    14%  delay/no-change
+    0%  injunction-granted-vs-developer
+    0%  injunction-denied
+    0%  new-major-settlement
+  -> converge/what-us-courts-do-over-the-next-45-days-on-ai-copyright-liab.json + .md (full reasoning trace)
+  -> ledger claim appended (p=0.519 'sj-denied-mixed-to-trial', by 2026-11-06)
+[converge] Organised public and civil society opposition to AI :: What organised AI opposition achieves over the next 45 days on datacenter siting, energy permits and deployment rollbacks
+  vectors: 12 (2 merges) · pressure saturated (8.2) · tension 0.598
+    37%  ratepayer-cost reallocation (partial rollback of cost exposure, not siting)  (1 domains)
+    37%  deployment rollback/injunction  (2 domains)
+    18%  deployment continues/status quo  (1 domains)
+    8%  delay/no-change
+    0%  state-level moratorium/ban
+    0%  local moratorium/permit block
+  -> converge/what-organised-ai-opposition-achieves-over-the-next-45-days-.json + .md (full reasoning trace)
+  -> ledger claim appended (p=0.369 'ratepayer-cost reallocation (partial rollback of cost exposure, not siting)', by 2026-11-03)
+[converge] Beijing (CAC, MIIT, State Council) and Chinese frontier labs :: What Beijing and Chinese labs do over the next 45 days on open-weight releases, domestic silicon and AI governance
+  vectors: 14 (1 merges) · pressure moderate (2.25) · tension 0.0
+    100%  labs self-restrict frontier weights  (1 domains)
+    0%  publish weight-export tiers
+    0%  new frontier open-weight release
+    0%  delay/no-change
+  -> converge/what-beijing-and-chinese-labs-do-over-the-next-45-days-on-op.json + .md (full reasoning trace)
+  -> ledger claim appended (p=1.0 'labs self-restrict frontier weights', by 2026-09-24)

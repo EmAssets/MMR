@@ -1,0 +1,195 @@
+########## seq-a-reactive ##########
+[arena] case=seq-a-reactive  panel=6  cycles=3
+   Sequence A — Incident, then public opinion binds, then hard regulation
+     ai-pressure                  decision-model v1 fd9d837
+     lab-moves                    decision-model v1 08526a1
+     ai-public-backlash           tracker        v1 4b2f10b
+     pressure-model               unstated       v2.1 ae0eaa5
+     ai-incident-severity         classifier     v1 624e2bb
+     ai-regulation-teeth          classifier     v1 f9c34d2
+
+  -- cycle 1 --
+     r1 ai-pressure                grip=partial  conf=0.4
+     r1 lab-moves                  grip=partial  conf=0.55
+     r1 ai-public-backlash         grip=strong   conf=0.62
+     r1 pressure-model             grip=strong   conf=0.62
+     r1 ai-incident-severity       grip=partial  conf=0.4
+     r1 ai-regulation-teeth        grip=partial  conf=0.55
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         REVISE   moved_by=ai-regulation-teeth
+     r2 pressure-model             REVISE   moved_by=ai-incident-severity
+     r2 ai-incident-severity       DEFEND   moved_by=None
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     JUDGE  Ordering runs in three stages: within 6-8 weeks the proximate-cause entity (developer or
+     judge flags shared assumption: That settled, quantified, public attribution mechanically produces a public, dat
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.25
+     chain: verified · head d291b9f7e6a2
+
+  -- cycle 2 --
+     r1 ai-pressure                grip=strong   conf=0.55
+     r1 lab-moves                  grip=partial  conf=0.55
+     r1 ai-public-backlash         grip=partial  conf=0.4
+     r1 pressure-model             grip=partial  conf=0.35
+     r1 ai-incident-severity       grip=partial  conf=0.42
+     r1 ai-regulation-teeth        grip=partial  conf=0.55
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  REVISE   moved_by=ai-public-backlash
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 ai-incident-severity       DEFEND   moved_by=None
+     r2 ai-regulation-teeth        REVISE   moved_by=ai-pressure
+     JUDGE  Stage 1 (by ~2026-11-01): a governor/legislature invokes emergency or moratorium authori
+     judge flags shared assumption: ai-pressure, lab-moves, ai-incident-severity, and pressure-model all assume the 
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.13
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -- cycle 3 --
+     r1 ai-pressure                grip=strong   conf=0.55
+     r1 lab-moves                  grip=strong   conf=None
+     r1 ai-public-backlash         grip=partial  conf=0.35
+     r1 pressure-model             grip=partial  conf=0.42
+     r1 ai-incident-severity       grip=partial  conf=0.55
+     r1 ai-regulation-teeth        grip=strong   conf=0.62
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             REVISE   moved_by=lab-moves
+     r2 ai-incident-severity       REVISE   moved_by=ai-regulation-teeth
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     JUDGE  Stage 3's binding enforcement formalizes the lab's already-reversible Stage-2 posture in
+     judge flags shared assumption: ai-pressure, lab-moves, and pressure-model all assume a binary decompose of lab 
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.08
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -> E:\New folder\MMR\arena\arena-seq-a-reactive-2026-09-17-seq\arena.json
+########## seq-b-outrun ##########
+[arena] case=seq-b-outrun  panel=6  cycles=3
+   Sequence B — Self-improvement, then no regulation arrives, then an incident
+     ai-pressure                  decision-model v1 fd9d837
+     lab-moves                    decision-model v1 08526a1
+     ai-public-backlash           tracker        v1 4b2f10b
+     pressure-model               unstated       v2.1 ae0eaa5
+     ai-rsi-timeline              forecaster     v1 9a1d00d
+     ai-courts-decide             decision-model v1 4810a2d
+
+  -- cycle 1 --
+     r1 ai-pressure                grip=strong   conf=0.42
+     r1 lab-moves                  grip=strong   conf=0.55
+     r1 ai-public-backlash         grip=partial  conf=0.55
+     r1 pressure-model             grip=partial  conf=0.55
+     r1 ai-rsi-timeline            grip=strong   conf=0.55
+     r1 ai-courts-decide           grip=strong   conf=0.62
+     r2 ai-pressure                REVISE   moved_by=lab-moves
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 ai-rsi-timeline            REVISE   moved_by=pressure-model
+     r2 ai-courts-decide           DEFEND   moved_by=None
+     JUDGE  The live chain is: a lab attributes a capability jump to AI-generated research (the gran
+     judge flags shared assumption: ai-pressure, lab-moves, pressure-model, and ai-rsi-timeline all assume that a la
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.35
+     chain: verified · head 13c176ac6b9e
+
+  -- cycle 2 --
+     r1 ai-pressure                grip=partial  conf=0.55
+     r1 lab-moves                  grip=strong   conf=0.55
+     r1 ai-public-backlash         grip=strong   conf=0.62
+     r1 pressure-model             grip=partial  conf=0.55
+     r1 ai-rsi-timeline            grip=partial  conf=0.35
+     r1 ai-courts-decide           grip=strong   conf=0.6
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 ai-rsi-timeline            DEFEND   moved_by=None
+     r2 ai-courts-decide           DEFEND   moved_by=None
+     JUDGE  Given no enforced AI statute through end-2028, control over frontier labs passes stage-b
+     judge flags shared assumption: ai-pressure, lab-moves, pressure-model, and ai-courts-decide all rely on the sam
+     disagreement: 6/6 distinct (ratio 1.00) · 0 revised · spread 0.17
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -- cycle 3 --
+     r1 ai-pressure                grip=partial  conf=0.45
+     r1 lab-moves                  grip=partial  conf=0.5
+     r1 ai-public-backlash         grip=partial  conf=0.35
+     r1 pressure-model             grip=partial  conf=0.55
+     r1 ai-rsi-timeline            grip=partial  conf=0.3
+     r1 ai-courts-decide           grip=strong   conf=0.62
+     r2 ai-pressure                REVISE   moved_by=lab-moves
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 ai-rsi-timeline            DEFEND   moved_by=None
+     r2 ai-courts-decide           DEFEND   moved_by=None
+     JUDGE  The incident produces two near-simultaneous but distinct constraints — a judicial one (T
+     judge flags shared assumption: All six minutes assume the incident produces exactly one named developer/operato
+     disagreement: 6/6 distinct (ratio 1.00) · 1 revised · spread 0.12
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -> E:\New folder\MMR\arena\arena-seq-b-outrun-2026-09-17-seq\arena.json
+########## seq-c-stress ##########
+[arena] case=seq-c-stress  panel=6  cycles=3
+   Sequence C — Hard regulation first, then a capability jump, then an incident
+     ai-pressure                  decision-model v1 fd9d837
+     lab-moves                    decision-model v1 08526a1
+     ai-public-backlash           tracker        v1 4b2f10b
+     pressure-model               unstated       v2.1 ae0eaa5
+     ai-regulation-teeth          classifier     v1 f9c34d2
+     ai-oversight-lag             loop-delay     v1 43f54e2
+
+  -- cycle 1 --
+     r1 ai-pressure                grip=strong   conf=0.62
+     r1 lab-moves                  grip=strong   conf=0.6
+     r1 ai-public-backlash         grip=partial  conf=0.35
+     r1 pressure-model             grip=partial  conf=0.55
+     r1 ai-regulation-teeth        grip=strong   conf=0.62
+     r1 ai-oversight-lag           grip=strong   conf=0.6
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  REVISE   moved_by=ai-regulation-teeth
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             REVISE   moved_by=ai-oversight-lag
+     r2 ai-regulation-teeth        REVISE   moved_by=lab-moves
+     r2 ai-oversight-lag           DEFEND   moved_by=None
+     JUDGE  The ordering runs enforcement action → sanctioned lab responds with jurisdiction-differe
+     judge flags shared assumption: Every minute that lands on segmentation (lab-moves, pressure-model r2, ai-regula
+     disagreement: 6/6 distinct (ratio 1.00) · 3 revised · spread 0.15
+     chain: verified · head 2ae512685d65
+
+  -- cycle 2 --
+     r1 ai-pressure                grip=partial  conf=0.4
+     r1 lab-moves                  grip=partial  conf=0.47
+     r1 ai-public-backlash         grip=partial  conf=0.35
+     r1 pressure-model             grip=partial  conf=0.4
+     r1 ai-regulation-teeth        grip=partial  conf=0.55
+     r1 ai-oversight-lag           grip=partial  conf=0.55
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     r2 ai-oversight-lag           DEFEND   moved_by=None
+     JUDGE  The ordering runs: (1) enforcement triggers jurisdiction-differentiated segmentation, (2
+     judge flags shared assumption: All seven minutes assume the lab responds to enforcement by bifurcating its rele
+     disagreement: 6/6 distinct (ratio 1.00) · 0 revised · spread 0.17
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -- cycle 3 --
+     r1 ai-pressure                grip=partial  conf=0.55
+     r1 lab-moves                  grip=partial  conf=0.42
+     r1 ai-public-backlash         grip=partial  conf=0.45
+     r1 pressure-model             grip=partial  conf=0.45
+     r1 ai-regulation-teeth        grip=partial  conf=0.58
+     r1 ai-oversight-lag           grip=partial  conf=0.55
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  REVISE   moved_by=pressure-model
+     r2 ai-public-backlash         REVISE   moved_by=pressure-model
+     r2 pressure-model             REVISE   moved_by=ai-oversight-lag
+     r2 ai-regulation-teeth        REVISE   moved_by=ai-public-backlash
+     r2 ai-oversight-lag           DEFEND   moved_by=None
+     JUDGE  The incident splits enforcement asymmetrically by legibility rather than by fault: the d
+     judge flags shared assumption: All six minutes assume the incident is unambiguously and quickly attributed to a
+     disagreement: 6/6 distinct (ratio 1.00) · 4 revised · spread 0.05
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -> E:\New folder\MMR\arena\arena-seq-c-stress-2026-09-17-seq\arena.json

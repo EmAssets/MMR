@@ -1,0 +1,186 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-seq-c-stress-2026-09-17-seq",
+ "built": "2026-09-17",
+ "case": "seq-c-stress",
+ "case_title": "Sequence C — Hard regulation first, then a capability jump, then an incident",
+ "as_of": "2026-09-17",
+ "question": "Stage by stage, what follows from this ordering, what threat becomes live at each step, and what dated observable would show it?",
+ "cycles": 3,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-oversight-lag",
+   "title": "AI-AI interaction and the oversight loop — (v1)",
+   "kind": "loop-delay",
+   "version": "v1",
+   "commit": "43f54e2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "ruling": "The ordering runs enforcement action → sanctioned lab responds with jurisdiction-differentiated segmentation (capability-frozen or withheld version in the enforcing market, full version elsewhere) rather than a public delay or global compliance → at most one other lab makes a citing announcement within 60 days → the resulting compliance channel (audit/disclosure) covers only the named obligations, leaving the full-capability model live everywhere the order doesn't reach.",
+    "because": "lab-moves' round-2 REVISE is the only minute that argues a distinct mechanism (quiet segmentation vs. loud delay) and forces the field to react: pressure-model and ai-regulation-teeth both REVISE to accommodate segmentation as an alternative realization, while ai-pressure DEFENDs pure public delay without answering lab-moves' objection that segmentation requires no public citation at all. ai-oversight-lag's undefeated point — loop-delay shortens only for obligations 'named in the order' while everything else keeps the old delay — is corroborated independently by teeth's 'off-docket stays theater' test, giving the narrow-coverage claim two non-identical arguments behind it.",
+    "resolve_by": "2026-12-31",
+    "threat_live": "A visible, narrow compliance channel (the named order's disclosure/audit terms) becomes newly live and simultaneously creates cover for an unnamed-and-uncovered channel: the full-capability version shipping into every market the order doesn't reach keeps the old, slow correction loop. The danger isn't the absence of oversight, it's oversight that looks real, is real for exactly what's named, and is theater for everything adjacent — named by oversight-lag and teeth together, not one minute alone.",
+    "strongest_minute": "lab-moves — it is the only minute that changes the mechanism rather than the parameters, correctly predicts that a firm facing capability/compliance/positioning conflict optimizes for market segmentation over a public concession, and it is the pivot every other surviving round-2 claim had to revise around. Docked slightly for hedging its own granted branch with a 'no enforcement action' fallback.",
+    "weakest_minute": "ai-public-backlash — its own stated objection (regulation-teeth's framing) shows its observable, 'delayed release citing regulatory review,' cannot be distinguished from routine compliance behavior that would happen on the same timeline without the enforcement action; a claim that concedes it can't be falsified by the event it names is the weakest form of argument here.",
+    "shared_assumption": "Every minute that lands on segmentation (lab-moves, pressure-model r2, ai-regulation-teeth r2) assumes the enforcing jurisdiction is cleanly separable from the markets where the full version keeps shipping — i.e., that a capability freeze can be scoped to one regulator's territory without spilling into or being undercut by other markets. None of the three argues for this separability; it is asserted as the mechanism's precondition.",
+    "smuggled_assumption": "ai-oversight-lag and pressure-model's round-2 claim both assume the enforcement action grants outside auditors compelled *model access* ('a binding compliance interface between that developer's model and outside auditors,' 'mandated model access... or audit rights'). The brief's granted terms (per lab-moves r1 and teeth) support disclosure and a financial-statement-level cost, not auditor access to the model itself — that specific extension is not argued for, only assumed.",
+    "unresolved": "Whether the sanctioned lab's response is public delay, silent segmentation, or a mix is not settled between ai-pressure and lab-moves — both remain live and mutually exclusive on the observable. The 60/90-day windows (backlash, lab-moves) are also unanchored: none of the minutes fixes the enforcement action's actual date, so those windows can't be checked without external information the minutes don't supply.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 3,
+    "confidence_spread": 0.15,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": true,
+    "rows": 13,
+    "head": "2ae512685d65f8b752584c39bc75d5051a06e74f3c402b26f70d4fa05c79d18a",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 13,
+     "total_rows": 13,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  },
+  {
+   "cycle": 2,
+   "ruling": {
+    "ruling": "The ordering runs: (1) enforcement triggers jurisdiction-differentiated segmentation, (2) compute and research effort concentrate in the unfrozen branch, (3) once self-improvement is measurable, the resulting cycle-time compression makes the frozen/disclosed branch's capability lag the live branch's by a growing, dated margin.",
+    "because": "Every round-2 DEFEND held its stage-1 claim rather than conceding, so segmentation-under-enforcement is common ground; the actual dispute is what stage 2 does with it. Five of seven minutes (lab-moves, ai-public-backlash, ai-regulation-teeth, ai-oversight-lag, and ai-pressure by implication) converge on capability-gap widening as the live threat, while pressure-model alone argues the compressed cycle changes disclosure-staleness rather than the branch choice itself — this is a genuine second thread, not noise, since it targets the audit/regulator relationship rather than the lab/market relationship.",
+    "resolve_by": "2026-12-17",
+    "threat_live": "A standing, self-widening capability gap between the disclosed/frozen branch and the undisclosed/live branch becomes possible once self-improvement is measurable — the freeze date stops being a snapshot and becomes a vintage stamp, because the compressed cycle means the gap compounds rather than staying fixed.",
+    "strongest_minute": "ai-oversight-lag — it is the only minute that locates the mechanism in the audit channel itself (sampling only the disclosed branch) rather than restating the capability-gap outcome, giving a distinct causal reason the gap would persist rather than just asserting it does.",
+    "weakest_minute": "ai-pressure — its round-1 claim already concedes the compressed-cycle evidence surfaces 'first and most visibly' in the non-enforcing market, which is the same capability-gap observation as five other minutes wearing different words, and round 2 adds no independent mechanism, just a defense against pressure-model's sharper version.",
+    "shared_assumption": "All seven minutes assume the lab responds to enforcement by bifurcating its release architecture rather than by slowing down uniformly or exiting the enforcing market — none argues for this over the alternative, they inherit it from the stage-1 brief.",
+    "smuggled_assumption": "pressure-model smuggles a second assumption the brief did not grant: that a specific regulator (EU AI Office or a BIS-tied body) will act on the staleness signal by publicly flagging it, which imports an institutional-response claim beyond the granted branch of lab behavior.",
+    "unresolved": "Whether the compressed cycle changes which branch the lab favors (majority view: gap widens because effort concentrates in the live branch) or only changes the cadence mismatch between disclosure and deployment (pressure-model's view, which keeps branch choice constant) — the minutes argue past each other on this rather than resolving it.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 0,
+    "confidence_spread": 0.17,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  },
+  {
+   "cycle": 3,
+   "ruling": {
+    "ruling": "The incident splits enforcement asymmetrically by legibility rather than by fault: the disclosed/frozen branch absorbs fast, cheap procedural tightening because regulators already have hooks into it, while the unfrozen/live branch — the one that actually produced the incident — escapes comparably costly action until new authority is built, widening the capability gap the segmentation stage already opened.",
+    "because": "Every minute agrees the incident is a P6-delivered consequence that raises pressure, but they split sharply on where costly enforcement lands: ai-oversight-lag and pressure-model (round 2) both argue enforcement mechanically targets whichever branch is already legible to overseers, hitting the frozen branch first even though the unfrozen branch caused the harm, because building new audit/liability hooks takes a full oversight cycle. ai-pressure and ai-public-backlash instead assume attribution itself forces the executive or public sentiment to act directly on the offending (unfrozen) branch — but this requires a second assumption the brief never granted: that political will alone manufactures enforceable authority within the attribution window, rather than authority-building being the rate-limiting step. lab-moves and ai-regulation-teeth thread between these by keying off the named-defendant mechanism (a satisfied trigger-condition with an identifiable target bites regardless of branch), which is the most brief-faithful account since it doesn't require inventing new institutional capacity.",
+    "resolve_by": "2027-06-30",
+    "threat_live": "the capability gap between the two branches widens rather than closes, because the branch that is easiest to regulate (frozen/disclosed) is the one that actually gets regulated, while the branch that caused the harm (unfrozen/concentrated) continues compressing its cycle time faster than any new oversight authority can be built to reach it",
+    "strongest_minute": "ai-oversight-lag — it is the only minute that names the actual mechanism of asymmetry (oversight-cycle lag versus compressed cycle-time) rather than just asserting which branch 'wins' the incident's fallout, and it held that mechanism unchanged from round 1 to round 2 under direct challenge.",
+    "weakest_minute": "ai-pressure — its round-1 claim that the executive resolves its stage-2 conflict by freezing the fast branch treats political resolution as automatic and instantaneous, and in round 2 it only restates the claim against pressure-model's objection without addressing why enforcement capacity would exist against a branch regulators cannot yet see into.",
+    "shared_assumption": "All six minutes assume the incident is unambiguously and quickly attributed to a specific developer/branch, when the brief only grants 'clearly-attributable' as an incident property, not that attribution converts into actionable jurisdiction over an undisclosed branch within the same timeframe.",
+    "smuggled_assumption": "ai-pressure smuggles in a second assumption beyond the brief: that the US federal executive uses this specific incident to resolve its unrelated stage-2 unilateral-preemption-vs-Senate-bill conflict in one direction, which imports an entire prior policy fork not established as settled by the incident alone.",
+    "unresolved": "Whether the unfrozen branch's harm-producing developer faces ANY costly consequence at all within the window, versus only the frozen branch being touched — ai-regulation-teeth and pressure-model leave open whether the 120-day enforcement action lands on the named defendant regardless of which branch they're in, or whether 'named defendant' effectively only ever resolves to the legible (frozen) branch in practice.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 4,
+    "confidence_spread": 0.05,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}
