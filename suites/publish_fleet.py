@@ -75,6 +75,13 @@ def _models_dir(root):
 TOOLS = _models_dir(ROOT)
 
 
+def _npx() -> str:
+    """Resolvable path to npx. Python's subprocess does not do Windows PATHEXT
+    lookup, so bare "npx" raises WinError 2 even when the shell finds it."""
+    import shutil
+    return shutil.which("npx") or shutil.which("npx.cmd") or "npx"
+
+
 def _git(d: Path, *args, timeout=60) -> str:
     """git stdout, or "" — decoded with replacement, never None.
 
@@ -409,14 +416,14 @@ def main() -> None:
         ct = ("application/json" if rel.endswith(".json")
               else "application/octet-stream" if rel.endswith(".bundle")
               else "text/markdown; charset=utf-8")
-        cmds.append(["npx", "wrangler", "r2", "object", "put", "%s/%s" % (base, rel),
+        cmds.append([_npx(), "wrangler", "r2", "object", "put", "%s/%s" % (base, rel),
                      "--file", str(f), "--content-type", ct,
                      "--cache-control", "public, max-age=31536000, immutable",
                      "--remote"] if a.publish == "r2"
                     else ["gsutil", "-h", "Cache-Control:public,max-age=31536000,immutable",
                           "cp", str(f), "%s/%s/%s" % (a.dest.rstrip("/"), snap, rel)])
     ptr = out / "FLEET.json"
-    cmds.append(["npx", "wrangler", "r2", "object", "put",
+    cmds.append([_npx(), "wrangler", "r2", "object", "put",
                  "%s/%s/latest/FLEET.json" % (a.dest.strip("/"), a.handle),
                  "--file", str(ptr), "--content-type", "application/json",
                  "--cache-control", "public, max-age=300", "--remote"]
