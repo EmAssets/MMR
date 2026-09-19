@@ -1,0 +1,307 @@
+{
+ "event_name": "meta-coxon-resignation",
+ "event_file": "arena\\cases\\meta-coxon-resignation.md",
+ "read_on": "2026-09-18",
+ "lenses": [
+  {
+   "model": "pressure-model",
+   "_error": "no entities in watch.json — nothing to read through"
+  },
+  {
+   "model": "attention-substrate",
+   "_error": "no entities in watch.json — nothing to read through"
+  },
+  {
+   "model": "ai-public-backlash",
+   "entity_reads": [
+    {
+     "entity": "sentiment-polls",
+     "touched": false,
+     "action": "no measurable change",
+     "implied_future": "n/a — no polling instrument in this event",
+     "implied_role": "bystander — absent from the record",
+     "floor": "E9",
+     "floor_because": "a poll series is itself an E9 aggregation instrument, but none was updated or cited in this chronology"
+    },
+    {
+     "entity": "state-enactments",
+     "touched": false,
+     "action": "no measurable change",
+     "implied_future": "n/a — no state legislative text moved",
+     "implied_role": "bystander — absent from the record",
+     "floor": "E12",
+     "floor_because": "enactment is the act of a territorial state; nothing in the chronology reaches that stage"
+    },
+    {
+     "entity": "ai-backlash-public",
+     "touched": false,
+     "action": "172M views, ~800k likes, ~200k reposts of one post, plus derivative conspiracy claims about METR/Anthropic — amplification, not organisation, refusal, or a campaign",
+     "implied_future": "this act only makes sense as attention capture, not as the entity ai-backlash-public tracks; an organised campaign would show sustained coordination past the news cycle, which is not yet observable",
+     "implied_role": "bystander — the audience is a distribution channel here, not the organised-opposition object this entity names",
+     "floor": "E9",
+     "floor_because": "mass resharing of a claim is a memeplex-propagation act, not the crystallisation into a campaign or boycott that would make it E10/E11"
+    },
+    {
+     "entity": "harm-categories",
+     "touched": true,
+     "action": "the highest-salience AI-related post of the period (Coxon's resignation, endorsed with a >10% extinction-risk figure) was framed entirely in catastrophic-risk terms — self-improving superintelligence, existential stakes — with no proximate-harm content (no jobs, surveillance, slop, deepfakes) attached to it",
+     "implied_future": "this act only makes sense if the highest-attention AI narrative of the window runs on extinction-risk framing rather than concrete-harm framing — the opposite of what P3 predicts should dominate ordinary sentiment",
+     "implied_role": "claimant — this event stakes a claim on the x-risk side of the harm-categories ledger, working against the count P3 needs",
+     "floor": "E9",
+     "floor_because": "a public framing choice replicated across a viral post and two employee endorsements is a memeplex-level act — content shape, not enforcement or institutional text"
+    },
+    {
+     "entity": "incident-citations",
+     "touched": false,
+     "action": "no bill, amendment, or enacted state AI law yet references the 2026-09-09 resignation, the endorsements, or 'We Must Pace the Frontier' by name — the sequence is 9 days old and no legislative text has had time to move; this is the entity to re-check, not a closed null",
+     "implied_future": "this act (its current absence) only makes sense if P3+P4 jointly hold: a maximally viral, catastrophic-risk-framed incident does NOT convert to state statutory text, because backlash-to-law conversion runs through concrete-harm incidents, not x-risk ones",
+     "implied_role": "witness — currently a null reading with a dated re-test attached, not yet a claimant either way",
+     "floor": "E10",
+     "floor_because": "the act being measured is the appearance of the incident's name inside enacted or introduced institutional text, which is what makes it an E10 question even though the current reading is zero",
+     "observable_by_2026-12-17": "any state legislature introducing or enacting an AI bill that names the 2026-09-09 resignation, the alignment-lead endorsements, or 'We Must Pace the Frontier' — a positive hit falsifies the P3-over-P4 reading above; the model predicts this stays absent through the window"
+    },
+    {
+     "entity": "lab-product-reversals",
+     "touched": true,
+     "action": "Anthropic published 'We Must Pace the Frontier' on ~2026-09-12, three days after the resignation, proposing embedded third-party evaluators with employee-like access — a public policy-posture shift, not a shipped product change",
+     "implied_future": "this act only makes sense if the triggering pressure on Anthropic came from an insider's public claim and its viral endorsement by two of its own alignment leads, not from the non-user, ordinary-customer sentiment channel P2 names as the mechanism industry is slow to read",
+     "implied_role": "instrument — Anthropic here is the entity enacting a response, but to a different input than the one P2's mechanism specifies",
+     "floor": "E11",
+     "floor_because": "a named organisation issuing a public policy proposal under its own letterhead, days after an internal event, is an organization acting coherently — one level above the E9 post that triggered it, and short of the E10 institution (an evaluator with actual standing) it merely proposes"
+    },
+    {
+     "entity": "nilay-patel",
+     "touched": false,
+     "action": "no public act by this entity appears anywhere in the chronology",
+     "implied_future": "n/a",
+     "implied_role": "bystander — absent from the record",
+     "floor": "E9",
+     "floor_because": "n/a — nothing to place"
+    },
+    {
+     "entity": "local-siting",
+     "touched": false,
+     "action": "no measurable change",
+     "implied_future": "n/a — no siting moratorium activity in this event",
+     "implied_role": "bystander — absent from the record",
+     "floor": "E12",
+     "floor_because": "n/a — nothing to place"
+    }
+   ],
+   "reached": 2,
+   "verdict": "edge",
+   "what_this_lens_cannot_see": "This lens has entities only for sentiment aggregates and state statutory text, so it is structurally blind to: (1) the E8 act the case says is the origin — one researcher's self-model and equity forfeiture; (2) the E11 intra-organisational act of two employed alignment leads publicly contradicting their own employer while staying — this model has no entity for lab personnel, only for lab products; (3) the proposed E10 institution itself — embedded third-party evaluators with employee-like access is a governance mechanism with no state or enactment attached, so 'state-enactments' cannot register it even if it is adopted; (4) all federal/executive-branch acts (Trump-Huang, Sacks, Altman-Musk) since this model watches state jurisdictions only, not federal rhetoric or executive positioning; (5) valence — 172M views is volume, and this model's leading signal is measured direction of net sentiment, which this event supplies no instrument for.",
+   "entities_watched": 8,
+   "read_on": "2026-09-18"
+  },
+  {
+   "model": "ai-lab-revealed-priorities",
+   "entity_reads": [
+    {
+     "entity": "openai",
+     "touched": false,
+     "action": "no measurable change — Altman's public agreement with pacing is a stated position, not a release, price, or policy decision",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "E9",
+     "floor_because": "a public statement of agreement is a cultural/discourse act; no completed decision under P1–P4 occurred, so it fails the entity's own filter (COMPLETED decisions only, ignore stated intentions)"
+    },
+    {
+     "entity": "anthropic",
+     "touched": true,
+     "action": "Dario Amodei published 'We Must Pace the Frontier' on darioamodei.com (~2026-09-12), proposing embedded third-party evaluators with employee-like access to frontier labs — a proposal, not yet an executed access agreement, price change, or release decision",
+     "implied_future": "this act only makes sense if a future exists in which evaluation access can be externally imposed on a frontier lab before shipping, rather than decided unilaterally on the lab's own timeline — the opposite of the pattern in P1",
+     "implied_role": "claimant — proposing a new gatekeeping arrangement it does not yet occupy or control",
+     "floor": "E9",
+     "floor_because": "the act is one individual publishing a personal essay on a personal domain proposing a future institution; it is a memeplex-level move about an E10 subject (an enforcement mechanism), not itself an enforcement mechanism — the case's own example of a blog post about state policy being an E9 act about an E12 subject applies here at one rung down"
+    },
+    {
+     "entity": "google-deepmind",
+     "touched": false,
+     "action": "no measurable change — not named in any dated item in this chronology",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "E9",
+     "floor_because": "n/a — absent from the record entirely, no act to place on the ladder"
+    },
+    {
+     "entity": "meta-xai",
+     "touched": false,
+     "action": "no measurable change — Musk's public agreement is a stated position, not a weights-licensing, pricing, or capability-withholding decision",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "E9",
+     "floor_because": "a statement of agreement is discourse, not a completed act this entity's definition tracks"
+    },
+    {
+     "entity": "safety-institutes",
+     "touched": true,
+     "action": "METR was named in Amodei's proposal as the prospective evaluator and its independence was publicly attacked by David Sacks; METR itself accepted or refused nothing — no lab has granted or been denied the described access",
+     "implied_future": "this act (naming METR, then attacking its independence) only makes sense in a future where the credibility of a specific third-party evaluator, not just the general idea of evaluation, determines whether any embedded-access arrangement is ever signed",
+     "implied_role": "instrument — cast as the proposed gate, without having accepted or sought that role in this sequence",
+     "floor": "E9",
+     "floor_because": "naming an org in an essay and attacking its independence in public statements are both discourse acts; the subject (a pre-deployment evaluation mechanism) is E10, but nothing has been enforced or refused yet, so the act itself has not reached that floor"
+    }
+   ],
+   "reached": 2,
+   "verdict": "edge",
+   "what_this_lens_cannot_see": "This lens only registers completed decisions by named labs/institutes/buyers, so it cannot see: (1) the originating act itself — one researcher's resignation and equity forfeiture, since this model has no individual-mind entity and bans psychological attribution; (2) the 172M-view amplification and the four quarantined conspiracy readings, which are E9 phenomena with no corresponding entity here; (3) any state-level actor — Trump and Huang arguing for acceleration on a public stage is a state-adjacent E12-flavored act with no entity in this registry to catch it, and it is plausibly the floor that actually decides whether Amodei's proposal ever becomes policy; (4) whether any of P1–P4 gets violated, since the only entity-legible outcome available so far is a proposal, and this model is built to read completed choices, not proposals.",
+   "entities_watched": 6,
+   "read_on": "2026-09-18"
+  },
+  {
+   "model": "ai-influence-chain",
+   "entity_reads": [
+    {
+     "entity": "intermediaries",
+     "touched": false,
+     "action": "none in chronology",
+     "implied_future": null,
+     "implied_role": null,
+     "floor": null,
+     "floor_because": null
+    },
+    {
+     "entity": "draft-text",
+     "touched": false,
+     "action": "no measurable change",
+     "implied_future": null,
+     "implied_role": null,
+     "floor": null,
+     "floor_because": null
+    },
+    {
+     "entity": "dockets",
+     "touched": false,
+     "action": "no measurable change",
+     "implied_future": null,
+     "implied_role": null,
+     "floor": null,
+     "floor_because": null
+    },
+    {
+     "entity": "lab-policy-arms",
+     "touched": true,
+     "action": "~2026-09-12 — Dario Amodei publishes 'We Must Pace the Frontier' on darioamodei.com proposing embedded third-party evaluators (naming METR) with employee-like access to verify safety commitments and assess alignment of models and training pipelines; Altman and Musk publicly concur; Sacks publicly attacks the proposal as cartel-formation and attacks the evaluator's independence.",
+     "implied_future": "this act only makes sense if a third-party-evaluator regime is going to be specified in some instrument within a step-2-to-step-4 window, and the first published framework text is the one later draft language would be traced back to (P1)",
+     "implied_role": "claimant — a step-1 actor publishing step-2-shaped text under its own name, skipping the intermediary link",
+     "floor": "E9",
+     "floor_because": "a proposal published on a personal domain, not issued by a think tank, trade body or agency, is a culture-layer act about an E10 subject (an enforcement institution with third-party access rights); it inverts this model's own P3 by making step 1 observed rather than inferred, and it skips step 2 entirely — one of the two conditions this model names as falsifying a tracer. First point of grip: whether 'embedded third-party evaluator' or 'pace the frontier' language appears in testimony, an agency RFI, or bill text by 2026-12-17"
+    },
+    {
+     "entity": "outcomes",
+     "touched": false,
+     "action": "no measurable change",
+     "implied_future": null,
+     "implied_role": null,
+     "floor": null,
+     "floor_because": null
+    }
+   ],
+   "reached": 1,
+   "verdict": "edge",
+   "what_this_lens_cannot_see": "every actor in the case. No entity here holds Coxon's E8 resignation and forfeited equity, the 172M-view E9 cascade and its quarantined conspiracy readings, the two Anthropic alignment leads' public endorsements, Altman/Musk's concurrence, Sacks's attack, or Trump/Huang on stage — the whole event sits pre-chain, before any step-2 document exists. Two specific near-misses: Coxon's reported coordination with policy-org heads is invisible until those orgs publish a document under their own name (this model sees text, not contact); METR is named as the instrument in someone else's proposal and has itself produced nothing, so it registers on no entity this model watches.",
+   "entities_watched": 5,
+   "read_on": "2026-09-18"
+  },
+  {
+   "model": "ai-regulation-teeth",
+   "entity_reads": [
+    {
+     "entity": "eu-ai-office",
+     "touched": false,
+     "action": "none"
+    },
+    {
+     "entity": "gpai-filings",
+     "touched": false,
+     "action": "none"
+    },
+    {
+     "entity": "transparency-rules",
+     "touched": false,
+     "action": "none"
+    },
+    {
+     "entity": "us-states",
+     "touched": false,
+     "action": "none"
+    },
+    {
+     "entity": "market-withdrawals",
+     "touched": false,
+     "action": "none"
+    }
+   ],
+   "reached": 0,
+   "verdict": "edge",
+   "what_this_lens_cannot_see": "Everything that makes this event legible elsewhere is invisible here: Coxon's resignation and its 172M-view spread (E8/E9, no statutory object), Anthropic publishing a proposal as an organization (E11 act, no enforcement body yet), and the federal political fight over pacing (Altman, Musk, Sacks, Trump/Huang — all E9-E11 public argument, none of it a state or EU institutional act). This lens has grip only where P1-P4 can classify a rule with a named enforcer, a filing, a disclosure obligation, or a withdrawal. Only the proposal's TEXT falls near that grip: under P3, 'embedded third-party evaluators' with no statutory standing, no per-incident penalties and no private right of action sorts SYMBOLIC by this model's own mechanism, regardless of how the text reads — and Sacks's attack on METR's independence is aimed at exactly the 'named enforcement body' leg of P1. That is a reading of a document, not a touch on any watched entity: no EU AI Office inspection, no GPAI systemic-risk filing, no transparency-rule compliance act, no US state statute, and no market withdrawal occurred in this chronology. This lens cannot see the resignation as an act at all, cannot see the audience as anything but noise, and cannot see a voluntary industry proposal as a 'rule' until some institution adopts it — it would only be triggered if, within 90 days (by 2026-12-17), an EU AI Office statement cites the proposal, a US state introduces a bill with a private right of action referencing it, or a frontier feature is withheld/geo-fenced citing AI Act obligations. None of that is present as of 2026-09-18; this lens has no grip at the floors (E8, E9, E11) where the event currently resolves.",
+   "entities_watched": 5,
+   "read_on": "2026-09-18"
+  },
+  {
+   "model": "ai-us-policy-direction",
+   "entity_reads": [
+    {
+     "entity": "white-house",
+     "touched": false,
+     "action": "No signed instrument. Trump's stage appearance with Jensen Huang and David Sacks's public attack on the pacing proposal are both speech acts; this entity's own definition excludes speeches and counts SIGNED instruments only — no EO, no framework acted on exists in this chronology.",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "n/a",
+     "floor_because": "Excluded by the entity's own filter before any floor question arises: two E12-actor speech acts occurred, but this registry only registers this actor when it signs, not when it speaks."
+    },
+    {
+     "entity": "congress",
+     "touched": false,
+     "action": "No statute enacted, no bill reported out of committee. Nothing in the chronology involves legislative text.",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "n/a",
+     "floor_because": "n/a"
+    },
+    {
+     "entity": "bis-commerce",
+     "touched": false,
+     "action": "No published rule on export licensing posture or thresholds. The event contains no chip-export content at all.",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "n/a",
+     "floor_because": "n/a"
+    },
+    {
+     "entity": "state-legislatures",
+     "touched": false,
+     "action": "No state AI enactment appears anywhere in the chronology. The event is entirely federal-lab/federal-politics in scope.",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "n/a",
+     "floor_because": "n/a"
+    },
+    {
+     "entity": "state-ags",
+     "touched": false,
+     "action": "No multistate action, suit, or investigation appears in the chronology.",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "n/a",
+     "floor_because": "n/a"
+    },
+    {
+     "entity": "federal-courts",
+     "touched": false,
+     "action": "No ruling, no filed suit, no preemption challenge appears in the chronology.",
+     "implied_future": "n/a — not touched",
+     "implied_role": "n/a — not touched",
+     "floor": "n/a",
+     "floor_because": "n/a"
+    }
+   ],
+   "reached": 0,
+   "verdict": "edge",
+   "what_this_lens_cannot_see": "This lens is built to see only signed federal instruments, enacted state law, and court rulings on preemption — the P1/P2/P3 axis of who wins the federal-vs-state round. This event never reaches that axis: it is an E8 origin (Coxon's resignation as a single self-model choosing to exit and speak), an E9 memeplex (the 172M-view spread and the quarantined conspiracy readings about it), and a set of E11 organizational acts (Amodei's essay proposing embedded third-party evaluators, Altman's and Musk's public agreement, a competitor's public attack, Sacks's public counter-attack) — none of which is a signed instrument, an enacted statute, a published export rule, or a court ruling. Structurally invisible from here: the content of the safety argument itself; the credibility and coordination questions about Coxon and METR; the lab-level maneuvering among Anthropic/OpenAI/xAI; and the entire private-sector-standards question Amodei's proposal raises, which sits one register below this model's floor (it proposes obligations without any state action to enact or preempt them). The one thing worth flagging precisely: Trump-with-Huang and Sacks's attack are the closest this event comes to touching white-house, and they are excluded not because they're irrelevant to the model's domain but because they are speech, not signature — if this resolves in this model's terms at all, it resolves only if and when that same posture produces a signed EO or transmitted legislative text on third-party evaluation or frontier-developer obligations, or a bill gets reported out of committee, within 90 days (by 2026-12-17). Until then: no grip, and the floor named is E12, where nothing has yet happened.",
+   "entities_watched": 6,
+   "read_on": "2026-09-18"
+  }
+ ]
+}

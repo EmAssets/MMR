@@ -202,10 +202,24 @@ def read_through(slug: str, event: str, model_hint: str) -> dict:
     return {"model": slug, "_error": "lens read failed or unparseable"}
 
 
+def snapshots(slug: str) -> list:
+    """Every snapshot for this event, oldest first. Legacy flat file included."""
+    out = []
+    flat = ODIR / ("%s.json" % slug)
+    if flat.exists():
+        out.append(flat)
+    d = ODIR / slug
+    if d.exists():
+        out += sorted(d.glob("*.json"))
+    return out
+
+
 def compare(slug: str) -> None:
-    f = ODIR / ("%s.json" % slug)
-    if not f.exists():
-        raise SystemExit("no lens run at %s" % f)
+    snaps = snapshots(slug)
+    if not snaps:
+        raise SystemExit("no lens run for %s" % slug)
+    f = snaps[-1]
+    print("(latest of %d snapshot(s): %s)" % (len(snaps), f.name))
     p = json.loads(f.read_text(encoding="utf-8"))
     lenses = [l for l in p["lenses"] if not l.get("_error")]
     print("[event lens] %s" % p["event_name"])

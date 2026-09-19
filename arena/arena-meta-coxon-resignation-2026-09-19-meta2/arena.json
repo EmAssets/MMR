@@ -1,0 +1,149 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-meta-coxon-resignation-2026-09-19-meta2",
+ "built": "2026-09-19",
+ "case": "meta-coxon-resignation",
+ "case_title": "Meta-model test — one event, read at five floors of the emergence ladder",
+ "as_of": "2026-09-18",
+ "question": "Start from the researcher's own model of the future and his role in it. Then for each actor who responded: what future does their public behaviour imply, what role do they take in it, and which floor of the ladder is their action actually operating on? Finally: which floor is load-bearing for what happens next, with a dated observable.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "attention-substrate",
+   "title": "The Attention Substrate — the model (v5.1)",
+   "kind": "unstated",
+   "version": "v5.1",
+   "commit": "14c1b8b",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-lab-revealed-priorities",
+   "title": "What Labs Choose When It Costs Them — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "d95eb3b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-influence-chain",
+   "title": "How AI Policy Gets Made — (v1)",
+   "kind": "tracer",
+   "version": "v1",
+   "commit": "64fe077",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-us-policy-direction",
+   "title": "US Federal AI Policy Direction — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "98bc8f2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "pivot": "Whether any resulting evaluator arrangement carries revocation/publication authority sitting outside the regulated lab's own veto, versus remaining self-vetoed (lab can revoke, gag, or scope it at will) — regardless of whether the actor doing the binding is a state (E12) or a horizontal cross-lab pact (E10-to-E10)",
+    "pivot_observable": "Text of any announced evaluator/oversight arrangement (Anthropic's or another lab's): does it name who selects the evaluator, who can revoke access, and whether findings publish without the regulated lab's consent",
+    "pivot_resolves_by": "2026-12-17",
+    "pivot_source": "ai-regulation-teeth",
+    "pivot_because": "This is the one variable that reorders the outcome set rather than just shifting confidence inside it. If veto sits outside the lab, the situation is materially different — an artifact exists that could bind conduct, feed the resignation-pressure question, and give the public-backlash sentiment an institutional attachment point. If veto stays inside the lab, every flavor of motion (Amodei's proposal, a narrowed unilateral pilot, even a second lab joining) collapses into the same functional bucket: theatre-with-language, changing nothing structurally. attention-substrate's own r2 revision folds its E12-only framing into exactly this test ('any embedded-evaluator move... stays a self-vetoed pilot'), which is what promotes veto-locus over jurisdiction-source as the true hinge.",
+    "minutes_by_side": {
+     "pressure-model": "not-bearing",
+     "attention-substrate": "below",
+     "ai-public-backlash": "below",
+     "ai-lab-revealed-priorities": "above",
+     "ai-influence-chain": "below",
+     "ai-regulation-teeth": "below",
+     "ai-us-policy-direction": "below"
+    },
+    "rival_pivots_rejected": "E12 jurisdiction-assertion (attention-substrate r1): the brief already shows the E12 actor's response — Sacks's public attack and the Trump/Huang stage appearance — as hostile, so this variable is already resolved inside the brief rather than live; it's a background condition, not a hinge. E9-to-E10 sentiment conversion (ai-public-backlash r1): abandoned by the same minute in r2, which rewrote its own mechanism to E10-to-E12 — a claim that keeps its prediction while swapping its causal story isn't testing either mechanism. Second public resignation (pressure-model): this is a downstream indicator conditioned on the same binding/non-binding fact, not an independent variable — it moves with the pivot, doesn't reorder it. Preemption contest / federal-vs-patchwork framing (ai-us-policy-direction r1): conceded to attention-substrate's framing in r2, folded into the veto-locus question rather than standing apart from it. Whether a second frontier lab signs on (touched by attention-substrate, ai-public-backlash, ai-lab-revealed-priorities but argued by none): this is a magnitude question nested inside the veto-locus pivot, not a separate axis — a second lab signing something self-vetoed doesn't reorder anything, so it's absorbed rather than rival.",
+    "ruling": "The load-bearing floor is E10-into-structure (institutional crystallization with externally-held veto) rather than E9 (sentiment) or E12 (state assertion) alone, because every minute's outcome collapses to the same non-binding bucket unless some arrangement — state-imposed or cross-lab — strips revocation/publication control from the regulated lab itself, and the minutes show no path to that by 2026-12-17.",
+    "because": "Six of seven minutes converge on 'nothing binding by 2026-12-17,' but they converge for different stated reasons (sentiment-stall, state-absence, lab-reluctance) until ai-regulation-teeth names the actual operational test — who selects, who revokes, who can veto publication — and attention-substrate explicitly adopts that test in its r2 revision to distinguish a 'self-vetoed pilot' from real crystallization. ai-lab-revealed-priorities is the sole minute on the other side, arguing Anthropic will be forced into a concrete unilateral act, but even its own claim describes that act as unilateral and lab-controlled, i.e. it does not contest that veto stays internal — it only contests whether motion happens at all, which is a confidence shift, not a reorder.",
+    "resolve_by": "2026-12-17",
+    "threat_live": "A self-vetoed pilot arrangement (scoped, time-boxed, lab-revocable) becomes newly likely on this branch, and its danger is that it functions as pressure-relief: it lets Anthropic appear responsive without ceding veto, which forecloses both the harder external-veto arrangement and the second high-stakes resignation that pressure-model's mechanism depends on. This risk arrives with the branch (a visible-but-hollow compensating act) rather than existing beforehand.",
+    "strongest_minute": "ai-regulation-teeth — it is the only minute that operationalizes 'binding' into three checkable terms (selector, revocation, publication veto) instead of leaving the word to do unexamined work; the rest of the panel, including a rival on r2, absorbs its framing.",
+    "weakest_minute": "ai-public-backlash — it kept its exact prediction from r1 to r2 while replacing its entire causal mechanism (E9-to-E10 sentiment-stall became E10-to-E12 institution-stall), which means the claim was never actually falsifiable by the mechanism it now claims to test.",
+    "shared_assumption": "That Amodei's embedded-evaluator proposal is the sole vehicle through which 'binding' could occur — five of seven minutes frame the entire question as whether that specific proposal crystallizes, without arguing why a wholly separate mechanism (e.g., a state consent decree, an insurer-driven standard, or a multi-lab pact with no connection to Amodei's proposal) is out of scope.",
+    "smuggled_assumption": "pressure-model imports interiority the brief did not grant: 'he modeled the cost (equity) as smaller than the stakes of silence' asserts Coxon's internal weighing, not an observable act — the question asks what future his public behavior implies, not what he believed while doing it.",
+    "unresolved": "Whether a non-Amodei-shaped path to externally-held veto (state consent decree, insurance/liability standard, multilateral non-US instrument) is plausible within the window — no minute tests this because all frame the question through Amodei's proposal as the only live vehicle.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 7,
+    "distinct_claims": 7,
+    "distinct_ratio": 1.0,
+    "revised": 3,
+    "confidence_spread": 0.36,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 15,
+   "chain": {
+    "ok": true,
+    "rows": 15,
+    "head": "e420bbb04938cc1cce9ac9f02866f857996bbd8cb2162ecc72f5863cfd391ed8",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 15,
+     "total_rows": 15,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

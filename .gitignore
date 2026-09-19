@@ -10,3 +10,6 @@ povs/
 # collision, so an engine update never overwrites your discipline.
 suites/kinds/my_kinds.json
 ui/inbox.jsonl
+
+# staged publish bundles — rebuilt by event_update --publish, never the source
+publish/

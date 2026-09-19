@@ -1,0 +1,34 @@
+[arena] case=meta-coxon-resignation  panel=7  cycles=1
+   Meta-model test — one event, read at five floors of the emergence ladder
+     pressure-model               unstated       v2.1 ae0eaa5
+     attention-substrate          unstated       v5.1 14c1b8b
+     ai-public-backlash           tracker        v1 4b2f10b
+     ai-lab-revealed-priorities   decision-model v1 d95eb3b
+     ai-influence-chain           tracer         v1 64fe077
+     ai-regulation-teeth          classifier     v1 f9c34d2
+     ai-us-policy-direction       decision-model v1 98bc8f2
+
+  -- cycle 1 --
+     r1 pressure-model             grip=partial  conf=0.42
+     r1 attention-substrate        grip=partial  conf=0.55
+     r1 ai-public-backlash         grip=strong   conf=0.62
+     r1 ai-lab-revealed-priorities grip=partial  conf=0.4
+     r1 ai-influence-chain         grip=partial  conf=0.62
+     r1 ai-regulation-teeth        grip=partial  conf=0.6
+     r1 ai-us-policy-direction     grip=strong   conf=0.68
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 attention-substrate        REVISE   moved_by=ai-lab-revealed-priorities
+     r2 ai-public-backlash         REVISE   moved_by=attention-substrate
+     r2 ai-lab-revealed-priorities DEFEND   moved_by=None
+     r2 ai-influence-chain         REVISE   moved_by=attention-substrate
+     r2 ai-regulation-teeth        DEFEND   moved_by=None
+     r2 ai-us-policy-direction     DEFEND   moved_by=None
+     JUDGE  The load-bearing floor is E10-into-structure (institutional crystallization with externa
+     PIVOT [ai-regulation-teeth]: Whether any resulting evaluator arrangement carries revocation/publication aut
+       sides: pressure-model=not-bearing, attention-substrate=below, ai-public-backlash=below, ai-lab-revealed-priorities=above, ai-influence-chain=below, ai-regulation-teeth=below, ai-us-policy-direction=below
+       not bearing on the pivot (not a criticism): pressure-model
+     judge flags shared assumption: That Amodei's embedded-evaluator proposal is the sole vehicle through which 'bin
+     disagreement: 7/7 distinct (ratio 1.00) · 3 revised · spread 0.36
+     chain: verified · head e420bbb04938
+
+  -> E:\New folder\MMR\arena\arena-meta-coxon-resignation-2026-09-19-meta2\arena.json
