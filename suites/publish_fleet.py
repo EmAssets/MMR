@@ -226,9 +226,83 @@ def readable(ix: dict) -> str:
     return "\n".join(L) + "\n"
 
 
+def to_github(repos: list, ix: dict, org: str, apply: bool) -> None:
+    """Push each repo to its own GitHub repository under a dedicated owner.
+
+    WHY THIS IS THE BETTER TARGET for a fleet, where R2 was right for one event
+    bundle: a reader runs `git clone` and has the working repo with its whole
+    history, no bundle step. GitHub also serves the browse-and-read case an
+    article's readers actually want.
+
+    WHY IT IS HANDLED SEPARATELY AND CAREFULLY. Pushing is the one step in this
+    whole pipeline that is irreversible and outward-facing under an identity. The
+    engine's own SETUP.md warns about exactly this failure: a clone that kept its
+    origin, and `git push` sending private premises to a repo nobody intended.
+    So:
+
+      * the owner must be passed EXPLICITLY (--org). There is no default, and it
+        must not be whatever account `gh` happens to be logged into -- the
+        operator asked for a dedicated account precisely so the personal one
+        cannot receive this by accident.
+      * the currently authenticated account is printed and must MATCH --org, or
+        this refuses. An `gh auth status` showing a personal account while --org
+        names the publishing one means the push would land as the wrong identity.
+      * --apply is still required. Without it this prints the plan.
+    """
+    who = _git(ROOT, "config", "--get", "user.name").strip()
+    auth = subprocess.run(["gh", "api", "user", "--jq", ".login"],
+                          capture_output=True, text=True, timeout=60)
+    login = (auth.stdout or "").strip()
+    print("")
+    print("  gh authenticated as: %s" % (login or "(unknown)"))
+    if not org:
+        raise SystemExit(
+            "--publish github needs --org <dedicated-account>.\n"
+            "There is deliberately no default: the account gh is logged into is\n"
+            "'%s', and pushing a fleet to a personal account by omission is the\n"
+            "failure SETUP.md warns about." % (login or "?"))
+    if login and login.lower() != org.lower():
+        raise SystemExit(
+            "gh is authenticated as '%s' but --org is '%s'.\n"
+            "Switch accounts first (gh auth switch / gh auth login) so the push\n"
+            "lands under the intended identity:\n"
+            "  gh auth login --hostname github.com   # as %s\n"
+            "Refusing to push cross-identity." % (login, org, org))
+
+    print("  target owner: %s" % org)
+    print("  %d repositories would be created and pushed:" % len(repos))
+    for slug, d, _ in repos[:6]:
+        print("    %s/%s" % (org, slug))
+    if len(repos) > 6:
+        print("    ... and %d more" % (len(repos) - 6))
+    print("")
+    print("  per repo: gh repo create %s/<slug> --public --source <dir> --push" % org)
+    print("  plus one index repo carrying FLEET.json / FLEET.md")
+    if not apply:
+        print("")
+        print("  DRY RUN -- nothing pushed. This is the irreversible step: a public")
+        print("  push can be cloned, cached and forked within minutes. Re-run with")
+        print("  --apply once the dedicated account is the authenticated one.")
+        return
+    for slug, d, _ in repos:
+        r = subprocess.run(["gh", "repo", "create", "%s/%s" % (org, slug),
+                            "--public", "--source", str(d), "--push",
+                            "--description", "MMR model: %s" % slug],
+                           capture_output=True, text=True, timeout=300)
+        ok_ = r.returncode == 0
+        print("    %-28s %s" % (slug, "pushed" if ok_ else
+                                (r.stderr or "").strip().splitlines()[0][:70]))
+    print("  done. Readers: git clone https://github.com/%s/<slug>" % org)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--publish", choices=["r2", "gcs"], nargs="?", const="r2")
+    ap.add_argument("--publish", choices=["r2", "gcs", "github"], nargs="?", const="r2",
+                    help="r2/gcs upload bundles; github pushes each repo as its own "
+                         "remote branch (readers git clone directly)")
+    ap.add_argument("--org", default="",
+                    help="github: the owner (user or org) to push to. MUST be the "
+                         "dedicated publishing account, not your personal one.")
     ap.add_argument("--dest", default="")
     ap.add_argument("--handle", default=os.environ.get("MMR_HANDLE", ""))
     ap.add_argument("--apply", action="store_true")
@@ -272,6 +346,8 @@ def main() -> None:
     if not a.publish:
         print("\n  staged only. Add --publish r2 --dest <bucket>/<prefix> --handle <you>")
         return
+    if a.publish == "github":
+        return to_github(ok, ix, a.org, a.apply)
     if not a.dest or not a.handle:
         raise SystemExit("--publish needs --dest and --handle")
 
