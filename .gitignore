@@ -13,3 +13,6 @@ ui/inbox.jsonl
 
 # staged publish bundles — rebuilt by event_update --publish, never the source
 publish/
+
+# wrangler local state (auth cache, build temp) — never publishable
+.wrangler/
