@@ -1,0 +1,29 @@
+##### Frontier AI labs (OpenAI, Anthropic, Google DeepMind, Meta, xAI)
+[converge] Frontier AI labs (OpenAI, Anthropic, Google DeepMind, Meta, xAI) :: What frontier AI labs do over the next 45 days on release pace, safety commitments and regulatory engagement
+  vectors: 7 (0 merges) · pressure saturated (14.45) · tension 0.195
+    73%  add pre-deployment gates, safeguards, or disclosures beyond current practice  (1 domains)
+    18%  loosen usage/safety restrictions to secure government contracts  (1 domains)
+    9%  delay/no-change
+  -> converge/what-frontier-ai-labs-do-over-the-next-45-days-on-release-pa.json + .md (full reasoning trace)
+  -> ledger claim appended (p=0.734 'add pre-deployment gates, safeguards, or disclosures beyond current practice', by 2026-11-02)
+##### US federal executive branch (White House, OSTP, Commerce/BIS)
+[converge] US federal executive branch (White House, OSTP, Commerce/BIS) :: What the US federal executive does over the next 45 days on AI regulation, preemption of state law, and export controls
+  vectors: 2 (0 merges) · pressure moderate (4.25) · tension 0.0
+    71%  delay/no-change
+    29%  escalates state-law preemption (new DOJ suits / BEAD funding conditions enforced)  (1 domains)
+    0%  tightens export controls (new Entity List additions or chip-rule tightening)
+    0%  loosens export controls (further China chip licenses, de-escalation with Beijing)
+  -> converge/what-the-us-federal-executive-does-over-the-next-45-days-on-.json + .md (full reasoning trace)
+  -> ledger claim appended (p=0.714 'delay/no-change', by 2026-11-02)
+##### Beijing (CAC, MIIT, State Council) and Chinese frontier labs
+[converge] Beijing (CAC, MIIT, State Council) and Chinese frontier labs :: What Beijing and Chinese labs do over the next 45 days on open-weight releases, domestic silicon and AI governance
+  filtered: 1 of 5 candidate vectors were facts, not pressures
+    - v5 Cyberspace Administration of China (CAC): pushes_toward 'tighten domestic AI-services restriction' is not one of
+  vectors: 4 (1 merges) · pressure high (6.05) · tension 0.579
+    33%  extend domestic-silicon exclusion  (1 domains)
+    23%  tighten US-origin restriction  (1 domains)
+    22%  delay/no-change
+    22%  clear Nvidia imports (capped)  (1 domains)
+  -> converge/what-beijing-and-chinese-labs-do-over-the-next-45-days-on-op.json + .md (full reasoning trace)
+  -> ledger claim appended (p=0.327 'extend domestic-silicon exclusion', by 2026-11-02)
+V2 DONE

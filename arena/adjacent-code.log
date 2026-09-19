@@ -1,0 +1,66 @@
+##### Electric power distribution (AC grid)
+[coded] Electric power distribution (AC grid)
+  capability 1886-03 -> dependent category 1913 = gap 27
+  verdict: substitution-then-category (conf 0.55)
+  collapses: Continuous, unattended mechanical refrigeration inside an ordinary home. Switch off the power an
+  -> cases/electric-power-distribution-ac-grid.json
+##### The automobile / mass motor transport
+[coded] The automobile / mass motor transport
+  capability 1908 -> dependent category 1921-09 = gap 13
+  verdict: substitution-then-category (conf 0.58)
+  collapses: eating a served restaurant meal while remaining seated in a parked car ('curb service' / carhop 
+  -> cases/the-automobile-mass-motor-transport.json
+##### Broadcast radio
+[coded] Broadcast radio
+  capability 1920 -> dependent category none = gap None
+  verdict: substitution-only (conf 0.7)
+  collapses: n/a — see doubts
+  -> cases/broadcast-radio.json
+##### The electronic spreadsheet
+[coded] The electronic spreadsheet
+  capability 1979-10 -> dependent category none = gap None
+  verdict: substitution-only (conf 0.65)
+  -> cases/the-electronic-spreadsheet.json
+##### The public internet / TCP-IP networking
+[coded] The public internet / TCP-IP networking
+  capability 1983-01 -> dependent category 1990-09 = gap 7
+  verdict: substitution-then-category (conf 0.55)
+  collapses: Discovering and retrieving a specific file from an anonymous-FTP host you never knew existed, ru
+  -> cases/the-public-internet-tcp-ip-networking.json
+##### Penicillin / mass-produced antibiotics
+[coded] Penicillin / mass-produced antibiotics
+  capability 1944-03 -> dependent category 1961 = gap 17
+  verdict: substitution-then-category (conf 0.6)
+  collapses: Curative-intent combination chemotherapy for acute leukemia (the VAMP regimen and its descendant
+  -> cases/penicillin-mass-produced-antibiotics.json
+##### Containerised shipping
+[coded] Containerised shipping
+  capability 1966 -> dependent category none = gap None
+  verdict: substitution-only (conf 0.6)
+  collapses: none — switch containers off and the same sourcing still runs, just with larger inventory buffer
+  -> cases/containerised-shipping.json
+##### The smartphone with always-on mobile data
+[coded] the smartphone with always-on mobile data  (counter-sought)
+  capability 1999-02 -> dependent category 2001-03 = gap 2
+  verdict: category-immediately (conf 0.55)
+  collapses: 'locate and fight nearby players by your real, continuously-updated position in physical space, 
+  -> cases/the-smartphone-with-always-on-mobile-data.json
+##### CRISPR-Cas9 gene editing
+[coded] CRISPR-Cas9  (counter-sought)
+  capability 2013-01 -> dependent category 2014 = gap 1
+  verdict: substitution-then-category (conf 0.62)
+  collapses: Testing every gene in the genome for a phenotype in one pooled experiment, or knocking out sever
+  -> cases/crispr-cas9-gene-editing.json
+##### The Bitcoin blockchain
+[coded] The Bitcoin blockchain  (counter-sought)
+  capability 2009-01 -> dependent category 2010-11/2010-12 = gap 1
+  verdict: substitution-then-category (conf 0.55)
+  collapses: 'Mining' itself. Switch Bitcoin off and there is no puzzle to race for, no block reward, no diff
+  -> cases/the-bitcoin-blockchain.json
+##### Lithium-ion batteries
+[coded] Lithium-ion batteries  (counter-sought)
+  capability 1991 -> dependent category 2010 = gap 19
+  verdict: substitution-then-category (conf 0.55)
+  collapses: self-lifted, hover-capable multirotor flight — a battery below the specific-energy/specific-powe
+  -> cases/lithium-ion-batteries.json
+ALL CODED

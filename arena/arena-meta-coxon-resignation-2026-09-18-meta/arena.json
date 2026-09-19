@@ -1,0 +1,149 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-meta-coxon-resignation-2026-09-18-meta",
+ "built": "2026-09-18",
+ "case": "meta-coxon-resignation",
+ "case_title": "Meta-model test — one event, read at five floors of the emergence ladder",
+ "as_of": "2026-09-18",
+ "question": "Start from the researcher's own model of the future and his role in it. Then for each actor who responded: what future does their public behaviour imply, what role do they take in it, and which floor of the ladder is their action actually operating on? Finally: which floor is load-bearing for what happens next, with a dated observable.",
+ "cycles": 1,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "attention-substrate",
+   "title": "The Attention Substrate — the model (v5.1)",
+   "kind": "unstated",
+   "version": "v5.1",
+   "commit": "14c1b8b",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-lab-revealed-priorities",
+   "title": "What Labs Choose When It Costs Them — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "d95eb3b",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-influence-chain",
+   "title": "How AI Policy Gets Made — (v1)",
+   "kind": "tracer",
+   "version": "v1",
+   "commit": "64fe077",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-us-policy-direction",
+   "title": "US Federal AI Policy Direction — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "98bc8f2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "pivot": "Whether Anthropic itself obtains a signed, published, employee-like METR-class evaluator-access arrangement in force by 2026-12-17 -- not whether any rival lab matches it",
+    "pivot_observable": "A published, signed agreement (or its absence) naming a third party with ongoing employee-like access to Anthropic's frontier training pipeline",
+    "pivot_resolves_by": "2026-12-17",
+    "pivot_source": "ai-regulation-teeth",
+    "pivot_because": "Every minute agrees rivals won't sign -- that convergence is not informative because it's shared, not argued independently. What actually reorders the outcome set is Anthropic's own follow-through: if Anthropic signs, an E10 institution now exists that rivals can be pressed to join or visibly refuse, making the 'others' question a live, meaningful test. If Anthropic doesn't, the proposal never leaves E9 rhetoric anywhere, and 'will others match it' becomes moot -- there is nothing yet to match. Treating 'others sign or not' as the hinge, as five of the eight minutes effectively do, mistakes a downstream, conditional question for the load-bearing one.",
+    "minutes_by_side": {
+     "pressure-model": "not-bearing",
+     "attention-substrate": "above",
+     "ai-public-backlash": "not-bearing",
+     "ai-lab-revealed-priorities": "not-bearing",
+     "ai-influence-chain": "above",
+     "ai-regulation-teeth": "above",
+     "ai-us-policy-direction": "not-bearing"
+    },
+    "rival_pivots_rejected": "'Do rivals sign' (pressure-model, ai-lab-revealed-priorities, ai-influence-chain's surface framing) is downstream of and conditional on Anthropic's own execution -- it doesn't reorder outcomes on its own because on this branch it resolves NO either way, just for different reasons. 'Does public sentiment convert to poll movement' (ai-public-backlash) sits on a different axis entirely -- E9-to-E12 legitimacy pressure, not E9-to-E10 institutionalization -- and doesn't change which institutional outcome obtains. 'Federal preemption' (ai-us-policy-direction) operates on a floor (E10 state/federal law) that no actor in this chronology has actually engaged with; the model concedes this itself (grip: none).",
+    "ruling": "The researcher's own model (Amodei-as-proposer-of-a-costly-institutional-commitment) survives only if Anthropic itself signs a binding evaluator-access agreement by 2026-12-17, and none of the eight actors' public behavior to date -- including Anthropic's -- implies a future in which that happens, so every minute's floor talk about rivals is arguing downstream of a test the brief hasn't yet shown even the proposer passing.",
+    "because": "attention-substrate's round-2 REVISE is the only minute to notice that the proposal has no receiving institution even at Anthropic, which directly targets the pivot rather than the rival-convergence question; ai-influence-chain and ai-regulation-teeth independently land on the same 'draft-text, no funder, no enforcement body' mechanism applied to the proposer, not just competitors. The remaining minutes (pressure-model, ai-lab-revealed-priorities, ai-public-backlash, ai-us-policy-direction) either implicitly grant Anthropic's own follow-through or operate on a different floor altogether, so they don't bear on whether the institution crystallizes at its origin.",
+    "resolve_by": "2026-12-17",
+    "threat_live": "If Anthropic proposes but does not execute, the public commitment becomes free reputational cover for continued unconstrained scaling industry-wide -- ai-lab-revealed-priorities names this mechanism (the proposal costs Anthropic nothing if others decline) but the same logic bites Anthropic itself if it never signs: rhetorical restraint with no binding cost, for everyone.",
+    "strongest_minute": "pressure-model -- it is the only minute that actually answers the question's 'rank each actor by the floor their action operates on' framing, ranking the eight acts by cost/irreversibility (Coxon's forfeited equity vs. costless verbal endorsements) rather than by stated stakes, which is a genuine mechanism rather than an assertion.",
+    "weakest_minute": "ai-us-policy-direction -- self-reports grip: none, and in round 2 concedes its own falsifier can be dodged by any preemption action arriving through a pre-existing channel rather than 'in response to this sequence,' meaning it cannot actually be falsified by the scenario it claims to test.",
+    "shared_assumption": "Five of the eight minutes treat Altman's and Musk's verbal/public endorsement as costless and non-convertible to binding commitment without independently arguing the mechanism -- two of them (ai-influence-chain, ai-regulation-teeth) flag in round 2 that this convergence itself may signal the claim is too easy rather than confirming it's correct.",
+    "smuggled_assumption": "attention-substrate's round-2 claim that 'no pre-existing institution exists to receive the commitment even at the lab that proposed it' asserts something about METR's institutional capacity/readiness that the brief never granted -- it's plausible but not licensed by the minutes as given.",
+    "unresolved": "Whether any lab (including Anthropic) has moved past Amodei's essay into actual drafting or negotiation with METR -- no minute cites an artifact beyond the essay, the resignation, and the public reactions, so the state of the pivot variable itself is not yet observable in the record.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 7,
+    "distinct_claims": 7,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.1,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 15,
+   "chain": {
+    "ok": true,
+    "rows": 15,
+    "head": "2d80c232d72197c7c53a01c1d61857a812fa89474f9d082fb20ce575dbc9dc08",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 15,
+     "total_rows": 15,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

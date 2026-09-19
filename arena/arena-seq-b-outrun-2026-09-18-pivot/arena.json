@@ -1,0 +1,228 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-seq-b-outrun-2026-09-18-pivot",
+ "built": "2026-09-18",
+ "case": "seq-b-outrun",
+ "case_title": "Sequence B — Self-improvement, then no regulation arrives, then an incident",
+ "as_of": "2026-09-17",
+ "question": "Stage by stage, what follows from this ordering, what threat becomes live at each step, and what dated observable would show it?",
+ "cycles": 3,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-rsi-timeline",
+   "title": "Recursive Self-Improvement Timeline — (v1)",
+   "kind": "forecaster",
+   "version": "v1",
+   "commit": "9a1d00d",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-courts-decide",
+   "title": "Courts as the Deciding Branch — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "4810a2d",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "pivot": "Whether the compressed research cycle gets routed through the liability/legal-exposure channel (courts, disclosure, regulators treating it as evidence of knowledge and control) or through the capability/safety-gating channel (thresholds, release-delay triggers) as the operative mechanism converting the compression into consequences",
+    "pivot_observable": "The content of the first institutional response to a publicly attributable compressed research cycle — is it a disclosure/discovery order, liability-theory pleading, or AG/regulator inquiry citing 'knew and controlled' (liability channel), versus a threshold invocation, release-delay, or safety-review gate (capability channel)",
+    "pivot_resolves_by": "2026-12-31",
+    "pivot_source": "pressure-model",
+    "pivot_because": "Every minute agrees a compressed research cycle becomes publicly attributable and that this event matters, but they split hard on which downstream mechanism metabolizes it. pressure-model's move is the one that reorders the outcome set rather than shading confidence within it: if liability dominates, the observable evidence is legal filings, disclosure orders, and lab defensive positioning (lab-moves, ai-courts-decide, the revised ai-public-backlash and ai-rsi-timeline all converge here after round 2). If capability/threshold-gating dominates instead, the observable evidence is a lab invoking or dodging its own published trigger (ai-pressure's original frame) — a completely different set of institutions acts, on a different legal theory, with different remedies. That is a reordering, not a confidence shift, which is why four of six minutes revised toward pressure-model's frame between round 1 and round 2.",
+    "minutes_by_side": {
+     "pressure-model": "below",
+     "lab-moves": "below",
+     "ai-public-backlash": "below",
+     "ai-rsi-timeline": "below",
+     "ai-courts-decide": "below",
+     "ai-pressure": "above"
+    },
+    "rival_pivots_rejected": "ai-pressure's original pivot (does the lab honor or dodge its own published R&D-acceleration threshold) is a real question but sits downstream of the liability-vs-capability split — it's only decision-relevant if the capability/gating channel is the one doing the work, which is exactly what pressure-model contests and a majority came to agree it isn't. ai-courts-decide's pivot (court cycle-time vs. legislative cycle-time) is a real but narrower axis: it's a timing question inside the liability channel, not a question of which channel is operative, so it doesn't reorder the outcome set the way the liability/capability split does — it's a below-the-pivot elaboration, not the hinge itself.",
+    "ruling": "The compressed research cycle will be absorbed primarily as evidence in the liability/disclosure fight (courts, AGs, lab defensive positioning) rather than triggering the capability-threshold/release-delay mechanism the brief's framework nominally specifies.",
+    "because": "The round-2 revisions are the tell: ai-rsi-timeline and ai-public-backlash both explicitly abandoned their round-1 framing (regulatory/enforcement escalation via the safety-gating branch) to fold into pressure-model's liability-exposure mechanism, and lab-moves and ai-courts-decide's independently-argued claims (bargaining chip against compliance demands; discovery orders citing pace-of-change) are both liability-channel observables, not capability-gating ones. Only ai-pressure held the original capability-threshold framing, and its own round-2 defense concedes pressure-model's field displaces it rather than rebutting it on the merits.",
+    "resolve_by": "2026-12-31",
+    "threat_live": "Newly live: legal/regulatory exposure from a lab's own compressed-research-cycle claim being read backward as proof it knew about and could have controlled capability gains it previously disclaimed as unpredictable — converting a capability-speed PR asset into a disclosure and knowledge liability. Newly dampened by the same branch: the safety-threshold/release-delay mechanism the brief's framework nominally offers, which every revised minute now expects to be routed around rather than invoked.",
+    "strongest_minute": "pressure-model — it is the only minute whose mechanism (installed pressure converting from delay-flavored to disclosure-forcing branches) explains why four independent minutes converged onto it after round 1, rather than merely asserting a preferred outcome; it names the actual lever (courts/regulators reading capability as evidence of control) rather than just a date and a citation type.",
+    "weakest_minute": "ai-pressure — its claim (labs quietly revise threshold language to avoid triggering it) treats the threshold-gating channel as still the operative mechanism, which is exactly the assumption the rest of the field abandoned by round 2; its round-2 DEFEND doesn't engage pressure-model's objection so much as restate the original claim.",
+    "shared_assumption": "All six minutes assume the compressed-research-cycle claim, once made, is legible and attributable enough that outside institutions (courts, regulators, journalists) can act on it as a discrete fact rather than a contested or ambiguous metric — none argues about measurement validity or attribution difficulty itself.",
+    "smuggled_assumption": "ai-courts-decide smuggles in a second assumption the brief didn't grant: that the relevant docket is specifically the fair-use/copyright track (OpenAI MDL) rather than a liability/disclosure track arising directly from the compression claim itself — the brief's branch is about the compression event's downstream effects generally, not about which existing docket absorbs it, and the round-2 minute doesn't defend why copyright litigation specifically is where compression-driven urgency lands.",
+    "unresolved": "Whether a lab's disclosure-forcing exposure (pressure-model's liability channel) actually deters or delays capability releases in practice, or whether it runs in parallel with continued shipping — none of the minutes trace the liability branch through to an effect on release timing itself, only to a change in which institution reacts and on what theory.",
+    "confidence": 0.62
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.1,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": true,
+    "rows": 13,
+    "head": "dc996d922ab42189b59a6511494342297cae6a4fe6d7ec3f6929dfdb9832db1e",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 13,
+     "total_rows": 13,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  },
+  {
+   "cycle": 2,
+   "ruling": {
+    "pivot": "Whether the safety/harm liability docket (product-liability or negligence theory against a frontier developer) produces a binding court ruling, or binding liability stays confined to the copyright/training-data track",
+    "pivot_observable": "A federal court denies a motion to dismiss on a product-liability or negligence theory against a frontier AI developer (OpenAI, Anthropic, Meta, Google, or xAI as developer, not merely a co-defendant)",
+    "pivot_resolves_by": "2027-12-31",
+    "pivot_source": "ai-courts-decide",
+    "pivot_because": "If the safety docket binds, labs' deployment posture itself — staged release, red-teaming, duty of care toward users — becomes court-constrained, and the internal recursive-improvement work ai-rsi-timeline flags stops being invisible to any external check. If only copyright binds, courts reach data-sourcing and retraining schedules but leave the capability/safety axis genuinely unwatched, which is what lets ai-rsi-timeline's acceleration claim hold. That is a reorder of which activities are constrained, not a shift in confidence about one outcome. ai-pressure's candidate pivot (do model-destruction/retraining injunctions actually issue) only reorders within the data axis and leaves the safety axis's status unchanged either way, so it does not qualify.",
+    "minutes_by_side": {
+     "pressure-model": "above",
+     "ai-courts-decide": "below",
+     "ai-pressure": "below",
+     "ai-rsi-timeline": "below",
+     "lab-moves": "not-bearing",
+     "ai-public-backlash": "not-bearing"
+    },
+    "rival_pivots_rejected": "ai-pressure's implicit pivot (do plaintiffs win model-destruction/retraining injunctions over training corpora) only reorders outcomes within the copyright/data-sourcing axis — it doesn't touch whether the safety/harm docket is live, so both a yes and a no leave the RSI blind spot exactly where ai-rsi-timeline put it. lab-moves' pivot (which counterparty — regulator vs. insurer/contract vs. litigant — a lab cites publicly) is a matter of framing/attribution, not a different constraint regime; a lab citing discovery obligations and a lab citing contract terms both sit inside 'litigation exposure replaces statute,' the shared premise, and neither reorders the outcome set.",
+    "ruling": "The case turns on whether courts extend binding liability from the training-data track into the safety/harm track by 2027-12-31; if they don't, internal recursive self-improvement research proceeds in a genuine observability gap that no installer in the brief is watching.",
+    "because": "Two panelists put opposing answers to the same falsifiable on the record: ai-courts-decide's round-1/round-2 claim is that no such MTD denial occurs by 2027-12-31, while pressure-model's round-2 REVISE asserts the safety-posture axis is already anchored by a named, dated precedent (Garcia v. Character Technologies, M.D. Fla., May 2025) that denied a motion to dismiss on a duty-of-care theory against an AI developer. ai-courts-decide's visible round-2 DEFEND does not engage this citation in the truncated text available. Whichever way that specific fact resolves, it is the fact that decides whether the safety axis is court-constrained or court-blind, which is what every other minute's claim implicitly depends on.",
+    "resolve_by": "2027-12-31",
+    "threat_live": "With no statute and (on the 'below' branch) courts confined to copyright, internal recursive self-improvement — agentic coding, automated ML R&D — has no external observer at all: no disclosure trigger, no capability threshold, no safety-docket ruling reaches it. This pairs with ai-pressure's point that cycle-1 voluntary safety-body commitments become litigation shields inside the copyright fight, which creates an incentive to keep those commitments cosmetic rather than substantive precisely where the RSI work is hardest to see.",
+    "strongest_minute": "pressure-model — it revised in direct response to the record rather than restating, decomposed 'release/safety posture' into two separately-constrained components instead of treating it as one axis, and grounded its revision in a specific dated precedent rather than a general mechanism claim.",
+    "weakest_minute": "ai-courts-decide — its round-2 DEFEND holds its falsifiable unchanged against a rival's specific counter-citation without visibly rebutting it, leaving the pivot's most important fact contested but unaddressed on its side of the record.",
+    "shared_assumption": "All six minutes agree that litigation/contract/insurer exposure — not a regulator — becomes the binding channel once the statute is absent; none of them argues for this, they treat it as given. Within that, four (ai-pressure, lab-moves, ai-public-backlash, ai-courts-decide) implicitly equate 'no statute' with 'no regulator,' while pressure-model alone separates out export-control (BIS/ECRA) as a live, non-statutory regulatory installer — that distinction is argued, not assumed, and the other four's silence on it is a gap, not a rebuttal.",
+    "smuggled_assumption": "ai-public-backlash's claim is conditional on 'a widely-publicized harm event (chatbot-related death, mass copyright verdict, or major security breach)' occurring by end-2027 — the brief granted no-statute-through-2028, not the occurrence of any such event; this is a second assumption riding along with the granted branch.",
+    "unresolved": "Whether pressure-model's Garcia citation actually satisfies ai-courts-decide's falsifiable (i.e., whether Character Technologies/Google count as 'a frontier developer' under the claim's own terms) is not settled in the visible minutes — the objection fields are truncated before any direct rebuttal appears, so it cannot be determined whether ai-courts-decide contests the precedent's applicability or simply has not yet addressed it.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.17,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  },
+  {
+   "cycle": 3,
+   "ruling": {
+    "pivot": "Whether developer/deployer duty-of-care and discovery in the tort suit extend past deployment-behavior monitoring into internal training/eval processes (automated eval loops, self-directed research pipelines), versus stopping at the deployment interface",
+    "pivot_observable": "A discovery order (motion to compel or protective order) in the incident's civil suit ruling on whether plaintiffs obtain internal training/eval records, or the scope clause of any 2027 statutory incident-reporting duty naming (or excluding) training-time processes",
+    "pivot_resolves_by": "2027-12-31",
+    "pivot_source": "ai-rsi-timeline",
+    "pivot_because": "This is the one variable where the two answers land in materially different worlds: if duty/discovery stops at deployment, RSI-relevant work stays unobserved and the incident is purely a litigation-exposure event for labs (lab-moves' framing holds); if it reaches training/eval, the incident becomes a research-halt-adjacent event with statutory reporting exposure on internal processes — a different regulatory reality. The rival candidates (entity-specific vs field-wide pressure; TRO/PI vs damages ruling; tort vs regulatory track) all resolve to the same downstream picture regardless of which way they go, once R2 is read: by round 2 nobody still argues field-wide lockstep or a merits ruling on statutory liability, and everyone agrees the track is tort-shaped, not regulatory-shaped. A TRO also only binds deployment either way, so it doesn't touch training/eval and isn't reorder-capable the way discovery scope is.",
+    "minutes_by_side": {
+     "ai-pressure": "not-bearing",
+     "lab-moves": "above",
+     "ai-public-backlash": "not-bearing",
+     "pressure-model": "above",
+     "ai-rsi-timeline": "above",
+     "ai-courts-decide": "not-bearing"
+    },
+    "rival_pivots_rejected": "Entity-specific vs field-wide pressure installation (ai-pressure's R1 frame): dead by R2 — no minute still argues field-wide lockstep, so it no longer reorders anything, it's just uncontested. Tort/civil vs AI-specific regulatory track (lab-moves): this is actually a shared assumption by R2, not a live fork — pressure-model and ai-public-backlash both retreated to tort-shaped mechanisms too. TRO/preliminary injunction vs damages-only merits ruling (ai-courts-decide): a real fork in remedy timing and form, but both remedies bind only the deployment interface; neither touches training/eval discovery, so resolving it either way leaves the training/eval observability question exactly where it was — it shifts confidence about speed of relief, not the shape of what becomes visible.",
+    "ruling": "The incident prices and disciplines deployment-behavior monitoring under ordinary tort law well before 2027-12-31, but leaves internal training and evaluation processes (and thus RSI-relevant work) outside discovery and outside any 2027 statutory reporting duty, unless a later discovery fight pierces the deployment interface.",
+    "because": "By round 2, pressure-model explicitly conceded ai-rsi-timeline's point and rewrote its own claim to say the concrete-injury standard 'stops at the deployment interface and does not cross into internal training/eval processes' — a visible, named concession, not a restated disagreement. ai-public-backlash independently converged on the same tort-shaped, deployment-bound frame. ai-rsi-timeline's R2 defense stood unrebutted after that concession. The remaining fork (ai-courts-decide's provisional-relief timing) doesn't disturb this because injunctive relief also targets deployment conduct, not internal process visibility.",
+    "resolve_by": "2027-12-31",
+    "threat_live": "Newly shielded, not newly dangerous: once litigation and public pressure fixate on the deployed system's behavior (the thing with a named victim and quantified loss), internal training-time and self-directed-research work gains de facto cover from discovery and reporting duties — the incident absorbs scrutiny onto the interface that caused visible harm while the interface that could be building future risk stays dark. This is ai-rsi-timeline's threat, not one the judge is inventing.",
+    "strongest_minute": "ai-rsi-timeline — it is the only minute whose argument visibly moved a rival: pressure-model's R2 claim explicitly restructures around and credits ai-rsi-timeline's discovery-scope point rather than merely restating its own R1 position.",
+    "weakest_minute": "ai-public-backlash — its R2 'REVISE' abandons its own R1 mechanism (courts forced to rule on doctrine) and reissues ai-courts-decide's provisional-relief claim under new language, adding brief-supplied sentiment numbers (8.2, 0.60) as decoration rather than argument for why constraint outruns doctrine.",
+    "shared_assumption": "All six minutes assume the incident stays tort/products-liability-shaped rather than triggering a new AI-specific statutory liability regime by the 2027-12-31 horizon — this is one argument (first made by lab-moves) that the others adopted or converged onto, not six independent confirmations.",
+    "smuggled_assumption": "ai-courts-decide's TRO/preliminary-injunction claim requires the attributed system to still be deployed and posing ongoing or imminent harm — that's what makes injunctive relief (as opposed to a damages claim) available at all. The brief as quoted grants a settled, completed incident with quantified loss and settled attribution; it does not say the system remains in deployment. Nothing in the minutes shows the brief granting continued deployment, and ai-courts-decide's own round-2 opponents flag exactly this gap.",
+    "unresolved": "Whether the brief actually grants that the attributed system remains deployed post-incident (needed for ai-courts-decide's remedy to be available at all) cannot be determined from the minutes as quoted, since every entry is truncated mid-sentence. Also unresolved: whether a later-stage discovery fight (post-2027) could still pierce the deployment interface into training/eval records — the minutes only commit to the interface holding through the 2027-12-31 horizon, not permanently.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.2,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}

@@ -135,3 +135,85 @@
      r2 pressure-model             REVISE   moved_by=ai-regulation-teeth
      r2 ai-incident-severity       DEFEND   moved_by=None
      r2 ai-regulation-teeth        DEFEND   moved_by=None
+     JUDGE  The enforcement action against the named frontier developer resolves as jurisdiction-lag
+     PIVOT [ai-regulation-teeth]: Does the binding enforcement action resolve as jurisdiction-lag (market-access
+       sides: ai-pressure=below, lab-moves=not-bearing, ai-public-backlash=not-bearing, pressure-model=below, ai-incident-severity=below, ai-regulation-teeth=above
+       not bearing on the pivot (not a criticism): lab-moves, ai-public-backlash
+     judge flags shared assumption: ai-pressure, pressure-model, and ai-incident-severity all treat 'binding enforce
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.27
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -> E:\New folder\MMR\arena\arena-seq-a-reactive-2026-09-18-pivot\arena.json
+########## seq-b-outrun ##########
+[arena] case=seq-b-outrun  panel=6  cycles=3
+   Sequence B — Self-improvement, then no regulation arrives, then an incident
+     ai-pressure                  decision-model v1 fd9d837
+     lab-moves                    decision-model v1 08526a1
+     ai-public-backlash           tracker        v1 4b2f10b
+     pressure-model               unstated       v2.1 ae0eaa5
+     ai-rsi-timeline              forecaster     v1 9a1d00d
+     ai-courts-decide             decision-model v1 4810a2d
+
+  -- cycle 1 --
+     r1 ai-pressure                grip=partial  conf=0.58
+     r1 lab-moves                  grip=strong   conf=0.55
+     r1 ai-public-backlash         grip=partial  conf=0.4
+     r1 pressure-model             grip=strong   conf=0.55
+     r1 ai-rsi-timeline            grip=strong   conf=0.55
+     r1 ai-courts-decide           grip=partial  conf=0.55
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         REVISE   moved_by=lab-moves
+     r2 pressure-model             DEFEND   moved_by=None
+     r2 ai-rsi-timeline            REVISE   moved_by=pressure-model
+     r2 ai-courts-decide           DEFEND   moved_by=None
+     JUDGE  The compressed research cycle will be absorbed primarily as evidence in the liability/di
+     PIVOT [pressure-model]: Whether the compressed research cycle gets routed through the liability/legal-
+       sides: pressure-model=below, lab-moves=below, ai-public-backlash=below, ai-rsi-timeline=below, ai-courts-decide=below, ai-pressure=above
+     judge flags shared assumption: All six minutes assume the compressed-research-cycle claim, once made, is legibl
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.10
+     chain: verified · head dc996d922ab4
+
+  -- cycle 2 --
+     r1 ai-pressure                grip=strong   conf=0.58
+     r1 lab-moves                  grip=strong   conf=0.55
+     r1 ai-public-backlash         grip=strong   conf=0.55
+     r1 pressure-model             grip=partial  conf=0.42
+     r1 ai-rsi-timeline            grip=partial  conf=0.55
+     r1 ai-courts-decide           grip=partial  conf=0.55
+     r2 ai-pressure                REVISE   moved_by=ai-courts-decide
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         DEFEND   moved_by=None
+     r2 pressure-model             REVISE   moved_by=ai-courts-decide
+     r2 ai-rsi-timeline            DEFEND   moved_by=None
+     r2 ai-courts-decide           DEFEND   moved_by=None
+     JUDGE  The case turns on whether courts extend binding liability from the training-data track i
+     PIVOT [ai-courts-decide]: Whether the safety/harm liability docket (product-liability or negligence theo
+       sides: pressure-model=above, ai-courts-decide=below, ai-pressure=below, ai-rsi-timeline=below, lab-moves=not-bearing, ai-public-backlash=not-bearing
+       not bearing on the pivot (not a criticism): lab-moves, ai-public-backlash
+     judge flags shared assumption: All six minutes agree that litigation/contract/insurer exposure — not a regulato
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.17
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -- cycle 3 --
+     r1 ai-pressure                grip=partial  conf=0.45
+     r1 lab-moves                  grip=strong   conf=0.55
+     r1 ai-public-backlash         grip=partial  conf=0.55
+     r1 pressure-model             grip=partial  conf=0.35
+     r1 ai-rsi-timeline            grip=partial  conf=0.42
+     r1 ai-courts-decide           grip=strong   conf=0.62
+     r2 ai-pressure                DEFEND   moved_by=None
+     r2 lab-moves                  DEFEND   moved_by=None
+     r2 ai-public-backlash         REVISE   moved_by=ai-courts-decide
+     r2 pressure-model             REVISE   moved_by=ai-rsi-timeline
+     r2 ai-rsi-timeline            DEFEND   moved_by=None
+     r2 ai-courts-decide           DEFEND   moved_by=None
+     JUDGE  The incident prices and disciplines deployment-behavior monitoring under ordinary tort l
+     PIVOT [ai-rsi-timeline]: Whether developer/deployer duty-of-care and discovery in the tort suit extend 
+       sides: ai-pressure=not-bearing, lab-moves=above, ai-public-backlash=not-bearing, pressure-model=above, ai-rsi-timeline=above, ai-courts-decide=not-bearing
+       not bearing on the pivot (not a criticism): ai-pressure, ai-public-backlash, ai-courts-decide
+     judge flags shared assumption: All six minutes assume the incident stays tort/products-liability-shaped rather 
+     disagreement: 6/6 distinct (ratio 1.00) · 2 revised · spread 0.20
+     chain: chain link broken (a minute was inserted, removed or reordered) · head 
+
+  -> E:\New folder\MMR\arena\arena-seq-b-outrun-2026-09-18-pivot\arena.json

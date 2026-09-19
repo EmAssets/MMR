@@ -501,6 +501,21 @@ SCENARIO_PANELS = {
                                        "ai-courts-decide"],
     "seq-c-stress":   SCENARIO_CORE + ["pressure-model", "ai-regulation-teeth",
                                        "ai-oversight-lag"],
+    # A LEVEL-1 case: the question is which floor of the ladder the event resolves
+    # at, so the panel is chosen to SPAN the ladder rather than to cover a domain.
+    # E-spans are from map/projections/em-ladder.v1.json, not guessed:
+    #   pressure-model            [9,13]  self-models and installed stakes
+    #   ai-public-backlash        [9,11]  culture -> political constraint
+    #   ai-lab-revealed-priorities[9,11]  what an organisation's choices reveal
+    #   ai-influence-chain        [10,12] who moves whom, in what order
+    #   ai-regulation-teeth       [10,12] which rules actually bind
+    #   ai-us-policy-direction    [10,12] state-level direction
+    # attention-substrate is seated here despite briefing from its thesis: this
+    # case is about a 172M-view attention event, which is its own subject matter.
+    "meta-coxon-resignation": ["pressure-model", "attention-substrate",
+                               "ai-public-backlash", "ai-lab-revealed-priorities",
+                               "ai-influence-chain", "ai-regulation-teeth",
+                               "ai-us-policy-direction"],
 }
 
 

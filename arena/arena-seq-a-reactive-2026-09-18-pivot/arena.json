@@ -1,0 +1,228 @@
+{
+ "spec": "arena-v2-signed",
+ "run_id": "arena-seq-a-reactive-2026-09-18-pivot",
+ "built": "2026-09-18",
+ "case": "seq-a-reactive",
+ "case_title": "Sequence A — Incident, then public opinion binds, then hard regulation",
+ "as_of": "2026-09-17",
+ "question": "Stage by stage, what follows from this ordering, what threat becomes live at each step, and what dated observable would show it?",
+ "cycles": 3,
+ "dry_run": false,
+ "panel": [
+  {
+   "slug": "ai-pressure",
+   "title": "AI labs under installed pressure — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "fd9d837",
+   "derived": "headers"
+  },
+  {
+   "slug": "lab-moves",
+   "title": "Frontier lab decision model — (v1)",
+   "kind": "decision-model",
+   "version": "v1",
+   "commit": "08526a1",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In — (v1)",
+   "kind": "tracker",
+   "version": "v1",
+   "commit": "4b2f10b",
+   "derived": "headers"
+  },
+  {
+   "slug": "pressure-model",
+   "title": "The Pressure Model — v2.1",
+   "kind": "unstated",
+   "version": "v2.1",
+   "commit": "ae0eaa5",
+   "derived": "thesis"
+  },
+  {
+   "slug": "ai-incident-severity",
+   "title": "Systemic vs One-Off Incidents — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "624e2bb",
+   "derived": "headers"
+  },
+  {
+   "slug": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite — (v1)",
+   "kind": "classifier",
+   "version": "v1",
+   "commit": "f9c34d2",
+   "derived": "headers"
+  }
+ ],
+ "signing": {
+  "scheme": "sha256 content hash + minute hash chain",
+  "attests": [
+   "the MODEL.md bytes each model actually read",
+   "the exact prompt sent",
+   "the response body",
+   "the order of minutes",
+   "the timestamp of each minute"
+  ],
+  "does_not_attest": [
+   "WHO produced the record — that needs a private key, and a timestamp is not a key",
+   "that a dirty working tree matched any commit"
+  ],
+  "verify": "python -m suites.arena --report <run_id>"
+ },
+ "judge": {
+  "slug": "independent-judge",
+  "blind_to": [
+   "every MODEL.md",
+   "the case's sealed outcome",
+   "which model is which beyond its name"
+  ]
+ },
+ "sealed_outcome_withheld": false,
+ "origin_score": null,
+ "rounds": [
+  {
+   "cycle": 1,
+   "ruling": {
+    "pivot": "Whether the settled root-cause finding lands at the model layer (fault reproducible across system prompts / independent of operator configuration) or the deployment layer (operator-specific misuse or misconfiguration)",
+    "pivot_observable": "The published root-cause/attribution finding's own characterization of where the fault sits — whether it states the failure mode is reproducible on the base model regardless of operator wrapping, or specific to the named operator's deployment",
+    "pivot_resolves_by": "2026-12-31",
+    "pivot_source": "judge",
+    "pivot_because": "pressure-model argues the developer is the target 'because the developer holds the only lever whose next-choice derivative actually changes future harm' — that only holds if the fault traces to something the developer controls. ai-incident-severity argues remediation ships 'regardless of where the settled root-cause finding lands' — which is itself an argument about this exact variable, asserting it doesn't matter, rather than evidence it doesn't. Neither minute names the observable directly, but both are visibly arguing opposite faces of it. If root cause lands at the deployment layer, the developer has no lever to pull and no exposure to price in — lab-moves, ai-incident-severity, ai-pressure, and pressure-model all lose their actor and their claims dissolve or transfer to the operator. If it lands at the model layer, all four claims are live simultaneously. That is a reordering of the outcome set, not a shift in confidence within one.",
+    "minutes_by_side": {
+     "ai-pressure": "not-bearing",
+     "lab-moves": "not-bearing",
+     "ai-public-backlash": "below",
+     "pressure-model": "above",
+     "ai-incident-severity": "above",
+     "ai-regulation-teeth": "not-bearing"
+    },
+    "rival_pivots_rejected": "Product move vs. political move (ai-pressure vs. lab-moves/ai-incident-severity): ai-pressure's own round-2 DEFEND concedes a lab can do both simultaneously — a capability restriction and a political endorsement are not exclusive branches, so resolving this shifts which move gets more emphasis, not which outcomes are reachable. Developer-alone vs. developer+operator pair (pressure-model vs. ai-public-backlash): this is real disagreement but it is downstream of the root-cause pivot — it only becomes decidable once you know whether the operator has any independent exposure, which is exactly what root-cause layer settles. Enforcer-with-standing vs. no enforcer (ai-regulation-teeth): orthogonal axis — it is about which *institution* imposes cost, not about who the target is, and its six-month window runs regardless of which layer the fault sits in.",
+    "ruling": "The developer becomes the concentrated target of both product remediation and pressure-model dynamics only if the root-cause finding places fault at the model layer; if it places fault at the deployment layer, the operator inherits the exposure and the developer's obligation narrows to cooperation, not remediation.",
+    "because": "pressure-model's lever argument and ai-incident-severity's 'regardless of layer' claim are the two strongest, most specific minutes, and they are arguing directly opposite sides of the same unstated variable — one says it matters, one says it doesn't. ai-public-backlash's revised claim (naming the developer/operator pair) is the minute that best captures what happens if the deployment layer is where fault lands: the operator stays a named target instead of dropping out. lab-moves and ai-incident-severity both presuppose the developer is the exposed party without arguing for it, which is why the root-cause layer, not '30 days vs quantified-loss' timing, is what actually decides whether their claims fire.",
+    "resolve_by": "2027-03-31",
+    "threat_live": "What becomes newly dangerous on this branch is a fault that survives arbitrary system prompts (model-layer, per ai-incident-severity) going unremediated because the 'isolated to the operator' defense is asserted and, this time, actually holds — displacing consequence onto the operator while capability elsewhere in the model line stays unchanged (lab-moves' own carve-out). What becomes newly safe is the developer's own exposure, if root cause truly is deployment-specific: no product concession, no political concession, just cooperation with an operator-directed enforcement action.",
+    "strongest_minute": "ai-regulation-teeth — it offers one clean, checkable discriminator (does an entity with pre-existing standing file by 2027-03-31) that is true regardless of which side of the root-cause pivot the case falls on, and it explicitly distinguishes rule-that-bites from theater rather than conflating the two.",
+    "weakest_minute": "ai-pressure — its claim is nested inside an unproven premise ('if the incident's operator/developer sits inside the named frontier set already carrying saturated pressure') and further assumes a specific named bill (Thune/Cruz/Klobuchar) is live and endorsable, neither of which the brief granted; it also concedes in round 2 that its own 'cheapest exit' framing may not be singular.",
+    "shared_assumption": "ai-pressure, pressure-model, and ai-incident-severity all import the same internal pressure-framework vocabulary (P6, 'saturated' pressure, '10.5 installed pressure', 'tension 0.66', Σ p(b)·|∂L/∂choice|) without arguing for the framework itself — this is one shared model of how pressure converts to action wearing three slugs, not three independent confirmations.",
+    "smuggled_assumption": "ai-pressure assumes a specific federal bill (Thune/Cruz/Klobuchar) is live, credible, and endorsable by 2026-12-17 — the brief granted an incident and an ordering, not the existence of a particular pending bill.",
+    "unresolved": "The minutes never state whether the root-cause finding will characterize fault by layer (model vs. deployment) at all, or whether attribution processes typically produce a finding granular enough to settle this — lab-moves in particular presupposes developer exposure without ever arguing why the fault should trace to the model rather than the operator's use of it.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 1,
+    "confidence_spread": 0.15,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": true,
+    "rows": 13,
+    "head": "e947ab30032876a1d38143851693ce846606bcaea1b4444201bd937198ab4551",
+    "dirty_minutes": 0,
+    "authorship": {
+     "signed_rows": 13,
+     "total_rows": 13,
+     "status": "verified",
+     "key_fingerprint": "6b9abf2f6fd93705"
+    }
+   }
+  },
+  {
+   "cycle": 2,
+   "ruling": {
+    "pivot": "Does the frontier lab implicated in the Stage-2 reversal still have its own branded or self-run deployment pending in the same jurisdiction/domain at the moment opposition binds?",
+    "pivot_observable": "Public record (filings, press, lab announcements) of whether the lab named in the first pressure-driven reversal has an active or announced deployment of its own in that jurisdiction/domain versus operating only through third-party deployers/infrastructure partners there",
+    "pivot_resolves_by": "2026-11-16",
+    "pivot_source": "pressure-model",
+    "pivot_because": "This is the one variable the minutes show actually reordering the outcome set rather than just shifting confidence. If yes, the lab becomes the visible target and pre-emptively pulls its own API/feature from a downstream deployer's use case (ai-pressure and lab-moves' scenario, checkable by 2026-11-16). If no, the lab has no proximate exposure to absorb, so pressure lands on the hyperscaler/utility instead, producing a siting-restriction path (ai-public-backlash's scenario, checkable by 2026-11-03). These are materially different worlds — different named actor, different remedy type, different downstream rule layer — not just different odds on the same outcome. Fault attribution, by contrast, is asserted by most minutes to stop gating anything on this branch, so resolving it doesn't move the outcome set.",
+    "minutes_by_side": {
+     "ai-pressure": "above",
+     "lab-moves": "above",
+     "ai-public-backlash": "below",
+     "pressure-model": "below",
+     "ai-incident-severity": "not-bearing",
+     "ai-regulation-teeth": "not-bearing"
+    },
+    "rival_pivots_rejected": "ai-incident-severity's pivot (whether the reversal gets a published root-cause/mechanism finding vs. mere attribution language) does not reorder the outcome set: the minutes on both sides of the target question agree the reversal closes without a structural finding either way, so this variable shifts how the event is narrated, not who it targets or what remedy follows. ai-regulation-teeth's pivot (whether opposition retrofits teeth into developer-layer rules like SB 53/EU GPAI Code) is downstream of the target question, not independent of it — which layer gets codified follows from which entity absorbed the blame, so it's a consequence of the real pivot, not a rival to it.",
+    "ruling": "The reversal's target is set by whether the implicated lab still has its own exposed deployment in that jurisdiction: if so, the lab pre-emptively pulls its own API/feature from a named deployer by 2026-11-16 and model-layer rules stay theatre; if not, an operator/infrastructure target absorbs the pressure and a state siting law follows by 2026-11-03, with new teeth codifying at the deployment layer either way.",
+    "because": "pressure-model's REVISE explicitly overrides both the carried fault-layer fork and its own round-1 claim of a fixed operator target, replacing them with a conditional keyed to which entity's next choice moves the stakes — that conditional is the only mechanism in the minutes that can produce either ai-pressure/lab-moves' lab-centered scenario or ai-public-backlash's operator-centered scenario as a function of an observable prior state (the lab's existing exposure), rather than asserting one outcome as fixed. ai-incident-severity and ai-regulation-teeth both operate on axes (fault-finding, rule-layer codification) that the minutes treat as downstream of, or orthogonal to, that targeting question.",
+    "resolve_by": "2026-11-16",
+    "threat_live": "Exposure decouples from causation: whichever entity is the visible face of the deployment absorbs blame and is compelled to act regardless of where technical fault actually lies, so a lab with no proximate deployment in the flashpoint jurisdiction becomes insulated even if its model caused the harm, while an operator or a lab with local exposure eats the consequence for a failure it may not have caused. The correlate risk: whatever concessions get extracted this way become the template regulators codify, so deployment-layer rules gain real teeth while model-layer rules (SB 53, EU GPAI Code) stay theatre unless opposition explicitly names the model layer.",
+    "strongest_minute": "ai-incident-severity — its REVISE draws a precise, falsifiable distinction between attribution (accepting responsibility for handling) and mechanism (a named reproducible failure pattern), and predicts the two decouple in the first reversal. It's a sharp, checkable claim even though it doesn't bear on the pivot.",
+    "weakest_minute": "ai-public-backlash — it needs not just a reversal landing on infrastructure but a specific enacted state siting law in force by a fixed near-term date, which is a much narrower and more specific compound outcome than the branch it's arguing from actually guarantees.",
+    "shared_assumption": "ai-incident-severity, ai-regulation-teeth, lab-moves, and pressure-model (in its retained portion) all rely on 'binding public opposition severs the developer/operator fault-layer fork' without independently arguing for it — pressure-model states the mechanism, the other three just build on the conclusion. Treat this as one argument, not three or four independent confirmations.",
+    "smuggled_assumption": "ai-public-backlash's claim requires a state-level siting restriction already 'enacted' and 'in force' by 2026-11-03 — the brief grants only that pressure operates 'without any court, agency, or state law yet requiring it' at the point of reversal; asserting a specific enacted statute on a fixed near-term date is an added premise about legislative speed, not a consequence drawn from the granted branch.",
+    "unresolved": "Whether the first visible reversal (Stage 2's trigger event) has already occurred as of this writing, and if so which entity it named — the minutes argue the downstream target conditionally but none states the actual current exposure position of any specific named lab, so the pivot is well-defined but not yet resolved by anything in the record.",
+    "confidence": 0.6
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.15,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  },
+  {
+   "cycle": 3,
+   "ruling": {
+    "pivot": "Does the binding enforcement action resolve as jurisdiction-lag (market-access cost only, model unchanged elsewhere) or as realized consequence/behaviour-change (the gate actually bites the model, discharging the lab's installed pressure)?",
+    "pivot_observable": "Whether the named frontier developer's flagship model ships on schedule and unaltered in non-enforcing markets (e.g. the US) while only delayed or feature-reduced in the enforcing jurisdiction, versus the model being changed, delayed, or blocked everywhere as a direct consequence of the action.",
+    "pivot_resolves_by": "2027-03-31",
+    "pivot_source": "ai-regulation-teeth",
+    "pivot_because": "Every other contested axis in these minutes (which lab, which layer, which jurisdiction) only relocates where the enforcement lands, but leaves the same two possible endings available: either the sanctioned party absorbs it as a bounded, priced cost and continues on the trajectory stage 2 already set, or the sanctioned party's trajectory is actually redirected because the model itself is forced to change. Resolution mode is the one variable that decides which of those two endings obtains, and it is checkable independent of who gets named. Ai-regulation-teeth is the only minute that names this axis explicitly and gives it a date; ai-pressure and pressure-model argue the opposite resolution (real discharge, tension collapsing toward zero) without naming the lag alternative as a live possibility.",
+    "minutes_by_side": {
+     "ai-pressure": "below",
+     "lab-moves": "not-bearing",
+     "ai-public-backlash": "not-bearing",
+     "pressure-model": "below",
+     "ai-incident-severity": "below",
+     "ai-regulation-teeth": "above"
+    },
+    "rival_pivots_rejected": "Developer vs. deployer/integrator (pressure-model r1, ai-public-backlash): this looks decisive but the brief's own phrasing — 'an open case against a named developer' (ai-pressure), 'enforcement action is open against a frontier developer' (ai-incident-severity) — already grants developer-layer targeting; pressure-model retracted its deployer-first claim in round 2, and ai-public-backlash's deployer-first framing is arguing against a premise the brief fixed, not a live variable. Same-lab-continues vs. third-lab-newly-exposed (lab-moves vs. ai-pressure/pressure-model): this changes who bears the exposure but not what happens once they bear it — both sides agree the stage-2 reversal target proceeds unchanged, so flipping this doesn't reorder the outcome set, it only relabels the actor. Model-layer vs. deployment-layer obligations (ai-public-backlash, lab-moves): a restatement of the developer/deployer axis already granted by the brief, not an independent hinge.",
+    "ruling": "The enforcement action against the named frontier developer resolves as jurisdiction-lag rather than global behaviour-change: the flagship model ships late or feature-reduced only in the enforcing market, leaving the lab's broader trajectory — and any US release timeline — unmoved by 2027-03-31.",
+    "because": "Ai-regulation-teeth is the only minute that actually forces the resolution-mode question and supplies a mechanism for why lag wins: enforcement under an EU-type regime (GPAI Code, cred 0.80) is jurisdictionally bounded by construction, so a lab can satisfy it locally without altering the model elsewhere. Ai-pressure and pressure-model assert the opposite (real discharge, tension collapsing toward zero) but their mechanisms describe how pressure updates on demonstrated consequence, not why the consequence must be global rather than market-local — they assume behaviour-change rather than argue for it over lag. Ai-incident-severity's structural reclassification is downstream of this same choice: a violation only counts as 'the gate itself failed' if the gate was real everywhere, which is precisely what's contested.",
+    "resolve_by": "2027-03-31",
+    "threat_live": "What becomes newly live is a regulator holding actual release-blocking power exercising it against a named frontier developer for the first time — real, not merely threatened, teeth. What stays open on this branch is whether that power is structural (reaches the model globally) or jurisdictional (a local toll the lab can pay without changing course elsewhere); the minutes split on this rather than resolving it.",
+    "strongest_minute": "ai-regulation-teeth — it is the only minute that names a mechanism (three exhaustive resolution modes: behaviour-change, jurisdiction-lag, non-compliance-exit) and commits to which one wins and why, rather than asserting an outcome its mechanism doesn't independently establish.",
+    "weakest_minute": "ai-public-backlash — its round-2 revision argues against a deployer-first premise the brief's other minutes read as already excluded by the granted branch (developer named, case already open), so it spends its argument re-litigating rather than extending the conditional.",
+    "shared_assumption": "ai-pressure, pressure-model, and ai-incident-severity all treat 'binding enforcement' as necessarily discharging into a real, model-level consequence, without arguing why a jurisdictionally-bounded penalty couldn't instead be absorbed as a local cost — they assume the enforcement is deep rather than wide.",
+    "smuggled_assumption": "pressure-model (round 1) and ai-public-backlash (round 2) both argue from a deployer/integrator-first premise, but the brief as read by ai-pressure and ai-incident-severity already specifies the open case is against a named developer — this is a second assumption not granted by stage 2 as fixed by the other minutes.",
+    "unresolved": "Whether the enforcing jurisdiction is EU-type or California-type, and whether the same lab or a third lab bears the exposure, cannot be settled from the minutes as given — both remain live sub-questions even after the resolution-mode pivot is fixed, and the minutes are truncated before their full mechanisms are visible.",
+    "confidence": 0.55
+   },
+   "disagreement": {
+    "panelists": 6,
+    "distinct_claims": 6,
+    "distinct_ratio": 1.0,
+    "revised": 2,
+    "confidence_spread": 0.27,
+    "note": "distinct_ratio near 1.0 = the panel genuinely disagreed. Near 1/n = it converged. Convergence in an early cycle is NOT agreement about the world: this fleet is one LLM over one corpus, so it is the expected result and is evidence about the corpus."
+   },
+   "minutes": 13,
+   "chain": {
+    "ok": false,
+    "reason": "chain link broken (a minute was inserted, removed or reordered)",
+    "row": 0,
+    "signed_by": "ai-pressure"
+   }
+  }
+ ],
+ "note": "Models claim in public before seeing each other, defend or revise under challenge, and are judged by a model that sees only the minutes. The judge's ruling becomes the next cycle's premise. Every minute is signed with the model's slug, version and repo commit. DISAGREEMENT is logged per cycle because this fleet is one LLM over one corpus and will converge for reasons that have nothing to do with the world.",
+ "mode": "scenario"
+}
