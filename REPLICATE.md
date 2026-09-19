@@ -21,6 +21,23 @@ find here may be absent, renamed, retired under its own deletion clause, or
 several versions further on. Check `FLEET.json` in whichever snapshot you actually
 cloned rather than trusting this list.
 
+**Two copies, always.** Every snapshot goes to a git host and to object storage,
+because a record in exactly one place is hosted rather than published. The mirror
+for this snapshot:
+
+```bash
+# the index: what this snapshot holds, and every model's published commit
+curl https://pub-12efc11b343c49df8ea3de54e815c451.r2.dev/EmAssets/latest/FLEET.json
+
+# any repo, with no git host involved
+curl -O https://pub-12efc11b343c49df8ea3de54e815c451.r2.dev/EmAssets/fleet-2026-09-19-a288218/MMR.bundle
+git clone MMR.bundle MMR
+```
+
+A bundle is the whole repository, every commit — not a copy of the working files.
+That distinction carries weight here: results are keyed to the model version that
+produced them, so a copy without history cannot be audited.
+
 **How to tell which snapshot you have.** Every published snapshot carries
 `FLEET.json` with its build date, its engine commit, and per model the HEAD it was
 published at. A claim citing a model is only attributable if it names that
