@@ -306,6 +306,10 @@ def main() -> None:
     ap.add_argument("--dest", default="")
     ap.add_argument("--handle", default=os.environ.get("MMR_HANDLE", ""))
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--only", default="",
+                    help="comma-separated slugs to publish, or a batch spec "
+                         "like 3/1 meaning 'batch 1 of size 3'. Batching keeps each "
+                         "irreversible action small and stoppable.")
     ap.add_argument("--allow-blocked", action="store_true",
                     help="publish the repos that pass, listing the rest as excluded, "
                          "instead of refusing the whole snapshot")
@@ -327,6 +331,35 @@ def main() -> None:
             "only the clean repos with the rest listed as excluded in the manifest.\n"
             "A snapshot containing a working tree is not a state, and a snapshot that\n"
             "hides what it left out is worse than one that publishes less.")
+
+    # --only narrows what is PUBLISHED, never what is AUDITED. The credential and
+    # clean-state checks above always run over the whole fleet: a batch that
+    # passes while a sibling is dirty is still a snapshot built beside a problem,
+    # and the operator should see it before the first push, not the sixteenth.
+    if a.only:
+        m = re.fullmatch(r"(\d+)/(\d+)", a.only.strip())
+        if m:
+            size, which = int(m.group(1)), int(m.group(2))
+            if size < 1 or which < 1:
+                raise SystemExit("--only N/M needs N>=1 and M>=1")
+            ordered = sorted(ok, key=lambda r: (r[0] != "MMR", r[0].lower()))
+            batches = [ordered[i:i + size] for i in range(0, len(ordered), size)]
+            if which > len(batches):
+                raise SystemExit("batch %d of size %d does not exist (%d batches for "
+                                 "%d clean repos)" % (which, size, len(batches), len(ordered)))
+            ok = batches[which - 1]
+            print("  batch %d of %d (size %d): %s"
+                  % (which, len(batches), size, ", ".join(s for s, _, _ in ok)))
+            print("  remaining after this batch: %d"
+                  % max(0, len(ordered) - which * size))
+        else:
+            want = {x.strip() for x in a.only.split(",") if x.strip()}
+            missing = want - {s for s, _, _ in ok}
+            if missing:
+                raise SystemExit("--only names repo(s) not in the clean set: %s"
+                                 % ", ".join(sorted(missing)))
+            ok = [r for r in ok if r[0] in want]
+            print("  publishing %d named repo(s): %s" % (len(ok), ", ".join(sorted(want))))
 
     snap = "fleet-%s-%s" % (TODAY, _git(ROOT, "rev-parse", "--short", "HEAD").strip())
     out = ROOT / "publish" / snap
