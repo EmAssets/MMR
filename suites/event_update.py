@@ -295,6 +295,17 @@ def file_claim(run_id: str) -> None:
     print("  verify grading_loop sees it: python -m suites.grading_loop --dry")
 
 
+def head(d: Path) -> str:
+    """Short HEAD of a repo, or '?'. A bundle that cannot name the commit it came
+    from is not attributable, and attribution is the whole premise."""
+    import subprocess
+    try:
+        return subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=str(d),
+                              capture_output=True, text=True, timeout=10).stdout.strip() or "?"
+    except Exception:
+        return "?"
+
+
 def _bundle(slug: str, outdir: Path) -> list:
     """Assemble exactly what a reader of the article needs, and nothing else.
 
@@ -370,10 +381,40 @@ def _bundle(slug: str, outdir: Path) -> list:
         mani.append("- `%s`" % x)
     (outdir / "MANIFEST.md").write_text("\n".join(mani) + "\n", encoding="utf-8")
     sent.append("MANIFEST.md")
+    # MANIFEST.json: the same facts, machine-readable, so an index can list
+    # contributed bundles by fetching ONE small file per URL instead of parsing
+    # markdown. This is what makes a many-contributor index cheap.
+    mj = {"spec": "mmr-event-bundle-v1", "event": slug, "built": TODAY,
+          "mmr_commit": head(ROOT),
+          "status": "v1 -- our model of these actors' models, from what was "
+                    "publicly gatherable on each file's date; never an actor's "
+                    "own claim about themselves",
+          "model_versions": {m: head(TOOLS / m) for m in sorted(seen)},
+          "files": sent[:],
+          "snapshots": [x for x in sent if x.startswith("lenses/")],
+          "arena_runs": sorted({x.split("/")[1] for x in sent
+                                if x.startswith("arena/") and "/" in x[6:]})}
+    # the dated, gradeable claims this bundle stands behind
+    claims = []
+    for r in sorted(ADIR.glob("arena-%s-*" % slug)):
+        aj = r / "arena.json"
+        if not aj.exists():
+            continue
+        ru = (json.loads(aj.read_text(encoding="utf-8")).get("rounds") or [{}])[-1].get("ruling", {})
+        if ru.get("pivot") and ru.get("pivot_resolves_by"):
+            claims.append({"run": r.name, "pivot": ru["pivot"],
+                           "observable": ru.get("pivot_observable"),
+                           "resolves_by": ru["pivot_resolves_by"],
+                           "confidence": ru.get("confidence"),
+                           "named_by": ru.get("pivot_source")})
+    mj["dated_claims"] = claims
+    (outdir / "MANIFEST.json").write_text(json.dumps(mj, ensure_ascii=False, indent=1),
+                                          encoding="utf-8")
+    sent.append("MANIFEST.json")
     return sent
 
 
-def publish(slug: str, target: str, dest: str, apply: bool) -> None:
+def publish(slug: str, target: str, dest: str, apply: bool, handle: str) -> None:
     """Stage the bundle, then upload it. DRY BY DEFAULT.
 
     Publishing is outward-facing and effectively irreversible -- once a bundle
@@ -404,24 +445,80 @@ def publish(slug: str, target: str, dest: str, apply: bool) -> None:
                          % ", ".join(sorted(set(bad))))
     print("  preflight: no credential-shaped strings in the staged tree")
 
-    if target == "gcs":
-        cmd = ["gsutil", "-m", "rsync", "-r", "-d", str(out), dest.rstrip("/") + "/" + slug]
-    elif target == "r2":
-        cmd = ["npx", "wrangler", "r2", "object", "put", "--recursive",
-               dest.rstrip("/") + "/" + slug, "--file", str(out)]
+    # --- cache classes. This is the whole scaling story. ------------------
+    #
+    # Lens snapshots and arena runs are IMMUTABLE once written -- a dated
+    # snapshot never changes, that is the point of the store -- so they carry a
+    # one-year immutable Cache-Control and a CDN serves them without ever
+    # revalidating. The case file and the manifests APPEND, so they get a short
+    # TTL. At that split, read volume costs essentially nothing: the origin sees
+    # one request per object per edge, whatever the reader count.
+    IMMUTABLE = "public, max-age=31536000, immutable"
+    MUTABLE = "public, max-age=300"
+
+    def cache_for(rel: str) -> str:
+        if rel.startswith("lenses/") or rel.startswith("arena/"):
+            return IMMUTABLE
+        return MUTABLE
+
+    def ctype_for(rel: str) -> str:
+        if rel.endswith(".json"):
+            return "application/json"
+        if rel.endswith(".jsonl"):
+            return "application/x-ndjson"
+        return "text/markdown; charset=utf-8"
+
+    # --- the key layout. Namespaced by CONTRIBUTOR and by COMMIT. ----------
+    #
+    # Without the handle, two readers publishing the same event slug overwrite
+    # each other -- the same-day collision this repo has now hit four times,
+    # except across users and therefore silent. Without the commit, a reader
+    # cannot tell which engine version produced a bundle, and the whole record
+    # is built on claims being attributable to a version.
+    base = "%s/%s/%s" % (handle, slug, head(ROOT))
+
+    cmds = []
+    if target == "r2":
+        # `wrangler r2 object put` takes ONE object -- there is no --recursive.
+        # (The first version of this function passed --recursive and would have
+        # failed on the first real upload.) One call per file is fine at this
+        # size; a bundle is 8 small objects.
+        for rel in sent:
+            cmds.append(["npx", "wrangler", "r2", "object", "put",
+                         "%s/%s/%s" % (dest.strip("/"), base, rel),
+                         "--file", str(out / rel),
+                         "--content-type", ctype_for(rel),
+                         "--cache-control", cache_for(rel),
+                         "--remote"])
+    elif target == "gcs":
+        # gsutil does do recursion, but sets one cache policy for the whole
+        # tree, so the immutable/mutable split needs a second pass.
+        cmds.append(["gsutil", "-m", "-h", "Cache-Control:" + MUTABLE,
+                     "rsync", "-r", str(out), "%s/%s" % (dest.rstrip("/"), base)])
+        cmds.append(["gsutil", "-m", "setmeta", "-h", "Cache-Control:" + IMMUTABLE,
+                     "%s/%s/lenses/**" % (dest.rstrip("/"), base),
+                     "%s/%s/arena/**" % (dest.rstrip("/"), base)])
     else:
-        raise SystemExit("--target must be gcs or r2")
-    print("\n  command: %s" % " ".join(cmd))
+        raise SystemExit("--publish must be r2 or gcs")
+
+    print("")
+    print("  key layout: %s/%s/<file>" % (dest.strip("/"), base))
+    print("  cache: lenses/ and arena/ immutable 1y; case/ and MANIFEST 5min")
+    print("  %d command(s):" % len(cmds))
+    for c in cmds[:3]:
+        print("    %s" % " ".join(c[:9]))
+    if len(cmds) > 3:
+        print("    ... and %d more (one per object)" % (len(cmds) - 3))
     if not apply:
-        print("  DRY RUN — nothing uploaded. Re-run with --apply to publish.")
+        print("  DRY RUN -- nothing uploaded. Re-run with --apply to publish.")
         print("  Inspect %s first; a publish cannot be taken back once cached." % out)
         return
-    r = subprocess.run(cmd, capture_output=True, text=True)
-    print((r.stdout or "")[-1500:])
-    if r.returncode != 0:
-        print((r.stderr or "")[-1500:])
-        raise SystemExit("upload failed (rc=%d)" % r.returncode)
-    print("  uploaded.")
+    for c in cmds:
+        r = subprocess.run(c, capture_output=True, text=True)
+        if r.returncode != 0:
+            print((r.stderr or r.stdout or "")[-800:])
+            raise SystemExit("upload failed on %s (rc=%d)" % (c[-1], r.returncode))
+    print("  uploaded %d object(s)." % len(cmds))
 
 
 def main() -> None:
@@ -430,7 +527,11 @@ def main() -> None:
     ap.add_argument("--add", help="one dated fact to append to the chronology")
     ap.add_argument("--diff", action="store_true", help="positions over time, all 3 levels")
     ap.add_argument("--file-claim", dest="file_claim", help="arena run-id whose pivot to file")
-    ap.add_argument("--publish", choices=["gcs", "r2"], help="stage + upload the bundle")
+    ap.add_argument("--publish", choices=["r2", "gcs"], nargs="?", const="r2",
+                    help="stage + upload the bundle (default target r2: zero egress)")
+    ap.add_argument("--handle", default=os.environ.get("MMR_HANDLE", ""),
+                    help="your contributor handle; namespaces the key so two "
+                         "contributors publishing one event cannot overwrite each other")
     ap.add_argument("--dest", default="", help="gs://bucket/path or <r2-bucket>/path")
     ap.add_argument("--apply", action="store_true",
                     help="actually upload (without it, --publish stages and prints only)")
@@ -438,7 +539,7 @@ def main() -> None:
     if a.publish:
         if not a.dest:
             raise SystemExit("--publish needs --dest (gs://bucket/path or bucket/path)")
-        return publish(a.case, a.publish, a.dest, a.apply)
+        return publish(a.case, a.publish, a.dest, a.apply, a.handle)
     if a.add:
         return add_fact(a.case, a.add)
     if a.file_claim:
