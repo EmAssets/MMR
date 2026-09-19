@@ -234,6 +234,42 @@ python -m suites.arena --case <case> --tag <your-handle>
 python -m suites.new_model my-risk-model --title "..." --domain "..." --kind forecaster
 ```
 
+**Keeping a reading current — the update loop.** A first read is not the deliverable;
+an event moves, and so does your reading of it. One command per step, and the store is
+append-only so a positioning history exists without anyone maintaining it:
+
+```bash
+# a new fact arrived -> append it, never rewrite the chronology
+python -m suites.event_update --case <slug> --add "2026-10-02 - <fact> (source)"
+
+# re-read at all three levels (the --add output prints these with the right tags)
+python -m suites.event_lens --event arena/cases/<slug>.md --models <slugs> --tag <date>
+python -m suites.arena --case <slug> --tag <date>
+
+# what moved, and whether the movement means anything
+python -m suites.event_update --case <slug> --diff
+
+# put the dated pivot somewhere the grading loop will actually find it
+python -m suites.event_update --case <slug> --file-claim <arena-run-id>
+
+# bundle for the article: allow-listed, credential-checked, DRY unless --apply
+python -m suites.event_update --case <slug> --publish gcs --dest gs://bucket/path
+```
+
+**The three levels, and why L2 gates the other two.** L0 is each entity's position, read
+through one model's own registry. L1 is the load-bearing floor — the arena pivot, and
+which rung of the ladder it sits on. **L2 is your own stability: the same brief argued
+twice with no new facts.** Whatever moves at L2 is the noise floor, and a change at L0
+or L1 smaller than it is resampling rather than news. This is not hypothetical — on the
+first event run through this loop, the pivot moved on an unchanged brief. `--diff`
+therefore prints L2 first and says so, every time.
+
+**Publishing is deliberately awkward.** `--publish` copies an allow-list (case file,
+lens snapshots, arena manifests and minutes, plus a MANIFEST naming every model commit
+the readings argued from), greps the staged tree for credential shapes and refuses on a
+hit, and uploads only with `--apply`. Inspect the staged directory first: a public
+bundle may be cached, mirrored or indexed whatever you do afterwards.
+
 **Pin the version you read from.** Every model repo is its own git repo, and a claim is
 only attributable if it names the commit it argued from. `git log --oneline -- MODEL.md`
 gives the versions; cite the short hash in your reading. Two readers on different
