@@ -15,6 +15,10 @@ or in a container. See `docs/COMPATIBILITY.md`.
 
 ## Start here (five minutes)
 
+> Cloning a published fleet rather than starting empty? See `REPLICATE.md` —
+> it covers the sibling layout, detaching the origin, trimming `fleet.json`,
+> and what a published record does and does not transfer.
+
 1. Copy this directory to a new name — that copy is your instance.
 2. `cp .env.example .env`. Then either set `OPENROUTER_API_KEY`, or set
    `LLM_BACKEND=claude-code` to use the `claude` CLI you already have. No API

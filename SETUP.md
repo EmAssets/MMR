@@ -12,10 +12,13 @@ your-workspace/
   my-own-modeling/   <- a META model (its subject: the two models above)
 ```
 
+**Already have a published fleet to start from?** `REPLICATE.md` covers cloning a
+working instance instead of building one. This file is the from-scratch path.
+
 ## 1. Copy the repo → make it your main
 
 ```bash
-git clone https://github.com/shaelsrv/ModelMeetsReality my-copilot
+git clone https://github.com/EmAssets/MMR my-copilot
 cd my-copilot
 rm -rf .git                                              # detach from the engine's history
 git config --global --add safe.directory "$PWD"          # if git says "dubious ownership"
