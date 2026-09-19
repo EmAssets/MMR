@@ -125,6 +125,27 @@ A gap between an actor's implied future and their implied role is one of the
 most informative things you can report. So is an actor whose action operates on a
 different floor than their stated subject.
 
+## Status of every reading produced here — v1, ours, gradeable
+
+Everything this case produces is **our model of these actors' models**, built from
+whatever was publicly gatherable on 2026-09-18. Some of it will be wrong. That is
+the intended mechanism, not a caveat:
+
+- each actor read carries a dated observable, so it is a prediction, not an
+  interpretation
+- when a prediction fails, it says which part of our reading of that actor was
+  wrong, which is more information than the prediction succeeding would give
+- the reading is then revised, and the revision is attributable to the evidence
+  that forced it
+
+**Nothing here is any actor's own claim about themselves.** A read that says "this
+act only makes sense if X" is a claim about an act, made by us, and stands or
+falls on the observable attached to it. Anyone quoting it as what an actor thinks
+is misusing it.
+
+Accuracy in v1 is not the standard. Being wrong in a way that shows up on a date
+is.
+
 ## What you must return
 
 Answer through your own mechanism only, and be explicit about the floor.

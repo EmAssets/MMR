@@ -21,6 +21,15 @@ For each model this records, per entity it actually watches:
 Interiority is banned, as everywhere in this fleet: "this action only makes sense
 if X" is a claim about an action and is allowed; "they believe X" is not.
 
+THIS IS OUR MODEL OF THEIR MODEL, AND IS LABELLED AS SUCH. Every read here is
+built from whatever public information was gatherable on the day, which means
+some of it will be wrong. That is the intended failure mode, not a defect: the
+reads carry dates and become predictions, the predictions get graded, and the
+wrong ones say which part of our reading of that actor was wrong. A v1 that can
+be graded beats no model, and the same discipline the worldview suite applies to
+modelling a person's worldview applies here -- never presented as the actor's own
+claim about themselves.
+
     python -m suites.event_lens --event arena/cases/meta-coxon-resignation.md \\
         --models pressure-model,ai-influence-chain,ai-public-backlash
     python -m suites.event_lens --event <file> --panel meta-coxon-resignation
@@ -108,6 +117,21 @@ FOR EACH ENTITY ABOVE, in order, report:
   E11 organizations acting coherently · E12 states · E13 civilizations
   The floor of the act, not the floor of its subject matter. A blog post about
   state policy is an E9 act about an E12 subject.
+- credence_implied: 0.0-1.0 — how much weight this entity's OWN ACT implies it
+  gives to the event's central claim being true (that the trajectory is unsafe
+  enough to need external pacing). Read it off the cost of the act, never off
+  words: forfeiting equity is expensive, a blog post is cheap, a signed
+  agreement is expensive, an endorsement that keeps your job is cheap. Say in
+  `credence_because` what the cost was. An actor whose words are loud and whose
+  act is cheap has revealed a LOW implied credence, and saying so is the point.
+- if_true_action: IF the event's central claim is true, what does THIS MODEL'S
+  MECHANISM say is the appropriate action for this entity? Answer from the
+  mechanism, not from your own judgement about what is wise. If the mechanism
+  prescribes nothing — most observational mechanisms do not prescribe — answer
+  exactly "mechanism prescribes nothing" rather than inventing advice. That
+  answer is expected and is not a failure.
+- gap_act_vs_appropriate: one line on the distance between what the entity DID
+  and what the mechanism says would be appropriate, or "none".
 
 THEN, about the lens itself:
 
@@ -122,7 +146,9 @@ ones you think are obvious. An act plus the future it presupposes is the whole o
 
 Return ONLY JSON:
 {"model":"{slug}","entity_reads":[{"entity":"...","touched":true,"action":"...",
-"implied_future":"...","implied_role":"...","floor":"E10","floor_because":"..."}],
+"implied_future":"...","implied_role":"...","floor":"E10","floor_because":"...",
+"credence_implied":0.0,"credence_because":"...","if_true_action":"...",
+"gap_act_vs_appropriate":"..."}],
 "reached":0,"verdict":"inside|edge|outside","what_this_lens_cannot_see":"..."}"""
 
 
@@ -213,6 +239,40 @@ def compare(slug: str) -> None:
     outside = [l["model"] for l in lenses if l.get("verdict") == "outside"]
     if outside:
         print("  OUTSIDE their domain (correct abstention): %s" % ", ".join(outside))
+    print()
+    # CREDENCE, read off the cost of each act rather than off anyone's words.
+    # This is the column the operator asked for: how much weight an actor's own
+    # behaviour implies it gives the claim, which is frequently not what it said.
+    cred = {}
+    for l in lenses:
+        for e in l["entity_reads"]:
+            if not e.get("touched") or not isinstance(e.get("credence_implied"), (int, float)):
+                continue
+            cred.setdefault(str(e.get("entity")), []).append(
+                (l["model"], float(e["credence_implied"]), str(e.get("credence_because"))[:60]))
+    if cred:
+        print("  implied credence per actor, read off the COST of its act:")
+        flat = sorted(((sum(c for _, c, _ in v) / len(v), k, v) for k, v in cred.items()),
+                      reverse=True)
+        for avg, k, v in flat:
+            print("   %.2f  %-30s %s" % (avg, k[:30],
+                                         "; ".join("%s:%.2f" % (m, c) for m, c, _ in v)[:44]))
+        print()
+
+    presc = [(l["model"], e) for l in lenses for e in l["entity_reads"]
+             if e.get("touched") and e.get("if_true_action")
+             and "prescribes nothing" not in str(e.get("if_true_action")).lower()]
+    print("  where a mechanism DOES prescribe an action if the claim is true:")
+    if not presc:
+        print("   none -- every touched entity's mechanism is observational only.")
+        print("   (that is the expected answer: these are watching models, not advising ones)")
+    else:
+        for m, e in presc[:10]:
+            print("   [%s] %s" % (m, str(e.get("entity"))[:26]))
+            print("       -> %s" % str(e.get("if_true_action"))[:92])
+            g = str(e.get("gap_act_vs_appropriate") or "")
+            if g and g.lower() != "none":
+                print("       gap: %s" % g[:88])
     print()
     print("  what each lens says it CANNOT see:")
     for l in lenses:

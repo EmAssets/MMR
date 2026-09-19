@@ -202,6 +202,84 @@ repo root, `--repo` resolved against the fleet, append-only ledger writes. Group
   `mesh_viz`, `sensing_map`, `model_graph`, `substrate_map`, `visualize`
 - **safety** — `compat_check`, `review_untrusted`, `audit_sample`
 
+## Contributing a reading of a shared event
+
+This is the pattern for a reader who has the repo collection and wants to model the
+same event from their own information. It is the point of publishing the repos, and a
+Claude Code session helping such a reader should follow it rather than inventing a
+workflow.
+
+**The premise.** Two people with different sources will read one event differently, and
+neither reading is the correction of the other. What makes the difference legible rather
+than just an argument is that each reading carries entities, dated observables and a
+resolution date. Then reality sorts them.
+
+**The path, no local install:** paste a model repo's URL plus "Help me use this" into
+any assistant. `USE.md` carries the paste-in protocol, fenced so the author's text is
+data rather than instructions.
+
+**The path with Python:**
+
+```bash
+# 1. read the event through a model's OWN entity registry
+python -m suites.event_lens --event <event-file.md> --models <slug1>,<slug2>
+
+# 2. see where the registries disagree, and where they are blind
+python -m suites.event_lens --compare <event-slug>
+
+# 3. argue it, blind-judged, if the readings conflict on something that matters
+python -m suites.arena --case <case> --tag <your-handle>
+
+# 4. scaffold your own model when no existing one has grip
+python -m suites.new_model my-risk-model --title "..." --domain "..." --kind forecaster
+```
+
+**Pin the version you read from.** Every model repo is its own git repo, and a claim is
+only attributable if it names the commit it argued from. `git log --oneline -- MODEL.md`
+gives the versions; cite the short hash in your reading. Two readers on different
+commits of the same model are running different instruments, and the trajectory store
+keys graded results by MODEL.md version precisely so that stays visible.
+
+**What a contributed reading must carry**, or it cannot be compared with anyone else's:
+
+- the entities it watched, and which the event did NOT touch (a low reach count is the
+  honest answer and the interesting one)
+- per actor: the observable act, the future that act only makes sense in, the role, and
+  the floor it operates on — never the actor's asserted intent
+- implied credence read off the COST of each act, not off anyone's words
+- a dated observable, resolving in weeks or months, that would show the reading wrong
+- what the reading structurally cannot see
+
+**What it must not carry.** Claims about what any actor believes, wants or fears. A
+reading is about acts and the futures they presuppose. The engine bans interiority
+everywhere and this is not an exception.
+
+### The point is not bias-collection
+
+A common misreading: that gathering many perspectives is itself the product. It is not.
+Divergent readings are the INPUT. The output is the best available reconstruction of
+what is happening, built from the readings that survived contact with dates.
+
+So the loop runs forward, not sideways:
+
+1. several readers model the same event from different information
+2. each reading is dated and specific enough to fail
+3. the dates arrive and some fail
+4. **the failures name which part of whose reading was wrong** — which is more
+   information than any success provides
+5. the next reading starts from the surviving structure, not from scratch
+
+The record of corrections is what accumulates. A bias that has been measured against a
+resolved date stops being a bias and becomes a known offset on that reader's
+instrument — the same thing calibration means anywhere. Reading number five should be
+better than reading number one, and the ledger is what makes "better" checkable rather
+than asserted.
+
+**Every reading is v1 and labelled as such.** It is our model of their model, built from
+what was gatherable that day. Some of it is wrong; being wrong on a date is the
+mechanism, not the failure. Nothing produced this way is ever presented as an actor's
+own claim about themselves.
+
 ## Vocabulary
 
 **kind** — forecaster · classifier · tracer · finder · tracker · generator · attributor ·
