@@ -51,6 +51,13 @@ for _s in (sys.stdout, sys.stderr):
 
 ROOT = Path(__file__).resolve().parents[1]
 TODAY = datetime.date.today().isoformat()
+# The standing mirror. A git host can suspend an account, a repo can be renamed
+# or deleted, and a published record that lives in exactly one place is not
+# published -- it is hosted. Every snapshot goes to both.
+R2_BUCKET = os.environ.get("MMR_R2_BUCKET", "em-mmr-mirror")
+R2_PUBLIC = os.environ.get("MMR_R2_PUBLIC",
+                           "https://pub-12efc11b343c49df8ea3de54e815c451.r2.dev")
+
 KEYPAT = (r"sk-or-v1-[A-Za-z0-9]{20,}|sk-ant-[A-Za-z0-9-]{20,}"
           r"|AIza[0-9A-Za-z_-]{30,}|ghp_[A-Za-z0-9]{30,}")
 
@@ -293,6 +300,12 @@ def to_github(repos: list, ix: dict, org: str, apply: bool) -> None:
         print("    %-28s %s" % (slug, "pushed" if ok_ else
                                 (r.stderr or "").strip().splitlines()[0][:70]))
     print("  done. Readers: git clone https://github.com/%s/<slug>" % org)
+    print("")
+    print("  A git host is a single point of failure for a published record.")
+    print("  Mirror the same snapshot to R2 so the bundles survive an account")
+    print("  suspension, a rename, or a deleted repo:")
+    print("    python -m suites.publish_fleet --publish r2 --dest %s --handle %s --apply"
+          % (R2_BUCKET, org))
 
 
 def main() -> None:
@@ -303,7 +316,9 @@ def main() -> None:
     ap.add_argument("--org", default="",
                     help="github: the owner (user or org) to push to. MUST be the "
                          "dedicated publishing account, not your personal one.")
-    ap.add_argument("--dest", default="")
+    ap.add_argument("--dest", default=R2_BUCKET,
+                    help="r2 bucket/prefix (defaults to the standing mirror) "
+                         "or gs://bucket/path")
     ap.add_argument("--handle", default=os.environ.get("MMR_HANDLE", ""))
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--only", default="",
@@ -422,6 +437,15 @@ def main() -> None:
             print((r.stderr or r.stdout or "")[-800:])
             raise SystemExit("upload failed on %s" % c[-1])
     print("  uploaded %d object(s)." % len(cmds))
+    if a.publish == "r2":
+        pref = "%s/%s" % (a.handle, snap)
+        print("")
+        print("  public mirror:")
+        print("    index:  %s/%s/FLEET.json" % (R2_PUBLIC, pref))
+        print("    latest: %s/%s/latest/FLEET.json" % (R2_PUBLIC, a.handle))
+        print("    bundle: %s/%s/<slug>.bundle" % (R2_PUBLIC, pref))
+        print("  a reader with no git host access:")
+        print("    curl -O %s/%s/MMR.bundle && git clone MMR.bundle MMR" % (R2_PUBLIC, pref))
 
 
 if __name__ == "__main__":
