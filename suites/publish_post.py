@@ -155,6 +155,31 @@ def to_blocks(md: str) -> str:
                        % (attrs, tag,
                           "\n".join("<li>%s</li>" % _inline(x) for x in items), tag))
             continue
+        # A bare X/Twitter or YouTube URL on its own line becomes a native
+        # embed block. An embed beats a screenshot for someone else's post: it
+        # stays current, it carries attribution and engagement figures the
+        # author controls, and it cannot be accused of a selective crop.
+        memb = re.fullmatch(r"(https?://(?:(?:www\.)?(?:twitter|x)\.com/\S+/status/\d+"
+                            r"|(?:www\.)?youtube\.com/watch\?v=\S+|youtu\.be/\S+))", st)
+        if memb:
+            url = memb.group(1)
+            if "youtu" in url:
+                prov, cls = "youtube", "wp-embed-aspect-16-9 wp-has-aspect-ratio"
+            else:
+                prov, cls = "twitter", ""
+            attrs = (chr(123) + chr(34) + "url" + chr(34) + ":" + chr(34) + url + chr(34)
+                     + "," + chr(34) + "type" + chr(34) + ":" + chr(34) + "rich" + chr(34)
+                     + "," + chr(34) + "providerNameSlug" + chr(34) + ":" + chr(34) + prov
+                     + chr(34) + "," + chr(34) + "responsive" + chr(34) + ":true" + chr(125))
+            fig = ("<figure class=" + chr(34) + "wp-block-embed is-type-rich "
+                   + "is-provider-" + prov + " wp-block-embed-" + prov
+                   + ((" " + cls) if cls else "") + chr(34) + ">"
+                   + "<div class=" + chr(34) + "wp-block-embed__wrapper" + chr(34) + ">"
+                   + url + "</div></figure>")
+            out.append("<!-- wp:embed " + attrs + " -->" + chr(10) + fig
+                       + chr(10) + "<!-- /wp:embed -->")
+            i += 1
+            continue
         mimg = re.fullmatch(r"!\[([^\]]*)\]\(([^)]+)\)", st)
         if mimg:
             alt, url = mimg.group(1), mimg.group(2)
@@ -178,7 +203,7 @@ def to_blocks(md: str) -> str:
     return "\n\n".join(out)
 
 
-def find_by_slug(slug: str) -> dict | None:
+def find_by_slug(slug: str, ptype: str = "post") -> dict | None:
     """The post with this slug, any status, or None.
 
     `wp post list --name=<slug>` does not reliably filter non-published posts on
@@ -186,9 +211,9 @@ def find_by_slug(slug: str) -> dict | None:
     depends on this lookup, because a miss creates a SECOND draft of the same
     post, so the slug is matched here rather than trusted to the flag.
     """
-    rc, out, err = ssh("cd ~/%s && wp post list --post_type=post --post_status=any "
+    rc, out, err = ssh("cd ~/%s && wp post list --post_type=%s --post_status=any "
                        "--fields=ID,post_status,post_title,post_name,post_modified "
-                       "--format=json" % WP_ROOT)
+                       "--format=json" % (WP_ROOT, ptype))
     if rc != 0:
         raise SystemExit("cannot reach the site: %s" % (err.strip() or out.strip())[:300])
     try:
@@ -265,6 +290,9 @@ def main() -> None:
     ap.add_argument("--slug", required=True, help="stable slug; re-running UPDATES this draft")
     ap.add_argument("--excerpt", default="")
     ap.add_argument("--category", default="", help="category name; created if absent")
+    ap.add_argument("--as-page", dest="as_page", action="store_true",
+                    help="publish as a PAGE rather than a post -- for evergreen "
+                         "explainers every article links to")
     ap.add_argument("--rename-from", dest="rename_from", default="",
                     help="previous slug, when changing it. Without this the lookup "
                          "misses and a SECOND post is created.")
@@ -317,9 +345,10 @@ def main() -> None:
         print("  --render-only: nothing sent.")
         return
 
-    found = find_by_slug(a.slug)
+    ptype = "page" if a.as_page else "post"
+    found = find_by_slug(a.slug, ptype)
     if not found and a.rename_from:
-        found = find_by_slug(a.rename_from)
+        found = find_by_slug(a.rename_from, ptype)
         if found:
             print("  renaming slug %s -> %s (post %s)"
                   % (a.rename_from, a.slug, found["ID"]))
@@ -350,8 +379,9 @@ def main() -> None:
                              "unattributed post. `wp user list` shows the logins."
                              % a.author)
 
-    common = ("--post_status=draft --post_type=post "
-              "--post_title=%s --post_name=%s" % (_q(title or a.slug), _q(a.slug)))
+    common = ("--post_status=draft --post_type=" + ptype +
+              " --post_title=" + _q(title or a.slug) +
+              " --post_name=" + _q(a.slug))
     if a.excerpt:
         common += " --post_excerpt=%s" % _q(a.excerpt)
     if author_id:
