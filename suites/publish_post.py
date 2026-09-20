@@ -46,6 +46,11 @@ SSH_USER = os.environ.get("WP_SSH_USER", "")
 SSH_KEY = os.environ.get("WP_SSH_KEY", str(Path.home() / ".ssh" / "emergencemachine"))
 WP_ROOT = os.environ.get("WP_ROOT", "domains/emergencemachine.com/public_html")
 
+# The byline. wp-cli over SSH has no logged-in user, so a post created without
+# this lands with post_author=0 -- no byline at all, which WordPress renders as
+# blank or falls back to whatever the theme guesses. Set explicitly.
+WP_AUTHOR = os.environ.get("WP_AUTHOR", "emergent2")
+
 
 def ssh(cmd: str, timeout=180) -> tuple[int, str, str]:
     r = subprocess.run(
@@ -260,6 +265,9 @@ def main() -> None:
     ap.add_argument("--slug", required=True, help="stable slug; re-running UPDATES this draft")
     ap.add_argument("--excerpt", default="")
     ap.add_argument("--category", default="", help="category name; created if absent")
+    ap.add_argument("--author", default=WP_AUTHOR,
+                    help="WordPress user login or ID for the byline "
+                         "(default %s)" % WP_AUTHOR)
     ap.add_argument("--show", action="store_true", help="just report the draft's state")
     ap.add_argument("--render-only", action="store_true",
                     help="write the converted HTML locally and touch nothing remote")
@@ -315,10 +323,26 @@ def main() -> None:
         raise SystemExit("upload of body failed: %s"
                          % (p.stderr or b"").decode("utf-8", "replace")[:300])
 
+    # Resolve the author to an ID once, so a typo fails here rather than silently
+    # producing an unattributed post.
+    author_id = ""
+    if a.author:
+        rc, out, _ = ssh("cd ~/%s && wp user get %s --field=ID 2>&1"
+                         % (WP_ROOT, _q(a.author)))
+        cand = (out.strip().splitlines() or [""])[-1].strip()
+        if cand.isdigit():
+            author_id = cand
+        else:
+            raise SystemExit("no such WordPress user %r -- refusing to publish an "
+                             "unattributed post. `wp user list` shows the logins."
+                             % a.author)
+
     common = ("--post_status=draft --post_type=post "
               "--post_title=%s --post_name=%s" % (_q(title or a.slug), _q(a.slug)))
     if a.excerpt:
         common += " --post_excerpt=%s" % _q(a.excerpt)
+    if author_id:
+        common += " --post_author=%s" % author_id
 
     if found:
         pid = found["ID"]
@@ -339,7 +363,8 @@ def main() -> None:
         ssh("cd ~/%s && wp post term add %s category %s 2>&1"
             % (WP_ROOT, pid, _q(a.category)))
     ssh("rm -f %s" % remote_tmp)
-    print("  %s (id %s), status DRAFT" % (action, pid))
+    print("  %s (id %s), status DRAFT, author %s (%s)"
+          % (action, pid, a.author, author_id))
     print("  review at: https://emergencemachine.com/wp-admin/post.php?post=%s&action=edit" % pid)
     print("  it stays a draft until you publish it yourself -- this tool cannot.")
 
