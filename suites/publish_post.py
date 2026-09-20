@@ -265,6 +265,14 @@ def main() -> None:
     ap.add_argument("--slug", required=True, help="stable slug; re-running UPDATES this draft")
     ap.add_argument("--excerpt", default="")
     ap.add_argument("--category", default="", help="category name; created if absent")
+    ap.add_argument("--rename-from", dest="rename_from", default="",
+                    help="previous slug, when changing it. Without this the lookup "
+                         "misses and a SECOND post is created.")
+    ap.add_argument("--focus-kw", dest="focus_kw", default="",
+                    help="Yoast focus keyphrase")
+    ap.add_argument("--metadesc", default="",
+                    help="Yoast meta description; 120-158 chars or it is truncated "
+                         "in search results. Defaults to --excerpt.")
     ap.add_argument("--author", default=WP_AUTHOR,
                     help="WordPress user login or ID for the byline "
                          "(default %s)" % WP_AUTHOR)
@@ -310,6 +318,11 @@ def main() -> None:
         return
 
     found = find_by_slug(a.slug)
+    if not found and a.rename_from:
+        found = find_by_slug(a.rename_from)
+        if found:
+            print("  renaming slug %s -> %s (post %s)"
+                  % (a.rename_from, a.slug, found["ID"]))
 
     # The body goes over stdin, never inside the remote command line: it is tens
     # of kilobytes with quotes, backticks and newratios in it, and shell-quoting
@@ -363,6 +376,21 @@ def main() -> None:
         ssh("cd ~/%s && wp post term add %s category %s 2>&1"
             % (WP_ROOT, pid, _q(a.category)))
     ssh("rm -f %s" % remote_tmp)
+
+    # Yoast fields. The site runs wordpress-seo and its other posts carry these,
+    # so a post without them is the odd one out: no focus keyphrase, no meta
+    # description, and Google writes its own snippet from whatever it finds.
+    md_desc = a.metadesc or a.excerpt
+    if md_desc:
+        if not 120 <= len(md_desc) <= 158:
+            print("  [note] meta description is %d chars; 120-158 is the range that "
+                  "survives truncation in search results" % len(md_desc))
+        ssh("cd ~/%s && wp post meta update %s _yoast_wpseo_metadesc %s"
+            % (WP_ROOT, pid, _q(md_desc)))
+    if a.focus_kw:
+        ssh("cd ~/%s && wp post meta update %s _yoast_wpseo_focuskw %s"
+            % (WP_ROOT, pid, _q(a.focus_kw)))
+        print("  yoast: focus keyphrase %r" % a.focus_kw)
     print("  %s (id %s), status DRAFT, author %s (%s)"
           % (action, pid, a.author, author_id))
     print("  review at: https://emergencemachine.com/wp-admin/post.php?post=%s&action=edit" % pid)
