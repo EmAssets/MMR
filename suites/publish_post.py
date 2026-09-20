@@ -150,6 +150,18 @@ def to_blocks(md: str) -> str:
                        % (attrs, tag,
                           "\n".join("<li>%s</li>" % _inline(x) for x in items), tag))
             continue
+        mimg = re.fullmatch(r"!\[([^\]]*)\]\(([^)]+)\)", st)
+        if mimg:
+            alt, url = mimg.group(1), mimg.group(2)
+            cap = ("<figcaption class=" + chr(34) + "wp-element-caption" + chr(34) + ">"
+                   + _inline(alt) + "</figcaption>") if alt else ""
+            fig = ("<figure class=" + chr(34) + "wp-block-image size-large" + chr(34) + ">"
+                   + "<img src=" + chr(34) + html.escape(url, quote=True) + chr(34)
+                   + " alt=" + chr(34) + html.escape(alt, quote=True) + chr(34) + "/>"
+                   + cap + "</figure>")
+            out.append("<!-- wp:image -->" + chr(10) + fig + chr(10) + "<!-- /wp:image -->")
+            i += 1
+            continue
         para = []
         while i < len(lines) and lines[i].strip() and not re.match(
                 r"^(#{1,4}\s|```|>|\||-\s|\*\s|\d+\.\s|-{3,}$)", lines[i].strip()):
@@ -182,6 +194,63 @@ def find_by_slug(slug: str) -> dict | None:
         if r.get("post_name") == slug:
             return r
     return None
+
+
+def upload_images(md: str, src_dir: Path, slug: str) -> tuple[str, list]:
+    """Upload every local image the markdown references; rewrite to media URLs.
+
+    Markdown pointing at a file on this machine is useless once published, so
+    each local `![alt](path)` is sent to the WordPress media library and the
+    reference rewritten to the uploaded URL. Remote URLs are left alone.
+
+    Uploads are keyed by filename: re-running does not create a second copy of
+    the same screenshot, for the same reason the post itself is idempotent.
+    """
+    done = []
+    for alt, rel in re.findall(r"!\[([^\]]*)\]\(([^)]+)\)", md):
+        if rel.startswith(("http://", "https://")):
+            continue
+        local = (src_dir / rel).resolve()
+        if not local.exists():
+            print("  [warn] image not found, left as-is: %s" % rel)
+            continue
+        name = local.name
+        rc, out, _ = ssh("cd ~/%s && wp post list --post_type=attachment "
+                         "--post_status=any --fields=ID,post_title --format=json" % WP_ROOT)
+        existing = None
+        try:
+            for r in json.loads(out.strip() or "[]"):
+                if str(r.get("post_title", "")).lower() == local.stem.lower():
+                    existing = r["ID"]
+                    break
+        except ValueError:
+            pass
+        if existing:
+            aid = existing
+            print("  image already uploaded: %s (id %s)" % (name, aid))
+        else:
+            remote = "/tmp/mmr-img-%s" % name
+            pr = subprocess.run(
+                ["ssh", "-p", SSH_PORT, "-i", SSH_KEY, "-o", "BatchMode=yes",
+                 "%s@%s" % (SSH_USER, SSH_HOST), "cat > %s" % remote],
+                input=local.read_bytes(), capture_output=True, timeout=600)
+            if pr.returncode != 0:
+                print("  [warn] upload failed for %s" % name)
+                continue
+            rc, out, err = ssh("cd ~/%s && wp media import %s --title=%s --alt=%s "
+                               "--porcelain 2>&1" % (WP_ROOT, remote, _q(local.stem), _q(alt)))
+            ssh("rm -f %s" % remote)
+            aid = (out.strip().splitlines() or ["?"])[-1].strip()
+            if not aid.isdigit():
+                print("  [warn] media import said: %s" % out.strip()[:160])
+                continue
+            print("  uploaded %s -> attachment %s" % (name, aid))
+        rc, out, _ = ssh("cd ~/%s && wp post get %s --field=guid" % (WP_ROOT, aid))
+        url = out.strip().splitlines()[-1].strip() if out.strip() else ""
+        if url:
+            md = md.replace("(%s)" % rel, "(%s)" % url)
+            done.append({"file": name, "id": aid, "url": url, "alt": alt})
+    return md, done
 
 
 def main() -> None:
@@ -218,6 +287,9 @@ def main() -> None:
     if m and not title:
         title = m.group(1).strip()
         md = "\n".join(md.split("\n")[1:])
+    md, imgs = ("", []) if False else upload_images(md, Path(a.file).parent, a.slug)         if not a.render_only else (md, [])
+    if imgs:
+        print("  %d image(s) in media library" % len(imgs))
     body = to_blocks(md)
 
     local = ROOT / "publish" / ("post-%s.html" % a.slug)
