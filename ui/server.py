@@ -480,12 +480,20 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
 @keyframes ghl { 0% { background:rgba(79,195,161,.25); } 100% { background:transparent; } }
 /* phone: eleven nav buttons in a row and wide tables were unusable on mobile */
 @media (max-width: 720px) {
-  body { padding:1rem .7rem 3rem; }
+  /* the capture FAB is fixed at bottom:1.2rem and is 3.2rem tall; 3rem of padding
+     left it sitting on top of the last ledger row. Clear the button, its offset and
+     the phone's home indicator / browser toolbar. */
+  body { padding:1rem .7rem calc(6.5rem + env(safe-area-inset-bottom, 0px)); }
   h1 { font-size:1.25rem; }
   nav { overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch;
         scrollbar-width:none; padding-bottom:.3rem; }
   nav::-webkit-scrollbar { display:none; }
-  nav button { flex:0 0 auto; font-size:.8rem; padding:.45rem .8rem; }
+  nav button { flex:0 0 auto; font-size:.8rem; padding:.45rem .8rem; white-space:nowrap; }
+  /* nav scrolls sideways here, so a group that still wraps stacks into a tall
+     column and its pills get clipped mid-word ("Entitie", "Timelin"). Each group
+     must stay a single non-wrapping run for the horizontal scroll to be the only
+     overflow direction. */
+  .navgroup { flex-wrap:nowrap; }
   table { display:block; overflow-x:auto; white-space:nowrap; }
   .card { padding:.8rem .85rem; }
   .task { flex-wrap:wrap; gap:.3rem; }
@@ -495,7 +503,7 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
 }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.45; } }
 </style></head><body><main>
-<h1>Model Cockpit <small>local · 127.0.0.1 only</small></h1>
+<h1>Model Cockpit <small>__ACCESS__</small></h1>
 <div style="display:flex;gap:.6rem;align-items:center;margin:.9rem 0 .2rem;flex-wrap:wrap">
   <input id="gq" placeholder="Search everything the fleet knows…  (semantic, 1300+ fragments)"
     onkeydown="if(event.key==='Enter')doSearch()"
@@ -536,7 +544,7 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
 </nav>
 
 <button id="capbtn" onclick="openCapture()" title="Register a claim (c)"
-  style="position:fixed;right:1.2rem;bottom:1.2rem;z-index:40;width:3.2rem;height:3.2rem;
+  style="position:fixed;right:1.2rem;bottom:calc(1.2rem + env(safe-area-inset-bottom, 0px));z-index:40;width:3.2rem;height:3.2rem;
          border-radius:50%;border:none;background:var(--acc);color:var(--bg);
          font-size:1.7rem;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.5)">+</button>
 
@@ -2500,10 +2508,37 @@ class H(BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
 
+    def _origin_label(self) -> str:
+        """Say how THIS request arrived, rather than asserting how the server is reachable.
+
+        The header used to read "local - 127.0.0.1 only" unconditionally. Once the
+        cockpit was published through a Cloudflare tunnel that became false, and false
+        in the worst direction: it is the label you would glance at to decide whether
+        this is safe to leave open. A hardcoded string cannot be right in both modes.
+
+        Cloudflare sets Cf-Access-Authenticated-User-Email only on requests that
+        actually cleared an Access policy, so it is evidence about this request. It is
+        NOT a proof of who is at the keyboard, and the label does not claim to be -- it
+        names the identity the edge asserted, which is what the operator can check.
+        A tunnelled request that somehow arrives WITHOUT that header is the dangerous
+        case and is called out rather than shrugged off.
+        """
+        import html as _html
+        email = self.headers.get("Cf-Access-Authenticated-User-Email")
+        via_cf = bool(self.headers.get("Cf-Ray"))
+        if email:
+            return "access · " + _html.escape(email)
+        if via_cf:
+            return "tunnelled · NO Access identity on this request"
+        host = (self.headers.get("Host") or "").split(":")[0]
+        if host in ("127.0.0.1", "localhost", "[::1]", "::1"):
+            return "local · 127.0.0.1 only"
+        return "direct · " + _html.escape(host or "unknown host")
+
     def do_GET(self):
         p = urlparse(self.path).path
         if p == "/":
-            return self._send(200, PAGE.encode(), "text/html")
+            return self._send(200, PAGE.replace("__ACCESS__", self._origin_label()).encode(), "text/html")
         if p == "/api/models":
             return self._send(200, [m for m in (model_info(n) for n in REPOS) if m])
         if p.startswith("/claim/"):
