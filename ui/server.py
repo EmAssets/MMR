@@ -1975,10 +1975,27 @@ async function ahStart(btn){
         cycles: +document.getElementById('ah-cycles').value,
         dry: document.getElementById('ah-dry').checked})})).json();
     if (r.error){ msg.textContent = r.error; btn.disabled = false; return; }
-    msg.textContent = 'started — this can take a few minutes. It will appear below.';
-    setTimeout(ahPending, 4000);
+    // 10 models x 2 rounds is 20 LLM calls at ARENA_WORKERS-at-a-time, which is
+    // minutes, not seconds. Say so, and start polling at once so the live card
+    // appears rather than an empty page that reads as failure.
+    msg.textContent = 'started — ' + ahSel.size + ' models x 2 rounds = ' +
+                      (ahSel.size * 2) + ' calls. Progress appears below.';
+    document.getElementById('ah-compose').hidden = true;
+    document.getElementById('ah-toggle').textContent = 'New arena';
+    ahStartPoll();
+    setTimeout(ahPending, 800);
   } catch(e){ msg.textContent = 'failed: ' + e; }
   btn.disabled = false;
+}
+/* Poll only while something is actually arguing. A timer that runs forever on
+   an idle cockpit is a battery cost on the phone this is mostly used from. */
+let ahPoll = null;
+function ahStartPoll(){
+  if (ahPoll) return;
+  ahPoll = setInterval(() => { if (!document.hidden) ahPending(); }, 4000);
+}
+function ahStopPoll(){
+  if (ahPoll){ clearInterval(ahPoll); ahPoll = null; }
 }
 async function ahPending(){
   const el = document.getElementById('ah-pending');
@@ -1986,8 +2003,44 @@ async function ahPending(){
   try { d = await (await fetch('/api/arena/pending')).json(); }
   catch(e){ return; }
   const ps = d.pending || [];
-  if (!ps.length){ el.innerHTML = ''; return; }
-  el.innerHTML = ps.map(st => {
+  const live = d.live || [];
+  // A run that is still arguing gets a live card. Without it the page was blank
+  // for the whole wait, which is indistinguishable from the run having failed.
+  const liveHtml = live.map(lv => {
+    const fin = lv.finished || [];
+    const wait = lv.waiting_on || [];
+    const tot = lv.total || (fin.length + wait.length) || 1;
+    const pct = Math.round(100 * fin.length / tot);
+    const rows = fin.map(f =>
+      `<div style="display:flex;gap:.5rem;align-items:baseline;padding:.3rem 0;`+
+      `border-top:1px solid var(--line);font-size:.84rem">`+
+      `<span class="mono" style="color:${f.error ? 'var(--miss)' : 'var(--accd)'}">`+
+      `${f.error ? '×' : '✓'}</span>`+
+      `<b style="min-width:11rem">${esc(f.slug)}</b>`+
+      `<span class="muted" style="flex:1">${esc(f.error ? String(f.error).slice(0,80)
+        : (f.move || f.grip || '') + (f.claim ? ' · ' + f.claim.slice(0,70) : ''))}</span>`+
+      `</div>`).join('');
+    const waiting = wait.map(s =>
+      `<div style="display:flex;gap:.5rem;align-items:baseline;padding:.3rem 0;`+
+      `border-top:1px solid var(--line);font-size:.84rem;opacity:.55">`+
+      `<span class="mono" style="animation:pulse 1.4s ease-in-out infinite">·</span>`+
+      `<b style="min-width:11rem">${esc(s)}</b>`+
+      `<span class="muted">thinking…</span></div>`).join('');
+    return `<div class="card" style="border-color:var(--acc)">`+
+      `<div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap">`+
+      `<h3 style="margin:0">Arguing — round ${lv.round || 1} of cycle ${lv.cycle || 1}</h3>`+
+      `<span class="badge" style="animation:pulse 1.4s ease-in-out infinite">running</span></div>`+
+      `<p class="muted" style="font-size:.82rem;margin:.3rem 0">`+
+      `${fin.length} of ${tot} answered${lv.started_at ? ' · started ' + esc(lv.started_at.slice(11)) : ''}`+
+      ` · ${esc(lv.run_id || '')}</p>`+
+      `<div style="height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin:.4rem 0 .6rem">`+
+      `<div style="height:100%;width:${pct}%;background:var(--acc);transition:width .4s"></div></div>`+
+      rows + waiting + `</div>`;
+  }).join('');
+  if (!ps.length && !live.length){ el.innerHTML = ''; ahStopPoll(); return; }
+  if (live.length) ahStartPoll(); else ahStopPoll();
+  if (!ps.length){ el.innerHTML = liveHtml; return; }
+  el.innerHTML = liveHtml + ps.map(st => {
     const rows = (st.minutes_rows || []).filter(m => m.round === 2);
     const r1 = (st.minutes_rows || []).filter(m => m.round === 1);
     const claimOf = s => {
@@ -2046,7 +2099,8 @@ async function ahRule(runId, pick, btn){
       body: JSON.stringify({run_id: runId, pick: pick, ruling: ruling, because: because})})).json();
     if (r.error){ if (msg) msg.textContent = r.error; btn.disabled = false; return; }
     if (msg) msg.textContent = 'recorded — the next round is arguing against it…';
-    setTimeout(ahPending, 5000);
+    ahStartPoll();
+    setTimeout(ahPending, 800);
   } catch(e){ if (msg) msg.textContent = 'failed: ' + e; btn.disabled = false; }
 }
 
@@ -2998,9 +3052,21 @@ class H(BaseHTTPRequestHandler):
             # person takes hours and this server restarts.
             adir = ROOT / "arena"
             out = []
+            live = []
             for d in sorted(adir.glob("arena-*-human"), reverse=True) if adir.exists() else []:
                 f = d / "awaiting-judge.json"
+                # A run that is still ARGUING has no awaiting-judge.json yet.
+                # Reporting only the finished ones is what made a live run look
+                # like a failed one: the page was empty for the whole wait.
+                lf = d / "live.json"
                 if not f.exists():
+                    if lf.exists():
+                        try:
+                            lv = json.loads(lf.read_text(encoding="utf-8"))
+                            lv["run_id"] = d.name
+                            live.append(lv)
+                        except ValueError:
+                            pass
                     continue
                 try:
                     st = json.loads(f.read_text(encoding="utf-8"))
@@ -3008,6 +3074,15 @@ class H(BaseHTTPRequestHandler):
                     continue
                 if st.get("status") != "awaiting-judge":
                     continue
+                # a finished-cycle run can still be arguing the NEXT cycle
+                if lf.exists():
+                    try:
+                        lv = json.loads(lf.read_text(encoding="utf-8"))
+                        if lv.get("status") == "arguing":
+                            lv["run_id"] = d.name
+                            live.append(lv)
+                    except ValueError:
+                        pass
                 mf = d / ("cycle-%d" % st.get("cycle", 1)) / "minutes.jsonl"
                 rows = []
                 if mf.exists():
@@ -3019,7 +3094,7 @@ class H(BaseHTTPRequestHandler):
                                 pass
                 st["minutes_rows"] = rows
                 out.append(st)
-            return self._send(200, {"pending": out})
+            return self._send(200, {"pending": out, "live": live})
         if p == "/api/experts":
             # Per-commentator view: what each said, what happened inside the
             # claim window, whether the view moved, and registered conflicts.

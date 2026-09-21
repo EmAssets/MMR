@@ -117,6 +117,67 @@ def _save_state(run_id: str, st: dict) -> None:
                                    encoding="utf-8")
 
 
+def make_progress(outdir: Path, panel: list, cycles: int):
+    """A progress callback that writes live.json as each panelist lands.
+
+    The UI polls a file rather than holding a connection, for the same reason
+    the run state is on disk: this server restarts, and a run that is only
+    observable through a live socket becomes invisible the moment it does.
+
+    Writes are whole-file and best-effort. A progress file that failed to write
+    must never take a real run down with it -- the record is the minutes, this
+    is a status light.
+    """
+    outdir.mkdir(parents=True, exist_ok=True)
+    state = {"panel": [p["slug"] for p in panel], "cycles_planned": cycles,
+             "cycle": 1, "round": 0, "total": len(panel), "finished": [],
+             "started_at": datetime.datetime.now().isoformat(timespec="seconds"),
+             "status": "arguing"}
+
+    def _flush():
+        try:
+            (outdir / "live.json").write_text(
+                json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+        except OSError:
+            pass
+
+    def progress(kind: str, info: dict):
+        if kind == "round":
+            state["cycle"] = info["cycle"]
+            state["round"] = info["round"]
+            state["total"] = info["total"]
+            # a new round starts empty; the previous round's finishers are done
+            state["finished"] = []
+            state["waiting_on"] = list(info.get("waiting_on") or [])
+            state["round_started_at"] = datetime.datetime.now().isoformat(timespec="seconds")
+        elif kind == "done":
+            state["finished"].append({
+                "slug": info["slug"],
+                "at": datetime.datetime.now().isoformat(timespec="seconds"),
+                "grip": info.get("grip"), "move": info.get("move"),
+                "error": info.get("error"),
+                "claim": info.get("claim") or "",
+            })
+            state["waiting_on"] = [s for s in state.get("waiting_on", [])
+                                   if s != info["slug"]]
+        _flush()
+
+    _flush()
+    return progress, state
+
+
+def _clear_progress(outdir: Path, status: str = "awaiting-judge") -> None:
+    f = outdir / "live.json"
+    try:
+        if f.exists():
+            d = json.loads(f.read_text(encoding="utf-8"))
+            d["status"] = status
+            d["waiting_on"] = []
+            f.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+    except (OSError, ValueError):
+        pass
+
+
 def _write_cycle(outdir: Path, cyc: int, minutes: list) -> None:
     cdir = outdir / ("cycle-%d" % cyc)
     cdir.mkdir(parents=True, exist_ok=True)
@@ -165,9 +226,11 @@ def start(title: str, brief: str, question: str, models: list, cycles: int,
     for p in panel:
         print("     %-28s %-14s %s %s" % (p["slug"], p["kind"], p["version"], p["commit"]))
 
+    prog, _ = make_progress(outdir, panel, cycles)
     minutes = A.argue_cycle(case, panel, 1, None, dry, model_hint,
-                            case.get("stages") or [], "", PREMISE_SOURCE)
+                            case.get("stages") or [], "", PREMISE_SOURCE, prog)
     _write_cycle(outdir, 1, minutes)
+    _clear_progress(outdir)
 
     st = {
         "spec": "arena-human-v1",
@@ -275,10 +338,13 @@ def rule(run_id: str, pick: str, ruling: str, because: str, dry: bool,
     case = A.all_cases()[st["case"]]
     panel = A.resolve_panel(st["case"], ",".join(p["slug"] for p in st["panel"]))
     nxt = cyc + 1
+    prog, _ = make_progress(outdir, panel, st["cycles_planned"])
     nminutes = A.argue_cycle(case, panel, nxt, text, dry or st.get("dry_run"),
                              model_hint or st.get("model_hint", "auto"),
-                             case.get("stages") or [], st["chain_head"], PREMISE_SOURCE)
+                             case.get("stages") or [], st["chain_head"], PREMISE_SOURCE,
+                             prog)
     _write_cycle(outdir, nxt, nminutes)
+    _clear_progress(outdir)
     st["cycle"] = nxt
     st["chain_head"] = nminutes[-1]["minute_sha"] if nminutes else st["chain_head"]
     st["status"] = "awaiting-judge"

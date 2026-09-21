@@ -780,7 +780,8 @@ def _call(model_hint: str, prompt: str, dry: bool) -> dict:
         return {"_unparsed": txt[:800]}
 
 
-def _call_many(model_hint: str, prompts: list, dry: bool, workers: int = 0) -> list:
+def _call_many(model_hint: str, prompts: list, dry: bool, workers: int = 0,
+               on_done=None) -> list:
     """Run independent prompts concurrently, returning bodies IN INPUT ORDER.
 
     Safe only where the prompts genuinely do not depend on each other, which in
@@ -809,9 +810,25 @@ def _call_many(model_hint: str, prompts: list, dry: bool, workers: int = 0) -> l
     many at once trades a rate-limit error for the wall time it was meant to
     save. On a dry run nothing is dispatched.
     """
+    # on_done(index, body) fires as each call lands, for progress reporting.
+    # It must never affect the result: the arena's minutes are order-sensitive
+    # and a callback that raised, or that mutated `out`, would corrupt a record
+    # to make a progress bar move. Hence the bare try/except around every call.
+    def _note(i, body):
+        if on_done:
+            try:
+                on_done(i, body)
+            except Exception:
+                pass
+
     n = len(prompts)
     if dry or n <= 1:
-        return [_call(model_hint, p, dry) for p in prompts]
+        res = []
+        for i, p in enumerate(prompts):
+            b = _call(model_hint, p, dry)
+            res.append(b)
+            _note(i, b)
+        return res
     if workers <= 0:
         try:
             workers = int(os.environ.get("ARENA_WORKERS", "4"))
@@ -819,20 +836,30 @@ def _call_many(model_hint: str, prompts: list, dry: bool, workers: int = 0) -> l
             workers = 4
     workers = max(1, min(workers, n))
     if workers == 1:
-        return [_call(model_hint, p, dry) for p in prompts]
+        res = []
+        for i, p in enumerate(prompts):
+            b = _call(model_hint, p, dry)
+            res.append(b)
+            _note(i, b)
+        return res
     out: list = [None] * n
     from concurrent.futures import ThreadPoolExecutor
     # Threads, not processes: every backend here blocks on IO (a subprocess or
     # an HTTP request), so the GIL is released while waiting and threads are
     # both sufficient and far cheaper to reason about.
+    from concurrent.futures import as_completed
     with ThreadPoolExecutor(max_workers=workers) as ex:
         futs = {ex.submit(_call, model_hint, p, dry): i for i, p in enumerate(prompts)}
-        for f in list(futs):
+        # as_completed, not submission order: a progress report that waits on
+        # call 0 before mentioning call 7 is not progress, it is a queue. `out`
+        # is still filled BY INDEX, so the chain order is unaffected.
+        for f in as_completed(futs):
             i = futs[f]
             try:
                 out[i] = f.result()
             except Exception as e:  # a crashed worker is not an empty answer
                 out[i] = {"_error": "%s: %s" % (type(e).__name__, e)}
+            _note(i, out[i])
     return out
 
 
@@ -1005,7 +1032,8 @@ def cycle_brief(case: dict, cyc: int, premise: str | None, stages: list,
 
 def argue_cycle(case: dict, panel: list, cyc: int, premise: str | None, dry: bool,
                 model_hint: str, stages: list, chain_head: str = "",
-                premise_source: str = "an independent judge's ruling") -> list:
+                premise_source: str = "an independent judge's ruling",
+                progress=None) -> list:
     """Rounds 1 and 2 of one cycle: claim in public, then defend or revise.
 
     Extracted from run() so that judging can be deferred. run() calls this and
@@ -1030,7 +1058,15 @@ def argue_cycle(case: dict, panel: list, cyc: int, premise: str | None, dry: boo
         CLAIM.format(title=p["title"], slug=p["slug"], kind=p["kind"],
                      one_line=p["one_line"], as_of=case["as_of"], brief=brief)
         for p in panel]
-    r1_bodies = _call_many(model_hint, r1_prompts, dry)
+    if progress:
+        progress("round", {"cycle": cyc, "round": 1, "total": len(panel),
+                           "waiting_on": [p["slug"] for p in panel]})
+    r1_bodies = _call_many(model_hint, r1_prompts, dry,
+                           on_done=(lambda i, b: progress(
+                               "done", {"cycle": cyc, "round": 1, "slug": panel[i]["slug"],
+                                        "grip": b.get("grip"), "error": b.get("_error"),
+                                        "claim": str(b.get("claim") or "")[:200]}))
+                                   if progress else None)
     for p, prompt, body in zip(panel, r1_prompts, r1_bodies):
         minutes.append(_minute("claim", p, cyc, 1, body, prompt,
                                minutes[-1]["minute_sha"] if minutes else chain_head))
@@ -1053,7 +1089,15 @@ def argue_cycle(case: dict, panel: list, cyc: int, premise: str | None, dry: boo
             title=p["title"], slug=p["slug"],
             mine=json.dumps(mine["body"], ensure_ascii=False)[:700] if mine else "",
             others=others or "(no other minutes)"))
-    r2_bodies = _call_many(model_hint, r2_prompts, dry)
+    if progress:
+        progress("round", {"cycle": cyc, "round": 2, "total": len(panel),
+                           "waiting_on": [p["slug"] for p in panel]})
+    r2_bodies = _call_many(model_hint, r2_prompts, dry,
+                           on_done=(lambda i, b: progress(
+                               "done", {"cycle": cyc, "round": 2, "slug": panel[i]["slug"],
+                                        "move": b.get("move"), "error": b.get("_error"),
+                                        "claim": str(b.get("claim") or "")[:200]}))
+                                   if progress else None)
     for p, prompt, body in zip(panel, r2_prompts, r2_bodies):
         minutes.append(_minute("defence", p, cyc, 2, body, prompt,
                                minutes[-1]["minute_sha"]))
