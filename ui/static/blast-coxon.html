@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="An interactive map of who was actually responding to whom after the Coxon resignation. Pivot any actor to the centre, count the rings, and see the references behind each act.">
+<meta name="description" content="An interactive map of who was actually responding to whom after the Coxon resignation. Pivot any actor to the centre and read their dossier.">
 <meta property="og:title" content="Who Was Looking At What">
 <meta property="og:description" content="Sacks attacked the proposal. Altman agreed with pacing the frontier. Neither was responding to the resignation.">
 <meta property="og:type" content="article">
@@ -211,6 +211,38 @@
   .tw-foot a{color:var(--teal); text-decoration:none}
   .tw-foot a:hover{text-decoration:underline}
   .tw-foot a:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .doss{margin-top:16px; padding-top:14px; border-top:1px solid var(--rule)}
+  .doss-none{
+    font-size:13px; color:var(--ink-3); font-style:italic; line-height:1.5;
+  }
+  .known{list-style:none; margin:0; padding:0; display:grid; gap:7px}
+  .known li{
+    font-size:13.5px; line-height:1.5; color:var(--ink-2);
+    padding-left:13px; position:relative;
+  }
+  .known li::before{
+    content:"\2013"; position:absolute; left:0; color:var(--ink-3);
+  }
+  .known a{color:var(--teal); text-decoration:none; font-size:12px; white-space:nowrap}
+  .known a:hover{text-decoration:underline}
+  .unsourced{
+    font:400 11px "IBM Plex Mono", monospace; color:var(--amber); white-space:nowrap;
+  }
+  .risk{margin:0; font-size:13.5px; line-height:1.55; color:var(--ink-2)}
+  .claims{list-style:none; margin:9px 0 0; padding:0; display:grid; gap:6px}
+  .claims li{
+    display:flex; justify-content:space-between; gap:11px; flex-wrap:wrap;
+    font-size:13px; line-height:1.45; padding:7px 9px;
+    background:var(--sunk); border-left:2px solid var(--teal); border-radius:0 2px 2px 0;
+  }
+  .cl-text{color:var(--ink-2); flex:1 1 15rem}
+  .cl-date{
+    font:500 11px "IBM Plex Mono", monospace; color:var(--teal);
+    white-space:nowrap; align-self:center;
+  }
+  #updated{
+    font:400 11px "IBM Plex Mono", monospace; color:var(--ink-3);
+  }
 
   .grid{display:grid; gap:18px; margin-top:clamp(30px,4vw,46px)}
   @media (min-width:760px){ .grid{grid-template-columns:repeat(3,1fr)} }
@@ -250,6 +282,7 @@
     <div class="frame-head">
       <h2 id="hub">centred on — Jacob Coxon</h2>
       <span class="readout" id="readout"></span>
+      <span id="updated"></span>
     </div>
     <div class="stage" id="stage"><svg id="svg" role="img" aria-label="Concentric rings of reaction layers"></svg></div>
     <div class="bar">
@@ -334,7 +367,7 @@
    Four of the six ring-2 acts are "single" — and those four carry this page's
    headline finding. Stating that on the node, rather than in a footnote nobody
    reaches, is the difference between a source list and an honest one. */
-const NODES = [
+let NODES = [
  {id:"coxon",label:"Jacob Coxon",kind:"person",date:"2026-09-09",to:null,src:"primary",
   act:"Resigns from Anthropic, forfeits equity, and posts that the companies are racing to self-improving superintelligence and gambling with our lives.",
   ev:"Jacob Coxon, an Anthropic safety researcher, resigns and posts publicly: “I resigned from Anthropic today… Neither company is acting responsibly.”",
@@ -584,7 +617,9 @@ function pick(id){
     + `<div class="qlab" style="margin-top:14px">references for this act</div>`
     + `<ul class="refs">` + (n.refs || []).map(r =>
         `<li><a href="${esc(r[1])}" target="_blank" rel="noopener noreferrer">${esc(r[0])}</a></li>`
-      ).join("") + `</ul></div>`;
+      ).join("") + `</ul>`
+    + (n.id === hub ? dossierCard(n) : "")
+    + `</div>`;
   draw();
 }
 
@@ -603,12 +638,57 @@ function tweetCard(t){
     + `</div>`;
 }
 
+/* What is known about the centred actor, with a source per line, plus their
+   position on AI risk where a public act establishes one.
+
+   Written only where sourced material exists. An actor with no dossier gets a
+   blank that says so — inventing a plausible position is precisely what this
+   project exists to avoid, and a confident paragraph about someone's views is
+   the easiest thing in the world to generate and the hardest to retract. */
+function dossierCard(n){
+  const d = n.dossier;
+  if (!d) return `<div class="doss doss-none">Nothing on file for `
+    + `${esc(n.label)} beyond the act above. That is a gap in this reading, `
+    + `not a judgement about them.</div>`;
+  let s = `<div class="doss">`;
+  if (d.known && d.known.length){
+    s += `<div class="qlab">what is known</div><ul class="known">`
+      + d.known.map(k => `<li>${esc(k[0])}`
+        + (k[1] ? ` <a href="${esc(k[1])}" target="_blank" rel="noopener noreferrer">source ↗</a>`
+                : ` <span class="unsourced">no link on file</span>`)
+        + `</li>`).join("") + `</ul>`;
+  }
+  if (d.risk){
+    s += `<div class="qlab" style="margin-top:13px">position on AI risk</div>`
+      + `<p class="risk">${esc(d.risk)}</p>`;
+  }
+  if (d.claims && d.claims.length){
+    s += `<ul class="claims">` + d.claims.map(c =>
+      `<li><span class="cl-text">${esc(c[0])}</span>`
+      + `<span class="cl-date">${esc(c[1])}</span></li>`).join("") + `</ul>`;
+  }
+  if (d.cost){
+    s += `<div class="qlab" style="margin-top:13px">what the act cost them</div>`
+      + `<p class="risk">${esc(d.cost)}</p>`;
+  }
+  return s + `</div>`;
+}
+
 function renderEmpty(){
   document.getElementById("insp").innerHTML =
     `<p class="empty">Select anyone in the diagram to see what they were reading, and the sentence that places them there.</p>`;
 }
 
-function centre(id){ hub = id; sel = null; renderEmpty(); draw(); }
+/* Centring someone opens their dossier. A blog link that drops a reader onto
+   an actor should land them on who that actor is, not on an empty panel that
+   needs a second tap to become useful. */
+function centre(id){
+  hub = id; sel = null; draw();
+  pick(id);
+  if (history.replaceState) {
+    try { history.replaceState(null, "", "#actor=" + id); } catch(_){}
+  }
+}
 function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
 
@@ -655,9 +735,42 @@ document.getElementById("key").innerHTML = Object.keys(KIND_LABEL).map(k =>
   + `<span><span class="sw" style="background:transparent;border:2px dashed ${cssv("--amber")}"></span>`
   + ` hollow = single source</span>`;
 
-renderEmpty();
-buildPicker();
-draw();
+/* #actor=<id> centres that actor on load, so the blog can link straight to a
+   vantage point. Unknown ids fall back to the seed rather than erroring. */
+function actorFromHash(){
+  const m = /[#&]actor=([a-z0-9-]{1,40})/.exec(location.hash || "");
+  return m && NODES.some(n => n.id === m[1]) ? m[1] : null;
+}
+
+function boot(){
+  buildPicker();
+  const want = actorFromHash();
+  if (want){ centre(want); } else { renderEmpty(); draw(); }
+}
+
+/* Data lives beside the page so new analysis is one upload, not a republish of
+   every surface. The baked-in copy above is the fallback: if the fetch fails,
+   is malformed, or returns something without nodes, the last known good data
+   renders instead of an empty frame. A visualisation that silently empties is
+   worse than one that is a few days stale. */
+(function(){
+  const url = "reaction-layers.json";
+  fetch(url, {cache: "no-cache"})
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => {
+      if (!d || !Array.isArray(d.nodes) || !d.nodes.length) throw new Error("no nodes");
+      NODES = d.nodes;
+      if (d.updated){
+        const el = document.getElementById("updated");
+        if (el) el.textContent = "data updated " + d.updated;
+      }
+      hub = NODES.some(n => n.id === hub) ? hub : (NODES.find(n => !n.to) || NODES[0]).id;
+      document.getElementById("picker").innerHTML = "";
+      boot();
+    })
+    .catch(() => { /* keep the baked copy; boot() already ran below */ });
+  boot();
+})();
 </script>
 
 </body>

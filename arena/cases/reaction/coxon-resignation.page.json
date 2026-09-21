@@ -1,0 +1,393 @@
+{
+ "spec": "reaction-layers-v1",
+ "case": "coxon-resignation",
+ "title": "Coxon resignation — reaction layers",
+ "updated": "2026-09-21",
+ "nodes": [
+  {
+   "id": "coxon",
+   "label": "Jacob Coxon",
+   "kind": "person",
+   "date": "2026-09-09",
+   "to": null,
+   "src": "primary",
+   "act": "Resigns from Anthropic, forfeits equity, and posts that the companies are racing to self-improving superintelligence and gambling with our lives.",
+   "ev": "Jacob Coxon, an Anthropic safety researcher, resigns and posts publicly: “I resigned from Anthropic today… Neither company is acting responsibly.”",
+   "post": [
+    "@hilbertspaess — the resignation post",
+    "https://x.com/hilbertspaess/status/2097476196791709843"
+   ],
+   "tweet": {
+    "text": "I resigned from Anthropic today. I spent the last three years doing pretraining research at both OpenAI and Anthropic. Neither company is acting responsibly. They are racing straight to self-improving superintelligence and gambling with our lives. More thoughts below.",
+    "author": "Jacob Coxon",
+    "handle": "hilbertspaess",
+    "date": "September 9, 2026",
+    "url": "https://x.com/hilbertspaess/status/2097476196791709843"
+   },
+   "refs": [
+    [
+     "The resignation post (@hilbertspaess)",
+     "https://x.com/hilbertspaess/status/2097476196791709843"
+    ],
+    [
+     "Axios — the equity forfeiture",
+     "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"
+    ],
+    [
+     "NBC News — the internal Slack post first",
+     "https://www.nbcnews.com/tech/tech-news/anthropic-safety-researcher-resigned-warning-rapid-ai-development-gamb-rcna596767"
+    ],
+    [
+     "PBS NewsHour",
+     "https://www.pbs.org/newshour/science/anthropic-researchers-resignation-sends-warning-about-the-dangers-of-ai-development"
+    ]
+   ],
+   "dossier": {
+    "known": [
+     [
+      "Spent three years on pretraining research at both OpenAI and Anthropic.",
+      "https://x.com/hilbertspaess/status/2097476196791709843"
+     ],
+     [
+      "Forfeited his equity in order to resign and speak publicly.",
+      "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"
+     ],
+     [
+      "Announced internally on Slack before posting publicly.",
+      "https://www.nbcnews.com/tech/tech-news/anthropic-safety-researcher-resigned-warning-rapid-ai-development-gamb-rcna596767"
+     ],
+     [
+      "Reported to have coordinated with AI-policy organisations before resigning, after saying he worked with no third parties.",
+      ""
+     ]
+    ],
+    "risk": "Stated position: neither OpenAI nor Anthropic is acting responsibly, and both are “racing straight to self-improving superintelligence and gambling with our lives.” He paid equity to say it.",
+    "cost": "High. Equity forfeited, employment ended."
+   }
+  },
+  {
+   "id": "audience",
+   "label": "Mass online audience",
+   "kind": "public",
+   "date": "within 24 hours",
+   "to": "coxon",
+   "src": "reported",
+   "act": "Amplifies the post to ~172M views, ~800k likes, ~200k reposts within 24 hours.",
+   "ev": "A mass online audience amplifies the resignation post.",
+   "nopost": "not one post — an aggregate of views, likes and reposts on Coxon’s thread, linked above",
+   "refs": [
+    [
+     "The post itself — counts visible on the thread",
+     "https://x.com/hilbertspaess/status/2097476196791709843"
+    ],
+    [
+     "Deadline",
+     "https://deadline.com/2026/09/anthropic-jacob-coxon-resignation-artificial-intelligence-1237072134/"
+    ],
+    [
+     "CoinDesk",
+     "https://www.coindesk.com/markets/2026/09/09/anthropic-researcher-quits-with-a-warning-on-ai-that-echoes-the-terminator-script"
+    ]
+   ]
+  },
+  {
+   "id": "science-lead",
+   "label": "Alignment science lead",
+   "kind": "person",
+   "date": "shortly after",
+   "to": "coxon",
+   "src": "reported",
+   "act": "Publicly endorses the post: “Jacob here is correct… greater than 10% chance within the next decade.”",
+   "ev": "An Anthropic alignment science lead publicly endorses the resignation post.",
+   "nopost": "an X post endorsing the resignation; quoted in reporting, URL not on file",
+   "refs": [
+    [
+     "PBS NewsHour",
+     "https://www.pbs.org/newshour/science/anthropic-researchers-resignation-sends-warning-about-the-dangers-of-ai-development"
+    ],
+    [
+     "Axios",
+     "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"
+    ]
+   ]
+  },
+  {
+   "id": "team-lead",
+   "label": "Alignment team lead",
+   "kind": "person",
+   "date": "shortly after",
+   "to": "coxon",
+   "src": "reported",
+   "act": "States publicly that Coxon was a senior researcher they had pitched to stay.",
+   "ev": "A second Anthropic alignment team lead states publicly that Coxon was a senior researcher they had pitched to stay, responding to his departure.",
+   "nopost": "an X post about the departure; quoted in reporting, URL not on file",
+   "refs": [
+    [
+     "NBC News",
+     "https://www.nbcnews.com/tech/tech-news/anthropic-safety-researcher-resigned-warning-rapid-ai-development-gamb-rcna596767"
+    ],
+    [
+     "Axios",
+     "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"
+    ]
+   ]
+  },
+  {
+   "id": "deepseek",
+   "label": "DeepSeek engineer",
+   "kind": "person",
+   "date": "after",
+   "to": "coxon",
+   "src": "single",
+   "act": "Publicly attacks Anthropic in extreme terms.",
+   "ev": "A DeepSeek engineer publicly attacks Anthropic in extreme terms, responding to the resignation post.",
+   "nopost": "an X post attacking Anthropic; described in the video, URL not on file",
+   "refs": [
+    [
+     "“Slow Down or Die” — The PrimeTime (the only source I have)",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ]
+  },
+  {
+   "id": "amodei",
+   "label": "Dario Amodei",
+   "kind": "person",
+   "date": "~2026-09-12",
+   "to": "coxon",
+   "src": "primary",
+   "act": "Publishes “We Must Pace the Frontier,” proposing embedded third-party evaluators such as METR with employee-like access.",
+   "ev": "It follows the resignation and the reaction to it.",
+   "post": [
+    "@DarioAmodei — the announcement post",
+    "https://x.com/DarioAmodei/status/2098773920774074715"
+   ],
+   "tweet": {
+    "text": "We Must Pace the Frontier: I’ve written a new essay on why the AI industry should slow down, with a three-part plan for doing so.\n\nAnthropic is unilaterally committing to the first of these steps. We’ll provide third-party evaluators with permanent, employee-level access to our…",
+    "author": "Dario Amodei",
+    "handle": "DarioAmodei",
+    "date": "September 12, 2026",
+    "url": "https://x.com/DarioAmodei/status/2098773920774074715"
+   },
+   "refs": [
+    [
+     "“We Must Pace the Frontier” — the essay",
+     "https://darioamodei.com/post/we-must-pace-the-frontier"
+    ],
+    [
+     "Amodei’s announcement post",
+     "https://x.com/DarioAmodei/status/2098773920774074715"
+    ],
+    [
+     "Zvi Mowshowitz — the most detailed independent reading",
+     "https://thezvi.substack.com/p/we-must-pace-the-frontier"
+    ],
+    [
+     "Forbes",
+     "https://www.forbes.com/sites/johnwerner/2026/09/17/amodei-cites-recursive-self-improvement-in-september-essay/"
+    ]
+   ],
+   "caveat": "The essay page carries no dateline. The 12 September date is confirmed by the timestamp on the announcement post below, not by the essay itself.",
+   "dossier": {
+    "known": [
+     [
+      "CEO of Anthropic. Published “We Must Pace the Frontier” proposing a three-part slowdown plan.",
+      "https://darioamodei.com/post/we-must-pace-the-frontier"
+     ],
+     [
+      "Committed Anthropic unilaterally to the first step: permanent employee-level access for third-party evaluators.",
+      "https://x.com/DarioAmodei/status/2098773920774074715"
+     ],
+     [
+      "Named METR as an example evaluator, without METR having sought the role.",
+      "https://darioamodei.com/post/we-must-pace-the-frontier"
+     ]
+    ],
+    "risk": "Four dated claims are on file from the essay, tracked to resolution dates:",
+    "claims": [
+     [
+      "A self-improving swarm could be capable of taking over the entire internet within 6–12 months",
+      "resolves 2027-09-12"
+     ],
+     [
+      "AI has advanced drastically faster since roughly summer 2026, driven by AI building the next generation",
+      "resolves 2027-09-12"
+     ],
+     [
+      "Interpretability improvements are possible in 1–2 years with focused effort",
+      "resolves 2028-09-12"
+     ],
+     [
+      "A 3–5 year window exists to execute chip restrictions",
+      "resolves 2029-09-12"
+     ]
+    ],
+    "cost": "Moderate. A unilateral commitment binding his own company, made in public.",
+    "src": "https://darioamodei.com/post/we-must-pace-the-frontier"
+   }
+  },
+  {
+   "id": "altman",
+   "label": "Sam Altman",
+   "kind": "person",
+   "date": "after",
+   "to": "amodei",
+   "src": "single",
+   "act": "Publicly agrees with pacing the frontier.",
+   "ev": "Sam Altman publicly agrees with pacing the frontier, the position set out in Amodei’s essay.",
+   "nopost": "an X post agreeing with pacing; described in the video, URL not on file",
+   "refs": [
+    [
+     "“Slow Down or Die” — The PrimeTime (the only source I have)",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ]
+  },
+  {
+   "id": "musk",
+   "label": "Elon Musk",
+   "kind": "person",
+   "date": "after",
+   "to": "amodei",
+   "src": "single",
+   "act": "Publicly agrees with pacing the frontier.",
+   "ev": "Elon Musk publicly agrees with pacing the frontier, the position set out in Amodei’s essay.",
+   "nopost": "an X post agreeing with pacing; described in the video, URL not on file",
+   "refs": [
+    [
+     "“Slow Down or Die” — The PrimeTime (the only source I have)",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ]
+  },
+  {
+   "id": "sacks",
+   "label": "David Sacks",
+   "kind": "person",
+   "date": "after",
+   "to": "amodei",
+   "src": "single",
+   "act": "Attacks the proposal as cartel-formation and attacks METR’s independence.",
+   "ev": "David Sacks publicly attacks the proposal as cartel-formation and attacks METR’s independence, responding to Amodei’s essay.",
+   "nopost": "X posts attacking the proposal and METR; described in the video, URL not on file",
+   "refs": [
+    [
+     "“Slow Down or Die” — The PrimeTime (the only source I have)",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ]
+  },
+  {
+   "id": "metr",
+   "label": "METR",
+   "kind": "organization",
+   "date": "after",
+   "to": "amodei",
+   "src": "primary",
+   "act": "Named as the evaluator that would hold the gate, without having sought the role. Issues no public act.",
+   "ev": "METR is named in Amodei’s proposal as the evaluator that would hold the gate, without having sought that role. It issues no public act.",
+   "nopost": "no act, so no post. It was named in someone else’s essay and said nothing publicly",
+   "refs": [
+    [
+     "The essay that names it",
+     "https://darioamodei.com/post/we-must-pace-the-frontier"
+    ],
+    [
+     "METR — Wikipedia",
+     "https://en.wikipedia.org/wiki/METR"
+    ],
+    [
+     "METR — 80,000 Hours listing",
+     "https://jobs.80000hours.org/organisations/model-evaluation-and-threat-research"
+    ]
+   ],
+   "caveat": "METR has said nothing publicly about being named. Its position here is the absence of an act, not a quiet one.",
+   "dossier": {
+    "known": [
+     [
+      "Model Evaluation and Threat Research — an independent evaluation organisation.",
+      "https://en.wikipedia.org/wiki/METR"
+     ],
+     [
+      "Named in Amodei’s proposal as the evaluator that would hold the gate.",
+      "https://darioamodei.com/post/we-must-pace-the-frontier"
+     ]
+    ],
+    "risk": "Nothing on file. METR has said nothing publicly about being named, so there is no act to read a position from. Its silence is the datum, not a position.",
+    "cost": "None paid. It did not act."
+   }
+  },
+  {
+   "id": "trump",
+   "label": "Donald Trump",
+   "kind": "state",
+   "date": "after",
+   "to": "amodei",
+   "src": "single",
+   "act": "Argues for acceleration and against Amodei’s pacing position, bringing Jensen Huang on stage.",
+   "ev": "Donald Trump argues publicly for acceleration and against Amodei’s pacing position, bringing Jensen Huang on stage.",
+   "nopost": "remarks on stage, not a post; no clip URL on file",
+   "refs": [
+    [
+     "“Slow Down or Die” — The PrimeTime (the only source I have)",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ]
+  },
+  {
+   "id": "huang",
+   "label": "Jensen Huang",
+   "kind": "person",
+   "date": "after",
+   "to": "amodei",
+   "src": "single",
+   "act": "Argues on stage for acceleration, against the pacing position set out in the essay.",
+   "ev": "Jensen Huang argues on stage for acceleration, against the pacing position set out in Amodei’s essay.",
+   "nopost": "remarks on stage, not a post; no clip URL on file",
+   "refs": [
+    [
+     "“Slow Down or Die” — The PrimeTime (the only source I have)",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ],
+   "caveat": "Reported as one scene with Trump. Separating the two acts is my reading, and it is the reading this diagram most depends on."
+  },
+  {
+   "id": "conspiracy",
+   "label": "Conspiracy readings",
+   "kind": "public",
+   "date": "after",
+   "to": "amodei",
+   "src": "single",
+   "act": "Claims circulate that the proposal is a regulatory-capture play and that the other leaders’ agreement is insincere.",
+   "ev": "These are claims about the reactions, not about the resignation.",
+   "nopost": "not one post — claims circulating across many accounts; the video is where I saw them collected",
+   "refs": [
+    [
+     "“Slow Down or Die” — where these are advanced",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ],
+   "caveat": "Placed here as claims that circulated. Nothing on this page adopts them, and none is evidence of anyone’s intent."
+  },
+  {
+   "id": "primetime",
+   "label": "The PrimeTime",
+   "kind": "press",
+   "date": "2026-09-19",
+   "to": "conspiracy",
+   "src": "primary",
+   "act": "A 14-minute commentary video summarising the resignation, the essay, the reactions and the conspiracy readings — then layering its own reading on top.",
+   "ev": "A commentary video summarises the resignation, the essay, the reactions to the essay and the conspiracy readings, and layers its own reading on top of them.",
+   "nopost": "a video, not a post — the URL is in the references below",
+   "refs": [
+    [
+     "“Slow Down or Die” — The PrimeTime, 19 Sept 2026",
+     "https://youtu.be/W8IVKMGbUZE"
+    ]
+   ],
+   "caveat": "Auto-captioned and unreliable on proper nouns. Used for chronology and for which reactions existed, not for quotes."
+  }
+ ],
+ "dossier_note": "A dossier is written only where sourced material exists. An actor with no dossier has none on file — that is a gap in this reading, not a judgement about them. Nothing here asserts what anyone believes, wants or fears."
+}
