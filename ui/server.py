@@ -2848,6 +2848,19 @@ class H(BaseHTTPRequestHandler):
         p = urlparse(self.path).path
         if p == "/":
             return self._send(200, PAGE.replace("__ACCESS__", self._origin_label()).encode(), "text/html")
+        if p.startswith("/static/"):
+            # Generated self-contained pages (blast-radius onions and the like).
+            # The name is regex-gated and the resolved path is confined to
+            # UI/static, because this server is now reachable from the internet
+            # through the tunnel and a traversal here would serve any file.
+            name = p[len("/static/"):]
+            if not re.fullmatch(r"[A-Za-z0-9._-]{1,120}\.html", name):
+                return self._send(404, {"error": "not found"})
+            base = (UI / "static").resolve()
+            f = (base / name).resolve()
+            if not str(f).startswith(str(base)) or not f.exists():
+                return self._send(404, {"error": "not found"})
+            return self._send(200, f.read_bytes(), "text/html")
         if p == "/api/models":
             return self._send(200, [m for m in (model_info(n) for n in REPOS) if m])
         if p.startswith("/claim/"):

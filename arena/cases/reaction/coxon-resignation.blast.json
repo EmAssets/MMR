@@ -1,0 +1,191 @@
+{
+ "spec": "blast-radius-v1",
+ "title": "Coxon resignation — reaction layers",
+ "built": "2026-09-21",
+ "source": "arena\\cases\\reaction\\coxon-resignation.md",
+ "center": "coxon-resignation",
+ "nodes": [
+  {
+   "id": "coxon-resignation",
+   "label": "Jacob Coxon",
+   "act": "Resigns from Anthropic and posts publicly that neither company is acting responsibly and they are racing to self-improving superintelligence, forfeiting equity to leave.",
+   "date": "2026-09-09",
+   "responded_to": null,
+   "evidence": "Jacob Coxon, an Anthropic safety researcher, resigns and posts publicly: \"I resigned from Anthropic today... Neither company is acting responsibly. They are racing straight to self-improving superintelligence and gambling with our lives.\" He forfeited equity to leave.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 0
+  },
+  {
+   "id": "mass-online-audience",
+   "label": "Mass online audience",
+   "act": "Amplifies the resignation post to ~172M views, ~800k likes, ~200k reposts within 24 hours.",
+   "date": "within 24 hours",
+   "responded_to": "coxon-resignation",
+   "evidence": "A mass online audience amplifies the resignation post.",
+   "inferred": false,
+   "kind": "public",
+   "layer": 1
+  },
+  {
+   "id": "anthropic-alignment-science-lead",
+   "label": "Anthropic alignment science lead",
+   "act": "Publicly endorses the resignation post: \"Jacob here is correct... I personally think it's greater than 10% chance within the next decade.\"",
+   "date": "shortly after",
+   "responded_to": "coxon-resignation",
+   "evidence": "An Anthropic alignment science lead publicly endorses the resignation post: \"Jacob here is correct... I personally think it's greater than 10% chance within the next decade.\"",
+   "inferred": false,
+   "kind": "person",
+   "layer": 1
+  },
+  {
+   "id": "anthropic-alignment-team-lead",
+   "label": "Anthropic alignment team lead",
+   "act": "States publicly that Coxon was a senior researcher they had pitched to stay.",
+   "date": "shortly after",
+   "responded_to": "coxon-resignation",
+   "evidence": "A second Anthropic alignment team lead states publicly that Coxon was a senior researcher they had pitched to stay, responding to his departure.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 1
+  },
+  {
+   "id": "amodei-essay",
+   "label": "Dario Amodei",
+   "act": "Publishes \"We Must Pace the Frontier\", proposing embedded third-party evaluators such as METR with employee-like access to verify safety commitments.",
+   "date": "2026-09-12",
+   "responded_to": "coxon-resignation",
+   "evidence": "It follows the resignation and the reaction to it.",
+   "inferred": true,
+   "kind": "person",
+   "layer": 1
+  },
+  {
+   "id": "altman-agrees",
+   "label": "Sam Altman",
+   "act": "Publicly agrees with pacing the frontier, the position set out in Amodei's essay.",
+   "date": "after",
+   "responded_to": "amodei-essay",
+   "evidence": "Sam Altman publicly agrees with pacing the frontier, the position set out in Amodei's essay.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 2
+  },
+  {
+   "id": "musk-agrees",
+   "label": "Elon Musk",
+   "act": "Publicly agrees with pacing the frontier, the position set out in Amodei's essay.",
+   "date": "after",
+   "responded_to": "amodei-essay",
+   "evidence": "Elon Musk publicly agrees with pacing the frontier, the position set out in Amodei's essay.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 2
+  },
+  {
+   "id": "sacks-attacks",
+   "label": "David Sacks",
+   "act": "Publicly attacks the proposal as cartel-formation and attacks METR's independence.",
+   "date": "after",
+   "responded_to": "amodei-essay",
+   "evidence": "David Sacks publicly attacks the proposal as cartel-formation and attacks METR's independence, responding to Amodei's essay.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 2
+  },
+  {
+   "id": "metr",
+   "label": "METR",
+   "act": "Named in Amodei's proposal as the evaluator that would hold the gate, without having sought that role; issues no public act.",
+   "date": "after",
+   "responded_to": "amodei-essay",
+   "evidence": "METR is named in Amodei's proposal as the evaluator that would hold the gate, without having sought that role. It issues no public act.",
+   "inferred": true,
+   "kind": "organization",
+   "layer": 2
+  },
+  {
+   "id": "trump-acceleration",
+   "label": "Donald Trump",
+   "act": "Argues publicly for acceleration and against Amodei's pacing position, bringing Jensen Huang on stage.",
+   "date": "after",
+   "responded_to": "amodei-essay",
+   "evidence": "Donald Trump argues publicly for acceleration and against Amodei's pacing position, bringing Jensen Huang on stage.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 2
+  },
+  {
+   "id": "huang-acceleration",
+   "label": "Jensen Huang",
+   "act": "Argues on stage for acceleration, against the pacing position set out in Amodei's essay.",
+   "date": "after",
+   "responded_to": "amodei-essay",
+   "evidence": "Jensen Huang argues on stage for acceleration, against the pacing position set out in Amodei's essay.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 2
+  },
+  {
+   "id": "deepseek-engineer",
+   "label": "DeepSeek engineer",
+   "act": "Publicly attacks Anthropic in extreme terms.",
+   "date": "after",
+   "responded_to": "coxon-resignation",
+   "evidence": "A DeepSeek engineer publicly attacks Anthropic in extreme terms, responding to the resignation post.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 1
+  },
+  {
+   "id": "conspiracy-readings",
+   "label": "Conspiracy readings",
+   "act": "Circulate claims that the proposal is a regulatory-capture play and that the other lab leaders' agreement is insincere.",
+   "date": "after",
+   "responded_to": "amodei-essay",
+   "evidence": "Conspiracy readings circulate claiming the proposal is a regulatory-capture play and that the other lab leaders' agreement is insincere. These are claims about the reactions, not about the resignation.",
+   "inferred": false,
+   "kind": "public",
+   "layer": 2
+  },
+  {
+   "id": "primetime-video",
+   "label": "The PrimeTime (\"Slow Down or Die\")",
+   "act": "Publishes a commentary video summarising the resignation, the essay, the reactions to the essay, and the conspiracy readings, layering its own reading on top.",
+   "date": "2026-09-19",
+   "responded_to": "conspiracy-readings",
+   "evidence": "A commentary video (\"Slow Down or Die\", The PrimeTime) summarises the resignation, the essay, the reactions to the essay and the conspiracy readings, and layers its own reading on top of them.",
+   "inferred": true,
+   "kind": "press",
+   "layer": 3
+  }
+ ],
+ "rings": {
+  "0": [
+   "coxon-resignation"
+  ],
+  "1": [
+   "amodei-essay",
+   "anthropic-alignment-science-lead",
+   "anthropic-alignment-team-lead",
+   "deepseek-engineer",
+   "mass-online-audience"
+  ],
+  "2": [
+   "altman-agrees",
+   "conspiracy-readings",
+   "huang-acceleration",
+   "metr",
+   "musk-agrees",
+   "sacks-attacks",
+   "trump-acceleration"
+  ],
+  "3": [
+   "primetime-video"
+  ]
+ },
+ "max_layer": 3,
+ "unreachable": [],
+ "note": "Layer = reaction hops from the centred entity, computed by BFS over extracted edges. It is NOT the emergence-ladder floor: a state (E12) can sit at layer 2. Every edge is our reading of what an act references, carries the span that licenses it, and can be overruled.",
+ "problems": []
+}
