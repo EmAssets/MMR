@@ -830,8 +830,12 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
 const $ = s => document.querySelector(s);
 /* Tab state lives in the URL hash, so refresh / back / forward / bookmarks all
    land where you were instead of dumping you on Home. */
-const TABS = ['home','verdict','garden','models','events','brainstorm','entities','map','tasks',
-              'assess','glossary','connect','searchres'];
+/* Derived from the DOM, not hand-maintained. The hardcoded list went stale when
+   arena, experts, timeline and visuals were added: showTab() silently rewrote
+   any unlisted id to 'home', so those four tabs looked like they were failing to
+   load when in fact the click was sending you back to Home. A list that must be
+   edited in two places to add a tab will drift again; this one cannot. */
+const TABS = Array.from(document.querySelectorAll('section[id]')).map(s => s.id);
 function showTab(id, push){
   if (!TABS.includes(id)) id = 'home';
   document.querySelectorAll('nav button').forEach(x =>
