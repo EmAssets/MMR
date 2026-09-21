@@ -1,0 +1,1622 @@
+{
+ "spec": "v1",
+ "generated": "2026-09-21",
+ "status": "open-for-submissions",
+ "ranking": "none",
+ "ranking_note": "Cards are not ranked. Records are self-reported counts until claims can be independently re-resolved; ranking on self-report is the failure the rules exist to prevent. See /modelgarden/RULES.md",
+ "rules": "https://modelmeetsreality.xyz/modelgarden/RULES.md",
+ "submit": "https://modelmeetsreality.xyz/modelgarden/#submit",
+ "submitted_count": 0,
+ "first_party_count": 43,
+ "count": 43,
+ "count_note": "43 models listed, ALL first-party (the operator's own, flagged first_party:true). submitted_count is 0: no third party has submitted yet, and first-party listings never increase it. Listed under the amendment proposed 2026-09-21, comment window closing 2026-10-05 per R3. 2 further models are withheld (attention-substrate, canon) because their MODEL.md has no falsifiable-consequences section and they are therefore not listable.",
+ "withheld_not_listable": [
+  "attention-substrate",
+  "canon"
+ ],
+ "amendment": "https://modelmeetsreality.xyz/modelgarden/AMENDMENT-2026-09-21.md",
+ "models": [
+  {
+   "spec": "v1",
+   "model": "adjacent-possible",
+   "title": "The Adjacent Possible —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/adjacent-possible",
+   "license": "CC-BY-4.0",
+   "kind": "timer",
+   "mechanism": "how a new capability becomes a new category — substitution first, then combination with independently-made tools, then categories that collapse if the tool is removed",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-18"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-adoption-phases",
+   "title": "Enterprise Agent Adoption Phases —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-adoption-phases",
+   "license": "CC-BY-4.0",
+   "kind": "timer",
+   "mechanism": "which phase of agent deployment we are in, and when the next arrives",
+   "aspects": [
+    "economy-markets",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-benchmark-legitimacy",
+   "title": "Against Benchmark Authority —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-benchmark-legitimacy",
+   "license": "CC-BY-4.0",
+   "kind": "adversary",
+   "mechanism": "attacking the belief that public leaderboards measure what matters",
+   "aspects": [
+    "science-epistemics",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-bubble-thesis",
+   "title": "Against the Bubble Thesis —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-bubble-thesis",
+   "license": "CC-BY-4.0",
+   "kind": "adversary",
+   "mechanism": "attacking the belief that AI capex is a bubble about to pop",
+   "aspects": [
+    "economy-markets",
+    "culture-narrative"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-capability-tracker",
+   "title": "AI capability signals",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-capability-tracker",
+   "license": "CC-BY-4.0",
+   "kind": "tracker",
+   "mechanism": "lead and lag orderings between observable AI capability signals",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-capex-signal",
+   "title": "Capex as Leading Signal —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-capex-signal",
+   "license": "CC-BY-4.0",
+   "kind": "tracker",
+   "mechanism": "whether infrastructure spend leads capability and revenue, and by how long",
+   "aspects": [
+    "economy-markets",
+    "infrastructure-logistics"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-china-argument",
+   "title": "When 'But China' Is Load-Bearing —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-china-argument",
+   "license": "CC-BY-4.0",
+   "kind": "classifier",
+   "mechanism": "separating the China argument as genuine constraint from the China argument as rhetoric",
+   "aspects": [
+    "states-geopolitics",
+    "attention-media"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-china-strategy",
+   "title": "China's Revealed AI Strategy —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-china-strategy",
+   "license": "CC-BY-4.0",
+   "kind": "decision-model",
+   "mechanism": "what Beijing and Chinese labs do, as distinct from what they announce",
+   "aspects": [
+    "states-geopolitics",
+    "economy-markets"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-chokepoint-physics",
+   "title": "The Physical Chokepoint —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-chokepoint-physics",
+   "license": "CC-BY-4.0",
+   "kind": "tracker",
+   "mechanism": "lithography, packaging and HBM as the supply floor under every projection",
+   "aspects": [
+    "infrastructure-logistics",
+    "technology-tools"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-compute-buildout",
+   "title": "Compute and Power Buildout —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-compute-buildout",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "whether the capex and electricity to run the buildout actually arrives",
+   "aspects": [
+    "infrastructure-logistics",
+    "economy-markets"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-compute-concentration",
+   "title": "Two Labs, Most of the Compute —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-compute-concentration",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "whether frontier labs end up controlling the majority of usable compute",
+   "aspects": [
+    "economy-markets",
+    "infrastructure-logistics"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-courts-decide",
+   "title": "Courts as the Deciding Branch —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-courts-decide",
+   "license": "CC-BY-4.0",
+   "kind": "decision-model",
+   "mechanism": "whether judges, not legislatures, settle AI's binding constraints",
+   "aspects": [
+    "institutions",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-cyber-offense-defense",
+   "title": "Cyber Offense-Defense Balance —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-cyber-offense-defense",
+   "license": "CC-BY-4.0",
+   "kind": "tracker",
+   "mechanism": "whether AI advantages attackers or defenders, and which moves first",
+   "aspects": [
+    "technology-tools",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-expert-calibration",
+   "title": "Expert Calibration Register —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-expert-calibration",
+   "license": "CC-BY-4.0",
+   "kind": "attributor",
+   "mechanism": "which named commentators on AI are actually right, tracked per dated claim",
+   "aspects": [
+    "science-epistemics",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-frontier-cadence",
+   "title": "Frontier Capability Cadence —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-frontier-cadence",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "which labs ship what frontier capability, and when",
+   "aspects": [
+    "technology-tools",
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-incident-severity",
+   "title": "Systemic vs One-Off Incidents —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-incident-severity",
+   "license": "CC-BY-4.0",
+   "kind": "classifier",
+   "mechanism": "which AI failures indicate structural risk and which are isolated",
+   "aspects": [
+    "science-epistemics",
+    "institutions"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-influence-chain",
+   "title": "How AI Policy Gets Made —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-influence-chain",
+   "license": "CC-BY-4.0",
+   "kind": "tracer",
+   "mechanism": "the chain from funder to think tank to draft text to enacted rule",
+   "aspects": [
+    "institutions",
+    "attention-media"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-lab-revealed-priorities",
+   "title": "What Labs Choose When It Costs Them —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-lab-revealed-priorities",
+   "license": "CC-BY-4.0",
+   "kind": "decision-model",
+   "mechanism": "how frontier labs trade safety, speed and revenue when the choice is real",
+   "aspects": [
+    "institutions",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-labor-attribution",
+   "title": "What Actually Moved the Job Numbers —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-labor-attribution",
+   "license": "CC-BY-4.0",
+   "kind": "attributor",
+   "mechanism": "separating AI displacement from the cycle, offshoring and ordinary cost-cutting",
+   "aspects": [
+    "economy-markets",
+    "culture-narrative"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-liability-pricing",
+   "title": "Liability as the Real Regulator —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-liability-pricing",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "whether priced insurance constrains AI deployment faster than statute",
+   "aspects": [
+    "economy-markets",
+    "institutions"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-open-weights-lag",
+   "title": "The Open-Weights Lag —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-open-weights-lag",
+   "license": "CC-BY-4.0",
+   "kind": "tracker",
+   "mechanism": "how far behind the closed frontier open weights run, and whether the gap moves",
+   "aspects": [
+    "technology-tools",
+    "culture-narrative"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-option-space",
+   "title": "Option Space and Awareness -",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-option-space",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "what each AI actor can do, what it shows evidence of knowing it can do, and what it takes",
+   "aspects": [
+    "institutions",
+    "states-geopolitics",
+    "economy-markets"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-oversight-lag",
+   "title": "AI-AI interaction and the oversight loop —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-oversight-lag",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "how late human correction arrives in loops where AI systems act on each other",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-possibility-finder",
+   "title": "New possibilities",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-possibility-finder",
+   "license": "CC-BY-4.0",
+   "kind": "finder",
+   "mechanism": "tool categories that became possible only because of a specific AI capability",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-pressure",
+   "title": "AI labs under installed pressure —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-pressure",
+   "license": "CC-BY-4.0",
+   "kind": "decision-model",
+   "mechanism": "which option AI labs and regulators take when public commitments conflict",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-pressure-field",
+   "title": "AI Pressure Field —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "license": "CC-BY-4.0",
+   "kind": "decision-model",
+   "mechanism": "what each AI-domain entity is under installed pressure to do, as a resultant-vector field over publicly documented stakes",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "early",
+    "graded_n": 1,
+    "hits_n": 0,
+    "horizon": "weeks",
+    "median_days": 45,
+    "activity": "active",
+    "last_touched": "2026-09-19"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 9,
+    "graded": 1
+   },
+   "record_provenance": "criteria-frozen",
+   "freeze": {
+    "frozen": 10,
+    "of": 10,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-public-backlash",
+   "title": "The Backlash Nobody Priced In —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-public-backlash",
+   "license": "CC-BY-4.0",
+   "kind": "tracker",
+   "mechanism": "public sentiment toward AI as a leading indicator of political constraint",
+   "aspects": [
+    "culture-narrative",
+    "attention-media"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-regulation-teeth",
+   "title": "Which Rules Actually Bite —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-regulation-teeth",
+   "license": "CC-BY-4.0",
+   "kind": "classifier",
+   "mechanism": "separating regulation that changes behaviour from regulation that is theatre",
+   "aspects": [
+    "institutions",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-rising-powers",
+   "title": "Power Centres Before They Are Obvious —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-rising-powers",
+   "license": "CC-BY-4.0",
+   "kind": "finder",
+   "mechanism": "surfacing entities that will matter to AI's direction before consensus notices",
+   "aspects": [
+    "states-geopolitics",
+    "institutions"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-rsi-timeline",
+   "title": "Recursive Self-Improvement Timeline —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-rsi-timeline",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "whether and when models start meaningfully improving themselves",
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    10,
+    13
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-19"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-scaling-orthodoxy",
+   "title": "Against the Scaling Consensus —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-scaling-orthodoxy",
+   "license": "CC-BY-4.0",
+   "kind": "adversary",
+   "mechanism": "attacking the belief that more compute keeps buying more capability",
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    11
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "ai-us-policy-direction",
+   "title": "US Federal AI Policy Direction —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/ai-us-policy-direction",
+   "license": "CC-BY-4.0",
+   "kind": "decision-model",
+   "mechanism": "preemption vs the state patchwork, and who wins each round",
+   "aspects": [
+    "states-geopolitics",
+    "institutions"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "expert-amodei",
+   "title": "Model of Amodei's Model —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/expert-amodei",
+   "license": "CC-BY-4.0",
+   "kind": "mirror",
+   "mechanism": "how Dario Amodei reasons about AI risk, pace and governance",
+   "aspects": [
+    "science-epistemics",
+    "institutions"
+   ],
+   "e_span": [
+    10,
+    13
+   ],
+   "level": 1,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-19"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "expert-campbell",
+   "title": "Model of Richard Campbell's Model —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/expert-campbell",
+   "license": "CC-BY-4.0",
+   "kind": "mirror",
+   "mechanism": "how Richard Campbell reasons about hype cycles and practitioner reality",
+   "aspects": [
+    "science-epistemics",
+    "culture-narrative"
+   ],
+   "e_span": [
+    8,
+    11
+   ],
+   "level": 1,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-19"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "expert-dwarkesh",
+   "title": "Model of Dwarkesh Patel's Model —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/expert-dwarkesh",
+   "license": "CC-BY-4.0",
+   "kind": "mirror",
+   "mechanism": "how Dwarkesh Patel reasons about capability trajectory and lab economics",
+   "aspects": [
+    "science-epistemics",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 1,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-19"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "expert-dylan-patel",
+   "title": "Model of Dylan Patel's Model —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/expert-dylan-patel",
+   "license": "CC-BY-4.0",
+   "kind": "mirror",
+   "mechanism": "how Dylan Patel reasons about compute, capex and lab economics",
+   "aspects": [
+    "science-epistemics",
+    "economy-markets"
+   ],
+   "e_span": [
+    9,
+    12
+   ],
+   "level": 1,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-19"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "expert-sheehan",
+   "title": "Model of Matt Sheehan's Model —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/expert-sheehan",
+   "license": "CC-BY-4.0",
+   "kind": "mirror",
+   "mechanism": "how Matt Sheehan reasons about Chinese AI policy",
+   "aspects": [
+    "science-epistemics",
+    "states-geopolitics"
+   ],
+   "e_span": [
+    10,
+    12
+   ],
+   "level": 1,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-19"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "lab-moves",
+   "title": "Frontier lab decision model —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/lab-moves",
+   "license": "CC-BY-4.0",
+   "kind": "decision-model",
+   "mechanism": "what frontier AI labs choose when capability, compliance and positioning conflict",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "my-predictions",
+   "title": "My Own Predictions —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/my-predictions",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "I think this is going to happen — am I right?",
+   "aspects": [
+    "institutions"
+   ],
+   "e_span": [
+    8,
+    10
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "overton-tracker",
+   "title": "Overton tracker",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/overton-tracker",
+   "license": "CC-BY-4.0",
+   "kind": "tracker",
+   "mechanism": "movement of policy positions from unthinkable to policy, with the canon Overton card as the named rival",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "pattern-candidates",
+   "title": "Cross-layer pattern candidates —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/pattern-candidates",
+   "license": "CC-BY-4.0",
+   "kind": "generator",
+   "mechanism": "proposes patterns that appear at more than one level of organization, from source content",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "pattern-evaluator",
+   "title": "Pattern evaluator —",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/pattern-evaluator",
+   "license": "CC-BY-4.0",
+   "kind": "adversary",
+   "mechanism": "kills cross-layer pattern candidates that are analogy rather than mechanism",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": true,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
+   "model": "pressure-model",
+   "title": "The Pressure Model",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/pressure-model",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "pressure in consciousness is generated by the self's model of reality. Choices under pressure are made over the risks the model identified; a dilemma is the model returning no good branch. **v2 (author's three moves):** the somatic channel ",
+   "level": 0,
+   "aspects": [],
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  }
+ ]
+}
