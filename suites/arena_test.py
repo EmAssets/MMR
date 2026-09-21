@@ -146,7 +146,11 @@ def main() -> int:
         for r in rows:
             if not r.get("signed_by"):
                 fails.append("unsigned minute: %s" % json.dumps(r)[:80])
-        panel_rows = [r for r in rows if r["signed_by"] != arena.JUDGE_SLUG]
+        # Any judge, not just the blind one. A human-judged run signs its ruling
+        # "human-judge", which has no MODEL.md and no commit by construction --
+        # counting it as a panelist would report it as an unsigned model.
+        JUDGES = {arena.JUDGE_SLUG, "human-judge"}
+        panel_rows = [r for r in rows if r["signed_by"] not in JUDGES]
         unc = [r["signed_by"] for r in panel_rows if not r.get("model_commit")]
         if unc:
             print("  note: no commit hash for %s (repo may be uncommitted)" % ", ".join(sorted(set(unc))))
@@ -399,6 +403,51 @@ def main() -> int:
             print("  a crashed worker surfaces as _error, not an empty minute")
     finally:
         arena._call = real_call
+
+    # ---- human-judged runs must stay distinguishable from blind ones ----
+    # The arena's value rests on the judge being unable to see whose argument is
+    # whose. A human judge can. That is allowed, but a human-judged run that
+    # could be scored, or that read as blind in the record, would quietly
+    # corrupt every comparison made against it.
+    print("\n== human-judged runs are marked and refused for scoring ==")
+    import tempfile as _tf
+    _hj = Path(_tf.mkdtemp(prefix="arena-human-selftest-"))
+    try:
+        fake = _hj / "arena.json"
+        fake.write_text(json.dumps({
+            "run_id": "selftest-human", "case": "openai-nov-2023",
+            "case_title": "t", "as_of": "", "question": "q", "mode": "human-judged",
+            "human_judged": True, "panel": [], "rounds": [
+                {"cycle": 1, "ruling": {"ruling": "r"}, "disagreement": {}, "minutes": 1}],
+        }), encoding="utf-8")
+        real_adir = arena.ADIR
+        arena.ADIR = _hj.parent
+        (_hj.parent / "selftest-human").mkdir(exist_ok=True)
+        (_hj.parent / "selftest-human" / "arena.json").write_text(
+            fake.read_text(encoding="utf-8"), encoding="utf-8")
+        try:
+            arena.score("selftest-human", dry=True, model_hint="auto")
+            fails.append("--score ACCEPTED a human-judged run; it must refuse")
+        except SystemExit as e:
+            if "HUMAN-JUDGED" not in str(e):
+                fails.append("--score refused a human-judged run for the wrong reason: %s" % e)
+            else:
+                print("  --score refuses a human-judged run — correct")
+        finally:
+            arena.ADIR = real_adir
+    finally:
+        import shutil as _sh
+        _sh.rmtree(_hj, ignore_errors=True)
+        _sh.rmtree(_hj.parent / "selftest-human", ignore_errors=True)
+
+    # the human judge must not be counted as a panelist anywhere
+    import suites.arena_human as _ah
+    if _ah.HUMAN_SLUG == arena.JUDGE_SLUG:
+        fails.append("the human judge reuses the blind judge's slug — the record "
+                     "could not tell them apart")
+    else:
+        print("  human judge signs as %r, distinct from %r"
+              % (_ah.HUMAN_SLUG, arena.JUDGE_SLUG))
 
     print()
     if fails:

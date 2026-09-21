@@ -1280,6 +1280,20 @@ def score(run_id: str, dry: bool, model_hint: str) -> None:
             "%s is a SCENARIO run: there is no sealed outcome to score against.\n"
             "A conditional is graded by waiting for the branch to materialise, "
             "not by revealing an answer that was never written." % run_id)
+    # A human-judged run is refused for a different reason, and the difference
+    # matters: the outcome EXISTS here. But the judge was a person who saw the
+    # model names, read every minute, and may already have known the answer.
+    # Scoring that measures whether the operator knew the outcome, not whether
+    # the panel argued well, and a number produced this way would sit in the
+    # same column as blind-judged scores and quietly corrupt them.
+    if payload.get("human_judged"):
+        raise SystemExit(
+            "%s was HUMAN-JUDGED: refusing to score it against the sealed outcome.\n"
+            "The judge saw the model names and every minute, and may have known the\n"
+            "outcome. A score here would measure the operator, not the panel -- and\n"
+            "would be indistinguishable from a blind-judged score in the record.\n"
+            "Re-run the same case with the blind judge if you want a comparable "
+            "number." % run_id)
     case = backtest_cases()[payload["case"]]
     final = payload["rounds"][-1]["ruling"]
     prompt = (
@@ -1311,6 +1325,14 @@ def report(run_id: str) -> None:
         raise SystemExit("no such run: %s" % run_id)
     p = json.loads(f.read_text(encoding="utf-8"))
     print("[arena report] %s — %s" % (p["run_id"], p["case_title"]))
+    # Stated before anything else, because every number below reads the same in
+    # both modes and nothing else on this page would tell you the judge was a
+    # person who could see which model said what.
+    if p.get("human_judged"):
+        print("  *** HUMAN-JUDGED — not comparable with a blind run ***")
+        print("      The judge saw every model's name and all minutes together,")
+        print("      and may have known the outcome. --score refuses this run.")
+        print("      Panel rounds are identical to a blind run; the judging is not.")
     print("  panel: %s" % ", ".join(x["slug"] for x in p["panel"]))
     print("\n  cycle  distinct  revised  spread   ruling")
     for r in p["rounds"]:
