@@ -500,6 +500,13 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
   .task .hint { margin-left:0; width:100%; }
   pre { font-size:11.5px; }
   .term:hover::after { width:min(20rem,88vw); }
+  /* the reality-map bars are .85rem (~13px) tall, far under a usable touch target,
+     so taps landed between them. Give each row vertical breathing room on touch
+     without changing the E-floor geometry the bar widths encode. */
+  /* !important is load-bearing here: the bars carry inline height/margin, which
+     would otherwise beat any selector in this sheet. */
+  #map .mapbar { height:1.5rem !important; margin:.3rem 0 !important; }
+  #map .mapbar span { line-height:1.5rem !important; font-size:.66rem !important; }
 }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.45; } }
 </style></head><body><main>
@@ -736,7 +743,7 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
                  background:var(--bg);border:1px solid var(--line);border-radius:5px;
                  color:var(--ink)">
         <span id="mmqn" class="mono" style="font-size:.72rem"></span></span>
-      <span class="muted" style="font-size:.75rem">drag to rotate · scroll to zoom · click a node for its dossier</span>
+      <span class="muted" style="font-size:.75rem">drag or one finger to rotate · scroll or pinch to zoom · tap a node for its dossier</span>
     </div>
     <div id="mmbody" style="touch-action:none"><p class="muted">loading…</p></div>
   </div>
@@ -1397,22 +1404,89 @@ no public trace of considering: ${(os.unevidenced_options||[]).slice(0,4).join('
   mmBindDrag();
 }
 
+/* Pointer Events, not mouse events. The previous binding listened only for
+   mousedown/mousemove/mouseup/wheel, so on a phone NOTHING was listening: the map
+   could not be rotated or zoomed at all. Pointer events cover mouse, touch and
+   stylus on one code path, and pinch is handled explicitly because there is no
+   touch equivalent of a wheel.
+
+   Also: the old code assigned window.onmouseup/onmousemove with `=`, which silently
+   clobbers any other global handler and re-clobbers on every rebind. These are
+   addEventListener bindings attached exactly once per svg element instead. */
 function mmBindDrag(){
   const svg = document.getElementById('mmsvg');
-  if (!svg) return;
-  svg.onmousedown = e => { mmDrag = {x:e.clientX, y:e.clientY}; svg.style.cursor='grabbing'; };
-  window.onmouseup = () => { mmDrag = null; const s=document.getElementById('mmsvg');
-                             if(s) s.style.cursor='grab'; };
-  window.onmousemove = e => {
-    if (!mmDrag) return;
+  if (!svg || svg.dataset.bound) return;
+  svg.dataset.bound = '1';
+
+  // the browser must not pan/zoom the page while a drag is in progress on the map
+  svg.style.touchAction = 'none';
+
+  const pts = new Map();          // active pointers, by id — 2 means pinch
+  let pinchDist = 0;
+  let moved = 0;                  // px travelled this gesture
+
+  const dist = () => {
+    const [a, b] = [...pts.values()];
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  };
+
+  svg.addEventListener('pointerdown', e => {
+    pts.set(e.pointerId, {x: e.clientX, y: e.clientY});
+    // keep receiving moves even when the finger slides off the svg
+    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    if (pts.size === 2) { pinchDist = dist(); mmDrag = null; }
+    else { mmDrag = {x: e.clientX, y: e.clientY}; moved = 0; svg.style.cursor = 'grabbing'; }
+  });
+
+  svg.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, {x: e.clientX, y: e.clientY});
+
+    if (pts.size === 2){                       // pinch to zoom
+      const d = dist();
+      if (pinchDist > 0){
+        mmZoom = Math.max(0.4, Math.min(2.6, mmZoom * (d / pinchDist)));
+        mmRender();
+      }
+      pinchDist = d;
+      e.preventDefault();
+      return;
+    }
+    if (!mmDrag) return;                        // one finger: rotate
+    moved += Math.abs(e.clientX - mmDrag.x) + Math.abs(e.clientY - mmDrag.y);
     mmRot.y += (e.clientX - mmDrag.x) * 0.008;
     mmRot.x += (e.clientY - mmDrag.y) * 0.008;
-    mmDrag = {x:e.clientX, y:e.clientY};
+    mmDrag = {x: e.clientX, y: e.clientY};
     mmRender();
+    e.preventDefault();
+  });
+
+  /* A rotate gesture that happens to finish on top of a node would otherwise fire
+     that node's onclick and navigate away mid-drag. Swallow the click when the
+     pointer actually travelled; 8px keeps a genuine tap (which always jitters a
+     little on a touchscreen) working. Capture phase, so it runs before the
+     circle's own handler. */
+  svg.addEventListener('click', e => {
+    if (moved > 8){ e.stopPropagation(); e.preventDefault(); moved = 0; }
+  }, true);
+
+  const end = e => {
+    pts.delete(e.pointerId);
+    try { svg.releasePointerCapture(e.pointerId); } catch (_) {}
+    if (pts.size < 2) pinchDist = 0;
+    // lifting one of two fingers must not jump the rotation: re-anchor to the
+    // finger still down rather than reusing the stale drag origin
+    mmDrag = pts.size === 1 ? {...[...pts.values()][0]} : null;
+    if (!pts.size) svg.style.cursor = 'grab';
   };
-  svg.onwheel = e => { e.preventDefault();
-    mmZoom = Math.max(0.4, Math.min(2.6, mmZoom * (e.deltaY>0 ? 0.92 : 1.08)));
-    mmRender(); };
+  svg.addEventListener('pointerup', end);
+  svg.addEventListener('pointercancel', end);
+
+  svg.addEventListener('wheel', e => {
+    e.preventDefault();
+    mmZoom = Math.max(0.4, Math.min(2.6, mmZoom * (e.deltaY > 0 ? 0.92 : 1.08)));
+    mmRender();
+  }, {passive: false});
 }
 
 function mmFilter(){
@@ -1588,7 +1662,7 @@ async function loadMap(){
         return `<div title="${esc(c.model)} · E${c.e_span[0]}–E${c.e_span[1]} · ${esc(c.tier)}`+
           ` · open ${c.record.open}, graded ${c.record.graded}${refuted?' · refutations logged':''}\n${esc(c.mechanism)}"`+
           ` onclick="location.href='/model/${canon?'canon':c.model}'"`+
-          ` style="position:relative;height:.85rem;margin:.15rem 0;cursor:pointer">`+
+          ` class="mapbar" style="position:relative;height:.85rem;margin:.15rem 0;cursor:pointer">`+
           `<div style="position:absolute;left:${l}%;width:${w}%;height:100%;border-radius:3px;`+
           `background:${canon?'transparent':col};border:1px ${canon?'dashed var(--base)':'solid transparent'};`+
           `${refuted?'box-shadow:inset 0 0 0 1px var(--miss);':''}"'></div>`+
