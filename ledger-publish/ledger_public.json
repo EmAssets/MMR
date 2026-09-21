@@ -1,0 +1,1336 @@
+{
+ "registered_on": "2026-08-22",
+ "baseline": "same underlying LLM, no instrument reasoning in context",
+ "predictions": [
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "X will announce a new monetization program or update to the Original Content Rewards Program by 2026-10-02.",
+   "criteria": "An official announcement or press release from X regarding a new or updated monetization program.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.62,
+   "status": "open",
+   "id": "A-1.01",
+   "topic": "X Platform Business Updates",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "X will report an increase in ad revenue or user engagement metrics by 2026-10-02.",
+   "criteria": "Official financial report or press release from X indicating a rise in ad revenue or user engagement statistics.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.35,
+   "status": "open",
+   "id": "A-1.02",
+   "topic": "X Platform Business Updates",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "OpenAI will announce the resumption of its largest frontier RL runs with updated security protocols.",
+   "criteria": "An official announcement or press release from OpenAI regarding the resumption of RL runs with enhanced security measures.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.15,
+   "status": "open",
+   "id": "A-1.03",
+   "topic": "OpenAI Frontier RL Runs",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "OpenAI will finalize and publicly announce the completion of the data center deal in Effingham County, including specific details on tax abatements and community grants.",
+   "criteria": "A public announcement or press release detailing the finalized terms of the data center deal, including financial specifics.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.24,
+   "status": "open",
+   "id": "A-1.04",
+   "topic": "OpenAI Effingham Data Center",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "Bluesky will announce a new feature or partnership aimed at enhancing user engagement by 2026-10-02.",
+   "criteria": "A public announcement or press release regarding a new feature or partnership.",
+   "instrument_p": 0.75,
+   "baseline_p": 0.55,
+   "status": "open",
+   "id": "A-1.05",
+   "topic": "Bluesky Platform Development",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "Bluesky's registered user count will reach at least 46 million by 2026-10-02.",
+   "criteria": "Official user count update from Bluesky or credible analytics source.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.06,
+   "status": "open",
+   "id": "A-1.06",
+   "topic": "Bluesky User Growth",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "By 2026-10-02, TikTok will announce a new partnership with a major U.S. technology firm to enhance its data security measures.",
+   "criteria": "An official announcement or press release from TikTok or the partner firm detailing the partnership.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.22,
+   "status": "open",
+   "id": "A-1.07",
+   "topic": "TikTok US Security Measures",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "By 2026-10-02, a U.S. congressional committee will hold a hearing to review TikTok's compliance with U.S. data security regulations.",
+   "criteria": "Official records or announcements of a scheduled or conducted congressional hearing.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.41,
+   "status": "open",
+   "id": "A-1.08",
+   "topic": "TikTok US Security Measures",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "Substack will announce a new feature or partnership aimed at enhancing creator monetization by 2026-10-02.",
+   "criteria": "An official announcement on Substack's blog or a press release detailing a new monetization feature or partnership.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.48,
+   "status": "open",
+   "id": "A-1.09",
+   "topic": "Substack Creator Monetization",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "Substack's paid subscriber count will reach 6 million by 2026-10-02.",
+   "criteria": "A public statement or data release from Substack confirming the subscriber count.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.08,
+   "status": "open",
+   "id": "A-1.10",
+   "topic": "Substack Subscriber Growth",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "By 2026-10-02, the European Commission will announce a revised methodology for calculating DSA supervisory fees.",
+   "criteria": "An official announcement or publication of the revised fee calculation methodology by the European Commission.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.31,
+   "status": "open",
+   "id": "A-1.11",
+   "topic": "EU DSA Implementation",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-1",
+   "commit": "390a5dd",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "At least one additional major fine (over €50 million) will be imposed on a large tech platform for DSA violations by 2026-10-02.",
+   "criteria": "Public announcement or press release detailing a fine over €50 million against a tech platform for DSA violations.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.19,
+   "status": "open",
+   "id": "A-1.12",
+   "topic": "EU DSA Implementation",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "The U.S. Senate will pass the Remote Access Security Act (RASA) by 2026-10-02.",
+   "criteria": "Official Senate vote results published.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.11,
+   "status": "open",
+   "id": "D-1.01",
+   "topic": "Remote Access Security Act",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "The U.S. will announce a new bilateral AI cooperation agreement with a European ally by 2026-10-02.",
+   "criteria": "Official announcement from the U.S. government.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.29,
+   "status": "open",
+   "id": "D-1.02",
+   "topic": "US-Europe AI Cooperation",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "U.S. Missionary Value-Export Drive",
+    "instances": "Marshall Plan / OEEC charters 1948-1951, Biden AI Executive Order & 'democratic values' coalition rhetoric Oct 2023"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "A new lawsuit challenging Section 230 protections will be filed by a major tech company.",
+   "criteria": "The filing of a lawsuit in a federal court by a tech company challenging Section 230 protections.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.05,
+   "status": "open",
+   "id": "D-1.03",
+   "topic": "Section 230 Legal Challenges",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "A federal court will issue a ruling on the Disney vs. FCC case, addressing the First Amendment claims.",
+   "criteria": "The issuance of a court ruling or order regarding the Disney vs. FCC case.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.26,
+   "status": "open",
+   "id": "D-1.04",
+   "topic": "Disney vs FCC Case",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "By 2026-10-02, India will announce at least one new bilateral agreement focused on digital public infrastructure with a non-BRICS country.",
+   "criteria": "Official announcement or press release from the Indian government or the partnering country.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.43,
+   "status": "open",
+   "id": "D-1.05",
+   "topic": "India Digital Infrastructure Agreements",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "Indian Digital Public-Rail Diffusion",
+    "instances": "Bhutan adopts BHIM/UPI rail Jul 2021, Singapore–India PayNow-UPI linkage Feb 2023"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "By 2026-10-02, India will host an international conference or workshop on digital public infrastructure, emphasizing data sovereignty and frugal innovation.",
+   "criteria": "Announcement or coverage of the event in international media or official Indian government channels.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.36,
+   "status": "open",
+   "id": "D-1.06",
+   "topic": "India Digital Infrastructure Agreements",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Frugal-Engineering Innovation Spurts",
+    "instances": "ISRO Mars Orbiter Mission at USD 74 m Nov 2013-Sep 2014, Serum Institute produces Covishield under AstraZeneca licence Jun 2020-Jan 2021"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "India will abstain from a UN resolution condemning Russia's actions in Ukraine.",
+   "criteria": "India's vote or abstention recorded in the UN General Assembly records.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.66,
+   "status": "open",
+   "id": "D-1.07",
+   "topic": "India UN Russia Votes",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "Non-Aligned Abstention Block",
+    "instances": "India abstains on UNGA Resolution ES-6/2 (Afghanistan) Jan 1980, India abstains on UNGA Resolution ES-11/1 (Ukraine) Mar 2022"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "India will sign a new trade agreement with a country outside the traditional US or Russian spheres of influence.",
+   "criteria": "Announcement of a new trade agreement in Indian government press releases or major news outlets.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.31,
+   "status": "open",
+   "id": "D-1.08",
+   "topic": "India Trade Agreements",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "India will propose an AI governance framework at an international forum that emphasizes multi-stakeholder collaboration and equitable AI benefits.",
+   "criteria": "An official proposal or document released by India at an international AI-related event or summit.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.27,
+   "status": "open",
+   "id": "D-1.09",
+   "topic": "India AI Governance Framework",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "The US will announce a new initiative or partnership aimed at strengthening AI regulation or security with a focus on its strategic allies.",
+   "criteria": "An official announcement from the US government or a related agency regarding a new AI-focused initiative or partnership.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.42,
+   "status": "open",
+   "id": "D-1.10",
+   "topic": "US AI Security Partnerships",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "U.S. Missionary Value-Export Drive",
+    "instances": "Marshall Plan / OEEC charters 1948-1951, Biden AI Executive Order & 'democratic values' coalition rhetoric Oct 2023"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "India will not join any new plurilateral agreements at the WTO before 2026-10-02.",
+   "criteria": "Official WTO announcements or India's public statements confirming participation in new plurilateral agreements.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.81,
+   "status": "open",
+   "id": "D-1.11",
+   "topic": "India WTO Plurilateral Agreements",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Non-Aligned Abstention Block",
+    "instances": "India abstains on UNGA Resolution 120 (Hungary) Nov 1956, India abstains on UNGA Resolution ES-11/1 (Ukraine) Mar 2022"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-1",
+   "commit": "7549c0c",
+   "made_on": "2026-08-21",
+   "resolve_by": "2026-10-02",
+   "claim": "The US will proceed with formalizing the 100% tariff proposal on countries importing Russian oil by 2026-10-02.",
+   "criteria": "Publication of the formalized tariff proposal in US government records or official announcements.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.13,
+   "status": "open",
+   "id": "D-1.12",
+   "topic": "US Russian Oil Tariffs",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-2",
+   "commit": "390a5dd",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06 the Government of India will publish an official circular launching a third-party audit of at least 5 000 government schools with results promised on a public dashboard",
+   "criteria": "Press release or circular on education ministry/PIB site explicitly announcing such an audit and public data release",
+   "instrument_p": 0.35,
+   "baseline_p": 0.26,
+   "status": "open",
+   "id": "A-2.01",
+   "topic": "India Government School Audits",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-2",
+   "commit": "390a5dd",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "Between 2026-08-22 and 2026-10-06 there will be ≥3 documented IRGC UAV or speed-boat harassment incidents against commercial shipping in the Strait of Hormuz and 0 successful missile or mine strikes causing a tanker hull breach >1 m",
+   "criteria": "Incidents recorded by Lloyd’s List, US 5th Fleet or equivalent open-source shipping incident trackers by the cut-off date",
+   "instrument_p": 0.4,
+   "baseline_p": 0.48,
+   "status": "open",
+   "id": "A-2.02",
+   "topic": "Strait of Hormuz Incidents",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "A",
+   "ledger": "A-2",
+   "commit": "390a5dd",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-09-13",
+   "claim": "The University of Michigan Consumer Sentiment Index preliminary September 2026 reading (scheduled 2026-09-13) will fall to 67.0 or lower",
+   "criteria": "Figure published by UMich Survey of Consumers",
+   "instrument_p": 0.3,
+   "baseline_p": 0.32,
+   "status": "hit",
+   "id": "A-2.03",
+   "topic": "University Michigan Consumer Sentiment",
+   "precedent": {
+    "strength": "none"
+   },
+   "graded_on": "2026-09-14",
+   "what_happened": "University of Michigan's preliminary September 2026 Consumer Sentiment Index, released 2026-09-11/12, fell to 47.8 from 51.7 in August — a 7.5% (3.9 point) drop, well below the ~51.0 consensus estimate. This is near the series' record low (below the 1st percentile historically), driven by deteriorating year-ahead expectations for personal finances and business conditions amid rising fuel prices, trade tensions, and inflation expectations jumping to 4.6%. Sources: Advisor Perspectives (advisorper",
+   "reasoning_unsealed": "Public support can erode even amid strong jobs numbers if real wages don't keep pace, because voters judge conditions by their own purchasing power rather than headline employment figures."
+  },
+  {
+   "instrument": "B",
+   "ledger": "B-1",
+   "commit": "937d5ad",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "The final September 2026 University of Michigan Consumer Sentiment Index will read below 60.0 (last below-60 print was Nov-2025 62.1).",
+   "criteria": "Value published in UMich news release on or before 2026-10-06.",
+   "instrument_p": 0.35,
+   "baseline_p": 0.13,
+   "status": "open",
+   "id": "B-1.01",
+   "topic": "University Michigan Consumer Sentiment",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "B",
+   "ledger": "B-1",
+   "commit": "937d5ad",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06 at least one publicly confirmed kinetic incident (ship seizure, missile/drone strike, or exchange of fire) between U.S. or allied forces and Iranian forces will have occurred in or near the Strait of Hormuz.",
+   "criteria": "Incident reported by two major outlets (e.g., Reuters, AP, Al Jazeera) naming damage or casualties.",
+   "instrument_p": 0.55,
+   "baseline_p": 0.32,
+   "status": "open",
+   "id": "B-1.02",
+   "topic": "Strait of Hormuz Incidents",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "B",
+   "ledger": "B-1",
+   "commit": "937d5ad",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "The Government of India will publish (press briefing or Gazette notification) a nationwide government-school infrastructure audit or funding package ≥ ₹50 billion explicitly referencing safety/basic amenities by 2026-10-06.",
+   "criteria": "Official document or PIB press note searchable on gov.in domains committing to audit or budget with stated amount/timeline.",
+   "instrument_p": 0.4,
+   "baseline_p": 0.34,
+   "status": "open",
+   "id": "B-1.03",
+   "topic": "India Government School Audits",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "C",
+   "ledger": "C-1",
+   "commit": "cfeb311",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "Before 2026-10-06, at least one of Microsoft, Google, Amazon, or Meta publicly delays, scales back, or re-sequences a previously announced 2026–2027 AI datacenter build citing power-availability or supply-chain constraints.",
+   "criteria": "Press release, earnings call, or major-media report quoting the company announcing a schedule change or capacity cut for a named AI-focused datacenter project.",
+   "instrument_p": 0.35,
+   "baseline_p": 0.38,
+   "status": "open",
+   "id": "C-1.01",
+   "topic": "Big Tech Datacenter Delays",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Regulatory Energy Clamp-Down on Compute-Heavy Tech",
+    "instances": "US War Production Board automobile halt 1942–1945, China's crypto-mining crackdown 2021–2023, New York State crypto-mining moratorium 2022–ongoing"
+   }
+  },
+  {
+   "instrument": "C",
+   "ledger": "C-1",
+   "commit": "cfeb311",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "The Conference Board’s August 2026 Leading Economic Index, released in September, prints ≤ -0.1 %, reversing July’s +0.2 % gain.",
+   "criteria": "Official LEI press release for August 2026 shows month-over-month change of -0.1 % or lower.",
+   "instrument_p": 0.3,
+   "baseline_p": 0.44,
+   "status": "open",
+   "id": "C-1.02",
+   "topic": "Conference Board Leading Index",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "C",
+   "ledger": "C-1",
+   "commit": "cfeb311",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "During any weekly release between 2026-09-01 and 2026-10-03, U.S. initial unemployment claims exceed 235 000, with at least one major outlet attributing the uptick partly to AI-sector layoffs or hiring freezes.",
+   "criteria": "U.S. Department of Labor weekly initial claims report shows a figure ≥ 235 000 and a same-day AP/WaPo/WSJ/Bloomberg story links the rise to job actions in AI-heavy firms.",
+   "instrument_p": 0.25,
+   "baseline_p": 0.26,
+   "status": "open",
+   "id": "C-1.03",
+   "topic": "US Unemployment Claims",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Automation-Driven Labour Displacement Wave",
+    "instances": "British textile mechanisation & Luddite riots 1780–1830, US assembly-line manufacturing boom 1913–1930, Japanese industrial robotics surge 1980–1995"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-2",
+   "commit": "7549c0c",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "On the first AI-governance resolution put to a recorded vote at the 2026 UN General Assembly session (opening 2026-09-17), India will abstain or vote “no” while the United States votes “yes”.",
+   "criteria": "UN voting record published on un.org; comparison of India and US positions on that resolution",
+   "instrument_p": 0.45,
+   "baseline_p": 0.61,
+   "status": "open",
+   "id": "D-2.01",
+   "topic": "UN AI Governance Resolution",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "Non-Aligned Abstention Block",
+    "instances": "India abstains on UNGA Resolution ES-6/2 (Afghanistan) Jan 1980, India abstains on UNGA Resolution ES-11/1 (Ukraine) Mar 2022"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-2",
+   "commit": "7549c0c",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "Between 2026-08-22 and 2026-10-06 the US Treasury’s OFAC will announce at least one new sanctions package adding ≥3 Iranian entities or individuals to the SDN list.",
+   "criteria": "Press release on home.treasury.gov or Federal Register notice showing new Iran designations",
+   "instrument_p": 0.6,
+   "baseline_p": 0.54,
+   "status": "open",
+   "id": "D-2.02",
+   "topic": "US Iran Sanctions",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "D",
+   "ledger": "D-2",
+   "commit": "7549c0c",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06 the Supreme Court of India will have declined to grant any interim stay against the government’s use of facial-recognition or digital surveillance in the CJP-protester cases (next hearing adjourned without stay or petition dismissed).",
+   "criteria": "Supreme Court docket/order sheet shows no interim injunction or stay order on surveillance tools in those writ petitions",
+   "instrument_p": 0.4,
+   "baseline_p": 0.72,
+   "status": "open",
+   "id": "D-2.03",
+   "topic": "India Surveillance Court Cases",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "E",
+   "ledger": "E-1",
+   "commit": "acb2744",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "Between 2026-08-22 and 2026-10-06 inclusive, at least one publicly confirmed incident will occur in or adjacent to the Strait of Hormuz in which Iranian state forces (IRGC Navy, Islamic Republic Navy, or affiliated units) either (a) seize or detain a commercial vessel for 24 hours or more, or (b) inflict physical damage on a commercial tanker by missile, drone, mine, or direct fire that produces a hull breach or disables propulsion.",
+   "criteria": "Confirmation accepted from any two of: U.S. Central Command, UKMTO, Lloyd’s List, or major wire services (Reuters, AP, Bloomberg) with satellite imagery/AIS data; the incident date must fall within the window and meet (a) or (b).",
+   "instrument_p": 0.52,
+   "baseline_p": 0.26,
+   "status": "open",
+   "id": "E-1.01",
+   "topic": "Strait of Hormuz Incidents",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "E",
+   "ledger": "E-1",
+   "commit": "acb2744",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "On or before 2026-10-06, a company in the S&P 500 will experience an intraday share-price swing of ≥15 % that leading financial outlets (Bloomberg, Reuters, WSJ) attribute primarily to a viral AI-generated fraudulent announcement (deepfake text, audio, or video) that the firm or a regulator publicly debunks within 24 hours.",
+   "criteria": "1. High-low price move ≥15 % during a regular U.S. trading session. 2. At least two of the named outlets publish same-day pieces citing an AI-generated hoax as the main trigger. 3. Official debunk (company press release or regulator statement) appears within 24 h of the hoax’s first public circulation.",
+   "instrument_p": 0.22,
+   "baseline_p": 0.08,
+   "status": "open",
+   "id": "E-1.02",
+   "topic": "AI Deepfake Market Manipulation",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Documented gaps forecast future failures",
+    "instances": "Google SRE incident postmortems linking toil areas to outages 2014-2020, NASA mission readiness reviews using gap categories 1995-2005"
+   }
+  },
+  {
+   "instrument": "E",
+   "ledger": "E-1",
+   "commit": "acb2744",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, at least two of Apple (iOS), Google (Chrome or Android), or Meta (Facebook/Instagram/WhatsApp) will have rolled out—enabled by default for a majority of U.S. users—a standards-based cryptographic provenance indicator (e.g., C2PA) that surfaces when images or video carry a valid origin stamp, with roll-out announced in company communications and confirmed by independent tech-press hands-on reports.",
+   "criteria": "1. Company blog post, release notes, or press statement cites feature as live for >50 % of U.S. users. 2. Independent coverage (The Verge, Wired, or equivalent) verifies the indicator in production apps/sites. Both conditions must be satisfied for at least two of the three companies within the window.",
+   "instrument_p": 0.28,
+   "baseline_p": 0.41,
+   "status": "open",
+   "id": "E-1.03",
+   "topic": "Cryptographic Content Provenance Standards",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "High-yield spreads will widen by an additional 50 basis points within the next 6 weeks.",
+   "criteria": "Check HY spread levels by 2026-10-06.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.38,
+   "status": "open",
+   "id": "F-1.01",
+   "topic": "High-Yield Credit Spreads",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Private Credit Snap",
+    "instances": "US sub-prime AAA spread blow-out Jul–Aug 2007, China trust-sector squeeze Jan 2014"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "A major private credit fund will announce a restructuring or significant asset sale by 2026-10-06.",
+   "criteria": "Monitor announcements from major private credit funds.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.23,
+   "status": "open",
+   "id": "F-1.02",
+   "topic": "Private Credit Fund Restructuring",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Private Credit Snap",
+    "instances": "US sub-prime AAA spread blow-out Jul–Aug 2007, US leveraged-loan freeze 13–18 Mar 2020"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "A significant market correction in AI-related stocks will occur by 2026-10-06 if productivity data continues to underperform expectations.",
+   "criteria": "A measurable drop (≥10%) in a major AI sector index or ETF within 5 trading days following a new productivity report.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.31,
+   "status": "open",
+   "id": "F-1.03",
+   "topic": "AI Stock Market Correction",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Productivity Hype Correction",
+    "instances": "NASDAQ crash Mar–Apr 2000, Clean-tech draw-down Nov 2021–Jun 2022"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, a major policy announcement addressing AI productivity expectations will be made, following a market correction.",
+   "criteria": "An official policy statement or adjustment related to AI productivity from a central bank or government body.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.12,
+   "status": "open",
+   "id": "F-1.04",
+   "topic": "AI Stock Market Correction",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Productivity Hype Correction",
+    "instances": "NASDAQ crash Mar–Apr 2000, Clean-tech draw-down Nov 2021–Jun 2022"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, the U.S. labor force participation rate will show a significant increase of at least 0.2 percentage points.",
+   "criteria": "BLS labor force participation rate report for September 2026",
+   "instrument_p": 0.6,
+   "baseline_p": 0.44,
+   "status": "open",
+   "id": "F-1.05",
+   "topic": "US Labor Force Participation",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, there will be a policy announcement from the U.S. government regarding further measures to boost labor supply, such as additional immigration reforms or incentives for workforce participation.",
+   "criteria": "Official government press releases or announcements",
+   "instrument_p": 0.7,
+   "baseline_p": 0.27,
+   "status": "open",
+   "id": "F-1.06",
+   "topic": "US Labor Supply Policy",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Labor Supply Squeeze & Wage Spiral",
+    "instances": "US post-WWII wage surge 1946–1948, West Germany guest-worker gap 1969–1971"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-09-15, there will be no significant change (>10 basis points) in US Treasury 10-year bond yields attributable to fiscal policy announcements.",
+   "criteria": "Check US Treasury 10-year bond yields on 2026-09-15 for changes exceeding 10 basis points linked to fiscal policy announcements.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.75,
+   "status": "open",
+   "id": "F-1.07",
+   "topic": "US Treasury Bond Yields",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Fiscal Theater Fizzle",
+    "instances": "US debt-ceiling standoffs Jul 2011 & Oct 2013, Italy budget standoff Sep–Dec 2018"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-01, the UK government will announce additional strategic exemptions to its fiscal consolidation plan, specifically targeting technology sectors.",
+   "criteria": "Check for announcements of new strategic exemptions to the fiscal consolidation plan by the UK government targeting technology sectors.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.21,
+   "status": "open",
+   "id": "F-1.08",
+   "topic": "UK Fiscal Policy Exemptions",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Fiscal Theater Fizzle",
+    "instances": "Japan serial consolidation rhetoric 1997–2012, Italy budget standoff Sep–Dec 2018"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "A significant market volatility event will occur within 5 trading days following a notable real-data drift in private credit spreads or AI productivity metrics.",
+   "criteria": "Observation of a sharp increase in market volatility metrics within 5 days of a reported change in private credit spreads or AI productivity data.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.33,
+   "status": "open",
+   "id": "F-1.09",
+   "topic": "Market Volatility Events",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Passive Flow Air Pocket",
+    "instances": "Black Monday equity crash 19 Oct 1987, COVID index-liquidity shock 9–18 Mar 2020"
+   }
+  },
+  {
+   "instrument": "F",
+   "ledger": "F-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "There will be no major policy announcements regarding passive investment flows by 2026-10-06.",
+   "criteria": "Absence of new policy measures or legislative actions targeting passive investment flows by the given date.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.8,
+   "status": "open",
+   "id": "F-1.10",
+   "topic": "Passive Investment Flow Policy",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "Within the next 3 weeks, the US or Iran will conduct a demonstration of force in the Strait of Hormuz, such as a military exercise or a show of naval presence.",
+   "criteria": "A reported military exercise or naval demonstration by either the US or Iran in the Strait of Hormuz by 2026-09-12.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.42,
+   "status": "open",
+   "id": "G-1.01",
+   "topic": "Strait of Hormuz Incidents",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Sub-threshold harassment plateau",
+    "instances": "US–Iran fast-boat and drone encounters in Persian Gulf 2016-2019"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, a third-party mediation effort will be publicly acknowledged, resulting in a temporary de-escalation of tensions in the Strait of Hormuz.",
+   "criteria": "Public acknowledgment of mediation efforts leading to a de-escalation by 2026-10-06.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.22,
+   "status": "open",
+   "id": "G-1.02",
+   "topic": "Strait of Hormuz Incidents",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Mediated two-exit climb-down",
+    "instances": "Cuban Missile Crisis Oct 1962, India–Pakistan Balakot crisis Feb-Mar 2019"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-09-15, there will be at least one more reported incident of drone harassment or similar low-cost escalation in the Red Sea.",
+   "criteria": "A news report of a drone attack or similar harassment incident in the Red Sea by 2026-09-15.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.71,
+   "status": "open",
+   "id": "G-1.03",
+   "topic": "Red Sea Tensions",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Sub-threshold harassment plateau",
+    "instances": "US–Iran fast-boat and drone encounters in Persian Gulf 2016-2019"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, a third-party mediation effort or a simultaneous divergent victory-framing will be reported in relation to Red Sea tensions.",
+   "criteria": "A news report of mediation efforts or both sides claiming victory in the Red Sea context by 2026-10-06.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.36,
+   "status": "open",
+   "id": "G-1.04",
+   "topic": "Red Sea Tensions",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Mediated two-exit climb-down",
+    "instances": "US-China EP-3 Hainan incident Apr 2001, India–Pakistan Balakot crisis Feb-Mar 2019"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, China will conduct another military exercise near the Taiwan Strait without crossing into Taiwanese territorial waters.",
+   "criteria": "Official announcements or reports of military exercises with specified locations.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.77,
+   "status": "open",
+   "id": "G-1.05",
+   "topic": "Taiwan Strait Tensions",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "Sub-threshold harassment plateau",
+    "instances": "China–Japan coast-guard shadowing around Senkaku/Diaoyu 2012-2019"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, there will be a mediated diplomatic engagement involving a third party between the US and China regarding Taiwan Strait tensions.",
+   "criteria": "Reports or announcements of diplomatic talks or mediation efforts.",
+   "instrument_p": 0.6,
+   "baseline_p": 0.29,
+   "status": "open",
+   "id": "G-1.06",
+   "topic": "Taiwan Strait Tensions",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Mediated two-exit climb-down",
+    "instances": "US-China EP-3 Hainan incident Apr 2001"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "Within the next 6 weeks, a new round of peace talks mediated by the UN will be announced, with both Ukraine and Russia agreeing to participate.",
+   "criteria": "An official announcement from the UN or involved parties confirming new peace talks.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.18,
+   "status": "open",
+   "id": "G-1.07",
+   "topic": "Ukraine Russia Peace Talks",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Off-ramp denial stalemate",
+    "instances": "Korean War armistice talks drag on Jul 1951-Jul 1953, Russia-Ukraine Donbas line Feb 2015-Feb 2022"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "By 2026-10-06, there will be a significant military incident involving a breach of a recognized border or a major escalation beyond artillery exchanges.",
+   "criteria": "Reports from credible news sources confirming a border breach or major escalation.",
+   "instrument_p": 0.4,
+   "baseline_p": 0.27,
+   "status": "open",
+   "id": "G-1.08",
+   "topic": "Ukraine Russia Military Escalation",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Threshold-reset limited war",
+    "instances": "Kargil War (India–Pakistan) May-Jul 1999"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "A public attribution of the financial sector cyber intrusion will be made by 2026-09-15.",
+   "criteria": "A public statement from a government or major organization attributing the intrusion to a state actor.",
+   "instrument_p": 0.7,
+   "baseline_p": 0.33,
+   "status": "open",
+   "id": "G-1.09",
+   "topic": "Financial Sector Cyber Intrusion",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "Deniable cyber tit-for-tat",
+    "instances": "US–Russia grid intrusions and counter-implanting 2015-2020, US–Iran ICS and data-wipe exchanges 2011-2020"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "unknown",
+   "made_on": "2026-08-22",
+   "resolve_by": "2026-10-06",
+   "claim": "A retaliatory measure (sanction or indictment) will be announced by a Western state against a state actor for a cyber intrusion by 2026-10-06.",
+   "criteria": "Official announcement of sanctions or legal action against a state actor.",
+   "instrument_p": 0.8,
+   "baseline_p": 0.28,
+   "status": "open",
+   "id": "G-1.10",
+   "topic": "State Cyber Attack Retaliation",
+   "precedent": {
+    "strength": "strong",
+    "pattern": "Deniable cyber tit-for-tat",
+    "instances": "US–Russia grid intrusions and counter-implanting 2015-2020, Israel–Iran shipping & cyber duels 2020-2022"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "5d6f9e3",
+   "made_on": "2026-08-26",
+   "resolve_by": "2026-12-31",
+   "claim": "Will the U.S. invade Iran before 2027?",
+   "criteria": "Market resolution criteria (adopted verbatim): This market will resolve to \"Yes\" if the United States commences a military offensive intended to establish control over any portion of Iran by December 31, 2026, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nFor the purposes of this market, land de facto controlled by Iran or the United States as of November 4, 2025 12:00 PM ET, will be considered the sovereign territory of that coun",
+   "instrument_p": 0.05,
+   "baseline_p": 0.03,
+   "status": "open",
+   "id": "G-1.11",
+   "topic": "US Iran Sanctions",
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "G",
+   "ledger": "G-1",
+   "commit": "5d6f9e3",
+   "made_on": "2026-08-26",
+   "resolve_by": "2026-10-31",
+   "claim": "Strait of Hormuz traffic returns to normal by October 31?",
+   "criteria": "Market resolution criteria (adopted verbatim): This market will resolve to “Yes” if IMF Portwatch publishes a 7-day moving average of transit calls (“Arrivals of Ships”) for the Strait of Hormuz equal to or above 60 for any date between market creation and October 31, 2026. Otherwise, this market will resolve to “No”.\n\nDaily transit calls include container, dry bulk, roll-on/roll-off, general cargo, and tanker ships. Ships not reported by IMF ",
+   "instrument_p": 0.65,
+   "baseline_p": 0.85,
+   "status": "open",
+   "id": "G-1.12",
+   "topic": "Strait of Hormuz Incidents",
+   "precedent": {
+    "strength": "partial",
+    "pattern": "Sub-threshold harassment plateau",
+    "instances": "US–Iran fast-boat and drone encounters in Persian Gulf 2016-2019, China–Japan coast-guard shadowing around Senkaku/Diaoyu 2012-2019"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-17",
+   "resolve_by": "2026-11-01",
+   "claim": "Outcome of 'What frontier AI labs do over the next 45 days on release pace, safety commitments and regulatory engagement': delay/no-change",
+   "criteria": "The observable decision/outcome by 2026-11-01; 'delay/no-change' as defined in the trace's outcome set",
+   "instrument_p": 0.288,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.01",
+   "topic": "pressure-convergence resultant: tension 0.655, pressure satu",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-17",
+   "resolve_by": "2026-11-01",
+   "claim": "Outcome of 'What the US federal executive does over the next 45 days on AI regulation, preemption of state law, and export controls': tighten export controls",
+   "criteria": "The observable decision/outcome by 2026-11-01; 'tighten export controls' as defined in the trace's outcome set",
+   "instrument_p": 0.35,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.02",
+   "topic": "pressure-convergence resultant: tension 0.497, pressure satu",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-17",
+   "resolve_by": "2026-11-01",
+   "claim": "Outcome of 'What the EU does over the next 45 days on AI Act enforcement, GPAI obligations and any simplification or delay': delay/no-change",
+   "criteria": "The observable decision/outcome by 2026-11-01; 'delay/no-change' as defined in the trace's outcome set",
+   "instrument_p": 0.348,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.03",
+   "topic": "pressure-convergence resultant: tension 0.595, pressure satu",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-17",
+   "resolve_by": "2026-11-06",
+   "claim": "Outcome of 'What US courts do over the next 45 days on AI copyright, liability and injunctive relief against model developers': sj-denied-mixed-to-trial",
+   "criteria": "The observable decision/outcome by 2026-11-06; 'sj-denied-mixed-to-trial' as defined in the trace's outcome set",
+   "instrument_p": 0.519,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.04",
+   "topic": "pressure-convergence resultant: tension 0.394, pressure high",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-17",
+   "resolve_by": "2026-11-03",
+   "claim": "Outcome of 'What organised AI opposition achieves over the next 45 days on datacenter siting, energy permits and deployment rollbacks': ratepayer-cost reallocation (partial rollback of cost exposure, not siting)",
+   "criteria": "The observable decision/outcome by 2026-11-03; 'ratepayer-cost reallocation (partial rollback of cost exposure, not siting)' as defined in the trace's outcome set",
+   "instrument_p": 0.369,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.05",
+   "topic": "pressure-convergence resultant: tension 0.598, pressure satu",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-18",
+   "resolve_by": "2026-11-02",
+   "claim": "Outcome of 'What frontier AI labs do over the next 45 days on release pace, safety commitments and regulatory engagement': add pre-deployment gates, safeguards, or disclosures beyond current practice",
+   "criteria": "The observable decision/outcome by 2026-11-02; 'add pre-deployment gates, safeguards, or disclosures beyond current practice' as defined in the trace's outcome set",
+   "instrument_p": 0.674,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.06",
+   "topic": "pressure-convergence resultant: tension 0.195, pressure satu",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-18",
+   "resolve_by": "2026-11-02",
+   "claim": "Outcome of 'What the US federal executive does over the next 45 days on AI regulation, preemption of state law, and export controls': delay/no-change",
+   "criteria": "The observable decision/outcome by 2026-11-02; 'delay/no-change' as defined in the trace's outcome set",
+   "instrument_p": 0.895,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.07",
+   "topic": "pressure-convergence resultant: tension 0.0, pressure modera",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-18",
+   "resolve_by": "2026-11-02",
+   "claim": "Outcome of 'What Beijing and Chinese labs do over the next 45 days on open-weight releases, domestic silicon and AI governance': extend domestic-silicon exclusion",
+   "criteria": "The observable decision/outcome by 2026-11-02; 'extend domestic-silicon exclusion' as defined in the trace's outcome set",
+   "instrument_p": 0.327,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.08",
+   "topic": "pressure-convergence resultant: tension 0.579, pressure high",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "H",
+   "model": "ai-pressure-field",
+   "repo": "https://github.com/EmAssets/ai-pressure-field",
+   "ledger": "H-1",
+   "commit": "71daa15",
+   "made_on": "2026-09-19",
+   "resolve_by": "2026-12-17",
+   "claim": "The load-bearing floor is E10-into-structure (institutional crystallization with externally-held veto) rather than E9 (sentiment) or E12 (state assertion) alone, because every minute's outcome collapses to the same non-binding bucket unless some arra",
+   "criteria": "Text of any announced evaluator/oversight arrangement (Anthropic's or another lab's): does it name who selects the evaluator, who can revoke access, and whether findings publish without the regulated lab's consent",
+   "instrument_p": 0.6,
+   "baseline_p": null,
+   "status": "open",
+   "id": "H-1.09",
+   "topic": "arena arena-meta-coxon-resignation-2026-09-19-meta2, judge s",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "I",
+   "model": "blindspot-model",
+   "repo": "https://github.com/EmAssets/blindspot-model",
+   "ledger": "I-1",
+   "commit": "4289ba4",
+   "made_on": "2026-09-16",
+   "resolve_by": "2027-03-31",
+   "claim": "When this criticality resolves, the resolving event arrives from an UNMONITORED dimension — and specifically from one of the registered blind spots: moratorium sunset/renewal outcomes (not enactment counts); behind-the-meter gas turbine order books and state air permits for on-site combustion; November 2026 state/local election outcomes where data centers are a ballot issue; ex-US capacity substitution (Gulf states, India, Nordics) in hyperscaler siting announcements; water-withdrawal permit denials by state engineers and groundwater districts",
+   "criteria": "Code the resolving event's arrival dimension against the registration moratorium-wave.2026-09-16.json. HIT if it arrived from a registered blind-spot dimension; PARTIAL if from an unmonitored dimension NOT on the list (weak claim holds, strong fails); MISS if from a dimension in the monitored set. Resolution rule: codes as RESOLVED when one of: (i) at least one statewide moratorium (e.g. NY) remains in force past its first sunset with no federal/court override, and a hyperscaler explicitly cites US siting/permitting friction as a reason for reduced US capex guidance or relocated capacity in an earnings call; (ii) federal preemption (statute, EO with enforceable teeth, or appellate ruling) nullifies state/local moratoria; (iii) the H1-2026 municipal moratorium wave majority lapses at sunset without renewal and buildout proceeds materially unchanged. Code the arrival dimension by which channel produced the triggering fact: monitored-set channel (capex/grid/tariff/debt data) vs. one of the five blindspot dimensions above.",
+   "instrument_p": 0.6,
+   "baseline_p": null,
+   "status": "open",
+   "id": "I-1.01",
+   "topic": "P1: watched dimensions get managed; residual surprise concen",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  },
+  {
+   "instrument": "I",
+   "model": "blindspot-model",
+   "repo": "https://github.com/EmAssets/blindspot-model",
+   "ledger": "I-1",
+   "commit": "4289ba4",
+   "made_on": "2026-09-16",
+   "resolve_by": "2026-10-31",
+   "claim": "When this criticality resolves, the resolving event arrives from an UNMONITORED dimension — and specifically from one of the registered blind spots: US congressional statute or rider (e.g., chip-security mandate, outbound investment restriction, GAIN AI Act-style bill); DOJ indictment or civil litigation over distillation/IP theft (e.g., an Anthropic- or OpenAI-style suit reaching a court order); multilateral UN/Geneva AI governance track (UNGA high-level week Sept 22-26, UN Global Dialogue on AI Governance); third-country compute/data-center access and cloud KYC rules (Malaysia, UAE, Singapore transshipment or hosting); Chinese unilateral domestic AI regulation (CAC/TC260 frontier model standards); technical anti-distillation countermeasures deployed unilaterally by US labs (API poisoning, output watermarking)",
+   "criteria": "Code the resolving event's arrival dimension against the registration us-china-ai-track.2026-09-16.json. HIT if it arrived from a registered blind-spot dimension; PARTIAL if from an unmonitored dimension NOT on the list (weak claim holds, strong fails); MISS if from a dimension in the monitored set. Resolution rule: Resolved BINDING if a joint US-China text (summit communique, MOU, or standing mechanism) names a specific actor, action, and date, or creates a dated follow-on session with enforcement/verification language. Resolved NON-BINDING if the summit or talks produce only a statement to 'continue dialogue' with no date or mechanism. Resolved COLLAPSED if the Sept 24 summit passes with no AI text, or either side explicitly suspends talks (China has already signaled talks 'cannot proceed' without agreement on defining AI safety). Code the arrival dimension by identifying which channel produced the actual constraining event: bilateral summit text vs. one of the six blind-spot channels (congressional statute, litigation, UN/multilateral text, third-country compute rule, Chinese unilateral regulation, or lab-side technical countermeasure).",
+   "instrument_p": 0.6,
+   "baseline_p": null,
+   "status": "open",
+   "id": "I-1.02",
+   "topic": "P1: watched dimensions get managed; residual surprise concen",
+   "reasoning_open": true,
+   "precedent": {
+    "strength": "none"
+   }
+  }
+ ],
+ "grading_windows": [
+  {
+   "opens": "2026-10-02",
+   "closes": "2026-10-06"
+  }
+ ],
+ "schema": {
+  "status": "open | hit | partial | miss | unresolvable",
+  "grading_fields": "graded_on, what_happened, reasoning_unsealed (added when a prediction is graded)",
+  "scoring": "Brier vs outcome (hit=1, partial=0.5, miss=0); unresolvable excluded",
+  "disclosure": "Instruments A-G are sealed: reasoning is hash-committed and disclosed only at grading. Instruments H onward are NAMED and OPEN: the model, its repository and its full reasoning are public now, before the outcome. Both are pre-registered and graded the same way; they differ only in when the reasoning becomes readable."
+ }
+}
