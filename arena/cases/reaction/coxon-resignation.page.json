@@ -230,7 +230,66 @@
     "cost": "Moderate. A unilateral commitment binding his own company, made in public.",
     "src": "https://darioamodei.com/post/we-must-pace-the-frontier"
    },
-   "power": "CEO, Anthropic — sets that lab’s release policy"
+   "power": "CEO, Anthropic — sets that lab’s release policy",
+   "pressure": {
+    "target": "Frontier AI labs (OpenAI, Anthropic, Google DeepMind, Meta, xAI)",
+    "question": "What frontier AI labs do over the next 45 days on release pace, safety commitments and regulatory engagement",
+    "band": "saturated",
+    "total": 10.85,
+    "tension": 0.244,
+    "dist": [
+     [
+      "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      0.674
+     ],
+     [
+      "loosen usage/safety restrictions to secure government contracts",
+      0.217
+     ],
+     [
+      "delay/no-change",
+      0.109
+     ]
+    ],
+    "vectors": [
+     {
+      "source": "White House executive directive + DoD + GSA (single command/procurement chain)",
+      "domain": "state-legal",
+      "push": "loosen usage/safety restrictions to secure government contracts",
+      "consequence": "exclusion from GSA Multiple Award Schedule and USAi.gov, removal of system integrations from federal platforms, exclusion from Pentagon classified-network contracts awarded to seven rival ve",
+      "severity": "high",
+      "credibility": 0.85,
+      "demonstrated": "2026-08-27"
+     },
+     {
+      "source": "European Commission AI Office, under Regulation (EU) 2024/1689",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "fines up to €15M or 3% of global annual turnover, imposable by the AI Office now that enforcement powers are active",
+      "severity": "high",
+      "credibility": 0.25,
+      "demonstrated": "never — powers active since 2026-08-02, no formal proceeding found against a named lab"
+     },
+     {
+      "source": "California Attorney General, under SB 53 (Transparency in Frontier Artificial Intelligence Act)",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "civil penalties up to $1,000,000 per violation, enforceable by the CA Attorney General",
+      "severity": "low",
+      "credibility": 0.25,
+      "demonstrated": "never — law effective 2026-01-01, no AG enforcement action found"
+     },
+     {
+      "source": "California & Delaware Attorneys General, via executed MOU with OpenAI's nonprofit Foundation",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "breach exposes the for-profit restructuring to reopened AG review/objection, since the recapitalization's non-objection was conditioned on this commitment",
+      "severity": "med",
+      "credibility": 0.25,
+      "demonstrated": "never — MOU executed 2025-10-27, no breach action found"
+     }
+    ]
+   }
   },
   {
    "id": "altman",
@@ -248,7 +307,66 @@
      "https://youtu.be/W8IVKMGbUZE"
     ]
    ],
-   "power": "CEO, OpenAI"
+   "power": "CEO, OpenAI",
+   "pressure": {
+    "target": "Frontier AI labs (OpenAI, Anthropic, Google DeepMind, Meta, xAI)",
+    "question": "What frontier AI labs do over the next 45 days on release pace, safety commitments and regulatory engagement",
+    "band": "saturated",
+    "total": 10.85,
+    "tension": 0.244,
+    "dist": [
+     [
+      "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      0.674
+     ],
+     [
+      "loosen usage/safety restrictions to secure government contracts",
+      0.217
+     ],
+     [
+      "delay/no-change",
+      0.109
+     ]
+    ],
+    "vectors": [
+     {
+      "source": "White House executive directive + DoD + GSA (single command/procurement chain)",
+      "domain": "state-legal",
+      "push": "loosen usage/safety restrictions to secure government contracts",
+      "consequence": "exclusion from GSA Multiple Award Schedule and USAi.gov, removal of system integrations from federal platforms, exclusion from Pentagon classified-network contracts awarded to seven rival ve",
+      "severity": "high",
+      "credibility": 0.85,
+      "demonstrated": "2026-08-27"
+     },
+     {
+      "source": "European Commission AI Office, under Regulation (EU) 2024/1689",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "fines up to €15M or 3% of global annual turnover, imposable by the AI Office now that enforcement powers are active",
+      "severity": "high",
+      "credibility": 0.25,
+      "demonstrated": "never — powers active since 2026-08-02, no formal proceeding found against a named lab"
+     },
+     {
+      "source": "California Attorney General, under SB 53 (Transparency in Frontier Artificial Intelligence Act)",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "civil penalties up to $1,000,000 per violation, enforceable by the CA Attorney General",
+      "severity": "low",
+      "credibility": 0.25,
+      "demonstrated": "never — law effective 2026-01-01, no AG enforcement action found"
+     },
+     {
+      "source": "California & Delaware Attorneys General, via executed MOU with OpenAI's nonprofit Foundation",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "breach exposes the for-profit restructuring to reopened AG review/objection, since the recapitalization's non-objection was conditioned on this commitment",
+      "severity": "med",
+      "credibility": 0.25,
+      "demonstrated": "never — MOU executed 2025-10-27, no breach action found"
+     }
+    ]
+   }
   },
   {
    "id": "musk",
@@ -266,7 +384,66 @@
      "https://youtu.be/W8IVKMGbUZE"
     ]
    ],
-   "power": "CEO, xAI — also Tesla and SpaceX"
+   "power": "CEO, xAI — also Tesla and SpaceX",
+   "pressure": {
+    "target": "Frontier AI labs (OpenAI, Anthropic, Google DeepMind, Meta, xAI)",
+    "question": "What frontier AI labs do over the next 45 days on release pace, safety commitments and regulatory engagement",
+    "band": "saturated",
+    "total": 10.85,
+    "tension": 0.244,
+    "dist": [
+     [
+      "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      0.674
+     ],
+     [
+      "loosen usage/safety restrictions to secure government contracts",
+      0.217
+     ],
+     [
+      "delay/no-change",
+      0.109
+     ]
+    ],
+    "vectors": [
+     {
+      "source": "White House executive directive + DoD + GSA (single command/procurement chain)",
+      "domain": "state-legal",
+      "push": "loosen usage/safety restrictions to secure government contracts",
+      "consequence": "exclusion from GSA Multiple Award Schedule and USAi.gov, removal of system integrations from federal platforms, exclusion from Pentagon classified-network contracts awarded to seven rival ve",
+      "severity": "high",
+      "credibility": 0.85,
+      "demonstrated": "2026-08-27"
+     },
+     {
+      "source": "European Commission AI Office, under Regulation (EU) 2024/1689",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "fines up to €15M or 3% of global annual turnover, imposable by the AI Office now that enforcement powers are active",
+      "severity": "high",
+      "credibility": 0.25,
+      "demonstrated": "never — powers active since 2026-08-02, no formal proceeding found against a named lab"
+     },
+     {
+      "source": "California Attorney General, under SB 53 (Transparency in Frontier Artificial Intelligence Act)",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "civil penalties up to $1,000,000 per violation, enforceable by the CA Attorney General",
+      "severity": "low",
+      "credibility": 0.25,
+      "demonstrated": "never — law effective 2026-01-01, no AG enforcement action found"
+     },
+     {
+      "source": "California & Delaware Attorneys General, via executed MOU with OpenAI's nonprofit Foundation",
+      "domain": "state-legal",
+      "push": "add pre-deployment gates, safeguards, or disclosures beyond current practice",
+      "consequence": "breach exposes the for-profit restructuring to reopened AG review/objection, since the recapitalization's non-objection was conditioned on this commitment",
+      "severity": "med",
+      "credibility": 0.25,
+      "demonstrated": "never — MOU executed 2025-10-27, no breach action found"
+     }
+    ]
+   }
   },
   {
    "id": "sacks",
@@ -284,7 +461,48 @@
      "https://youtu.be/W8IVKMGbUZE"
     ]
    ],
-   "power": "White House AI &amp; Crypto Czar"
+   "power": "White House AI &amp; Crypto Czar",
+   "pressure": {
+    "target": "US federal executive branch (White House, OSTP, Commerce/BIS)",
+    "question": "What the US federal executive does over the next 45 days on AI regulation, preemption of state law, and export controls",
+    "band": "moderate",
+    "total": 3.05,
+    "tension": 0.0,
+    "dist": [
+     [
+      "delay/no-change",
+      0.895
+     ],
+     [
+      "escalates state-law preemption (new DOJ suits / BEAD funding conditions enforced)",
+      0.105
+     ],
+     [
+      "tightens export controls (new Entity List additions or chip-rule tightening)",
+      0.0
+     ]
+    ],
+    "vectors": [
+     {
+      "source": "People's Republic of China (MOFCOM / State Council)",
+      "domain": "foreign",
+      "push": "delay/no-change",
+      "consequence": "MOFCOM export-control denial and government-procurement bans on named US rare-earth and defense-linked firms (MP Materials, USA Rare Earth, 8 others; 46 firms barred from PRC government proc",
+      "severity": "high",
+      "credibility": 0.85,
+      "demonstrated": "2026-06-22"
+     },
+     {
+      "source": "U.S. District Court, District of Colorado (pending ruling on DOJ's Equal Protection theory in xAI v. Colorado / US v. Colorado)",
+      "domain": "institutional",
+      "push": "escalates state-law preemption (new DOJ suits / BEAD funding conditions enforced)",
+      "consequence": "an adverse merits ruling would strip DOJ's lead legal theory for its AI Litigation Task Force nationwide, undercutting the mechanism the executive is relying on to challenge all 38 states' A",
+      "severity": "med",
+      "credibility": 0.25,
+      "demonstrated": "never (enforcement only preliminarily suspended by joint motion 2026-04-27; no merits ruling yet)"
+     }
+    ]
+   }
   },
   {
    "id": "metr",
@@ -343,7 +561,48 @@
      "https://youtu.be/W8IVKMGbUZE"
     ]
    ],
-   "power": "President of the United States"
+   "power": "President of the United States",
+   "pressure": {
+    "target": "US federal executive branch (White House, OSTP, Commerce/BIS)",
+    "question": "What the US federal executive does over the next 45 days on AI regulation, preemption of state law, and export controls",
+    "band": "moderate",
+    "total": 3.05,
+    "tension": 0.0,
+    "dist": [
+     [
+      "delay/no-change",
+      0.895
+     ],
+     [
+      "escalates state-law preemption (new DOJ suits / BEAD funding conditions enforced)",
+      0.105
+     ],
+     [
+      "tightens export controls (new Entity List additions or chip-rule tightening)",
+      0.0
+     ]
+    ],
+    "vectors": [
+     {
+      "source": "People's Republic of China (MOFCOM / State Council)",
+      "domain": "foreign",
+      "push": "delay/no-change",
+      "consequence": "MOFCOM export-control denial and government-procurement bans on named US rare-earth and defense-linked firms (MP Materials, USA Rare Earth, 8 others; 46 firms barred from PRC government proc",
+      "severity": "high",
+      "credibility": 0.85,
+      "demonstrated": "2026-06-22"
+     },
+     {
+      "source": "U.S. District Court, District of Colorado (pending ruling on DOJ's Equal Protection theory in xAI v. Colorado / US v. Colorado)",
+      "domain": "institutional",
+      "push": "escalates state-law preemption (new DOJ suits / BEAD funding conditions enforced)",
+      "consequence": "an adverse merits ruling would strip DOJ's lead legal theory for its AI Litigation Task Force nationwide, undercutting the mechanism the executive is relying on to challenge all 38 states' A",
+      "severity": "med",
+      "credibility": 0.25,
+      "demonstrated": "never (enforcement only preliminarily suspended by joint motion 2026-04-27; no merits ruling yet)"
+     }
+    ]
+   }
   },
   {
    "id": "huang",
@@ -362,7 +621,10 @@
     ]
    ],
    "caveat": "Reported as one scene with Trump. Separating the two acts is my reading, and it is the reading this diagram most depends on.",
-   "power": "CEO, Nvidia — controls the compute supply"
+   "power": "CEO, Nvidia — controls the compute supply",
+   "pressure": {
+    "none": "No pressure field has been computed for Nvidia or its CEO. The labs field measures pressure on model-release decisions, which is not the question a compute supplier faces; borrowing it would report a number about someone else."
+   }
   },
   {
    "id": "conspiracy",
@@ -404,5 +666,6 @@
   }
  ],
  "dossier_note": "A dossier is written only where sourced material exists. An actor with no dossier has none on file — that is a gap in this reading, not a judgement about them. Nothing here asserts what anyone believes, wants or fears.",
- "power_note": "‘Power’ marks an individual who can change what happens by DECIDING rather than by persuading — a lab CEO, a head of state, the supplier of the compute. It is read from the role, not from how loud the act was: the 172-million-view audience is the loudest node here and decides nothing. Coxon is deliberately unmarked. His act was giving up a position inside one of these companies, and that is precisely why it carried."
+ "power_note": "‘Power’ marks an individual who can change what happens by DECIDING rather than by persuading — a lab CEO, a head of state, the supplier of the compute. It is read from the role, not from how loud the act was: the 172-million-view audience is the loudest node here and decides nothing. Coxon is deliberately unmarked. His act was giving up a position inside one of these companies, and that is precisely why it carried.",
+ "pressure_note": "Pressure is computed, not asserted: each vector is a named source with a severity, a credibility read from whether that source has demonstrated follow-through, and a time-sensitivity. Plain arithmetic turns the vectors into an outcome distribution. IMPORTANT: these fields are computed for INSTITUTIONS — 'frontier AI labs', 'the US federal executive' — not for the named individual. A CEO sits inside that field and is not identical to it. Shown here as the field the person is standing in, never as a reading of the person."
 }

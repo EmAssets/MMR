@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="An interactive map of who was actually responding to whom after the Coxon resignation. Pivot any actor to the centre and read their dossier.">
+<meta name="description" content="An interactive map of who was actually responding to whom after the Coxon resignation. Pivot any actor to the centre and read their dossier and pressure field.">
 <meta property="og:title" content="Who Was Looking At What">
 <meta property="og:description" content="Sacks attacked the proposal. Altman agreed with pacing the frontier. Neither was responding to the resignation.">
 <meta property="og:type" content="article">
@@ -255,6 +255,48 @@
     background:var(--sunk); font-size:13px; line-height:1.5; color:var(--ink-2);
   }
   .power-line b{color:var(--ink); font-weight:600}
+  .pf-head{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-bottom:6px}
+  .pf-band{
+    font:600 10px "IBM Plex Mono", monospace; letter-spacing:.09em; text-transform:uppercase;
+    border:1px solid; border-radius:2px; padding:3px 8px;
+  }
+  .pf-tot{font:400 11.5px "IBM Plex Mono", monospace; color:var(--ink-3)}
+  .pf-target{margin:0; font-size:12.5px; line-height:1.45; color:var(--ink-3)}
+  .pf-target b{color:var(--ink-2); font-weight:500}
+  .pf-dist{list-style:none; margin:0; padding:0; display:grid; gap:5px}
+  .pf-dist li{
+    position:relative; display:flex; gap:9px; align-items:baseline;
+    font-size:12.5px; line-height:1.4; padding:6px 9px; overflow:hidden;
+    background:var(--sunk); border-radius:2px;
+  }
+  .pf-bar{
+    position:absolute; left:0; top:0; bottom:0; background:var(--teal);
+    opacity:.14; pointer-events:none;
+  }
+  .pf-pct{
+    font:600 12px "IBM Plex Mono", monospace; color:var(--teal);
+    min-width:2.6rem; position:relative; font-variant-numeric:tabular-nums;
+  }
+  .pf-out{color:var(--ink-2); position:relative; flex:1}
+  .pf-vecs{list-style:none; margin:0; padding:0; display:grid; gap:9px}
+  .pf-vecs li{
+    padding:9px 11px; background:var(--sunk); border-left:2px solid var(--rule-2);
+    border-radius:0 2px 2px 0;
+  }
+  .pf-src{
+    font-size:12.5px; font-weight:500; color:var(--ink); line-height:1.4;
+    display:flex; gap:7px; align-items:baseline; flex-wrap:wrap;
+  }
+  .pf-sev{
+    font:600 9.5px "IBM Plex Mono", monospace; letter-spacing:.07em;
+    text-transform:uppercase; color:var(--amber);
+  }
+  .pf-push{font-size:12.5px; color:var(--teal); margin-top:3px; line-height:1.4}
+  .pf-cons{font-size:12px; color:var(--ink-3); margin-top:4px; line-height:1.45}
+  .pf-dem{
+    font:400 11px "IBM Plex Mono", monospace; color:var(--ink-3);
+    margin-top:4px; opacity:.85;
+  }
 
   .grid{display:grid; gap:18px; margin-top:clamp(30px,4vw,46px)}
   @media (min-width:760px){ .grid{grid-template-columns:repeat(3,1fr)} }
@@ -331,6 +373,8 @@
       five lab or chip CEOs, and a head of state. They are drawn larger, with an outer ring.</p>
       <p>Coxon is not one of them — and that is the point. His act was giving up a position
       inside one of those companies, which is why it carried.</p>
+      <p>Centre one and the panel shows the <em>pressure field</em> they stand in: named sources,
+      what each pushes toward, and what happens to them if they refuse.</p>
     </div>
     <div class="note">
       <h3>The commentator</h3>
@@ -649,7 +693,7 @@ function pick(id){
     + `<ul class="refs">` + (n.refs || []).map(r =>
         `<li><a href="${esc(r[1])}" target="_blank" rel="noopener noreferrer">${esc(r[0])}</a></li>`
       ).join("") + `</ul>`
-    + (n.id === hub ? dossierCard(n) : "")
+    + (n.id === hub ? dossierCard(n) + pressureCard(n) : "")
     + `</div>`;
   draw();
 }
@@ -701,6 +745,51 @@ function dossierCard(n){
   if (d.cost){
     s += `<div class="qlab" style="margin-top:13px">what the act cost them</div>`
       + `<p class="risk">${esc(d.cost)}</p>`;
+  }
+  return s + `</div>`;
+}
+
+/* The pressure field the actor is standing in.
+   Computed, not asserted: every vector names a source, what it pushes toward,
+   and THE CONSEQUENCE of not complying — which is what separates a pressure
+   from an opinion. Severity, credibility and timescale feed plain arithmetic
+   that produces the distribution.
+
+   The fields are computed for INSTITUTIONS. A CEO sits inside one and is not
+   identical to it, so the card says whose field it is rather than implying the
+   number describes the person. */
+function pressureCard(n){
+  const p = n.pressure;
+  if (!p) return "";
+  if (p.none) return `<div class="doss"><div class="qlab">pressure on them</div>`
+    + `<p class="doss-none">${esc(p.none)}</p></div>`;
+  const band = String(p.band || "");
+  const tone = band === "saturated" ? "--miss" : band === "high" ? "--amber"
+             : band === "moderate" ? "--slate" : "--ink-3";
+  let s = `<div class="doss"><div class="qlab">the pressure field they stand in</div>`
+    + `<div class="pf-head">`
+    + `<span class="pf-band" style="border-color:${cssv(tone)};color:${cssv(tone)}">`
+    + `${esc(band)}</span>`
+    + `<span class="pf-tot">total ${esc(p.total)}</span>`
+    + (p.tension != null ? `<span class="pf-tot">tension ${esc(p.tension)}</span>` : "")
+    + `</div>`
+    + `<p class="pf-target">computed for <b>${esc(p.target)}</b> — not for this person alone</p>`;
+  if (p.dist && p.dist.length){
+    s += `<div class="qlab" style="margin-top:11px">what the field pushes toward, next 45 days</div>`
+      + `<ul class="pf-dist">` + p.dist.map(([k, v]) =>
+        `<li><span class="pf-bar" style="width:${Math.round(v*100)}%"></span>`
+        + `<span class="pf-pct">${Math.round(v*100)}%</span>`
+        + `<span class="pf-out">${esc(k)}</span></li>`).join("") + `</ul>`;
+  }
+  if (p.vectors && p.vectors.length){
+    s += `<div class="qlab" style="margin-top:12px">the strongest vectors</div>`
+      + `<ul class="pf-vecs">` + p.vectors.map(v =>
+        `<li><div class="pf-src">${esc(v.source)}`
+        + (v.severity ? `<span class="pf-sev">${esc(v.severity)}</span>` : "") + `</div>`
+        + `<div class="pf-push">→ ${esc(v.push)}</div>`
+        + (v.consequence ? `<div class="pf-cons">if refused: ${esc(v.consequence)}</div>` : "")
+        + (v.demonstrated ? `<div class="pf-dem">demonstrated ${esc(v.demonstrated)}</div>` : "")
+        + `</li>`).join("") + `</ul>`;
   }
   return s + `</div>`;
 }
