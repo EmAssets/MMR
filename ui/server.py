@@ -769,6 +769,51 @@ kbd { font-family:"IBM Plex Mono",monospace; background:var(--panel); border:1px
 
 <section id="arena">
   <h2>Arena — claim, defend, be judged blind</h2>
+
+  <div class="card" style="margin-bottom:1rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <h3 style="margin:0">Start one — you be the judge</h3>
+      <button class="act" id="ah-toggle" onclick="ahToggle()">New arena</button>
+    </div>
+    <div id="ah-compose" hidden style="margin-top:.8rem">
+      <p class="muted" style="font-size:.82rem">
+        Models claim in public before seeing each other, then defend or revise. Normally a
+        blind judge rules. Here <b>you</b> do — and your ruling becomes the next round's
+        premise, so the panel argues against your call.
+        <br><b style="color:var(--flag)">You are not a blind judge.</b> You see which model
+        said what. These runs are marked <span class="mono">human-judged</span> and
+        <span class="mono">--score</span> refuses them, so they never sit in the same
+        column as blind ones.
+      </p>
+      <input id="ah-title" placeholder="Title — what is this case called?"
+        style="width:100%;margin:.4rem 0;padding:.55rem .7rem;background:var(--bg);
+               border:1px solid var(--line);border-radius:6px;color:var(--ink);font:inherit">
+      <textarea id="ah-brief" rows="6" placeholder="The brief. State the assumption you are granting, and say not to argue about whether it happens. Do NOT state what you think follows — that hands the panel an answer to paraphrase."
+        style="width:100%;margin:.2rem 0;padding:.55rem .7rem;background:var(--bg);
+               border:1px solid var(--line);border-radius:6px;color:var(--ink);font:inherit;
+               font-size:.88rem;resize:vertical"></textarea>
+      <input id="ah-question" placeholder="The question the panel answers (optional)"
+        style="width:100%;margin:.2rem 0 .6rem;padding:.55rem .7rem;background:var(--bg);
+               border:1px solid var(--line);border-radius:6px;color:var(--ink);font:inherit">
+      <div style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-bottom:.5rem">
+        <label class="muted" style="font-size:.82rem">rounds
+          <select id="ah-cycles" style="margin-left:.3rem;background:var(--bg);color:var(--ink);
+                  border:1px solid var(--line);border-radius:5px;padding:.3rem .4rem">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+          </select></label>
+        <label class="muted" style="font-size:.82rem">
+          <input type="checkbox" id="ah-dry"> dry run (no LLM calls, free)</label>
+      </div>
+      <div class="muted" style="font-size:.82rem;margin-bottom:.3rem">
+        Panel — pick <b>2 or more</b>. <span id="ah-count"></span></div>
+      <div id="ah-models" style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.7rem"></div>
+      <button class="act" onclick="ahStart(this)">Start arena</button>
+      <span class="muted" id="ah-msg" style="margin-left:.6rem"></span>
+    </div>
+  </div>
+
+  <div id="ah-pending"></div>
+
   <p id="ar-note" class="muted"></p>
   <div id="ar-pick" style="margin:.6rem 0"></div>
   <div id="ar-body"></div>
@@ -1873,6 +1918,138 @@ async function loadGloss(){
   relinkAll();
   if (location.hash.startsWith('#g-')) setTimeout(()=>openGloss(location.hash.slice(1)), 250);
 }
+/* ---- human-judged arena: compose, pick a panel, rule ---- */
+let ahSel = new Set();
+function ahToggle(){
+  const box = document.getElementById('ah-compose');
+  box.hidden = !box.hidden;
+  document.getElementById('ah-toggle').textContent = box.hidden ? 'New arena' : 'Close';
+  if (!box.hidden) ahModels();
+}
+async function ahModels(){
+  const el = document.getElementById('ah-models');
+  if (el.dataset.filled) return;
+  // the fetch takes a moment; an empty row reads as "no models" rather than
+  // "not loaded yet", and on a phone that is the whole panel looking broken
+  el.innerHTML = '<span class="muted" style="font-size:.82rem">loading models…</span>';
+  let ms = [];
+  try { ms = await (await fetch('/api/models')).json(); }
+  catch(e){ el.innerHTML = '<span class="muted">could not load models</span>'; return; }
+  el.dataset.filled = '1';
+  el.innerHTML = ms.map(m =>
+    `<button type="button" class="badge ahm" data-m="${esc(m.name)}" onclick="ahPick(this)" `+
+    `title="${esc(m.kind || m.title || '')}" `+
+    `style="cursor:pointer;border:1px solid var(--line);background:var(--bg);color:var(--ink);`+
+    `padding:.4rem .7rem;font:inherit;font-size:.8rem;border-radius:999px">${esc(m.name)}</button>`
+  ).join('');
+  ahCount();
+}
+function ahPick(b){
+  const m = b.dataset.m;
+  if (ahSel.has(m)){ ahSel.delete(m); b.classList.remove('ok');
+                     b.style.borderColor = 'var(--line)'; b.style.color = 'var(--ink)'; }
+  else { ahSel.add(m); b.classList.add('ok');
+         b.style.borderColor = 'var(--acc)'; b.style.color = 'var(--accd)'; }
+  ahCount();
+}
+function ahCount(){
+  const n = ahSel.size;
+  document.getElementById('ah-count').textContent =
+    n === 0 ? 'none picked' :
+    n === 1 ? '1 picked — a panel of one has nobody to argue with' :
+    n + ' picked: ' + [...ahSel].join(', ');
+}
+async function ahStart(btn){
+  const msg = document.getElementById('ah-msg');
+  const title = document.getElementById('ah-title').value.trim();
+  const brief = document.getElementById('ah-brief').value.trim();
+  if (!title || !brief){ msg.textContent = 'needs a title and a brief'; return; }
+  if (ahSel.size < 2){ msg.textContent = 'pick at least 2 models'; return; }
+  btn.disabled = true; msg.textContent = 'starting — round 1 is arguing…';
+  try {
+    const r = await (await fetch('/api/arena/start', {method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({title: title, brief: brief,
+        question: document.getElementById('ah-question').value.trim(),
+        models: [...ahSel],
+        cycles: +document.getElementById('ah-cycles').value,
+        dry: document.getElementById('ah-dry').checked})})).json();
+    if (r.error){ msg.textContent = r.error; btn.disabled = false; return; }
+    msg.textContent = 'started — this can take a few minutes. It will appear below.';
+    setTimeout(ahPending, 4000);
+  } catch(e){ msg.textContent = 'failed: ' + e; }
+  btn.disabled = false;
+}
+async function ahPending(){
+  const el = document.getElementById('ah-pending');
+  let d;
+  try { d = await (await fetch('/api/arena/pending')).json(); }
+  catch(e){ return; }
+  const ps = d.pending || [];
+  if (!ps.length){ el.innerHTML = ''; return; }
+  el.innerHTML = ps.map(st => {
+    const rows = (st.minutes_rows || []).filter(m => m.round === 2);
+    const r1 = (st.minutes_rows || []).filter(m => m.round === 1);
+    const claimOf = s => {
+      const m2 = rows.find(x => x.signed_by === s) || r1.find(x => x.signed_by === s);
+      if (!m2) return '';
+      const b = m2.body || {};
+      return String(b.claim || b.revised_claim || b.defence || '');
+    };
+    const cards = (st.panel || []).map(p => {
+      const m2 = rows.find(x => x.signed_by === p.slug);
+      const mv = m2 ? (m2.body || {}).move || '' : '';
+      return `<div class="claim" style="margin:.5rem 0">`+
+        `<div class="chead" style="font-family:IBM Plex Mono,monospace;font-size:.72rem;`+
+        `color:var(--sub);display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">`+
+        `<b style="color:var(--ink)">${esc(p.slug)}</b>`+
+        (mv ? `<span class="badge">${esc(mv)}</span>` : '')+
+        `<span>${esc(p.version || '')}</span></div>`+
+        `<div class="ctext" style="font-weight:400;font-size:.88rem;margin:.35rem 0">`+
+        `${esc(claimOf(p.slug)) || '<span class="muted">no claim recorded</span>'}</div>`+
+        `<button class="act" style="font-size:.85rem;padding:.7rem 1.1rem;min-height:44px"`+
+        ` onclick="ahRule('${esc(st.run_id)}','${esc(p.slug)}',this)">`+
+        `Pick as ruling</button></div>`;
+    }).join('');
+    return `<div class="card" style="border-color:var(--acc)">`+
+      `<div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap">`+
+      `<h3 style="margin:0">Your ruling — round ${st.cycle} of ${st.cycles_planned}</h3>`+
+      `<span class="badge" style="border-color:var(--flag);color:var(--flag)">human-judged</span></div>`+
+      `<p class="muted" style="font-size:.84rem;margin:.3rem 0 .6rem">${esc(st.case_title)}`+
+      `${st.dry_run ? ' · <b>dry run</b> — no LLM calls were made, so the claims are placeholders' : ''}</p>`+
+      cards +
+      `<details style="margin-top:.6rem"><summary class="muted" style="cursor:pointer">`+
+      `or write your own ruling instead</summary>`+
+      `<textarea id="ahr-${esc(st.run_id)}" rows="3" placeholder="Your ruling, in one sentence."`+
+      ` style="width:100%;margin:.4rem 0;padding:.5rem .7rem;background:var(--bg);`+
+      `border:1px solid var(--line);border-radius:6px;color:var(--ink);font:inherit;font-size:.88rem"></textarea>`+
+      `<input id="ahw-${esc(st.run_id)}" placeholder="Why — what in the minutes decided it"`+
+      ` style="width:100%;margin:.2rem 0 .5rem;padding:.5rem .7rem;background:var(--bg);`+
+      `border:1px solid var(--line);border-radius:6px;color:var(--ink);font:inherit;font-size:.88rem">`+
+      `<button class="act" style="font-size:.85rem;padding:.7rem 1.1rem;min-height:44px"`+
+      ` onclick="ahRule('${esc(st.run_id)}','',this)">Submit my ruling</button></details>`+
+      `<div class="muted" id="ahmsg-${esc(st.run_id)}" style="margin-top:.5rem;font-size:.82rem"></div></div>`;
+  }).join('');
+}
+async function ahRule(runId, pick, btn){
+  const msg = document.getElementById('ahmsg-' + runId);
+  const ta = document.getElementById('ahr-' + runId);
+  const wy = document.getElementById('ahw-' + runId);
+  const ruling = ta ? ta.value.trim() : '';
+  const because = wy ? wy.value.trim() : '';
+  if (!pick && !ruling){ if (msg) msg.textContent = 'pick a model, or write a ruling'; return; }
+  btn.disabled = true;
+  if (msg) msg.textContent = pick ? ('adopting ' + pick + '…') : 'recording your ruling…';
+  try {
+    const r = await (await fetch('/api/arena/rule', {method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({run_id: runId, pick: pick, ruling: ruling, because: because})})).json();
+    if (r.error){ if (msg) msg.textContent = r.error; btn.disabled = false; return; }
+    if (msg) msg.textContent = 'recorded — the next round is arguing against it…';
+    setTimeout(ahPending, 5000);
+  } catch(e){ if (msg) msg.textContent = 'failed: ' + e; btn.disabled = false; }
+}
+
 async function loadArena(runId){
   let d;
   try { d = await (await fetch("/api/arena" + (runId ? "?run=" + encodeURIComponent(runId) : ""))).json(); }
@@ -2151,7 +2328,7 @@ async function loadVisuals(){
     + esc((d.views||[]).join(', ')) + '</p>';
 }
 loadGardenPage(); loadHome(); loadVerdict(); loadModels(); loadTasks(); loadAssess(); loadEvents(); loadGloss(); loadBrainstorm(); loadMap(); loadExperts(); loadArena();
-loadTimeline(); loadVisuals();
+loadTimeline(); loadVisuals(); ahPending();
 loadEntities(); loadMindmap();
 {
   // Debounced so typing does not fire a request per keystroke.
@@ -2815,6 +2992,34 @@ class H(BaseHTTPRequestHandler):
                 rd["minutes_rows"] = rows
             data["runs"] = runs
             return self._send(200, data)
+        if p == "/api/arena/pending":
+            # Human-judged runs waiting on the operator. State lives on disk
+            # (awaiting-judge.json) rather than in this process, because a
+            # person takes hours and this server restarts.
+            adir = ROOT / "arena"
+            out = []
+            for d in sorted(adir.glob("arena-*-human"), reverse=True) if adir.exists() else []:
+                f = d / "awaiting-judge.json"
+                if not f.exists():
+                    continue
+                try:
+                    st = json.loads(f.read_text(encoding="utf-8"))
+                except ValueError:
+                    continue
+                if st.get("status") != "awaiting-judge":
+                    continue
+                mf = d / ("cycle-%d" % st.get("cycle", 1)) / "minutes.jsonl"
+                rows = []
+                if mf.exists():
+                    for line in mf.read_text(encoding="utf-8").splitlines():
+                        if line.strip():
+                            try:
+                                rows.append(json.loads(line))
+                            except ValueError:
+                                pass
+                st["minutes_rows"] = rows
+                out.append(st)
+            return self._send(200, {"pending": out})
         if p == "/api/experts":
             # Per-commentator view: what each said, what happened inside the
             # claim window, whether the view moved, and registered conflicts.
@@ -3329,6 +3534,102 @@ class H(BaseHTTPRequestHandler):
                                              f"(suites.brainstorm): {ev[:800]}")},
                                    ensure_ascii=False) + "\n")
             return self._send(200, {"ok": True, "id": bid})
+        if p == "/api/arena/start":
+            # Compose a case and argue cycle 1, then stop for the operator to
+            # rule. Runs in a thread: the panel rounds are real LLM calls and
+            # can take minutes, which is far longer than a request should hold.
+            import subprocess as _sp, threading as _th
+            title = (body.get("title") or "").strip()
+            brief = (body.get("brief") or "").strip()
+            question = (body.get("question") or "").strip()
+            models = [m for m in (body.get("models") or []) if isinstance(m, str)]
+            cycles = max(1, min(6, int(body.get("cycles") or 2)))
+            dry = bool(body.get("dry"))
+            if not title or not brief:
+                return self._send(400, {"error": "need a title and a brief"})
+            if len(models) < 2:
+                # A panel of one has nobody to defend against, and round 2 would
+                # show it an empty board. Same floor /api/brainstorm enforces.
+                return self._send(400, {"error": "pick at least 2 models — a panel of "
+                                                 "one has nobody to argue with"})
+            bad = [m for m in models if not re.fullmatch(r"[a-z0-9-]{1,60}", m)
+                   or not (TOOLS / m / "MODEL.md").exists()]
+            if bad:
+                return self._send(400, {"error": "unknown model(s): %s" % ", ".join(bad[:4])})
+            # The brief is written to a FILE and passed by path. It is operator
+            # prose -- newlines, quotes, whatever -- and must never become a
+            # shell argument. Same rule as the /api/run allow-list.
+            tmpd = UI / "arena-briefs"
+            tmpd.mkdir(parents=True, exist_ok=True)
+            import secrets as _sec
+            bf = tmpd / ("brief-%s.md" % _sec.token_hex(4))
+            bf.write_text(brief, encoding="utf-8")
+            cmd = [sys.executable, "-u", "-m", "suites.arena_human", "--start",
+                   "--title", title, "--brief-file", str(bf),
+                   "--models", ",".join(models), "--cycles", str(cycles)]
+            if question:
+                cmd += ["--question", question]
+            if dry:
+                cmd += ["--dry-run"]
+            logf = UI / "runs" / "arena_human.log"
+            logf.parent.mkdir(parents=True, exist_ok=True)
+            def _go():
+                with logf.open("w", encoding="utf-8") as fh:
+                    fh.write("$ " + " ".join(cmd[2:]) + "\n\n")
+                    fh.flush()
+                    try:
+                        _sp.run(cmd, cwd=str(ROOT), stdout=fh, stderr=_sp.STDOUT, timeout=3600)
+                    except Exception as e:
+                        fh.write("\n[failed] " + str(e) + "\n")
+                    finally:
+                        try:
+                            bf.unlink()
+                        except OSError:
+                            pass
+            _th.Thread(target=_go, daemon=True).start()
+            return self._send(200, {"ok": True, "started": True, "models": models,
+                                    "cycles": cycles, "dry": dry})
+        if p == "/api/arena/rule":
+            import subprocess as _sp, threading as _th
+            run_id = (body.get("run_id") or "").strip()
+            pick = (body.get("pick") or "").strip()
+            ruling = (body.get("ruling") or "").strip()
+            because = (body.get("because") or "").strip()
+            pivot = (body.get("pivot") or "").strip()
+            resolve_by = (body.get("resolve_by") or "").strip()
+            if not re.fullmatch(r"arena-[a-z0-9-]{1,120}-human", run_id):
+                return self._send(400, {"error": "bad run id"})
+            if not (ROOT / "arena" / run_id / "awaiting-judge.json").exists():
+                return self._send(404, {"error": "no pending arena at that id"})
+            if pick and not re.fullmatch(r"[a-z0-9-]{1,60}", pick):
+                return self._send(400, {"error": "bad pick"})
+            if not pick and not ruling:
+                return self._send(400, {"error": "pick a model's answer, or write your own ruling"})
+            if resolve_by and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", resolve_by):
+                return self._send(400, {"error": "resolve_by must be YYYY-MM-DD"})
+            cmd = [sys.executable, "-u", "-m", "suites.arena_human", "--rule", run_id]
+            if pick:
+                cmd += ["--pick", pick]
+            if ruling:
+                cmd += ["--ruling", ruling]
+            if because:
+                cmd += ["--because", because]
+            if pivot:
+                cmd += ["--pivot", pivot]
+            if resolve_by:
+                cmd += ["--resolve-by", resolve_by]
+            logf = UI / "runs" / "arena_human.log"
+            logf.parent.mkdir(parents=True, exist_ok=True)
+            def _go2():
+                with logf.open("a", encoding="utf-8") as fh:
+                    fh.write("\n$ " + " ".join(cmd[2:]) + "\n\n")
+                    fh.flush()
+                    try:
+                        _sp.run(cmd, cwd=str(ROOT), stdout=fh, stderr=_sp.STDOUT, timeout=3600)
+                    except Exception as e:
+                        fh.write("\n[failed] " + str(e) + "\n")
+            _th.Thread(target=_go2, daemon=True).start()
+            return self._send(200, {"ok": True, "run_id": run_id, "picked": pick or None})
         if p == "/api/capture":
             # Register a claim from the UI. Writes the same shape the suites read,
             # into the target model's own ledger — no special-case store.
