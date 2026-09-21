@@ -75,6 +75,18 @@ RULES, and the whole value of this depends on them:
 1. Decide from what the act ITSELF references. If someone attacks "the proposal",
    they are responding to the proposal, NOT to the earlier event that prompted
    the proposal. If someone replies to a post, they are responding to the post.
+
+1a. THE MOST COMMON ERROR IS ATTACHING EVERYTHING TO THE SEED. Before you write
+   any edge, re-read your own quoted span and ask: does it name the seed, or does
+   it name something that itself responded to the seed? "responding to their
+   departure" means the DEPARTURE is the target, not the event that caused the
+   departure. "cites the offer" means the OFFER is the target. If your quote
+   names an intermediate act, the edge points at the intermediate act. An edge
+   whose evidence names something other than its target is simply wrong.
+
+1b. Chains are expected and are the whole point. A five-item chronology can be
+   five layers deep. Do not flatten it because every item ultimately traces back
+   to the same origin -- of course it does; the question is by what route.
 2. Quote the span that licenses each edge, verbatim from the chronology above.
    If no span licenses it, set "inferred": true and say what you reasoned from.
    An honest inferred edge is fine; a fabricated quote destroys the whole record.
@@ -185,6 +197,28 @@ def validate(nodes: list, chronology: str) -> list:
             if norm(ev)[:60] and norm(ev)[:60] not in norm(chronology):
                 problems.append("%s cites a span not found in the chronology: %r"
                                 % (n.get("id"), ev[:60]))
+    # A "does the evidence name a different node than the target" check was
+    # tried here and REMOVED. On the real openai-nov-2023 extraction it missed
+    # both genuine errors and fired twice on correct edges, because node ids
+    # share words ("altman-posts" vs "altman-returns"). A detector that cries
+    # wolf while missing the fault is worse than none: it trains you to ignore
+    # it. The structural check below -- a chronology of N sequential acts that
+    # collapses to depth 1 -- catches the same failure without pretending to
+    # parse meaning out of a quote.
+
+    # EVERYTHING-ATTACHED-TO-THE-SEED. The failure mode that collapsed
+    # openai-nov-2023 from 4 layers to 2: most acts pointed straight at the
+    # seed, because every act ultimately traces back to it. Of course it does;
+    # the question is by what route. This is a smell, not proof, so it is
+    # reported as one.
+    if len(nodes) >= 6:
+        direct = sum(1 for n in nodes if n.get("responded_to") == (seeds[0] if seeds else None))
+        if direct >= len(nodes) * 0.6:
+            problems.append(
+                "%d of %d acts attach directly to the seed — chains may have been "
+                "flattened; check whether an act references an intermediate act"
+                % (direct, len(nodes)))
+
     # a cycle means someone responded to something that responded to them
     seen, stack = set(), set()
 
