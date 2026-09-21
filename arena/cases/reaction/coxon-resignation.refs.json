@@ -1,0 +1,21 @@
+{
+ "spec": "blast-refs-v1",
+ "case": "coxon-resignation",
+ "note": "Source tier per act. primary = traceable to the actor's own post or page; reported = two or more independent outlets; single = one commentary video, not traced to a primary post. Four of the six ring-2 acts are single-sourced, and those carry the headline finding.",
+ "tiers": {
+  "coxon-resignation": "primary",
+  "mass-online-audience": "reported",
+  "anthropic-alignment-science-lead": "reported",
+  "anthropic-alignment-team-lead": "reported",
+  "deepseek-engineer": "single",
+  "amodei-essay": "primary",
+  "altman-agrees": "single",
+  "musk-agrees": "single",
+  "sacks-attacks": "single",
+  "metr": "primary",
+  "trump-acceleration": "single",
+  "huang-acceleration": "single",
+  "conspiracy-readings": "single",
+  "primetime-video": "primary"
+ }
+}
