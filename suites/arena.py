@@ -986,6 +986,81 @@ def disagreement(minutes: list) -> dict:
 
 # ---------------------------------------------------------------- run
 
+def cycle_brief(case: dict, cyc: int, premise: str | None, stages: list,
+                premise_source: str = "an independent judge's ruling") -> str:
+    """The brief one cycle argues from, including any premise carried forward.
+
+    Split out because a human-judged run carries the SAME premise mechanism with
+    a different author, and the panel must be told which it is. A panelist that
+    cannot tell a judge's ruling from the operator's pick cannot argue against
+    the right thing.
+    """
+    brief = stages[cyc - 1] if stages and cyc <= len(stages) else case["brief"]
+    if premise:
+        brief += ("\n\nPREMISE CARRIED FROM THE PREVIOUS CYCLE (%s "
+                  "on the prior round's minutes — not a fact, and you may argue "
+                  "against it):\n%s" % (premise_source, premise))
+    return brief
+
+
+def argue_cycle(case: dict, panel: list, cyc: int, premise: str | None, dry: bool,
+                model_hint: str, stages: list, chain_head: str = "",
+                premise_source: str = "an independent judge's ruling") -> list:
+    """Rounds 1 and 2 of one cycle: claim in public, then defend or revise.
+
+    Extracted from run() so that judging can be deferred. run() calls this and
+    then judges inline; the human-judged path calls this, persists the minutes,
+    and stops until a person rules. Both get IDENTICAL panel behaviour because
+    it is the same code, which is the only way the two modes stay comparable.
+
+    Returns the cycle's minutes, chained from `chain_head`. Judging appends to
+    this list; it does not rebuild it.
+    """
+    print("\n  -- cycle %d --" % cyc)
+    minutes: list = []
+    brief = cycle_brief(case, cyc, premise, stages, premise_source)
+
+    # round 1 — claim, written before anyone sees anyone else.
+    #
+    # Every prompt is built before any call goes out, which is the same
+    # thing the blindness already required: a round-1 prompt cannot contain
+    # another model's minute because no such minute exists yet. So these run
+    # concurrently, and the minutes are still chained in panel order below.
+    r1_prompts = [
+        CLAIM.format(title=p["title"], slug=p["slug"], kind=p["kind"],
+                     one_line=p["one_line"], as_of=case["as_of"], brief=brief)
+        for p in panel]
+    r1_bodies = _call_many(model_hint, r1_prompts, dry)
+    for p, prompt, body in zip(panel, r1_prompts, r1_bodies):
+        minutes.append(_minute("claim", p, cyc, 1, body, prompt,
+                               minutes[-1]["minute_sha"] if minutes else chain_head))
+        print("     r1 %-26s grip=%-8s conf=%s" % (p["slug"], body.get("grip"), body.get("confidence")))
+
+    # round 2 — defend or revise, now seeing the others.
+    #
+    # The board is built once, from the completed round 1, so every defence
+    # sees the same material and none sees another defence. That was already
+    # true sequentially -- a later panelist never saw an earlier panelist's
+    # round-2 minute, because `board` is filtered to round 1.
+    board = "\n".join(
+        "- [%s] %s" % (m["signed_by"], str(m["body"].get("claim", ""))[:220])
+        for m in minutes if m["round"] == 1)
+    r2_prompts = []
+    for p in panel:
+        mine = next((m for m in minutes if m["signed_by"] == p["slug"] and m["round"] == 1), None)
+        others = "\n".join(l for l in board.splitlines() if not l.startswith("- [%s]" % p["slug"]))
+        r2_prompts.append(DEFEND.format(
+            title=p["title"], slug=p["slug"],
+            mine=json.dumps(mine["body"], ensure_ascii=False)[:700] if mine else "",
+            others=others or "(no other minutes)"))
+    r2_bodies = _call_many(model_hint, r2_prompts, dry)
+    for p, prompt, body in zip(panel, r2_prompts, r2_bodies):
+        minutes.append(_minute("defence", p, cyc, 2, body, prompt,
+                               minutes[-1]["minute_sha"]))
+        print("     r2 %-26s %-8s moved_by=%s" % (p["slug"], body.get("move"), body.get("moved_by")))
+    return minutes
+
+
 def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str,
         run_tag: str = "") -> None:
     cases = all_cases()
@@ -1034,52 +1109,8 @@ def run(case_slug: str, panel_spec: str, cycles: int, dry: bool, model_hint: str
     chain_head = ""   # links cycle N's first minute to cycle N-1's last
 
     for cyc in range(1, cycles + 1):
-        print("\n  -- cycle %d --" % cyc)
-        minutes = []
-        brief = stages[cyc - 1] if stages and cyc <= len(stages) else case["brief"]
-        if premise:
-            brief += ("\n\nPREMISE CARRIED FROM THE PREVIOUS CYCLE (an independent judge's "
-                      "ruling on the prior round's minutes — not a fact, and you may argue "
-                      "against it):\n%s" % premise)
-
-        # round 1 — claim, written before anyone sees anyone else.
-        #
-        # Every prompt is built before any call goes out, which is the same
-        # thing the blindness already required: a round-1 prompt cannot contain
-        # another model's minute because no such minute exists yet. So these run
-        # concurrently, and the minutes are still chained in panel order below.
-        r1_prompts = [
-            CLAIM.format(title=p["title"], slug=p["slug"], kind=p["kind"],
-                         one_line=p["one_line"], as_of=case["as_of"], brief=brief)
-            for p in panel]
-        r1_bodies = _call_many(model_hint, r1_prompts, dry)
-        for p, prompt, body in zip(panel, r1_prompts, r1_bodies):
-            minutes.append(_minute("claim", p, cyc, 1, body, prompt,
-                                   minutes[-1]["minute_sha"] if minutes else chain_head))
-            print("     r1 %-26s grip=%-8s conf=%s" % (p["slug"], body.get("grip"), body.get("confidence")))
-
-        # round 2 — defend or revise, now seeing the others.
-        #
-        # The board is built once, from the completed round 1, so every defence
-        # sees the same material and none sees another defence. That was already
-        # true sequentially -- a later panelist never saw an earlier panelist's
-        # round-2 minute, because `board` is filtered to round 1.
-        board = "\n".join(
-            "- [%s] %s" % (m["signed_by"], str(m["body"].get("claim", ""))[:220])
-            for m in minutes if m["round"] == 1)
-        r2_prompts = []
-        for p in panel:
-            mine = next((m for m in minutes if m["signed_by"] == p["slug"] and m["round"] == 1), None)
-            others = "\n".join(l for l in board.splitlines() if not l.startswith("- [%s]" % p["slug"]))
-            r2_prompts.append(DEFEND.format(
-                title=p["title"], slug=p["slug"],
-                mine=json.dumps(mine["body"], ensure_ascii=False)[:700] if mine else "",
-                others=others or "(no other minutes)"))
-        r2_bodies = _call_many(model_hint, r2_prompts, dry)
-        for p, prompt, body in zip(panel, r2_prompts, r2_bodies):
-            minutes.append(_minute("defence", p, cyc, 2, body, prompt,
-                                   minutes[-1]["minute_sha"]))
-            print("     r2 %-26s %-8s moved_by=%s" % (p["slug"], body.get("move"), body.get("moved_by")))
+        minutes = argue_cycle(case, panel, cyc, premise, dry, model_hint,
+                              stages, chain_head)
 
         # the judge — minutes only. No MODEL.md, no sealed outcome.
         jtext = "\n".join(
