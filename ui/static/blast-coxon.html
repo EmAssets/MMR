@@ -1,235 +1,638 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Reaction layers</title>
+<meta name="description" content="An interactive map of who was actually responding to whom after the Coxon resignation. Pivot any actor to the centre, count the rings, and see the references behind each act.">
+<meta property="og:title" content="Who Was Looking At What">
+<meta property="og:description" content="Sacks attacked the proposal. Altman agreed with pacing the frontier. Neither was responding to the resignation.">
+<meta property="og:type" content="article">
+<style>
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>Who Was Looking At What</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root{
-    --bg:#0e1116; --panel:#151a21; --ink:#e8eaed; --sub:#8b949e; --line:#232a33;
-    --acc:#4fc3a1; --accd:#7fe0c4; --flag:#e0a33e; --miss:#e06c75;
-    color-scheme:dark;
+    --ground:#f7f6f3; --panel:#ffffff; --sunk:#efede8;
+    --ink:#14171c; --ink-2:#4a5058; --ink-3:#7c838d;
+    --rule:#ddd9d2; --rule-2:#c9c4bb;
+    --teal:#0f7a5f; --teal-soft:#d3ebe2;
+    --amber:#9a6a10; --violet:#6b4a9e; --coral:#a93f3c; --slate:#5a6472;
+    --shadow:0 1px 2px rgba(20,23,28,.06), 0 8px 24px rgba(20,23,28,.05);
   }
-  @media (prefers-color-scheme: light){
-    :root:not([data-theme="dark"]){
-      --bg:#fbfbfa; --panel:#fff; --ink:#1a1d21; --sub:#5f6672; --line:#e3e6ea;
-      --acc:#1f8a6d; --accd:#126952; --flag:#9a6b12; --miss:#b3453f;
-      color-scheme:light;
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0d1014; --panel:#151920; --sunk:#10141a;
+      --ink:#e9eaec; --ink-2:#a2aab5; --ink-3:#6f7883;
+      --rule:#242a33; --rule-2:#333b46;
+      --teal:#4fc3a1; --teal-soft:#16302a;
+      --amber:#e0a33e; --violet:#b58ce0; --coral:#e06c75; --slate:#8b96a5;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.3);
     }
   }
+  :root[data-theme="dark"]{
+    --ground:#0d1014; --panel:#151920; --sunk:#10141a;
+    --ink:#e9eaec; --ink-2:#a2aab5; --ink-3:#6f7883;
+    --rule:#242a33; --rule-2:#333b46;
+    --teal:#4fc3a1; --teal-soft:#16302a;
+    --amber:#e0a33e; --violet:#b58ce0; --coral:#e06c75; --slate:#8b96a5;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.3);
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
-       BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:0}
-  .wrap{max-width:1000px;margin:0 auto;padding:14px 16px 20px}
-  h1{font-size:1.05rem;margin:0 0 .15rem;font-weight:600}
-  .sub{color:var(--sub);font-size:.8rem;margin:0 0 .7rem}
-  .stage{position:relative;width:100%;aspect-ratio:1/1;max-height:74vh;margin:0 auto;
-         touch-action:none;cursor:grab}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font:400 16px/1.6 "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:1080px; margin:0 auto; padding-block:clamp(28px,5vw,56px); padding-left:20px; padding-right:20px}
+
+  .eyebrow{
+    font:500 11px/1 "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
+    margin:0 0 14px;
+  }
+  h1{
+    font:400 clamp(34px,6.2vw,62px)/1.02 "Instrument Serif", Georgia, serif;
+    margin:0 0 16px; letter-spacing:-.012em; text-wrap:balance; max-width:16ch;
+  }
+  .lede{
+    font-size:clamp(16px,2.1vw,19px); line-height:1.62; color:var(--ink-2);
+    max-width:62ch; margin:0 0 10px;
+  }
+  .lede em{font-style:italic; color:var(--ink)}
+
+  .frame{
+    margin-top:clamp(28px,4vw,44px);
+    border:1px solid var(--rule); border-radius:3px;
+    background:var(--panel); box-shadow:var(--shadow); overflow:hidden;
+  }
+  .frame-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+    flex-wrap:wrap; padding:14px 18px; border-bottom:1px solid var(--rule);
+    background:var(--sunk);
+  }
+  .frame-head h2{
+    font:500 13px/1.3 "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing:.04em; margin:0; color:var(--ink);
+  }
+  .readout{
+    font:400 12px/1.3 "IBM Plex Mono", ui-monospace, monospace;
+    color:var(--ink-3); font-variant-numeric:tabular-nums;
+  }
+  .readout b{color:var(--teal); font-weight:500}
+
+  .stage{position:relative; width:100%; aspect-ratio:1/1; max-height:70vh; touch-action:none; cursor:grab}
   .stage:active{cursor:grabbing}
-  svg{width:100%;height:100%;display:block;overflow:visible}
-  .ring{fill:none;stroke:var(--line);stroke-width:1}
-  .ringlab{fill:var(--sub);font:600 10px ui-monospace,monospace;letter-spacing:.06em}
-  .edge{stroke:var(--line);stroke-width:1.2;fill:none}
-  .edge.hot{stroke:var(--acc);stroke-width:2}
-  .node{cursor:pointer}
-  .node circle{stroke:var(--bg);stroke-width:2;transition:r .25s}
-  .node text{fill:var(--ink);font:11px -apple-system,sans-serif;pointer-events:none}
-  .node.center circle{stroke:var(--acc);stroke-width:2.5}
-  .node.dim{opacity:.35}
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;
-         padding:.75rem .85rem;margin-top:.7rem}
-  .panel h2{font-size:.9rem;margin:0 0 .3rem}
-  .panel .act{font-size:.86rem;margin:.2rem 0 .45rem}
-  .ev{border-left:2px solid var(--acc);padding:.3rem 0 .3rem .6rem;color:var(--sub);
-      font-size:.8rem;font-style:italic;margin:.35rem 0}
-  .meta{display:flex;gap:.5rem;flex-wrap:wrap;font:600 10px ui-monospace,monospace;
-        letter-spacing:.04em;margin-bottom:.35rem}
-  .tag{border:1px solid var(--line);border-radius:999px;padding:.18rem .5rem;color:var(--sub)}
-  .tag.lay{border-color:var(--acc);color:var(--accd)}
-  .tag.inf{border-color:var(--flag);color:var(--flag)}
-  button{font:inherit;cursor:pointer;background:var(--panel);color:var(--ink);
-         border:1px solid var(--line);border-radius:999px;padding:.5rem .85rem;
-         min-height:40px}
-  button.pri{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:600}
-  .bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:.55rem}
-  .note{color:var(--sub);font-size:.76rem;margin-top:.7rem;line-height:1.45}
-  .legend{display:flex;gap:.7rem;flex-wrap:wrap;font-size:.74rem;color:var(--sub);
-          margin-top:.4rem}
-  .sw{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;vertical-align:-.05rem}
-  @media (max-width:520px){
-    .wrap{padding:10px 12px 16px}
-    .node text{font-size:10px}
-    .stage{max-height:60vh}
+  svg{width:100%; height:100%; display:block}
+  .ring{fill:none; stroke:var(--rule); stroke-width:1}
+  .ring.near{stroke:var(--rule-2)}
+  .rlab{fill:var(--ink-3); font:500 10px "IBM Plex Mono", monospace; letter-spacing:.1em}
+  .rnote{fill:var(--ink-3); font:400 9.5px "IBM Plex Sans", sans-serif; opacity:.85}
+  .edge{stroke:var(--rule-2); stroke-width:1; fill:none; opacity:.6}
+  .edge.hot{stroke:var(--teal); stroke-width:1.8; opacity:1}
+  .nd{cursor:pointer}
+  .nd circle{stroke:var(--panel); stroke-width:2.5; transition:r .22s ease}
+  .nd text{fill:var(--ink); font:500 11.5px "IBM Plex Sans", sans-serif; pointer-events:none}
+  .nd.hub circle{stroke:var(--teal); stroke-width:3}
+  .nd.hub text{font-weight:600}
+  .nd.mute{opacity:.28}
+  .nd.mute text{fill:var(--ink-3)}
+
+  .bar{
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    padding:12px 18px; border-top:1px solid var(--rule); background:var(--sunk);
   }
-</style></head><body>
-<div class="wrap">
-  <h1 id="ttl">Reaction layers</h1>
-  <p class="sub" id="sub"></p>
-  <div class="stage" id="stage"><svg id="svg"></svg></div>
-  <div class="bar">
-    <button class="pri" id="reset">Re-centre on the original act</button>
-    <span class="sub" style="font-size:.78rem">tap any entity to pivot · drag to rotate · pinch to zoom</span>
+  .bar-2{padding-top:0; border-top:none}
+  .barlab{
+    font:500 10px "IBM Plex Mono", monospace; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-3); flex:none;
+  }
+  .picker{display:flex; gap:6px; flex-wrap:wrap}
+  .chip{
+    font:500 12px "IBM Plex Sans", sans-serif; cursor:pointer;
+    background:var(--panel); color:var(--ink-2); border:1px solid var(--rule);
+    border-radius:2px; padding:7px 10px; min-height:36px;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:border-color .15s, color .15s;
+  }
+  .chip:hover{border-color:var(--teal); color:var(--teal)}
+  .chip:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .chip[aria-pressed="true"]{
+    background:var(--teal-soft); border-color:var(--teal); color:var(--teal); font-weight:600;
+  }
+  .chip .dot{width:7px; height:7px; border-radius:50%; flex:none}
+  button{
+    font:500 13px "IBM Plex Sans", sans-serif; cursor:pointer;
+    background:var(--panel); color:var(--ink); border:1px solid var(--rule-2);
+    border-radius:2px; padding:9px 14px; min-height:40px;
+    transition:border-color .15s, color .15s;
+  }
+  button:hover{border-color:var(--teal); color:var(--teal)}
+  button:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  button.on{background:var(--teal); border-color:var(--teal); color:var(--panel)}
+  .hint{font-size:12.5px; color:var(--ink-3)}
+
+  .inspector{
+    border-top:1px solid var(--rule); padding:18px;
+    display:grid; grid-template-columns:1fr; gap:14px; min-height:150px;
+    background:var(--panel);
+  }
+  @media (min-width:720px){ .inspector{grid-template-columns:1.15fr .85fr} }
+  .tags{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:9px}
+  .tag{
+    font:500 10px "IBM Plex Mono", monospace; letter-spacing:.07em; text-transform:uppercase;
+    border:1px solid var(--rule-2); border-radius:2px; padding:3px 7px; color:var(--ink-3);
+  }
+  .tag.lay{border-color:var(--teal); color:var(--teal)}
+  .insp-name{font:400 25px/1.2 "Instrument Serif", Georgia, serif; margin:0 0 7px}
+  .insp-act{font-size:14.5px; line-height:1.55; color:var(--ink-2); margin:0 0 12px}
+  .routed{font-size:13px; color:var(--ink-3); margin-bottom:5px}
+  .routed b{color:var(--ink); font-weight:500}
+  .quote{
+    border-left:2px solid var(--teal); background:var(--sunk);
+    padding:11px 13px; font:400 12.5px/1.6 "IBM Plex Mono", monospace;
+    color:var(--ink-2); border-radius:0 2px 2px 0;
+  }
+  .qlab{
+    font:500 9.5px "IBM Plex Mono", monospace; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-3); margin-bottom:6px;
+  }
+  .empty{color:var(--ink-3); font-size:14px; font-style:italic; align-self:center}
+  .tag.src{cursor:help}
+  .caveat{
+    margin:11px 0 0; padding:9px 11px; border-left:2px solid var(--amber);
+    background:var(--sunk); font-size:13px; line-height:1.5; color:var(--ink-2);
+  }
+  .refs{list-style:none; margin:0; padding:0; display:grid; gap:5px}
+  .refs li{font-size:13px; line-height:1.45}
+  .refs a{color:var(--teal); text-decoration:none; border-bottom:1px solid transparent}
+  .refs a:hover{border-bottom-color:var(--teal)}
+  .refs a:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .srckey{
+    display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;
+    font-size:12px; color:var(--ink-3);
+  }
+  .srckey b{font-weight:500}
+  .postlink{
+    display:inline-flex; align-items:baseline; gap:7px;
+    font-size:13.5px; color:var(--teal); text-decoration:none;
+    border:1px solid var(--teal); border-radius:2px; padding:8px 11px;
+    min-height:38px; align-items:center;
+  }
+  .postlink:hover{background:var(--teal-soft)}
+  .postlink:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .nopost{
+    font-size:13px; color:var(--ink-3); border:1px dashed var(--rule-2);
+    border-radius:2px; padding:8px 11px; line-height:1.45;
+  }
+  .nopost-why{font-size:12px; color:var(--ink-3); opacity:.85}
+  .pmark{font-family:"IBM Plex Mono", monospace; opacity:.7}
+  .tweet{
+    border:1px solid var(--rule-2); border-radius:3px; padding:13px 15px;
+    background:var(--sunk);
+  }
+  .tw-head{display:flex; gap:7px; align-items:baseline; flex-wrap:wrap; margin-bottom:8px}
+  .tw-name{font-weight:600; font-size:14px; color:var(--ink)}
+  .tw-handle{font:400 12.5px "IBM Plex Mono", monospace; color:var(--ink-3)}
+  .tw-body{
+    margin:0 0 10px; font-size:15px; line-height:1.55; color:var(--ink);
+  }
+  .tw-foot{
+    display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    align-items:center; padding-top:9px; border-top:1px solid var(--rule);
+    font:400 12px "IBM Plex Mono", monospace; color:var(--ink-3);
+  }
+  .tw-foot a{color:var(--teal); text-decoration:none}
+  .tw-foot a:hover{text-decoration:underline}
+  .tw-foot a:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+
+  .grid{display:grid; gap:18px; margin-top:clamp(30px,4vw,46px)}
+  @media (min-width:760px){ .grid{grid-template-columns:repeat(3,1fr)} }
+  .note h3{
+    font:500 11px/1 "IBM Plex Mono", monospace; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--teal); margin:0 0 9px;
+  }
+  .note p{margin:0; font-size:14.5px; line-height:1.62; color:var(--ink-2)}
+  .note p + p{margin-top:9px}
+
+  .foot{
+    margin-top:clamp(32px,4vw,48px); padding-top:20px; border-top:1px solid var(--rule);
+    font-size:13.5px; line-height:1.65; color:var(--ink-3); max-width:70ch;
+  }
+  .foot b{color:var(--ink-2); font-weight:500}
+  .key{display:flex; gap:14px; flex-wrap:wrap; margin-top:12px; font-size:12px; color:var(--ink-3)}
+  .sw{display:inline-block; width:9px; height:9px; border-radius:50%; vertical-align:0}
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+</style>
+
+<div class="page">
+  <p class="eyebrow">Reaction structure · one event, 14 acts</p>
+  <h1>Who was looking at what</h1>
+  <p class="lede">
+    On 9 September 2026 an Anthropic safety researcher resigned, forfeited his equity, and posted
+    why. The post reached 172 million views. Then everyone reacted — but <em>not to the same
+    thing.</em>
+  </p>
+  <p class="lede">
+    Sacks attacked “the proposal.” Altman and Musk agreed with “pacing the frontier.” Those are
+    Dario Amodei’s words, from an essay published three days later. They were not responding to the
+    resignation at all. Each ring below is one hop of reaction — and <em>any</em> of the fourteen can
+    hold the centre. Stand with someone and the rings recount from where they stood.
+  </p>
+
+  <div class="frame">
+    <div class="frame-head">
+      <h2 id="hub">centred on — Jacob Coxon</h2>
+      <span class="readout" id="readout"></span>
+    </div>
+    <div class="stage" id="stage"><svg id="svg" role="img" aria-label="Concentric rings of reaction layers"></svg></div>
+    <div class="bar">
+      <span class="barlab">stand with</span>
+      <div class="picker" id="picker"></div>
+    </div>
+    <div class="bar bar-2">
+      <span class="hint">or tap anyone in the diagram · drag to rotate · scroll or pinch to zoom</span>
+    </div>
+    <div class="inspector" id="insp"></div>
   </div>
-  <div class="legend" id="legend"></div>
-  <div class="panel" id="detail" hidden></div>
-  <p class="note" id="note"></p>
+
+  <div class="grid">
+    <div class="note">
+      <h3>The finding</h3>
+      <p>Four of the loudest voices sit on ring 2, not ring 1. They were arguing about an audit
+      regime that did not exist when the post went up.</p>
+      <p>Read as responses to the resignation, the event looks like a referendum on one man
+      quitting. It had already become something else.</p>
+      <p style="color:var(--amber)">Four of those six rest on a single commentary video. Select one
+      to see what backs it.</p>
+    </div>
+    <div class="note">
+      <h3>Jensen Huang</h3>
+      <p>Reported as “Trump brought Huang on stage” — one scene, so most accounts treat it as one
+      act. It is two.</p>
+      <p>Huang argued against <em>the pacing position</em>, which is Amodei’s framing. He reaches
+      the centre through the essay, not through Trump. Same ring, different route.</p>
+    </div>
+    <div class="note">
+      <h3>The commentator</h3>
+      <p>A 14-minute video summarised the resignation, the essay, the reactions to the essay and
+      the conspiracy readings — then added its own.</p>
+      <p>Stand with <em>The PrimeTime</em> and the resignation lands three rings out. That is how
+      much interpretation sits between a viewer and the act.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <b>How a ring is assigned.</b> Every edge says what an act references, and carries the
+    sentence that licenses it — shown in the panel whenever you select someone. Distance is then
+    plain arithmetic: hops from the centre. Nothing decides that Sacks is “ring 2”; it falls out of
+    the edges, and re-centring recomputes it.
+    <br><br>
+    <b>What this is not.</b> A ring is not importance, and not agreement — Altman agreeing and Sacks
+    attacking sit on the same ring, because both were reading the same document. It is also not the
+    emergence floor: a head of state can sit two hops out.
+    <br><br>
+    <b>Standing of the reading.</b> Each edge is an inference from what an act publicly referenced,
+    never from anyone’s stated intent. Some will be wrong. The quote is attached so you can overrule
+    it rather than take it on trust.
+    <br><br>
+    <b>Where this reading is thinnest.</b> Select any actor and the panel names the references behind
+    that act, tagged by how well sourced it is. The Altman, Musk, Sacks and Trump/Huang reactions rest
+    on a <em>single</em> commentary video and were not traced to primary posts — and those are four of
+    the six acts on ring 2, which is where this page’s main claim lives.
+    <br><br>
+    <b>Only two acts carry the post itself.</b> Coxon’s resignation and Amodei’s announcement, shown
+    in full. The text is verbatim from X’s own embed API rather than a live widget: the widget loads
+    a tracker into your browser to display 280 characters, and it breaks if the post is later
+    deleted — at which point a page like this would quietly lose the evidence it rests on. The
+    other twelve are described in reporting or in the video, and I could not locate the original
+    posts; two of them were remarks on a stage rather than posts at all. Each panel says which case it
+    is rather than leaving the link quietly absent. <em>If you have a URL for any of them, that is the
+    single most useful correction to this page</em> — the edges are inferences from what each act
+    referenced, so a primary post is what would confirm or break one.
+    <div class="srckey">
+      <span><b style="color:var(--teal)">primary source</b> — the actor’s own post or page</span>
+      <span><b style="color:var(--slate)">reported</b> — two or more independent outlets</span>
+      <span><b style="color:var(--amber)">single source</b> — one video, untraced</span>
+    </div>
+    <div class="key" id="key"></div>
+  </div>
 </div>
+
 <script>
-const DATA = {"spec": "blast-radius-v1", "title": "Coxon resignation — reaction layers", "built": "2026-09-21", "source": "arena\\cases\\reaction\\coxon-resignation.md", "center": "coxon-resignation", "nodes": [{"id": "coxon-resignation", "label": "Jacob Coxon", "act": "Resigns from Anthropic and posts publicly that neither company is acting responsibly and they are racing to self-improving superintelligence, forfeiting equity to leave.", "date": "2026-09-09", "responded_to": null, "evidence": "Jacob Coxon, an Anthropic safety researcher, resigns and posts publicly: \"I resigned from Anthropic today... Neither company is acting responsibly. They are racing straight to self-improving superintelligence and gambling with our lives.\" He forfeited equity to leave.", "inferred": false, "kind": "person", "layer": 0}, {"id": "mass-online-audience", "label": "Mass online audience", "act": "Amplifies the resignation post to ~172M views, ~800k likes, ~200k reposts within 24 hours.", "date": "within 24 hours", "responded_to": "coxon-resignation", "evidence": "A mass online audience amplifies the resignation post.", "inferred": false, "kind": "public", "layer": 1}, {"id": "anthropic-alignment-science-lead", "label": "Anthropic alignment science lead", "act": "Publicly endorses the resignation post: \"Jacob here is correct... I personally think it's greater than 10% chance within the next decade.\"", "date": "shortly after", "responded_to": "coxon-resignation", "evidence": "An Anthropic alignment science lead publicly endorses the resignation post: \"Jacob here is correct... I personally think it's greater than 10% chance within the next decade.\"", "inferred": false, "kind": "person", "layer": 1}, {"id": "anthropic-alignment-team-lead", "label": "Anthropic alignment team lead", "act": "States publicly that Coxon was a senior researcher they had pitched to stay.", "date": "shortly after", "responded_to": "coxon-resignation", "evidence": "A second Anthropic alignment team lead states publicly that Coxon was a senior researcher they had pitched to stay, responding to his departure.", "inferred": false, "kind": "person", "layer": 1}, {"id": "amodei-essay", "label": "Dario Amodei", "act": "Publishes \"We Must Pace the Frontier\", proposing embedded third-party evaluators such as METR with employee-like access to verify safety commitments.", "date": "2026-09-12", "responded_to": "coxon-resignation", "evidence": "It follows the resignation and the reaction to it.", "inferred": true, "kind": "person", "layer": 1}, {"id": "altman-agrees", "label": "Sam Altman", "act": "Publicly agrees with pacing the frontier, the position set out in Amodei's essay.", "date": "after", "responded_to": "amodei-essay", "evidence": "Sam Altman publicly agrees with pacing the frontier, the position set out in Amodei's essay.", "inferred": false, "kind": "person", "layer": 2}, {"id": "musk-agrees", "label": "Elon Musk", "act": "Publicly agrees with pacing the frontier, the position set out in Amodei's essay.", "date": "after", "responded_to": "amodei-essay", "evidence": "Elon Musk publicly agrees with pacing the frontier, the position set out in Amodei's essay.", "inferred": false, "kind": "person", "layer": 2}, {"id": "sacks-attacks", "label": "David Sacks", "act": "Publicly attacks the proposal as cartel-formation and attacks METR's independence.", "date": "after", "responded_to": "amodei-essay", "evidence": "David Sacks publicly attacks the proposal as cartel-formation and attacks METR's independence, responding to Amodei's essay.", "inferred": false, "kind": "person", "layer": 2}, {"id": "metr", "label": "METR", "act": "Named in Amodei's proposal as the evaluator that would hold the gate, without having sought that role; issues no public act.", "date": "after", "responded_to": "amodei-essay", "evidence": "METR is named in Amodei's proposal as the evaluator that would hold the gate, without having sought that role. It issues no public act.", "inferred": true, "kind": "organization", "layer": 2}, {"id": "trump-acceleration", "label": "Donald Trump", "act": "Argues publicly for acceleration and against Amodei's pacing position, bringing Jensen Huang on stage.", "date": "after", "responded_to": "amodei-essay", "evidence": "Donald Trump argues publicly for acceleration and against Amodei's pacing position, bringing Jensen Huang on stage.", "inferred": false, "kind": "person", "layer": 2}, {"id": "huang-acceleration", "label": "Jensen Huang", "act": "Argues on stage for acceleration, against the pacing position set out in Amodei's essay.", "date": "after", "responded_to": "amodei-essay", "evidence": "Jensen Huang argues on stage for acceleration, against the pacing position set out in Amodei's essay.", "inferred": false, "kind": "person", "layer": 2}, {"id": "deepseek-engineer", "label": "DeepSeek engineer", "act": "Publicly attacks Anthropic in extreme terms.", "date": "after", "responded_to": "coxon-resignation", "evidence": "A DeepSeek engineer publicly attacks Anthropic in extreme terms, responding to the resignation post.", "inferred": false, "kind": "person", "layer": 1}, {"id": "conspiracy-readings", "label": "Conspiracy readings", "act": "Circulate claims that the proposal is a regulatory-capture play and that the other lab leaders' agreement is insincere.", "date": "after", "responded_to": "amodei-essay", "evidence": "Conspiracy readings circulate claiming the proposal is a regulatory-capture play and that the other lab leaders' agreement is insincere. These are claims about the reactions, not about the resignation.", "inferred": false, "kind": "public", "layer": 2}, {"id": "primetime-video", "label": "The PrimeTime (\"Slow Down or Die\")", "act": "Publishes a commentary video summarising the resignation, the essay, the reactions to the essay, and the conspiracy readings, layering its own reading on top.", "date": "2026-09-19", "responded_to": "conspiracy-readings", "evidence": "A commentary video (\"Slow Down or Die\", The PrimeTime) summarises the resignation, the essay, the reactions to the essay and the conspiracy readings, and layers its own reading on top of them.", "inferred": true, "kind": "press", "layer": 3}], "rings": {"0": ["coxon-resignation"], "1": ["amodei-essay", "anthropic-alignment-science-lead", "anthropic-alignment-team-lead", "deepseek-engineer", "mass-online-audience"], "2": ["altman-agrees", "conspiracy-readings", "huang-acceleration", "metr", "musk-agrees", "sacks-attacks", "trump-acceleration"], "3": ["primetime-video"]}, "max_layer": 3, "unreachable": [], "note": "Layer = reaction hops from the centred entity, computed by BFS over extracted edges. It is NOT the emergence-ladder floor: a state (E12) can sit at layer 2. Every edge is our reading of what an act references, carries the span that licenses it, and can be overruled.", "problems": []};
+/* `src` is the tier of evidence behind the ACT, and it is not decoration.
+   "primary" = traceable to the actor's own post or page. "reported" = two or
+   more independent outlets. "single" = one commentary video, not traced to a
+   primary source by me.
 
-const KIND_COLOR = {
-  person:'#4fc3a1', organization:'#6ba8e0', state:'#e0a33e',
-  press:'#b58ce0', public:'#e06c75', artifact:'#8b949e'
+   Four of the six ring-2 acts are "single" — and those four carry this page's
+   headline finding. Stating that on the node, rather than in a footnote nobody
+   reaches, is the difference between a source list and an honest one. */
+const NODES = [
+ {id:"coxon",label:"Jacob Coxon",kind:"person",date:"2026-09-09",to:null,src:"primary",
+  act:"Resigns from Anthropic, forfeits equity, and posts that the companies are racing to self-improving superintelligence and gambling with our lives.",
+  ev:"Jacob Coxon, an Anthropic safety researcher, resigns and posts publicly: “I resigned from Anthropic today… Neither company is acting responsibly.”",
+  post:["@hilbertspaess — the resignation post","https://x.com/hilbertspaess/status/2097476196791709843"],
+  tweet:{text:"I resigned from Anthropic today. I spent the last three years doing pretraining research at both OpenAI and Anthropic. Neither company is acting responsibly. They are racing straight to self-improving superintelligence and gambling with our lives. More thoughts below.",author:"Jacob Coxon",handle:"hilbertspaess",date:"September 9, 2026",url:"https://x.com/hilbertspaess/status/2097476196791709843"},
+  refs:[["The resignation post (@hilbertspaess)","https://x.com/hilbertspaess/status/2097476196791709843"],
+        ["Axios — the equity forfeiture","https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"],
+        ["NBC News — the internal Slack post first","https://www.nbcnews.com/tech/tech-news/anthropic-safety-researcher-resigned-warning-rapid-ai-development-gamb-rcna596767"],
+        ["PBS NewsHour","https://www.pbs.org/newshour/science/anthropic-researchers-resignation-sends-warning-about-the-dangers-of-ai-development"]]},
+ {id:"audience",label:"Mass online audience",kind:"public",date:"within 24 hours",to:"coxon",src:"reported",
+  act:"Amplifies the post to ~172M views, ~800k likes, ~200k reposts within 24 hours.",
+  ev:"A mass online audience amplifies the resignation post.",
+  nopost:"not one post — an aggregate of views, likes and reposts on Coxon’s thread, linked above",
+  refs:[["The post itself — counts visible on the thread","https://x.com/hilbertspaess/status/2097476196791709843"],
+        ["Deadline","https://deadline.com/2026/09/anthropic-jacob-coxon-resignation-artificial-intelligence-1237072134/"],
+        ["CoinDesk","https://www.coindesk.com/markets/2026/09/09/anthropic-researcher-quits-with-a-warning-on-ai-that-echoes-the-terminator-script"]]},
+ {id:"science-lead",label:"Alignment science lead",kind:"person",date:"shortly after",to:"coxon",src:"reported",
+  act:"Publicly endorses the post: “Jacob here is correct… greater than 10% chance within the next decade.”",
+  ev:"An Anthropic alignment science lead publicly endorses the resignation post.",
+  nopost:"an X post endorsing the resignation; quoted in reporting, URL not on file",
+  refs:[["PBS NewsHour","https://www.pbs.org/newshour/science/anthropic-researchers-resignation-sends-warning-about-the-dangers-of-ai-development"],
+        ["Axios","https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"]]},
+ {id:"team-lead",label:"Alignment team lead",kind:"person",date:"shortly after",to:"coxon",src:"reported",
+  act:"States publicly that Coxon was a senior researcher they had pitched to stay.",
+  ev:"A second Anthropic alignment team lead states publicly that Coxon was a senior researcher they had pitched to stay, responding to his departure.",
+  nopost:"an X post about the departure; quoted in reporting, URL not on file",
+  refs:[["NBC News","https://www.nbcnews.com/tech/tech-news/anthropic-safety-researcher-resigned-warning-rapid-ai-development-gamb-rcna596767"],
+        ["Axios","https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"]]},
+ {id:"deepseek",label:"DeepSeek engineer",kind:"person",date:"after",to:"coxon",src:"single",
+  act:"Publicly attacks Anthropic in extreme terms.",
+  ev:"A DeepSeek engineer publicly attacks Anthropic in extreme terms, responding to the resignation post.",
+  nopost:"an X post attacking Anthropic; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"amodei",label:"Dario Amodei",kind:"person",date:"~2026-09-12",to:"coxon",src:"primary",
+  act:"Publishes “We Must Pace the Frontier,” proposing embedded third-party evaluators such as METR with employee-like access.",
+  ev:"It follows the resignation and the reaction to it.",
+  post:["@DarioAmodei — the announcement post","https://x.com/DarioAmodei/status/2098773920774074715"],
+  tweet:{text:"We Must Pace the Frontier: I’ve written a new essay on why the AI industry should slow down, with a three-part plan for doing so.\n\nAnthropic is unilaterally committing to the first of these steps. We’ll provide third-party evaluators with permanent, employee-level access to our…",author:"Dario Amodei",handle:"DarioAmodei",date:"September 12, 2026",url:"https://x.com/DarioAmodei/status/2098773920774074715"},
+  refs:[["“We Must Pace the Frontier” — the essay","https://darioamodei.com/post/we-must-pace-the-frontier"],
+        ["Amodei’s announcement post","https://x.com/DarioAmodei/status/2098773920774074715"],
+        ["Zvi Mowshowitz — the most detailed independent reading","https://thezvi.substack.com/p/we-must-pace-the-frontier"],
+        ["Forbes","https://www.forbes.com/sites/johnwerner/2026/09/17/amodei-cites-recursive-self-improvement-in-september-essay/"]],
+  caveat:"The essay page carries no dateline. The 12 September date is confirmed by the timestamp on the announcement post below, not by the essay itself."},
+ {id:"altman",label:"Sam Altman",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Publicly agrees with pacing the frontier.",
+  ev:"Sam Altman publicly agrees with pacing the frontier, the position set out in Amodei’s essay.",
+  nopost:"an X post agreeing with pacing; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"musk",label:"Elon Musk",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Publicly agrees with pacing the frontier.",
+  ev:"Elon Musk publicly agrees with pacing the frontier, the position set out in Amodei’s essay.",
+  nopost:"an X post agreeing with pacing; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"sacks",label:"David Sacks",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Attacks the proposal as cartel-formation and attacks METR’s independence.",
+  ev:"David Sacks publicly attacks the proposal as cartel-formation and attacks METR’s independence, responding to Amodei’s essay.",
+  nopost:"X posts attacking the proposal and METR; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"metr",label:"METR",kind:"organization",date:"after",to:"amodei",src:"primary",
+  act:"Named as the evaluator that would hold the gate, without having sought the role. Issues no public act.",
+  ev:"METR is named in Amodei’s proposal as the evaluator that would hold the gate, without having sought that role. It issues no public act.",
+  nopost:"no act, so no post. It was named in someone else’s essay and said nothing publicly",
+  refs:[["The essay that names it","https://darioamodei.com/post/we-must-pace-the-frontier"],
+        ["METR — Wikipedia","https://en.wikipedia.org/wiki/METR"],
+        ["METR — 80,000 Hours listing","https://jobs.80000hours.org/organisations/model-evaluation-and-threat-research"]],
+  caveat:"METR has said nothing publicly about being named. Its position here is the absence of an act, not a quiet one."},
+ {id:"trump",label:"Donald Trump",kind:"state",date:"after",to:"amodei",src:"single",
+  act:"Argues for acceleration and against Amodei’s pacing position, bringing Jensen Huang on stage.",
+  ev:"Donald Trump argues publicly for acceleration and against Amodei’s pacing position, bringing Jensen Huang on stage.",
+  nopost:"remarks on stage, not a post; no clip URL on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"huang",label:"Jensen Huang",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Argues on stage for acceleration, against the pacing position set out in the essay.",
+  ev:"Jensen Huang argues on stage for acceleration, against the pacing position set out in Amodei’s essay.",
+  nopost:"remarks on stage, not a post; no clip URL on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]],
+  caveat:"Reported as one scene with Trump. Separating the two acts is my reading, and it is the reading this diagram most depends on."},
+ {id:"conspiracy",label:"Conspiracy readings",kind:"public",date:"after",to:"amodei",src:"single",
+  act:"Claims circulate that the proposal is a regulatory-capture play and that the other leaders’ agreement is insincere.",
+  ev:"These are claims about the reactions, not about the resignation.",
+  nopost:"not one post — claims circulating across many accounts; the video is where I saw them collected",
+  refs:[["“Slow Down or Die” — where these are advanced","https://youtu.be/W8IVKMGbUZE"]],
+  caveat:"Placed here as claims that circulated. Nothing on this page adopts them, and none is evidence of anyone’s intent."},
+ {id:"primetime",label:"The PrimeTime",kind:"press",date:"2026-09-19",to:"conspiracy",src:"primary",
+  act:"A 14-minute commentary video summarising the resignation, the essay, the reactions and the conspiracy readings — then layering its own reading on top.",
+  ev:"A commentary video summarises the resignation, the essay, the reactions to the essay and the conspiracy readings, and layers its own reading on top of them.",
+  nopost:"a video, not a post — the URL is in the references below",
+  refs:[["“Slow Down or Die” — The PrimeTime, 19 Sept 2026","https://youtu.be/W8IVKMGbUZE"]],
+  caveat:"Auto-captioned and unreliable on proper nouns. Used for chronology and for which reactions existed, not for quotes."}
+];
+
+const SRC_META = {
+  primary:  {label:"primary source", tone:"--teal",  note:"traceable to the actor’s own post or page"},
+  reported: {label:"reported",       tone:"--slate", note:"two or more independent outlets"},
+  single:   {label:"single source",  tone:"--amber", note:"one commentary video; not traced to a primary post"}
 };
-const svg = document.getElementById('svg');
-let center = DATA ? DATA.center : '';
-let rot = 0, zoom = 1, sel = null;
 
-function byId(id){ return DATA.nodes.find(n => n.id === id); }
+const KIND = {person:"--teal", organization:"--slate", state:"--amber", press:"--violet", public:"--coral"};
+const KIND_LABEL = {person:"individual", organization:"organisation", state:"head of state", press:"commentary", public:"crowd"};
+const RING_NOTE = {
+  1:"read the act itself",
+  2:"read a response to it",
+  3:"read the responses to the responses",
+  4:"read the commentary on those",
+  5:"further out still"
+};
 
-/* Layers recompute in the page, so pivoting needs no server. Same BFS the
-   extractor runs: undirected, because "how many layers did this person stack"
-   is a walk back down the chain. */
+const svg = document.getElementById("svg");
+const byId = id => NODES.find(n => n.id === id);
+let hub = "coxon", sel = null, rot = -Math.PI/2, zoom = 1;
+
+function cssv(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
 function layersFrom(id){
-  const adj = {};
-  DATA.nodes.forEach(n => { adj[n.id] = adj[n.id] || new Set(); });
-  DATA.nodes.forEach(n => {
-    const t = n.responded_to;
-    if (t && adj[t] && t !== n.id){ adj[n.id].add(t); adj[t].add(n.id); }
-  });
-  const dist = {}; dist[id] = 0;
-  let frontier = [id];
-  while (frontier.length){
-    const nxt = [];
-    for (const c of frontier)
-      for (const nb of [...adj[c]].sort())
-        if (!(nb in dist)){ dist[nb] = dist[c] + 1; nxt.push(nb); }
-    frontier = nxt;
+  const adj = {}; NODES.forEach(n => adj[n.id] = new Set());
+  NODES.forEach(n => { if (n.to && adj[n.to]){ adj[n.id].add(n.to); adj[n.to].add(n.id); } });
+  const d = {[id]:0}; let f = [id];
+  while (f.length){
+    const nx = [];
+    for (const c of f) for (const m of [...adj[c]].sort())
+      if (!(m in d)){ d[m] = d[c] + 1; nx.push(m); }
+    f = nx;
   }
-  return dist;
+  return d;
 }
 
 function draw(){
-  const dist = layersFrom(center);
-  const max = Math.max(1, ...Object.values(dist));
-  const S = 1000, C = S / 2;
-  const step = (C - 60) / (max + 0.35);
+  const d = layersFrom(hub);
+  const max = Math.max(1, ...Object.values(d));
+  const S = 1000, C = S/2, step = (C - 92) / (max + .3);
   const rings = {};
-  DATA.nodes.forEach(n => {
-    const d = dist[n.id];
-    if (d === undefined) return;
-    (rings[d] = rings[d] || []).push(n);
-  });
+  NODES.forEach(n => { const k = d[n.id]; if (k !== undefined) (rings[k] = rings[k] || []).push(n); });
 
   const pos = {};
-  Object.keys(rings).map(Number).sort((a,b)=>a-b).forEach(d => {
-    const ns = rings[d].sort((a,b) => a.id.localeCompare(b.id));
-    const r = d * step * zoom;
-    ns.forEach((n, i) => {
-      // offset every other ring so labels on adjacent rings do not collide
-      const a = (i / ns.length) * Math.PI * 2 + rot + (d % 2 ? Math.PI / ns.length : 0);
-      pos[n.id] = d === 0 ? {x:C, y:C} : {x: C + r * Math.cos(a), y: C + r * Math.sin(a)};
+  Object.keys(rings).map(Number).sort((a,b)=>a-b).forEach(k => {
+    const ns = rings[k].slice().sort((a,b) => a.label.localeCompare(b.label));
+    const r = k * step * zoom;
+    ns.forEach((n,i) => {
+      const a = (i/ns.length) * Math.PI*2 + rot + (k % 2 ? Math.PI/ns.length : 0);
+      pos[n.id] = k === 0 ? {x:C, y:C} : {x:C + r*Math.cos(a), y:C + r*Math.sin(a)};
     });
   });
 
-  let s = `<g>`;
-  for (let d = 1; d <= max; d++){
-    const r = d * step * zoom;
-    if (r > C * 1.6) continue;
-    s += `<circle class="ring" cx="${C}" cy="${C}" r="${r.toFixed(1)}"/>`;
-    s += `<text class="ringlab" x="${C + 4}" y="${(C - r + 13).toFixed(1)}">L${d}</text>`;
+  let s = "";
+  for (let k = 1; k <= max; k++){
+    const r = k * step * zoom;
+    if (r > C*1.5) continue;
+    s += `<circle class="ring${k===1?' near':''}" cx="${C}" cy="${C}" r="${r.toFixed(1)}"/>`;
+    // Ring captions sit on the lower-left diagonal, where nodes are sparsest,
+    // rather than straight up from the centre where they collided with node
+    // labels. Anchored end-on so longer captions grow away from the diagram.
+    const ang = Math.PI * 0.78;
+    const lx = C + r * Math.cos(ang), ly = C + r * Math.sin(ang);
+    s += `<text class="rlab" x="${lx.toFixed(1)}" y="${(ly-4).toFixed(1)}" text-anchor="end">RING ${k}</text>`;
+    if (RING_NOTE[k]) s += `<text class="rnote" x="${lx.toFixed(1)}" y="${(ly+9).toFixed(1)}" text-anchor="end">${esc(RING_NOTE[k])}</text>`;
   }
-  DATA.nodes.forEach(n => {
-    const t = n.responded_to;
-    if (!t || !pos[n.id] || !pos[t]) return;
-    const hot = sel && (n.id === sel || t === sel);
-    s += `<path class="edge${hot?' hot':''}" d="M${pos[n.id].x.toFixed(1)},${pos[n.id].y.toFixed(1)} `+
-         `Q${C},${C} ${pos[t].x.toFixed(1)},${pos[t].y.toFixed(1)}"/>`;
+  NODES.forEach(n => {
+    if (!n.to || !pos[n.id] || !pos[n.to]) return;
+    const hot = sel && (n.id === sel || n.to === sel);
+    s += `<path class="edge${hot?' hot':''}" d="M${pos[n.id].x.toFixed(1)},${pos[n.id].y.toFixed(1)} Q${C},${C} ${pos[n.to].x.toFixed(1)},${pos[n.to].y.toFixed(1)}"/>`;
   });
-  DATA.nodes.forEach(n => {
-    const p = pos[n.id];
-    if (!p) return;
-    const d = dist[n.id];
-    const isC = n.id === center;
-    const dim = sel && sel !== n.id && n.responded_to !== sel &&
-                !DATA.nodes.some(m => m.id === sel && m.responded_to === n.id);
-    const col = KIND_COLOR[n.kind] || KIND_COLOR.artifact;
-    const rad = isC ? 13 : 8;
-    const anchor = p.x > C + 12 ? 'start' : p.x < C - 12 ? 'end' : 'middle';
-    const dx = anchor === 'start' ? rad + 5 : anchor === 'end' ? -(rad + 5) : 0;
-    const dy = anchor === 'middle' ? (p.y < C ? -(rad + 7) : rad + 14) : 4;
-    s += `<g class="node${isC?' center':''}${dim?' dim':''}" data-id="${n.id}">`+
-         `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${rad}" fill="${col}"/>`+
-         `<text x="${(p.x+dx).toFixed(1)}" y="${(p.y+dy).toFixed(1)}" text-anchor="${anchor}">`+
-         `${esc(n.label || n.id)}</text></g>`;
+  NODES.forEach(n => {
+    const p = pos[n.id]; if (!p) return;
+    const isHub = n.id === hub;
+    const rel = sel && sel !== n.id && n.to !== sel && !NODES.some(m => m.id === sel && m.to === n.id);
+    const col = cssv(KIND[n.kind] || "--slate");
+    const rad = isHub ? 14 : 8.5;
+    const anch = p.x > C+14 ? "start" : p.x < C-14 ? "end" : "middle";
+    const dx = anch === "start" ? rad+7 : anch === "end" ? -(rad+7) : 0;
+    const dy = anch === "middle" ? (p.y < C ? -(rad+9) : rad+18) : 4.5;
+    const sm = SRC_META[n.src] || SRC_META.reported;
+    // A hollow ring marks a single-sourced act, so the weakest evidence is
+    // visible on the diagram rather than only after selecting each node.
+    const thin = n.src === "single";
+    s += `<g class="nd${isHub?" hub":""}${rel?" mute":""}" data-id="${n.id}" tabindex="0" role="button" aria-label="${esc(n.label)}, ring ${d[n.id]}, ${esc(sm.label)}">`
+      + `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${rad}" fill="${thin ? "none" : col}"`
+      + (thin ? ` stroke="${col}" stroke-width="2.5" stroke-dasharray="3 2.5"` : "") + `/>`
+      + `<text x="${(p.x+dx).toFixed(1)}" y="${(p.y+dy).toFixed(1)}" text-anchor="${anch}">${esc(n.label)}</text></g>`;
   });
-  s += `</g>`;
-  svg.setAttribute('viewBox', `0 0 ${S} ${S}`);
-  svg.innerHTML = s;
-  svg.querySelectorAll('.node').forEach(g =>
-    g.addEventListener('click', () => select(g.dataset.id)));
 
-  const un = DATA.nodes.filter(n => dist[n.id] === undefined);
-  document.getElementById('sub').textContent =
-    `centred on ${(byId(center)||{}).label || center} · ${max} layer${max===1?'':'s'} · `+
-    `${DATA.nodes.length} entities` + (un.length ? ` · ${un.length} not connected` : '');
+  svg.setAttribute("viewBox", `0 0 ${S} ${S}`);
+  svg.innerHTML = s;
+  svg.querySelectorAll(".nd").forEach(g => {
+    g.addEventListener("click", () => pick(g.dataset.id));
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); pick(g.dataset.id); } });
+  });
+
+  document.getElementById("hub").textContent = "centred on — " + byId(hub).label;
+  const far = Object.entries(d).sort((a,b) => b[1]-a[1])[0];
+  const withPost = NODES.filter(n => n.post).length;
+  document.getElementById("readout").innerHTML =
+    `<b>${max}</b> rings · <b>${NODES.length}</b> acts · `
+    + `<b>${withPost}</b> link to the original post · `
+    + `furthest: ${esc(byId(far[0]).label)} at ring <b>${far[1]}</b>`;
+  document.querySelectorAll(".chip").forEach(c =>
+    c.setAttribute("aria-pressed", String(c.dataset.id === hub)));
 }
 
-function select(id){
-  sel = (sel === id) ? null : id;
-  const n = byId(id);
-  const el = document.getElementById('detail');
-  if (!sel || !n){ el.hidden = true; draw(); return; }
-  const dist = layersFrom(center);
-  const tgt = n.responded_to ? byId(n.responded_to) : null;
-  el.hidden = false;
+/* Every actor is a centre. The first build offered two preset buttons and hid
+   the rest behind "tap a node, then press a button in the panel" — two steps to
+   reach the page's main idea, which meant most readers never found out that
+   pivoting was the point. */
+function buildPicker(){
+  const order = NODES.slice().sort((a,b) => {
+    const d = layersFrom("coxon");
+    return (d[a.id] - d[b.id]) || a.label.localeCompare(b.label);
+  });
+  document.getElementById("picker").innerHTML = order.map(n =>
+    `<button class="chip" data-id="${n.id}" aria-pressed="${n.id === hub}">`
+    + `<span class="dot" style="background:${cssv(KIND[n.kind] || "--slate")}"></span>`
+    + `${esc(n.label)}</button>`).join("");
+  document.querySelectorAll(".chip").forEach(c =>
+    c.addEventListener("click", () => { rot = -Math.PI/2; zoom = 1; centre(c.dataset.id); }));
+}
+
+function pick(id){
+  sel = sel === id ? null : id;
+  const el = document.getElementById("insp");
+  if (!sel){ renderEmpty(); draw(); return; }
+  const n = byId(id), d = layersFrom(hub), tgt = n.to ? byId(n.to) : null;
+  const sm = SRC_META[n.src] || SRC_META.reported;
   el.innerHTML =
-    `<div class="meta">`+
-    `<span class="tag lay">layer ${dist[n.id] ?? '—'}</span>`+
-    `<span class="tag">${esc(n.kind || 'entity')}</span>`+
-    (n.date ? `<span class="tag">${esc(n.date)}</span>` : '')+
-    (n.inferred ? `<span class="tag inf">inferred edge</span>` : '')+
-    `</div>`+
-    `<h2>${esc(n.label || n.id)}</h2>`+
-    `<div class="act">${esc(n.act || '')}</div>`+
-    (tgt ? `<div style="font-size:.82rem;color:var(--sub)">responding to `+
-           `<b style="color:var(--ink)">${esc(tgt.label || tgt.id)}</b></div>` :
-           `<div style="font-size:.82rem;color:var(--sub)">the originating act — responds to nothing</div>`)+
-    (n.evidence ? `<div class="ev">${esc(n.evidence)}</div>` : '')+
-    `<div class="bar"><button onclick="pivot('${n.id}')">Bring to centre</button></div>`;
+    `<div><div class="tags">`
+    + `<span class="tag lay">ring ${d[n.id]}</span>`
+    + `<span class="tag">${esc(KIND_LABEL[n.kind] || n.kind)}</span>`
+    + `<span class="tag">${esc(n.date)}</span>`
+    + `<span class="tag src" style="border-color:${cssv(sm.tone)};color:${cssv(sm.tone)}"`
+    + ` title="${esc(sm.note)}">${esc(sm.label)}</span></div>`
+    + `<h3 class="insp-name">${esc(n.label)}</h3>`
+    + `<p class="insp-act">${esc(n.act)}</p>`
+    + (tgt ? `<div class="routed">reading <b>${esc(tgt.label)}</b></div>`
+           : `<div class="routed">the originating act — reading nobody</div>`)
+    + (n.caveat ? `<p class="caveat">${esc(n.caveat)}</p>` : "")
+    + (n.id !== hub
+        ? `<button style="margin-top:12px" onclick="rot=-Math.PI/2; zoom=1; centre('${n.id}')">Stand with ${esc(n.label)}</button>`
+        : `<div class="routed" style="margin-top:12px">— currently at the centre</div>`)
+    + `</div>`
+    + `<div><div class="qlab">the act itself</div>`
+    + (n.tweet ? tweetCard(n.tweet)
+       : n.post
+        ? `<a class="postlink" href="${esc(n.post[1])}" target="_blank" rel="noopener noreferrer">`
+          + `<span class="pmark">↗</span> ${esc(n.post[0])}</a>`
+        : `<div class="nopost"><span class="pmark">—</span> no post URL on file`
+          + (n.nopost ? `<br><span class="nopost-why">${esc(n.nopost)}</span>` : "") + `</div>`)
+    + `<div class="qlab" style="margin-top:14px">the sentence that places them</div>`
+    + `<div class="quote">${esc(n.ev)}</div>`
+    + `<div class="qlab" style="margin-top:14px">references for this act</div>`
+    + `<ul class="refs">` + (n.refs || []).map(r =>
+        `<li><a href="${esc(r[1])}" target="_blank" rel="noopener noreferrer">${esc(r[0])}</a></li>`
+      ).join("") + `</ul></div>`;
   draw();
 }
 
-function pivot(id){ center = id; sel = null;
-  document.getElementById('detail').hidden = true; draw(); }
+/* The post, rendered from its text rather than embedded through X's widget.
+   The widget needs platform.twitter.com, which this page's host blocks and
+   which loads a tracker into every reader's browser to display 280 characters.
+   The text below is verbatim from X's own oEmbed API, and the card links out,
+   so nothing is paraphrased and nothing is hidden. */
+function tweetCard(t){
+  return `<div class="tweet">`
+    + `<div class="tw-head"><span class="tw-name">${esc(t.author)}</span>`
+    + `<span class="tw-handle">@${esc(t.handle)}</span></div>`
+    + `<p class="tw-body">${esc(t.text).replace(/\n/g, "<br>")}</p>`
+    + `<div class="tw-foot"><span>${esc(t.date)}</span>`
+    + `<a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">view on X ↗</a></div>`
+    + `</div>`;
+}
 
-function esc(s){ return String(s == null ? '' : s)
-  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function renderEmpty(){
+  document.getElementById("insp").innerHTML =
+    `<p class="empty">Select anyone in the diagram to see what they were reading, and the sentence that places them there.</p>`;
+}
 
-/* Pointer events, not mouse events: this is read on phones more than desktops. */
+function centre(id){ hub = id; sel = null; renderEmpty(); draw(); }
+function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+
 (function(){
-  const st = document.getElementById('stage');
-  st.style.touchAction = 'none';
+  const st = document.getElementById("stage");
   const pts = new Map(); let pinch = 0, drag = null, moved = 0;
-  const dist2 = () => { const [a,b] = [...pts.values()];
-    return Math.hypot(a.x-b.x, a.y-b.y); };
-  st.addEventListener('pointerdown', e => {
+  const gap = () => { const [a,b] = [...pts.values()]; return Math.hypot(a.x-b.x, a.y-b.y); };
+  st.addEventListener("pointerdown", e => {
     pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
     try { st.setPointerCapture(e.pointerId); } catch(_){}
-    if (pts.size === 2){ pinch = dist2(); drag = null; }
-    else { drag = {x:e.clientX}; moved = 0; }
+    if (pts.size === 2){ pinch = gap(); drag = null; } else { drag = {x:e.clientX}; moved = 0; }
   });
-  st.addEventListener('pointermove', e => {
+  st.addEventListener("pointermove", e => {
     if (!pts.has(e.pointerId)) return;
     pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
     if (pts.size === 2){
-      const d = dist2();
-      if (pinch > 0){ zoom = Math.max(0.5, Math.min(2.2, zoom * (d/pinch))); draw(); }
-      pinch = d; e.preventDefault(); return;
+      const g = gap();
+      if (pinch > 0){ zoom = Math.max(.55, Math.min(1.9, zoom * (g/pinch))); draw(); }
+      pinch = g; e.preventDefault(); return;
     }
     if (!drag) return;
     moved += Math.abs(e.clientX - drag.x);
-    rot += (e.clientX - drag.x) * 0.006;
-    drag = {x:e.clientX};
-    draw(); e.preventDefault();
+    rot += (e.clientX - drag.x) * .006;
+    drag = {x:e.clientX}; draw(); e.preventDefault();
   });
   const end = e => {
     pts.delete(e.pointerId);
@@ -237,32 +640,25 @@ function esc(s){ return String(s == null ? '' : s)
     if (pts.size < 2) pinch = 0;
     drag = pts.size === 1 ? {x:[...pts.values()][0].x} : null;
   };
-  st.addEventListener('pointerup', end);
-  st.addEventListener('pointercancel', end);
-  // a rotate gesture ending on a node must not also select it
-  st.addEventListener('click', e => { if (moved > 8){ e.stopPropagation(); moved = 0; } }, true);
-  st.addEventListener('wheel', e => {
+  st.addEventListener("pointerup", end);
+  st.addEventListener("pointercancel", end);
+  st.addEventListener("click", e => { if (moved > 8){ e.stopPropagation(); moved = 0; } }, true);
+  st.addEventListener("wheel", e => {
     e.preventDefault();
-    zoom = Math.max(0.5, Math.min(2.2, zoom * (e.deltaY > 0 ? 0.92 : 1.08)));
+    zoom = Math.max(.55, Math.min(1.9, zoom * (e.deltaY > 0 ? .93 : 1.07)));
     draw();
   }, {passive:false});
 })();
 
-document.getElementById('reset').addEventListener('click', () => {
-  center = DATA.center; sel = null; rot = 0; zoom = 1;
-  document.getElementById('detail').hidden = true; draw();
-});
+document.getElementById("key").innerHTML = Object.keys(KIND_LABEL).map(k =>
+  `<span><span class="sw" style="background:${cssv(KIND[k])}"></span> ${esc(KIND_LABEL[k])}</span>`).join("")
+  + `<span><span class="sw" style="background:transparent;border:2px dashed ${cssv("--amber")}"></span>`
+  + ` hollow = single source</span>`;
 
-if (DATA){
-  document.getElementById('ttl').textContent = DATA.title || 'Reaction layers';
-  document.getElementById('note').textContent = DATA.note || '';
-  const kinds = [...new Set(DATA.nodes.map(n => n.kind || 'artifact'))].sort();
-  document.getElementById('legend').innerHTML = kinds.map(k =>
-    `<span><span class="sw" style="background:${KIND_COLOR[k]||KIND_COLOR.artifact}"></span> ${esc(k)}</span>`
-  ).join('');
-  draw();
-} else {
-  document.getElementById('sub').textContent = 'no data';
-}
+renderEmpty();
+buildPicker();
+draw();
 </script>
-</body></html>
+
+</body>
+</html>

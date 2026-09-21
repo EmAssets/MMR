@@ -1,0 +1,16 @@
+{
+ "coxon": {
+  "text": "I resigned from Anthropic today. I spent the last three years doing pretraining research at both OpenAI and Anthropic. Neither company is acting responsibly. They are racing straight to self-improving superintelligence and gambling with our lives. More thoughts below.",
+  "author": "Jacob Coxon",
+  "handle": "hilbertspaess",
+  "url": "https://x.com/hilbertspaess/status/2097476196791709843",
+  "date": "September 9, 2026"
+ },
+ "amodei": {
+  "text": "We Must Pace the Frontier: I’ve written a new essay on why the AI industry should slow down, with a three-part plan for doing so.\n\nAnthropic is unilaterally committing to the first of these steps. We’ll provide third-party evaluators with permanent, employee-level access to our…",
+  "author": "Dario Amodei",
+  "handle": "DarioAmodei",
+  "url": "https://x.com/DarioAmodei/status/2098773920774074715",
+  "date": "September 12, 2026"
+ }
+}
