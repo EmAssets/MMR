@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Reaction layers</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#151a21; --ink:#e8eaed; --sub:#8b949e; --line:#232a33;
+    --acc:#4fc3a1; --accd:#7fe0c4; --flag:#e0a33e; --miss:#e06c75;
+    color-scheme:dark;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#fbfbfa; --panel:#fff; --ink:#1a1d21; --sub:#5f6672; --line:#e3e6ea;
+      --acc:#1f8a6d; --accd:#126952; --flag:#9a6b12; --miss:#b3453f;
+      color-scheme:light;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
+       BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:0}
+  .wrap{max-width:1000px;margin:0 auto;padding:14px 16px 20px}
+  h1{font-size:1.05rem;margin:0 0 .15rem;font-weight:600}
+  .sub{color:var(--sub);font-size:.8rem;margin:0 0 .7rem}
+  .stage{position:relative;width:100%;aspect-ratio:1/1;max-height:74vh;margin:0 auto;
+         touch-action:none;cursor:grab}
+  .stage:active{cursor:grabbing}
+  svg{width:100%;height:100%;display:block;overflow:visible}
+  .ring{fill:none;stroke:var(--line);stroke-width:1}
+  .ringlab{fill:var(--sub);font:600 10px ui-monospace,monospace;letter-spacing:.06em}
+  .edge{stroke:var(--line);stroke-width:1.2;fill:none}
+  .edge.hot{stroke:var(--acc);stroke-width:2}
+  .node{cursor:pointer}
+  .node circle{stroke:var(--bg);stroke-width:2;transition:r .25s}
+  .node text{fill:var(--ink);font:11px -apple-system,sans-serif;pointer-events:none}
+  .node.center circle{stroke:var(--acc);stroke-width:2.5}
+  .node.dim{opacity:.35}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+         padding:.75rem .85rem;margin-top:.7rem}
+  .panel h2{font-size:.9rem;margin:0 0 .3rem}
+  .panel .act{font-size:.86rem;margin:.2rem 0 .45rem}
+  .ev{border-left:2px solid var(--acc);padding:.3rem 0 .3rem .6rem;color:var(--sub);
+      font-size:.8rem;font-style:italic;margin:.35rem 0}
+  .meta{display:flex;gap:.5rem;flex-wrap:wrap;font:600 10px ui-monospace,monospace;
+        letter-spacing:.04em;margin-bottom:.35rem}
+  .tag{border:1px solid var(--line);border-radius:999px;padding:.18rem .5rem;color:var(--sub)}
+  .tag.lay{border-color:var(--acc);color:var(--accd)}
+  .tag.inf{border-color:var(--flag);color:var(--flag)}
+  button{font:inherit;cursor:pointer;background:var(--panel);color:var(--ink);
+         border:1px solid var(--line);border-radius:999px;padding:.5rem .85rem;
+         min-height:40px}
+  button.pri{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:600}
+  .bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:.55rem}
+  .note{color:var(--sub);font-size:.76rem;margin-top:.7rem;line-height:1.45}
+  .legend{display:flex;gap:.7rem;flex-wrap:wrap;font-size:.74rem;color:var(--sub);
+          margin-top:.4rem}
+  .sw{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;vertical-align:-.05rem}
+  @media (max-width:520px){
+    .wrap{padding:10px 12px 16px}
+    .node text{font-size:10px}
+    .stage{max-height:60vh}
+  }
+</style></head><body>
+<div class="wrap">
+  <h1 id="ttl">Reaction layers</h1>
+  <p class="sub" id="sub"></p>
+  <div class="stage" id="stage"><svg id="svg"></svg></div>
+  <div class="bar">
+    <button class="pri" id="reset">Re-centre on the original act</button>
+    <span class="sub" style="font-size:.78rem">tap any entity to pivot · drag to rotate · pinch to zoom</span>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div class="panel" id="detail" hidden></div>
+  <p class="note" id="note"></p>
+</div>
+<script>
+const DATA = /*__DATA__*/null;
+
+const KIND_COLOR = {
+  person:'#4fc3a1', organization:'#6ba8e0', state:'#e0a33e',
+  press:'#b58ce0', public:'#e06c75', artifact:'#8b949e'
+};
+const svg = document.getElementById('svg');
+let center = DATA ? DATA.center : '';
+let rot = 0, zoom = 1, sel = null;
+
+function byId(id){ return DATA.nodes.find(n => n.id === id); }
+
+/* Layers recompute in the page, so pivoting needs no server. Same BFS the
+   extractor runs: undirected, because "how many layers did this person stack"
+   is a walk back down the chain. */
+function layersFrom(id){
+  const adj = {};
+  DATA.nodes.forEach(n => { adj[n.id] = adj[n.id] || new Set(); });
+  DATA.nodes.forEach(n => {
+    const t = n.responded_to;
+    if (t && adj[t] && t !== n.id){ adj[n.id].add(t); adj[t].add(n.id); }
+  });
+  const dist = {}; dist[id] = 0;
+  let frontier = [id];
+  while (frontier.length){
+    const nxt = [];
+    for (const c of frontier)
+      for (const nb of [...adj[c]].sort())
+        if (!(nb in dist)){ dist[nb] = dist[c] + 1; nxt.push(nb); }
+    frontier = nxt;
+  }
+  return dist;
+}
+
+function draw(){
+  const dist = layersFrom(center);
+  const max = Math.max(1, ...Object.values(dist));
+  const S = 1000, C = S / 2;
+  const step = (C - 60) / (max + 0.35);
+  const rings = {};
+  DATA.nodes.forEach(n => {
+    const d = dist[n.id];
+    if (d === undefined) return;
+    (rings[d] = rings[d] || []).push(n);
+  });
+
+  const pos = {};
+  Object.keys(rings).map(Number).sort((a,b)=>a-b).forEach(d => {
+    const ns = rings[d].sort((a,b) => a.id.localeCompare(b.id));
+    const r = d * step * zoom;
+    ns.forEach((n, i) => {
+      // offset every other ring so labels on adjacent rings do not collide
+      const a = (i / ns.length) * Math.PI * 2 + rot + (d % 2 ? Math.PI / ns.length : 0);
+      pos[n.id] = d === 0 ? {x:C, y:C} : {x: C + r * Math.cos(a), y: C + r * Math.sin(a)};
+    });
+  });
+
+  let s = `<g>`;
+  for (let d = 1; d <= max; d++){
+    const r = d * step * zoom;
+    if (r > C * 1.6) continue;
+    s += `<circle class="ring" cx="${C}" cy="${C}" r="${r.toFixed(1)}"/>`;
+    s += `<text class="ringlab" x="${C + 4}" y="${(C - r + 13).toFixed(1)}">L${d}</text>`;
+  }
+  DATA.nodes.forEach(n => {
+    const t = n.responded_to;
+    if (!t || !pos[n.id] || !pos[t]) return;
+    const hot = sel && (n.id === sel || t === sel);
+    s += `<path class="edge${hot?' hot':''}" d="M${pos[n.id].x.toFixed(1)},${pos[n.id].y.toFixed(1)} `+
+         `Q${C},${C} ${pos[t].x.toFixed(1)},${pos[t].y.toFixed(1)}"/>`;
+  });
+  DATA.nodes.forEach(n => {
+    const p = pos[n.id];
+    if (!p) return;
+    const d = dist[n.id];
+    const isC = n.id === center;
+    const dim = sel && sel !== n.id && n.responded_to !== sel &&
+                !DATA.nodes.some(m => m.id === sel && m.responded_to === n.id);
+    const col = KIND_COLOR[n.kind] || KIND_COLOR.artifact;
+    const rad = isC ? 13 : 8;
+    const anchor = p.x > C + 12 ? 'start' : p.x < C - 12 ? 'end' : 'middle';
+    const dx = anchor === 'start' ? rad + 5 : anchor === 'end' ? -(rad + 5) : 0;
+    const dy = anchor === 'middle' ? (p.y < C ? -(rad + 7) : rad + 14) : 4;
+    s += `<g class="node${isC?' center':''}${dim?' dim':''}" data-id="${n.id}">`+
+         `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${rad}" fill="${col}"/>`+
+         `<text x="${(p.x+dx).toFixed(1)}" y="${(p.y+dy).toFixed(1)}" text-anchor="${anchor}">`+
+         `${esc(n.label || n.id)}</text></g>`;
+  });
+  s += `</g>`;
+  svg.setAttribute('viewBox', `0 0 ${S} ${S}`);
+  svg.innerHTML = s;
+  svg.querySelectorAll('.node').forEach(g =>
+    g.addEventListener('click', () => select(g.dataset.id)));
+
+  const un = DATA.nodes.filter(n => dist[n.id] === undefined);
+  document.getElementById('sub').textContent =
+    `centred on ${(byId(center)||{}).label || center} · ${max} layer${max===1?'':'s'} · `+
+    `${DATA.nodes.length} entities` + (un.length ? ` · ${un.length} not connected` : '');
+}
+
+function select(id){
+  sel = (sel === id) ? null : id;
+  const n = byId(id);
+  const el = document.getElementById('detail');
+  if (!sel || !n){ el.hidden = true; draw(); return; }
+  const dist = layersFrom(center);
+  const tgt = n.responded_to ? byId(n.responded_to) : null;
+  el.hidden = false;
+  el.innerHTML =
+    `<div class="meta">`+
+    `<span class="tag lay">layer ${dist[n.id] ?? '—'}</span>`+
+    `<span class="tag">${esc(n.kind || 'entity')}</span>`+
+    (n.date ? `<span class="tag">${esc(n.date)}</span>` : '')+
+    (n.inferred ? `<span class="tag inf">inferred edge</span>` : '')+
+    `</div>`+
+    `<h2>${esc(n.label || n.id)}</h2>`+
+    `<div class="act">${esc(n.act || '')}</div>`+
+    (tgt ? `<div style="font-size:.82rem;color:var(--sub)">responding to `+
+           `<b style="color:var(--ink)">${esc(tgt.label || tgt.id)}</b></div>` :
+           `<div style="font-size:.82rem;color:var(--sub)">the originating act — responds to nothing</div>`)+
+    (n.evidence ? `<div class="ev">${esc(n.evidence)}</div>` : '')+
+    `<div class="bar"><button onclick="pivot('${n.id}')">Bring to centre</button></div>`;
+  draw();
+}
+
+function pivot(id){ center = id; sel = null;
+  document.getElementById('detail').hidden = true; draw(); }
+
+function esc(s){ return String(s == null ? '' : s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* Pointer events, not mouse events: this is read on phones more than desktops. */
+(function(){
+  const st = document.getElementById('stage');
+  st.style.touchAction = 'none';
+  const pts = new Map(); let pinch = 0, drag = null, moved = 0;
+  const dist2 = () => { const [a,b] = [...pts.values()];
+    return Math.hypot(a.x-b.x, a.y-b.y); };
+  st.addEventListener('pointerdown', e => {
+    pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    try { st.setPointerCapture(e.pointerId); } catch(_){}
+    if (pts.size === 2){ pinch = dist2(); drag = null; }
+    else { drag = {x:e.clientX}; moved = 0; }
+  });
+  st.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    if (pts.size === 2){
+      const d = dist2();
+      if (pinch > 0){ zoom = Math.max(0.5, Math.min(2.2, zoom * (d/pinch))); draw(); }
+      pinch = d; e.preventDefault(); return;
+    }
+    if (!drag) return;
+    moved += Math.abs(e.clientX - drag.x);
+    rot += (e.clientX - drag.x) * 0.006;
+    drag = {x:e.clientX};
+    draw(); e.preventDefault();
+  });
+  const end = e => {
+    pts.delete(e.pointerId);
+    try { st.releasePointerCapture(e.pointerId); } catch(_){}
+    if (pts.size < 2) pinch = 0;
+    drag = pts.size === 1 ? {x:[...pts.values()][0].x} : null;
+  };
+  st.addEventListener('pointerup', end);
+  st.addEventListener('pointercancel', end);
+  // a rotate gesture ending on a node must not also select it
+  st.addEventListener('click', e => { if (moved > 8){ e.stopPropagation(); moved = 0; } }, true);
+  st.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoom = Math.max(0.5, Math.min(2.2, zoom * (e.deltaY > 0 ? 0.92 : 1.08)));
+    draw();
+  }, {passive:false});
+})();
+
+document.getElementById('reset').addEventListener('click', () => {
+  center = DATA.center; sel = null; rot = 0; zoom = 1;
+  document.getElementById('detail').hidden = true; draw();
+});
+
+if (DATA){
+  document.getElementById('ttl').textContent = DATA.title || 'Reaction layers';
+  document.getElementById('note').textContent = DATA.note || '';
+  const kinds = [...new Set(DATA.nodes.map(n => n.kind || 'artifact'))].sort();
+  document.getElementById('legend').innerHTML = kinds.map(k =>
+    `<span><span class="sw" style="background:${KIND_COLOR[k]||KIND_COLOR.artifact}"></span> ${esc(k)}</span>`
+  ).join('');
+  draw();
+} else {
+  document.getElementById('sub').textContent = 'no data';
+}
+</script>
+</body></html>

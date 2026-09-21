@@ -1,0 +1,38 @@
+{
+ "_note": "Hand-coded from the chronology. Jensen Huang is split OUT of the 'Trump, with Jensen Huang on stage' bundle used in the original meta-coxon case file, because bundling two actors into one node makes them structurally inseparable and hides that they arrived by different routes.",
+ "seed": "coxon-resignation",
+ "expected_layers": {
+  "coxon-resignation": 0,
+  "mass-audience": 1,
+  "alignment-lead-1": 1,
+  "alignment-lead-2": 1,
+  "deepseek-engineer": 1,
+  "amodei-essay": 1,
+  "sam-altman": 2,
+  "elon-musk": 2,
+  "david-sacks": 2,
+  "metr": 2,
+  "trump": 2,
+  "jensen-huang": 2,
+  "conspiracy-readings": 3,
+  "primetime-video": 4
+ },
+ "why": {
+  "mass-audience": "amplified the post itself",
+  "amodei-essay": "follows the resignation and the reaction to it",
+  "sam-altman": "agreed with 'pacing the frontier' — Amodei's phrase, so L2 not L1",
+  "david-sacks": "attacked 'the proposal' and METR, i.e. the essay — L2",
+  "jensen-huang": "argued against the pacing position set out in the essay — L2, reached via Amodei and NOT via Trump",
+  "trump": "argued against Amodei's pacing position — L2",
+  "conspiracy-readings": "claims ABOUT the reactions to the essay — L3",
+  "primetime-video": "summarises everything including the conspiracy readings, then adds its own — L4"
+ },
+ "must_hold": [
+  "sam-altman is deeper than amodei-essay",
+  "david-sacks is deeper than amodei-essay",
+  "jensen-huang is deeper than amodei-essay",
+  "conspiracy-readings is deeper than david-sacks",
+  "primetime-video is deeper than conspiracy-readings"
+ ],
+ "jensen_check": "Huang must resolve to the same layer as Trump (both L2) while being an independent node. If the extractor makes Huang respond to Trump rather than to the essay, he lands at L3 and the onion says he was reacting to Trump — which the chronology does not support: he argued against the PACING POSITION, which is Amodei's."
+}

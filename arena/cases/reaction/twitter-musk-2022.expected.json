@@ -1,0 +1,32 @@
+{
+ "_note": "Hand-coded BEFORE the extractor was written. Tests a DIFFERENT shape from openai-nov-2023: two independent branches from the seed (the takeover post vs the layoffs) that never rejoin, plus a second-order consequence chain (verification -> impersonation -> Eli Lilly -> suspension).",
+ "seed": "musk-acquisition",
+ "expected_layers": {
+  "musk-acquisition": 0,
+  "musk-bird-post": 1,
+  "layoffs": 1,
+  "paid-verification": 1,
+  "thierry-breton": 2,
+  "advertiser-pause": 2,
+  "impersonation-wave": 2,
+  "eli-lilly": 3,
+  "verification-suspended": 3,
+  "press-analysis": 3
+ },
+ "why": {
+  "musk-bird-post": "Musk's own post about his own takeover — one hop from the acquisition",
+  "layoffs": "an act by the new owner following the acquisition",
+  "paid-verification": "a product act by the new owner",
+  "thierry-breton": "replied DIRECTLY to the bird post — responds to L1, not to the acquisition",
+  "advertiser-pause": "cited the layoffs — responds to L1",
+  "impersonation-wave": "followed from paid verification — responds to L1",
+  "eli-lilly": "responded to the fake account, i.e. to the impersonation wave (L2)",
+  "verification-suspended": "responded to the impersonation wave (L2)",
+  "press-analysis": "analysed the advertiser pause (L2)"
+ },
+ "must_hold": [
+  "breton is L2 because he replied to a post, not to the acquisition itself",
+  "eli-lilly is deeper than impersonation-wave",
+  "the branches do not collapse: breton and eli-lilly reach the seed by different paths"
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "_note": "Hand-coded from the chronology BEFORE the extractor was written. Layer = number of reaction hops from the seed act. This is the ground truth the extractor is checked against; if the extractor disagrees, one of the two is wrong and that is the finding.",
+ "seed": "openai-board",
+ "expected_layers": {
+  "openai-board": 0,
+  "greg-brockman": 1,
+  "sam-altman": 1,
+  "senior-researchers": 1,
+  "microsoft": 2,
+  "employee-letter": 3,
+  "ilya-sutskever": 4,
+  "press-analysis": 4
+ },
+ "why": {
+  "greg-brockman": "quit citing the board's decision — responds to the seed",
+  "sam-altman": "posted about his own removal — responds to the seed",
+  "senior-researchers": "resigned naming the board's removal — responds to the seed",
+  "microsoft": "hired Altman and Brockman, responding to THEIR departure (L1), not to the board directly",
+  "employee-letter": "cites the Microsoft offer as destination — responds to Microsoft (L2)",
+  "ilya-sutskever": "signed the employee letter — responds to the letter (L3)",
+  "press-analysis": "analysed the employee letter — responds to the letter (L3)"
+ },
+ "must_hold": [
+  "microsoft is deeper than brockman and altman, not the same layer",
+  "employee-letter is deeper than microsoft",
+  "ilya-sutskever is deeper than employee-letter despite being ON the board that seeded it"
+ ]
+}
