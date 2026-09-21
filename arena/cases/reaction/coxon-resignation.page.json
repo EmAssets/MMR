@@ -63,7 +63,8 @@
     ],
     "risk": "Stated position: neither OpenAI nor Anthropic is acting responsibly, and both are “racing straight to self-improving superintelligence and gambling with our lives.” He paid equity to say it.",
     "cost": "High. Equity forfeited, employment ended."
-   }
+   },
+   "power": null
   },
   {
    "id": "audience",
@@ -88,7 +89,8 @@
      "CoinDesk",
      "https://www.coindesk.com/markets/2026/09/09/anthropic-researcher-quits-with-a-warning-on-ai-that-echoes-the-terminator-script"
     ]
-   ]
+   ],
+   "power": null
   },
   {
    "id": "science-lead",
@@ -109,7 +111,8 @@
      "Axios",
      "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"
     ]
-   ]
+   ],
+   "power": null
   },
   {
    "id": "team-lead",
@@ -130,7 +133,8 @@
      "Axios",
      "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"
     ]
-   ]
+   ],
+   "power": null
   },
   {
    "id": "deepseek",
@@ -147,7 +151,8 @@
      "“Slow Down or Die” — The PrimeTime (the only source I have)",
      "https://youtu.be/W8IVKMGbUZE"
     ]
-   ]
+   ],
+   "power": null
   },
   {
    "id": "amodei",
@@ -224,7 +229,8 @@
     ],
     "cost": "Moderate. A unilateral commitment binding his own company, made in public.",
     "src": "https://darioamodei.com/post/we-must-pace-the-frontier"
-   }
+   },
+   "power": "CEO, Anthropic — sets that lab’s release policy"
   },
   {
    "id": "altman",
@@ -241,7 +247,8 @@
      "“Slow Down or Die” — The PrimeTime (the only source I have)",
      "https://youtu.be/W8IVKMGbUZE"
     ]
-   ]
+   ],
+   "power": "CEO, OpenAI"
   },
   {
    "id": "musk",
@@ -258,7 +265,8 @@
      "“Slow Down or Die” — The PrimeTime (the only source I have)",
      "https://youtu.be/W8IVKMGbUZE"
     ]
-   ]
+   ],
+   "power": "CEO, xAI — also Tesla and SpaceX"
   },
   {
    "id": "sacks",
@@ -275,7 +283,8 @@
      "“Slow Down or Die” — The PrimeTime (the only source I have)",
      "https://youtu.be/W8IVKMGbUZE"
     ]
-   ]
+   ],
+   "power": "White House AI &amp; Crypto Czar"
   },
   {
    "id": "metr",
@@ -315,7 +324,8 @@
     ],
     "risk": "Nothing on file. METR has said nothing publicly about being named, so there is no act to read a position from. Its silence is the datum, not a position.",
     "cost": "None paid. It did not act."
-   }
+   },
+   "power": null
   },
   {
    "id": "trump",
@@ -332,7 +342,8 @@
      "“Slow Down or Die” — The PrimeTime (the only source I have)",
      "https://youtu.be/W8IVKMGbUZE"
     ]
-   ]
+   ],
+   "power": "President of the United States"
   },
   {
    "id": "huang",
@@ -350,7 +361,8 @@
      "https://youtu.be/W8IVKMGbUZE"
     ]
    ],
-   "caveat": "Reported as one scene with Trump. Separating the two acts is my reading, and it is the reading this diagram most depends on."
+   "caveat": "Reported as one scene with Trump. Separating the two acts is my reading, and it is the reading this diagram most depends on.",
+   "power": "CEO, Nvidia — controls the compute supply"
   },
   {
    "id": "conspiracy",
@@ -368,7 +380,8 @@
      "https://youtu.be/W8IVKMGbUZE"
     ]
    ],
-   "caveat": "Placed here as claims that circulated. Nothing on this page adopts them, and none is evidence of anyone’s intent."
+   "caveat": "Placed here as claims that circulated. Nothing on this page adopts them, and none is evidence of anyone’s intent.",
+   "power": null
   },
   {
    "id": "primetime",
@@ -386,8 +399,10 @@
      "https://youtu.be/W8IVKMGbUZE"
     ]
    ],
-   "caveat": "Auto-captioned and unreliable on proper nouns. Used for chronology and for which reactions existed, not for quotes."
+   "caveat": "Auto-captioned and unreliable on proper nouns. Used for chronology and for which reactions existed, not for quotes.",
+   "power": null
   }
  ],
- "dossier_note": "A dossier is written only where sourced material exists. An actor with no dossier has none on file — that is a gap in this reading, not a judgement about them. Nothing here asserts what anyone believes, wants or fears."
+ "dossier_note": "A dossier is written only where sourced material exists. An actor with no dossier has none on file — that is a gap in this reading, not a judgement about them. Nothing here asserts what anyone believes, wants or fears.",
+ "power_note": "‘Power’ marks an individual who can change what happens by DECIDING rather than by persuading — a lab CEO, a head of state, the supplier of the compute. It is read from the role, not from how loud the act was: the 172-million-view audience is the loudest node here and decides nothing. Coxon is deliberately unmarked. His act was giving up a position inside one of these companies, and that is precisely why it carried."
 }

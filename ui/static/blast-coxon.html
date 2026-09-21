@@ -243,6 +243,18 @@
   #updated{
     font:400 11px "IBM Plex Mono", monospace; color:var(--ink-3);
   }
+  .nd.faded{opacity:.16}
+  .nd.faded text{fill:var(--ink-3)}
+  .toggle{
+    display:inline-flex; align-items:center; gap:7px; cursor:pointer;
+    font-size:12.5px; color:var(--ink-2); min-height:36px;
+  }
+  .toggle input{width:15px; height:15px; accent-color:var(--teal); cursor:pointer}
+  .power-line{
+    margin:11px 0 0; padding:9px 11px; border-left:2px solid var(--teal);
+    background:var(--sunk); font-size:13px; line-height:1.5; color:var(--ink-2);
+  }
+  .power-line b{color:var(--ink); font-weight:600}
 
   .grid{display:grid; gap:18px; margin-top:clamp(30px,4vw,46px)}
   @media (min-width:760px){ .grid{grid-template-columns:repeat(3,1fr)} }
@@ -290,6 +302,7 @@
       <div class="picker" id="picker"></div>
     </div>
     <div class="bar bar-2">
+      <label class="toggle"><input type="checkbox" id="poweronly"> emphasise the six who decide</label>
       <span class="hint">or tap anyone in the diagram · drag to rotate · scroll or pinch to zoom</span>
     </div>
     <div class="inspector" id="insp"></div>
@@ -311,6 +324,13 @@
       act. It is two.</p>
       <p>Huang argued against <em>the pacing position</em>, which is Amodei’s framing. He reaches
       the centre through the essay, not through Trump. Same ring, different route.</p>
+    </div>
+    <div class="note">
+      <h3>Who actually decides</h3>
+      <p>Six of the fourteen can change what happens by <em>deciding</em> rather than persuading:
+      five lab or chip CEOs, and a head of state. They are drawn larger, with an outer ring.</p>
+      <p>Coxon is not one of them — and that is the point. His act was giving up a position
+      inside one of those companies, which is why it carried.</p>
     </div>
     <div class="note">
       <h3>The commentator</h3>
@@ -477,7 +497,7 @@ const RING_NOTE = {
 
 const svg = document.getElementById("svg");
 const byId = id => NODES.find(n => n.id === id);
-let hub = "coxon", sel = null, rot = -Math.PI/2, zoom = 1;
+let hub = "coxon", sel = null, rot = -Math.PI/2, zoom = 1, powerOnly = false;
 
 function cssv(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 
@@ -542,10 +562,19 @@ function draw(){
     // A hollow ring marks a single-sourced act, so the weakest evidence is
     // visible on the diagram rather than only after selecting each node.
     const thin = n.src === "single";
-    s += `<g class="nd${isHub?" hub":""}${rel?" mute":""}" data-id="${n.id}" tabindex="0" role="button" aria-label="${esc(n.label)}, ring ${d[n.id]}, ${esc(sm.label)}">`
-      + `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${rad}" fill="${thin ? "none" : col}"`
+    // Power reads as SIZE plus an outer ring. It is a separate axis from
+    // sourcing and from kind, so it gets its own channel rather than competing
+    // for the fill colour those already use.
+    const pw = !!n.power;
+    const dim = powerOnly && !pw;
+    const r2 = isHub ? rad : pw ? rad + 2.5 : rad - 1;
+    s += `<g class="nd${isHub?" hub":""}${rel?" mute":""}${dim?" faded":""}" data-id="${n.id}" tabindex="0" role="button" aria-label="${esc(n.label)}, ring ${d[n.id]}, ${esc(sm.label)}${pw?", holds power":""}">`
+      + (pw ? `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${(r2+4.5).toFixed(1)}"`
+              + ` fill="none" stroke="${col}" stroke-width="1" opacity=".45"/>` : "")
+      + `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r2}" fill="${thin ? "none" : col}"`
       + (thin ? ` stroke="${col}" stroke-width="2.5" stroke-dasharray="3 2.5"` : "") + `/>`
-      + `<text x="${(p.x+dx).toFixed(1)}" y="${(p.y+dy).toFixed(1)}" text-anchor="${anch}">${esc(n.label)}</text></g>`;
+      + `<text x="${(p.x+dx).toFixed(1)}" y="${(p.y+dy).toFixed(1)}" text-anchor="${anch}"`
+      + (pw ? ` style="font-weight:600"` : "") + `>${esc(n.label)}</text></g>`;
   });
 
   svg.setAttribute("viewBox", `0 0 ${S} ${S}`);
@@ -595,8 +624,10 @@ function pick(id){
     + `<span class="tag">${esc(KIND_LABEL[n.kind] || n.kind)}</span>`
     + `<span class="tag">${esc(n.date)}</span>`
     + `<span class="tag src" style="border-color:${cssv(sm.tone)};color:${cssv(sm.tone)}"`
-    + ` title="${esc(sm.note)}">${esc(sm.label)}</span></div>`
+    + ` title="${esc(sm.note)}">${esc(sm.label)}</span>`
+    + (n.power ? `<span class="tag lay">decides</span>` : "") + `</div>`
     + `<h3 class="insp-name">${esc(n.label)}</h3>`
+    + (n.power ? `<p class="power-line"><b>Holds power.</b> ${n.power}</p>` : "")
     + `<p class="insp-act">${esc(n.act)}</p>`
     + (tgt ? `<div class="routed">reading <b>${esc(tgt.label)}</b></div>`
            : `<div class="routed">the originating act — reading nobody</div>`)
@@ -733,7 +764,9 @@ function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace
 document.getElementById("key").innerHTML = Object.keys(KIND_LABEL).map(k =>
   `<span><span class="sw" style="background:${cssv(KIND[k])}"></span> ${esc(KIND_LABEL[k])}</span>`).join("")
   + `<span><span class="sw" style="background:transparent;border:2px dashed ${cssv("--amber")}"></span>`
-  + ` hollow = single source</span>`;
+  + ` hollow = single source</span>`
+  + `<span><span class="sw" style="background:${cssv("--teal")};box-shadow:0 0 0 2px var(--ground),0 0 0 3px ${cssv("--teal")}"></span>`
+  + ` ringed = decides</span>`;
 
 /* #actor=<id> centres that actor on load, so the blog can link straight to a
    vantage point. Unknown ids fall back to the seed rather than erroring. */
@@ -744,6 +777,15 @@ function actorFromHash(){
 
 function boot(){
   buildPicker();
+  const pw = document.getElementById("poweronly");
+  if (pw && !pw.dataset.bound){
+    pw.dataset.bound = "1";
+    // Dims rather than removes. Filtering these nodes OUT would collapse the
+    // diagram to two rings with all five on one of them, because everyone with
+    // power responded to the same essay -- the layering only exists because the
+    // people without power are in it.
+    pw.addEventListener("change", () => { powerOnly = pw.checked; draw(); });
+  }
   const want = actorFromHash();
   if (want){ centre(want); } else { renderEmpty(); draw(); }
 }
