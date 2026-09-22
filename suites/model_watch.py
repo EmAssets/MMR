@@ -253,9 +253,17 @@ def cmd_assess(repo, model):
 def cmd_status(repo):
     _c, _m, lpath = load_cfg(repo)
     led = load_ledger(lpath)
-    print(f"[{repo}] rounds {led['rounds']} · predictions {len(led['predictions'])} · learnings {len(led['learnings'])}")
-    for p in led["predictions"]:
-        print(f"  [{p['status']:>8}] ({p['made_on']}→{p['resolve_by']}) {p['claim'][:85]}")
+    # A ledger written by another suite (capture, event_update) carries only
+    # `predictions`. Indexing the optional keys crashed --status on exactly the
+    # ledgers a user is most likely to inspect: the ones with real claims in
+    # them but no watch round yet.
+    preds = led.get("predictions") or []
+    print("[%s] rounds %s · predictions %d · learnings %d"
+          % (repo, led.get("rounds", 0), len(preds), len(led.get("learnings") or [])))
+    for p in preds:
+        print("  [%8s] (%s→%s) %s"
+              % (p.get("status", "?"), p.get("made_on", "?"),
+                 p.get("resolve_by", "?"), str(p.get("claim", ""))[:85]))
 
 
 def _post_analysis(repo):
