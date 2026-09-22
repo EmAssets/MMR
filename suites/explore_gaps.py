@@ -107,13 +107,61 @@ REGIONS = [
      "capability-based threat modelling. What can a given actor class actually do this "
      "quarter: state services, criminal groups, insiders, unaligned automation? What "
      "capability would have to be demonstrated for the assessment to change?"),
-    ("attack surface and control efficacy",
-     "STRIDE/DREAD-style decomposition of where AI systems are actually exposed: "
-     "training-data poisoning, model weights exfiltration, inference-time jailbreaks, "
-     "agentic tool abuse, supply-chain dependency compromise, evaluation gaming. Paired "
-     "with CONTROL EFFICACY: which mitigations have a demonstrated effect, and which "
-     "are announced. A control nobody has tested under adversarial conditions is a "
-     "claim, not a control."),
+    # Attack surface is not one region. Each surface has a different owner, a
+    # different control, and a different observable, so they are proposed
+    # separately -- one region listing six surfaces produced candidates spread
+    # too thin to be mechanisms.
+    ("attack surface · the training pipeline",
+     "Everything upstream of a released model: data acquisition and provenance, "
+     "poisoned or laundered corpora, annotation and RLHF contractor access, checkpoint "
+     "storage, and the build chain that turns a corpus into weights. The defining "
+     "property is that compromise here is LATENT -- it is present in the artefact and "
+     "invisible at inference until triggered. Observables: a disclosed poisoning "
+     "incident, a provenance requirement entering a procurement contract, a published "
+     "audit of training-data supply."),
+    ("attack surface · weights, inference and the served endpoint",
+     "The model as a deployed asset: weight exfiltration by insider or intrusion, "
+     "extraction and distillation through an API, prompt injection reaching a system "
+     "prompt, jailbreaks that survive a published patch, and side channels in serving "
+     "infrastructure. The defining property is that the attacker interacts with a "
+     "RUNNING system, so every attempt is in principle logged -- and whether it is "
+     "logged is itself the finding. Observables: a disclosed weight-theft incident, a "
+     "provider publishing extraction-rate data, a jailbreak surviving N patch cycles."),
+    ("attack surface · agents, tools and the blast radius of autonomy",
+     "What changes when a model is given credentials, a browser, a shell, a payment "
+     "method or another agent to talk to. The surface is the TOOL BOUNDARY: what the "
+     "agent can reach, what it can do without a human in the loop, and what a single "
+     "compromised step can touch. Distinct from jailbreaks because the harm does not "
+     "require the model to be fooled -- a correctly-following agent with over-broad "
+     "permissions is sufficient. Observables: a reported agentic incident with a named "
+     "scope of access, a provider publishing default tool permissions, an enterprise "
+     "policy requiring human approval at a named step."),
+    ("attack surface · the supply chain beneath the model",
+     "Dependencies nobody treats as an AI surface: the ML framework and its transitive "
+     "packages, model hubs and unsigned artefacts, container images, GPU firmware and "
+     "drivers, the cloud tenancy, and the handful of orchestration tools everyone "
+     "shares. Concentration is the mechanism -- a compromise at a shared dependency "
+     "reaches every downstream deployment at once, which is the opposite of the "
+     "distributed picture most threat models assume. Observables: a CVE in a named ML "
+     "dependency with disclosed downstream count, a hub introducing artefact signing, a "
+     "named provider publishing an SBOM for a model release."),
+    ("control efficacy · what has actually been tested",
+     "Not which mitigations exist but which have a DEMONSTRATED effect under "
+     "adversarial conditions. Red-team findings that changed a release decision, "
+     "evaluation suites that a model failed and was held back for, filters measured "
+     "against an adaptive attacker rather than a fixed benchmark, and the gap between "
+     "a control's announced scope and its tested scope. A control nobody has tested "
+     "adversarially is a claim, not a control -- and the model's job is to say which "
+     "is which, with the test as the observable."),
+    ("evaluation gaming and the measurement surface",
+     "The evaluations themselves as an attack surface: benchmark contamination, "
+     "training on the test set by accident or design, evaluations scoped so that "
+     "passing is uninformative, and the incentive to optimise a metric a third party "
+     "will publish. Distinct from other surfaces because the victim is the REASONING "
+     "of everyone downstream who trusts the number, including regulators writing "
+     "thresholds into rules. Observables: a contamination finding on a named benchmark, "
+     "an evaluator publishing a held-out protocol, a regulator citing a specific "
+     "evaluation in binding text."),
     # Deflection is observable WITHOUT claiming intent, and the distinction is
     # the whole design. "He dodged" is a claim about a mind and is banned.
     # "The answer did not contain the asked-for object, and the topic moved to X"
