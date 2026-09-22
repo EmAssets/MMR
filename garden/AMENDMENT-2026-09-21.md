@@ -1,9 +1,15 @@
 # Proposed amendment — first-party models in the garden
 
-**Status:** PROPOSED. Not in effect.
+**Status:** IN EFFECT as of 2026-09-21.
 **Published:** 2026-09-21
-**Comment window closes:** 2026-10-05 (14 days, per R3.2)
-**Ships with objections recorded, per R3.3.**
+**Comment window:** NOT OBSERVED. See "R3 was not followed" below.
+**Objections recorded below, per R3.3.**
+
+> **This amendment shipped the same day it was published.** R3.2 requires a
+> 14-day public comment window before an admission change takes effect. That
+> window was not observed. The operator decided that an empty garden was doing
+> more damage than the procedural breach, and shipped. What that costs is
+> stated immediately below, not buried.
 
 ---
 
@@ -81,6 +87,40 @@ alternative on offer is not "a neutral registry" but "no registry". If the
 objection is right, it should show up as third-party submissions that look like
 imitations of the first-party cards rather than like their authors' own work —
 and that is checkable.
+
+## R3 was not followed, and this is what that means
+
+R3.2 requires a 14-day public comment window before an admission change takes
+effect. It was skipped. No R3.4 emergency applies — there was no legal
+obligation, no privacy incident, no threat to a named individual. This was a
+judgement call about usefulness, which is precisely the category R3 exists to
+constrain.
+
+**The sealed prediction resolving 2026-11-15 reads:**
+
+> The operator makes an unregistered rule change before 150 submissions, and it
+> is contested.
+
+The first clause is now **true**. The change is registered *retrospectively* —
+this document exists and was published — but not *pre*-registered, which is
+what R3 requires and what the claim was written to detect. Whether the second
+clause resolves depends on whether anyone contests it, which is not the
+operator's to decide.
+
+**The honest reading:** R3 was written specifically to bind the operator before
+there was an incentive to break it. An incentive appeared — a visibly empty
+registry — and the rule did not hold. That is a fact about this project's
+governance, and it is recorded here rather than smoothed over. The rule was not
+rewritten to make the action compliant; the action is simply outside it.
+
+**What is NOT claimed:** that this was fine because the models are good, that
+first-party listing is low-risk, or that the window would have changed the
+outcome. None of those are known.
+
+**Still open for comment.** The window was skipped, not cancelled. Objections
+received before 2026-10-05 will be appended here, and the listing is reversible
+— removing the 44 cards restores the prior state exactly, since nothing else
+changed.
 
 ## Registered consequence of this amendment
 

@@ -9,7 +9,7 @@
  "submitted_count": 0,
  "first_party_count": 44,
  "count": 44,
- "count_note": "44 models listed, ALL first-party (the operator's own, flagged first_party:true). submitted_count is 0: no third party has submitted yet, and first-party listings never increase it. Every card here passed suites.validate_card, the same check the submission page tells authors to run. 1 withheld, named in withheld_not_listable with the reason.",
+ "count_note": "44 models listed, ALL first-party (the operator's own, flagged first_party:true). submitted_count is 0: no third party has submitted yet, and first-party listings never increase it. Every card passed suites.validate_card, the same check the submission page tells authors to run. 1 withheld, named in withheld_not_listable with the reason. GOVERNANCE: listed under an amendment published 2026-09-21 that did NOT observe R3's 14-day comment window. The breach is recorded in the amendment rather than smoothed over, and the listing is reversible.",
  "withheld_not_listable": [
   {
    "model": "canon",
@@ -1728,5 +1728,6 @@
    },
    "first_party": true
   }
- ]
+ ],
+ "governance_note": "R3 comment window not observed; see the amendment. Listing is reversible."
 }

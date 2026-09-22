@@ -160,3 +160,79 @@ its failures do not name the action that fixes them.
 
 Items 1–3 are the difference between a submission process that works and one
 that does not. 4 and 5 are polish.
+
+---
+
+# Part 2 — actually submitting, 2026-09-21
+
+Corrected premise: **an external user needs no Cloudflare access at all.** They
+paste a GitHub URL into the form and press one button. The page is right that
+nothing is uploaded. Earlier notes in this document assumed the operator's
+publishing path was the submitter's path; it is not.
+
+The form posts to `POST /modelgarden/api/submit`, guarded by Turnstile. It
+works: `ai-pressure-field` returned **"Queued for review."** on the first try.
+
+## F6 — the Turnstile token is single-use, and nothing says so · SHOULD FIX
+
+Submitting a second model without reloading fails:
+
+> Challenge failed — reload and try again
+
+An author with five models to submit must fully reload the page between each
+one. The message does say "reload", which is better than most — but the form
+gives no indication beforehand that one submission per page load is the rule,
+and the natural behaviour after a success is to type the next URL.
+
+**Fix:** reset the Turnstile widget after a successful submit
+(`turnstile.reset()`), so consecutive submissions work without a reload. Failing
+that, clear the field on success and say "reload to submit another".
+
+## F7 — a submission succeeded while the UI reported failure · SHOULD FIX
+
+`blindspot-model` was submitted on a stale token and the UI showed *"Challenge
+failed."* Resubmitting after a reload returned:
+
+> Already queued for review
+
+So the first attempt **did** reach the queue. The UI reported a failure for a
+request that succeeded. An author in that position either gives up on a model
+that is actually queued, or resubmits repeatedly against a backend that already
+has it.
+
+**Fix:** make the client trust the response status rather than inferring from
+the challenge, and distinguish "not submitted" from "submitted, duplicate".
+"Already queued for review" is the right message — it just needs to not follow
+a false failure.
+
+## F8 — the field keeps a stale value after a failed submit · MINOR
+
+After a failed attempt the input still held a URL from an earlier attempt, so
+the next click submitted the wrong repo. Clearing on success, and leaving the
+value intact only on genuine failure, would make the state legible.
+
+## What is good, and should not change
+
+- **One field, one button.** Nothing to configure, no account, no upload.
+- **The error messages are specific.** An empty POST returns *"Send an https
+  link to a public repo — e.g. https://github.com/you/your-model"*, which names
+  the fix. That is better than most submission forms.
+- **Duplicate detection works**, and its message is honest.
+- **Turnstile rejects scripted POSTs.** A direct `curl` with a valid repo URL
+  returned 403 — the anti-spam is real, not decorative.
+
+## Measured
+
+| | |
+| --- | --- |
+| submissions attempted | 3 |
+| reached the queue | 2 (`ai-pressure-field`, `blindspot-model`) |
+| failed for a real reason | 0 |
+| failed for token reuse | 1, which had in fact succeeded (F7) |
+| Cloudflare access needed by the submitter | **none** |
+
+## Revised priority
+
+F6 and F7 are now the top items, above everything in Part 1 — they affect every
+author submitting more than one model, and F7 actively misinforms. F1 (the
+validator command that cannot run) remains the highest-impact copy fix.
