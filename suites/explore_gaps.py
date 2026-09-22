@@ -197,6 +197,29 @@ REGIONS = [
      "which would itself be the finding. Observables: a named production incident, a "
      "red-team result reproduced in deployment, a control introduced specifically to "
      "prevent one of these behaviours."),
+    # Added after the 2026-09 US/China ship case, which fit none of the other
+    # regions. No adversary, no volition, no attack: an analyst ASKED a chatbot,
+    # it answered confidently and wrongly, and the wrong answer travelled up a
+    # chain sized for human error. The dangerous property is that the output
+    # arrives with none of the uncertainty signals a human source carries --
+    # no hedging, no hesitation, no "I'm not sure", no traceable sourcing --
+    # and institutions built their verification around exactly those signals.
+    ("confident error inside a decision chain",
+     "AI as a source of CONFIDENT WRONG ANSWERS carried by humans into consequential "
+     "decisions, with no adversary and no autonomy involved. The mechanism is the "
+     "stripping of uncertainty markers: a human analyst who is unsure writes like "
+     "someone unsure, and every reviewer above them reads that. A model output is "
+     "fluent, sourced-looking and identical in register whether it is right or "
+     "fabricated, so the signal reviewers were trained on is gone and the error "
+     "travels further before anyone checks. Compounding factors to model: whether the "
+     "AI provenance is disclosed in the artefact at all, how many review layers the "
+     "output crosses before sourcing is examined, and whether the catch was "
+     "systematic or a late accident. Domains where this is load-bearing: military "
+     "and intelligence assessment, clinical decision support, criminal-justice "
+     "filings, financial risk memos, safety engineering sign-off. Observables: a "
+     "disclosed incident naming the stage at which sourcing was examined; a named "
+     "institution requiring AI provenance labelling on internal artefacts; a "
+     "procurement or doctrine document adding a verification step at a named point."),
     ("human ecosystems · the substrate AI acts on",
      "Not AI systems but the human arrangements they act THROUGH and degrade: hiring "
      "pipelines, credit and insurance underwriting, court and benefits administration, "
