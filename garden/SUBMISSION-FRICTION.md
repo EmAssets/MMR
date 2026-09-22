@@ -236,3 +236,46 @@ value intact only on genuine failure, would make the state legible.
 F6 and F7 are now the top items, above everything in Part 1 — they affect every
 author submitting more than one model, and F7 actively misinforms. F1 (the
 validator command that cannot run) remains the highest-impact copy fix.
+
+---
+
+# Part 3 — blast_radius on UNGA 81, 2026-09-22
+
+Second live test of the extractor, on a case with a genuinely different shape:
+a four-year institutional lineage (Global Digital Compact 2024 -> A/RES/79/325
+-> Geneva session) running alongside a one-day debate.
+
+**It flagged its own problem**, which is the behaviour the validators exist for:
+
+```
+! 2 nodes claim to be the seed: global-digital-compact, rahman-opens-debate
+  unreachable from this centre: abdullah-unga81, rahman-opens-debate
+```
+
+That was correct — the case really does have two roots — but two edges were
+wrong, and the extractor's own quoted evidence showed it:
+
+| edge drawn | evidence quoted | what the evidence names |
+| --- | --- | --- |
+| `trump-unga81 -> dialogue-inaugural-session` | "totally rejects any attempt to construct a globalist scheme" | no Geneva session; he is speaking into the general debate |
+| `erdogan-unga81 -> dialogue-inaugural-session` | "establish a common international legal framework for AI" | also the general debate |
+
+**Same failure class as the Microsoft edge in openai-nov-2023:** acts attached
+to the most prominent prior node rather than to the one the evidence names. The
+flattening detector did not fire, because this chain is four deep — flat-to-seed
+was the wrong symptom to watch for. Depth does not prove the edges are right.
+
+Corrected (both speakers -> `rahman-opens-debate`, which opened the debate they
+spoke into), every node becomes reachable and the seed is unique.
+
+**What the corrected structure shows:** Trump and Erdoğan sit at **L2 from each
+other**. They took opposite positions on the same day in the same room and
+there is no edge between them — both responded to the debate, neither to the
+other. An account that reads them as arguing with each other is adding a
+relationship the record does not contain.
+
+**Fix to consider:** the "everything attached to the seed" heuristic catches
+flattening but not misrouting. A stronger check would ask whether each edge's
+evidence mentions its target at all — tried once and removed for crying wolf on
+shared words (see Part 1), so it needs to be smarter than substring matching,
+not merely reinstated.

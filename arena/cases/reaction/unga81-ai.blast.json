@@ -1,0 +1,130 @@
+{
+ "spec": "blast-radius-v1",
+ "title": "UNGA 81 — AI governance at the General Debate",
+ "built": "2026-09-22",
+ "source": "arena\\cases\\reaction\\unga81-ai.md",
+ "center": "global-digital-compact",
+ "nodes": [
+  {
+   "id": "global-digital-compact",
+   "label": "Global Digital Compact",
+   "act": "Adopted at the Summit of the Future; commits to creating a Global Dialogue on AI Governance",
+   "date": "2024",
+   "responded_to": null,
+   "evidence": "The Global Digital Compact, adopted at the Summit of the Future, commits to creating a Global Dialogue on AI Governance.",
+   "inferred": false,
+   "kind": "artifact",
+   "layer": 0
+  },
+  {
+   "id": "unga-res-79-325",
+   "label": "UNGA Resolution A/RES/79/325",
+   "act": "Formally establishes the Global Dialogue on AI Governance, naming co-chairs Egriselda López (El Salvador) and Rein Tammsaar (Estonia)",
+   "date": "A/RES/79/325",
+   "responded_to": "global-digital-compact",
+   "evidence": "UN General Assembly resolution formally establishes the Global Dialogue on AI Governance.",
+   "inferred": true,
+   "kind": "artifact",
+   "layer": 1
+  },
+  {
+   "id": "dialogue-inaugural-session",
+   "label": "Global Dialogue on AI Governance — inaugural session",
+   "act": "Holds its first session, in Geneva",
+   "date": "2026-07-06",
+   "responded_to": "unga-res-79-325",
+   "evidence": "The inaugural session of the Global Dialogue on AI Governance is held in Geneva.",
+   "inferred": true,
+   "kind": "artifact",
+   "layer": 2
+  },
+  {
+   "id": "sg-opening-remarks",
+   "label": "UN Secretary-General",
+   "act": "Delivers opening remarks at the Dialogue's inaugural session",
+   "date": "2026-07-06",
+   "responded_to": "dialogue-inaugural-session",
+   "evidence": "The Secretary-General delivers opening remarks.",
+   "inferred": false,
+   "kind": "person",
+   "layer": 3
+  },
+  {
+   "id": "rahman-opens-debate",
+   "label": "Khalilur Rahman, President of the 81st UNGA session",
+   "act": "Opens the general debate, calling AI a potential accelerator of progress that also risks job losses, a widening digital divide, and — via AGI — human survival, and calls for prudent guardrails, without naming any mechanism, panel or deadline",
+   "date": "2026-09-22",
+   "responded_to": "unga-res-79-325",
+   "evidence": "He names no mechanism, panel or deadline.",
+   "inferred": true,
+   "kind": "person",
+   "layer": 2
+  },
+  {
+   "id": "trump-unga81",
+   "label": "Donald Trump, US President",
+   "act": "Rejects any 'globalist scheme to control artificial intelligence' and proposes renaming the technology 'superintelligence'",
+   "date": "2026-09-22",
+   "responded_to": "rahman-opens-debate",
+   "evidence": "The United States totally rejects any attempt to construct a globalist scheme to control artificial intelligence.",
+   "inferred": true,
+   "kind": "person",
+   "layer": 3
+  },
+  {
+   "id": "erdogan-unga81",
+   "label": "Recep Tayyip Erdoğan, President of Turkey",
+   "act": "Calls for a common international legal framework for AI and to accelerate work on a UN international convention on AI, citing disinformation and cybersecurity threats",
+   "date": "2026-09-22",
+   "responded_to": "rahman-opens-debate",
+   "evidence": "It is long overdue now to establish a common international legal framework for AI",
+   "inferred": true,
+   "kind": "person",
+   "layer": 3
+  },
+  {
+   "id": "abdullah-unga81",
+   "label": "King Abdullah II of Jordan",
+   "act": "Addresses the General Debate on technology's effect on attention spans, without addressing AI regulation or superintelligence",
+   "date": "2026-09-22",
+   "responded_to": "rahman-opens-debate",
+   "evidence": "He does not address AI regulation or superintelligence.",
+   "inferred": true,
+   "kind": "person",
+   "layer": 3
+  },
+  {
+   "id": "dialogue-second-session",
+   "label": "Global Dialogue on AI Governance — second session",
+   "act": "Scheduled for New York, back-to-back with the 11th Multi-stakeholder Forum on Science, Technology and Innovation",
+   "date": "2027-05-03",
+   "responded_to": "dialogue-inaugural-session",
+   "evidence": "The second session of the Global Dialogue on AI Governance is scheduled for New York",
+   "inferred": true,
+   "kind": "artifact",
+   "layer": 3
+  }
+ ],
+ "rings": {
+  "0": [
+   "global-digital-compact"
+  ],
+  "1": [
+   "unga-res-79-325"
+  ],
+  "2": [
+   "dialogue-inaugural-session",
+   "rahman-opens-debate"
+  ],
+  "3": [
+   "abdullah-unga81",
+   "dialogue-second-session",
+   "erdogan-unga81",
+   "sg-opening-remarks",
+   "trump-unga81"
+  ]
+ },
+ "max_layer": 3,
+ "unreachable": [],
+ "note": "Layer = reaction hops from the centred entity, computed by BFS over extracted edges. It is NOT the emergence-ladder floor: a state (E12) can sit at layer 2. Every edge is our reading of what an act references, carries the span that licenses it, and can be overruled."
+}
