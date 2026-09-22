@@ -1,0 +1,234 @@
+{
+ "spec": "reaction-layers-v1",
+ "case": "unga81-ai",
+ "title": "UNGA 81 — who was answering whom",
+ "updated": "2026-09-22",
+ "center": "rahman-opens-debate",
+ "nodes": [
+  {
+   "id": "global-digital-compact",
+   "label": "Global Digital Compact",
+   "kind": "artifact",
+   "date": "2024",
+   "to": null,
+   "src": "primary",
+   "act": "Adopted at the Summit of the Future; commits to creating a Global Dialogue on AI Governance",
+   "ev": "The Global Digital Compact, adopted at the Summit of the Future, commits to creating a Global Dialogue on AI Governance.",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ]
+  },
+  {
+   "id": "unga-res-79-325",
+   "label": "UNGA Resolution A/RES/79/325",
+   "kind": "artifact",
+   "date": "A/RES/79/325",
+   "to": "global-digital-compact",
+   "src": "primary",
+   "act": "Formally establishes the Global Dialogue on AI Governance, naming co-chairs Egriselda López (El Salvador) and Rein Tammsaar (Estonia)",
+   "ev": "UN General Assembly resolution formally establishes the Global Dialogue on AI Governance.",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ],
+   "inferred": true
+  },
+  {
+   "id": "dialogue-inaugural-session",
+   "label": "Global Dialogue on AI Governance — inaugural session",
+   "kind": "artifact",
+   "date": "2026-07-06",
+   "to": "unga-res-79-325",
+   "src": "primary",
+   "act": "Holds its first session, in Geneva",
+   "ev": "The inaugural session of the Global Dialogue on AI Governance is held in Geneva.",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ],
+   "inferred": true
+  },
+  {
+   "id": "sg-opening-remarks",
+   "label": "UN Secretary-General",
+   "kind": "person",
+   "date": "2026-07-06",
+   "to": "dialogue-inaugural-session",
+   "src": "primary",
+   "act": "Delivers opening remarks at the Dialogue's inaugural session",
+   "ev": "The Secretary-General delivers opening remarks.",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ]
+  },
+  {
+   "id": "rahman-opens-debate",
+   "label": "Khalilur Rahman, President of the 81st UNGA session",
+   "kind": "person",
+   "date": "2026-09-22",
+   "to": "unga-res-79-325",
+   "src": "primary",
+   "act": "Opens the general debate, calling AI a potential accelerator of progress that also risks job losses, a widening digital divide, and — via AGI — human survival, and calls for prudent guardrails, without naming any mechanism, panel or deadline",
+   "ev": "He names no mechanism, panel or deadline.",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ],
+   "inferred": true
+  },
+  {
+   "id": "trump-unga81",
+   "label": "Donald Trump, US President",
+   "kind": "person",
+   "date": "2026-09-22",
+   "to": "rahman-opens-debate",
+   "src": "primary",
+   "act": "Rejects any 'globalist scheme to control artificial intelligence' and proposes renaming the technology 'superintelligence'",
+   "ev": "The United States totally rejects any attempt to construct a globalist scheme to control artificial intelligence.",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ],
+   "inferred": true
+  },
+  {
+   "id": "erdogan-unga81",
+   "label": "Recep Tayyip Erdoğan, President of Turkey",
+   "kind": "person",
+   "date": "2026-09-22",
+   "to": "rahman-opens-debate",
+   "src": "primary",
+   "act": "Calls for a common international legal framework for AI and to accelerate work on a UN international convention on AI, citing disinformation and cybersecurity threats",
+   "ev": "It is long overdue now to establish a common international legal framework for AI",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ],
+   "inferred": true
+  },
+  {
+   "id": "abdullah-unga81",
+   "label": "King Abdullah II of Jordan",
+   "kind": "person",
+   "date": "2026-09-22",
+   "to": "rahman-opens-debate",
+   "src": "primary",
+   "act": "Addresses the General Debate on technology's effect on attention spans, without addressing AI regulation or superintelligence",
+   "ev": "He does not address AI regulation or superintelligence.",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ],
+   "inferred": true
+  },
+  {
+   "id": "dialogue-second-session",
+   "label": "Global Dialogue on AI Governance — second session",
+   "kind": "artifact",
+   "date": "2027-05-03",
+   "to": "dialogue-inaugural-session",
+   "src": "primary",
+   "act": "Scheduled for New York, back-to-back with the 11th Multi-stakeholder Forum on Science, Technology and Innovation",
+   "ev": "The second session of the Global Dialogue on AI Governance is scheduled for New York",
+   "refs": [
+    [
+     "www.un.org",
+     "https://www.un.org/pga/81/documents/speeches/general-debate-opening-22-september-2026/"
+    ],
+    [
+     "www.thenationalnews.com",
+     "https://www.thenationalnews.com/future/technology/2026/09/22/trump-ai-superintelligence-king-abdullah-unga/"
+    ],
+    [
+     "www.un.org",
+     "https://www.un.org/global-dialogue-ai-governance/en"
+    ]
+   ],
+   "inferred": true
+  }
+ ],
+ "note": "Layer = reaction hops from the centred entity, computed by BFS over extracted edges. It is NOT the emergence-ladder floor: a state (E12) can sit at layer 2. Every edge is our reading of what an act references, carries the span that licenses it, and can be overruled.",
+ "lede": "On 22 September 2026, four leaders addressed AI at the UN General Debate. Trump rejected “any attempt to construct a globalist scheme to control artificial intelligence.” Erdoğan called for a binding UN convention. They took opposite positions on the same day in the same room — and there is no edge between them. Both answered the debate; neither answered the other. Behind both sits a four-year institutional lineage running back to the 2024 Global Digital Compact."
+}

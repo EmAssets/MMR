@@ -301,8 +301,9 @@
 </style>
 
 <div class="page">
-  <p class="eyebrow">Reaction structure · one event, 14 acts</p>
-  <h1>Who was looking at what</h1>
+  <p class="eyebrow" id="eyebrow">Reaction structure · one event, 14 acts</p>
+  <h1 id="pagetitle">Who was looking at what</h1>
+  <div id="lede-default">
   <p class="lede">
     On 9 September 2026 an Anthropic safety researcher resigned, forfeited his equity, and posted
     why. The post reached 172 million views. Then everyone reacted — but <em>not to the same
@@ -314,6 +315,8 @@
     resignation at all. Each ring below is one hop of reaction — and <em>any</em> of the fourteen can
     hold the centre. Stand with someone and the rings recount from where they stood.
   </p>
+  </div>
+  <div id="lede-case" hidden><p class="lede" id="lede-case-text"></p></div>
 
   <div class="frame">
     <div class="frame-head">
@@ -627,9 +630,15 @@ function draw(){
    reach the page's main idea, which meant most readers never found out that
    pivoting was the point. */
 function buildPicker(){
+  // Order by distance from the SEED, not from a hardcoded slug. "coxon" was
+  // baked in here; on any other case every comparison became NaN and the picker
+  // rendered empty, which reads as "this case has no actors".
+  const seed = (NODES.find(n => !n.to) || NODES[0] || {}).id;
+  const dseed = seed ? layersFrom(seed) : {};
   const order = NODES.slice().sort((a,b) => {
-    const d = layersFrom("coxon");
-    return (d[a.id] - d[b.id]) || a.label.localeCompare(b.label);
+    const da = dseed[a.id], db = dseed[b.id];
+    if (da !== db) return (da === undefined) - (db === undefined) || da - db;
+    return a.label.localeCompare(b.label);
   });
   document.getElementById("picker").innerHTML = order.map(n =>
     `<button class="chip" data-id="${n.id}" aria-pressed="${n.id === hub}">`
@@ -868,7 +877,11 @@ function boot(){
    renders instead of an empty frame. A visualisation that silently empties is
    worse than one that is a few days stale. */
 (function(){
-  const url = "reaction-layers.json";
+  // ?case=<slug> selects a different event. The default file stays where it is
+  // so every link already published keeps working; a new case is a new file
+  // beside it, not a migration.
+  const m = /[?&]case=([a-z0-9-]{1,40})/.exec(location.search || "");
+  const url = m ? "reaction-layers-" + m[1] + ".json" : "reaction-layers.json";
   fetch(url, {cache: "no-cache"})
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(d => {
@@ -878,9 +891,36 @@ function boot(){
         const el = document.getElementById("updated");
         if (el) el.textContent = "data updated " + d.updated;
       }
-      hub = NODES.some(n => n.id === hub) ? hub : (NODES.find(n => !n.to) || NODES[0]).id;
-      document.getElementById("picker").innerHTML = "";
+      // A case file supplies its own framing. The default prose stays in the
+      // page for the Coxon event, so every link already published is unchanged;
+      // another case swaps the title and lede rather than inheriting copy that
+      // describes a different event.
+      if (d.case && d.case !== "coxon-resignation"){
+        if (d.title){
+          document.getElementById("pagetitle").textContent = d.title;
+          document.title = d.title;
+        }
+        document.getElementById("eyebrow").textContent =
+          "Reaction structure · one event, " + d.nodes.length + " acts";
+        document.getElementById("lede-default").hidden = true;
+        const lc = document.getElementById("lede-case");
+        if (d.lede){
+          document.getElementById("lede-case-text").textContent = d.lede;
+          lc.hidden = false;
+        }
+      }
+      // The data file may name its own centre. Fall back to the seed, and only
+      // keep the current hub if the new data actually contains it -- otherwise
+      // a case switch leaves the page centred on a node that no longer exists.
+      const want = d.center && NODES.some(n => n.id === d.center) ? d.center : null;
+      hub = want || (NODES.some(n => n.id === hub) ? hub
+                     : (NODES.find(n => !n.to) || NODES[0]).id);
+      const pk = document.getElementById("picker");
+      pk.innerHTML = "";
+      delete pk.dataset.filled;
       boot();
+      draw();   // the readout is written by draw(); without this it keeps the
+                // baked-in fallback's numbers after the fetch replaces NODES
     })
     .catch(() => { /* keep the baked copy; boot() already ran below */ });
   boot();
