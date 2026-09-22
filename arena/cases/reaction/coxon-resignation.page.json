@@ -2,7 +2,7 @@
  "spec": "reaction-layers-v1",
  "case": "coxon-resignation",
  "title": "Coxon resignation — reaction layers",
- "updated": "2026-09-21",
+ "updated": "2026-09-22",
  "nodes": [
   {
    "id": "coxon",
@@ -663,6 +663,76 @@
    ],
    "caveat": "Auto-captioned and unreliable on proper nouns. Used for chronology and for which reactions existed, not for quotes.",
    "power": null
+  },
+  {
+   "id": "mmr-lenses",
+   "label": "Seven model lenses",
+   "kind": "artifact",
+   "date": "2026-09-18",
+   "to": "primetime",
+   "src": "primary",
+   "act": "Seven forecasting models read the event through their own registries of watched entities, each recording which entities it touched, the future each act implies, and the credence read from what the act cost.",
+   "ev": "The commentary video is where the sequence was first seen laid out end to end; the lenses were built from that chronology after verifying it independently.",
+   "refs": [
+    [
+     "lens snapshots",
+     "https://github.com/EmAssets/MMR/tree/master/lenses/meta-coxon-resignation"
+    ]
+   ],
+   "power": null,
+   "dossier": {
+    "known": [
+     [
+      "Seven models, each with its own entity registry, so “what happened” is one answer per registry rather than one answer.",
+      "https://github.com/EmAssets/MMR/tree/master/lenses/meta-coxon-resignation"
+     ],
+     [
+      "Every reading is labelled v1: our model of their model, built from what was gatherable on 2026-09-18.",
+      ""
+     ]
+    ],
+    "risk": "No position of its own. The lenses report what each entity's act implies, and are banned from asserting what anyone believes, wants or fears.",
+    "cost": "None paid. An analysis risks being wrong on a date, which is the mechanism, not a cost."
+   }
+  },
+  {
+   "id": "this-reading",
+   "label": "This reading",
+   "kind": "artifact",
+   "date": "2026-09-21",
+   "to": "mmr-lenses",
+   "src": "primary",
+   "act": "Extracted the reaction structure from the chronology, assigned each act a source tier, and published it — adding a further layer of interpretation on top of everything below.",
+   "ev": "A commentary video summarises the resignation, the essay, the reactions to the essay and the conspiracy readings, and layers its own reading on top of them.",
+   "refs": [
+    [
+     "the page you are reading",
+     "https://modelmeetsreality.com/asset/reaction-layers.html"
+    ],
+    [
+     "the extractor",
+     "https://github.com/EmAssets/MMR/blob/master/suites/blast_radius.py"
+    ]
+   ],
+   "power": null,
+   "dossier": {
+    "known": [
+     [
+      "Every edge is an inference from what an act publicly referenced, never from stated intent.",
+      ""
+     ],
+     [
+      "Four of the six ring-2 acts rest on a single commentary video and were never traced to primary posts.",
+      ""
+     ],
+     [
+      "The extractor misrouted two edges on the UNGA case, caught by its own quoted evidence.",
+      ""
+     ]
+    ],
+    "risk": "Its claim is structural, not predictive: that some actors were reading the essay rather than the post. It is wrong if a primary source shows otherwise.",
+    "cost": "Publishing the edges with their evidence, so a reader can overrule any of them."
+   }
   }
  ],
  "dossier_note": "A dossier is written only where sourced material exists. An actor with no dossier has none on file — that is a gap in this reading, not a judgement about them. Nothing here asserts what anyone believes, wants or fears.",
