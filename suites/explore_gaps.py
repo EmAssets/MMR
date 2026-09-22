@@ -345,25 +345,46 @@ def existing_models() -> str:
     return "\n".join(sorted(out))
 
 
-def propose(n_per: int, dry: bool, model_hint: str) -> list:
+def propose(n_per: int, dry: bool, model_hint: str, regions: list = None,
+            batch: int = 4, store: Path = None) -> list:
+    """Propose candidates, WRITING AFTER EACH BATCH.
+
+    The first run fired all fourteen regions at once and printed nothing for
+    forty minutes, because _call_many returns only when every prompt in the
+    batch has landed. A long run that shows nothing until the end is
+    indistinguishable from a hung one, and if it is killed the work is lost.
+
+    So: small batches, appended to the store as they complete. A killed run
+    keeps whatever finished.
+    """
     from suites import arena as A
     A._load_env()
     ex = existing_models()
-    prompts, labels = [], []
-    for region, why in REGIONS:
-        prompts.append(PROMPT.format(existing=ex, region=region, why=why,
-                                     n=n_per, today=TODAY))
-        labels.append(region)
-    bodies = A._call_many(model_hint, prompts, dry,
-                          on_done=lambda i, b: print("    proposed: %s" % labels[i]))
+    todo = regions if regions is not None else REGIONS
     out = []
-    for label, b in zip(labels, bodies):
-        if b.get("_error") or b.get("_unparsed"):
-            print("  ! %s: %s" % (label, str(b.get("_error") or "unparsed")[:80]))
-            continue
-        for c in (b.get("candidates") or []):
-            c["region"] = label
-            out.append(c)
+    for i in range(0, len(todo), batch):
+        chunk = todo[i:i + batch]
+        labels = [r for r, _ in chunk]
+        prompts = [PROMPT.format(existing=ex, region=r, why=w, n=n_per, today=TODAY)
+                   for r, w in chunk]
+        print("\n  batch %d/%d: %s"
+              % (i // batch + 1, (len(todo) + batch - 1) // batch,
+                 ", ".join(l.split(" · ")[0] for l in labels)))
+        bodies = A._call_many(model_hint, prompts, dry,
+                              on_done=lambda j, b: print("    landed: %s" % labels[j]))
+        got = 0
+        for label, b in zip(labels, bodies):
+            if b.get("_error") or b.get("_unparsed"):
+                print("    ! %s: %s" % (label, str(b.get("_error") or "unparsed")[:70]))
+                continue
+            for c in (b.get("candidates") or []):
+                c["region"] = label
+                out.append(c)
+                got += 1
+        print("    +%d candidates (%d total)" % (got, len(out)))
+        if store:
+            store.write_text(json.dumps({"generated": TODAY, "candidates": out},
+                                        ensure_ascii=False, indent=1), encoding="utf-8")
     return out
 
 
@@ -428,7 +449,10 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Propose and filter model candidates.")
     ap.add_argument("--propose", action="store_true")
     ap.add_argument("--filter", action="store_true")
-    ap.add_argument("--n", type=int, default=12, help="candidates per region")
+    ap.add_argument("--n", type=int, default=10, help="candidates per region")
+    ap.add_argument("--batch", type=int, default=2, help="regions run concurrently")
+    ap.add_argument("--only", default="", help="substring match on region names")
+    ap.add_argument("--fresh", action="store_true", help="ignore existing candidates")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--model", default="auto")
     ap.add_argument("--dry-run", action="store_true")
@@ -437,13 +461,34 @@ def main() -> None:
     f = OUT / "candidates.json"
 
     if a.propose:
-        print("[explore] %d regions x %d candidates" % (len(REGIONS), a.n))
-        cands = propose(a.n, a.dry_run, a.model)
-        print("\n  %d candidates proposed" % len(cands))
-        if a.apply or not a.dry_run:
-            f.write_text(json.dumps({"generated": TODAY, "candidates": cands},
-                                    ensure_ascii=False, indent=1), encoding="utf-8")
-            print("  -> %s" % f)
+        todo = REGIONS
+        if a.only:
+            want = [s.strip().lower() for s in a.only.split(",") if s.strip()]
+            todo = [r for r in REGIONS if any(w in r[0].lower() for w in want)]
+            if not todo:
+                raise SystemExit("no region matched %r" % a.only)
+        # Resume rather than restart: a region already in the store is skipped,
+        # so a killed run is continued by re-issuing the same command.
+        done = set()
+        if f.exists() and not a.fresh:
+            prev = json.loads(f.read_text(encoding="utf-8")).get("candidates", [])
+            done = {c.get("region") for c in prev}
+            todo = [r for r in todo if r[0] not in done]
+            if done:
+                print("  resuming: %d region(s) already have candidates" % len(done))
+        print("[explore] %d region(s) x %d candidates, batches of %d"
+              % (len(todo), a.n, a.batch))
+        if not todo:
+            print("  nothing to do")
+            return
+        prior = []
+        if f.exists() and not a.fresh:
+            prior = json.loads(f.read_text(encoding="utf-8")).get("candidates", [])
+        cands = propose(a.n, a.dry_run, a.model, todo, a.batch, None)
+        allc = prior + cands
+        f.write_text(json.dumps({"generated": TODAY, "candidates": allc},
+                                ensure_ascii=False, indent=1), encoding="utf-8")
+        print("\n  %d new, %d total -> %s" % (len(cands), len(allc), f))
         return
 
     if a.filter:
