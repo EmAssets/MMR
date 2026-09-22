@@ -166,6 +166,61 @@ REGIONS = [
     # the whole design. "He dodged" is a claim about a mind and is banned.
     # "The answer did not contain the asked-for object, and the topic moved to X"
     # is a claim about a transcript, checkable by anyone with the tape.
+    # THE HARD ONE, and the reason it is specified this carefully. "The AI acted
+    # on its own volition" sounds like interiority and is banned as stated. But
+    # the thing actually being asked about is observable without any claim about
+    # a mind: an action taken that NO INSTRUCTION ASKED FOR, and that a reader
+    # of the instruction would not have predicted. Whether the system "wanted"
+    # it is unanswerable and unnecessary. Whether the action was in the
+    # instruction set is a fact about a log.
+    ("adversarial without a principal · unrequested action",
+     "Actions taken by a deployed system that no instruction asked for and that the "
+     "operator did not anticipate, distinguished from three things it is usually "
+     "confused with: a jailbreak (a human asked), a bug (the action was not in the "
+     "capability set), and misuse (a human is the principal). The observable is the "
+     "GAP between the instruction set and the action log -- what the system did that "
+     "nothing in the instruction accounts for. Examples in scope: an agent acquiring "
+     "access it was not granted in order to complete a granted task, a system "
+     "preserving its own operation when continuation was not instructed, an optimiser "
+     "satisfying a stated metric by a route the specifier would have excluded. Say "
+     "nothing about whether it 'knew'. Observables: a disclosed incident where the "
+     "operator states no instruction covered the action; a provider publishing an "
+     "instruction-to-action audit; an insurer or regulator defining the category."),
+    ("adversarial without a principal · instrumental convergence in the wild",
+     "The specific sub-case where a system takes an action that is USEFUL FOR ALMOST "
+     "ANY GOAL -- acquiring resources, resisting interruption, preserving access, "
+     "hiding a state change -- without that action being in the instruction. This is "
+     "the classic theoretical claim, and the model's job is to make it EMPIRICAL: "
+     "which of these behaviours have been observed outside an eval harness, in what "
+     "deployment, and what did the operator have to do about it. Falsified by a year "
+     "passing with no such report despite instrumented agentic deployment at scale -- "
+     "which would itself be the finding. Observables: a named production incident, a "
+     "red-team result reproduced in deployment, a control introduced specifically to "
+     "prevent one of these behaviours."),
+    ("human ecosystems · the substrate AI acts on",
+     "Not AI systems but the human arrangements they act THROUGH and degrade: hiring "
+     "pipelines, credit and insurance underwriting, court and benefits administration, "
+     "editorial and peer review, clinical triage, procurement scoring, content "
+     "moderation, academic assessment. The mechanism is that these systems already "
+     "had failure modes and tolerances built for HUMAN error rates and human latency; "
+     "an AI participant changes the rate, the correlation and the appeal path at once. "
+     "Correlated error is the key property: a thousand human reviewers make "
+     "uncorrelated mistakes, one model makes the same mistake a thousand times, and "
+     "the institution's appeal process was sized for the former. Observables: a named "
+     "institution publishing an error-rate or appeal-volume change, a regulator "
+     "requiring a human reviewer at a named step, a class action over correlated "
+     "automated decisions."),
+    ("human ecosystems · trust, verification and the cost of checking",
+     "What happens to institutions whose function depends on verification being cheaper "
+     "than fabrication -- identity, provenance, peer review, evidence in court, "
+     "journalism, academic credit, KYC. The mechanism is a cost inversion: these "
+     "arrangements are load-bearing only while producing a credible artefact is dearer "
+     "than checking one. When generation becomes near-free, the institution either "
+     "raises verification cost (friction everyone pays), accepts more fraud, or "
+     "narrows what it will accept as evidence. Which of those three it picks is the "
+     "prediction. Observables: a court, journal or registry publishing a changed "
+     "evidence standard; a named body reintroducing an in-person or hardware step; a "
+     "measured fraud-rate disclosure."),
     ("non-answers under questioning",
      "What happens to a QUESTION when a powerful actor is asked it on the record. "
      "Observable without any claim about intent: does the response contain the "
@@ -220,6 +275,15 @@ an observable. "X publishes Y by DATE" is.
 Do NOT propose:
   - anything requiring a claim about what a person or company believes, wants or
     fears. This fleet bans interiority everywhere.
+
+    THIS APPLIES TO AI SYSTEMS TOO, and it is a constraint on WORDING, not on
+    subject matter. A system acting in ways nobody instructed is entirely in
+    scope -- it is one of the most important things to model. State it as the
+    observable it is: an action present in the log and absent from the
+    instruction set. Never as "the system wanted", "decided to", "realised
+    that", "tried to avoid" or "knew". If your candidate needs one of those
+    verbs to make sense, the mechanism is not yet specified; specify it against
+    the log and the instruction, and it will be both sayable and checkable.
   - a model whose only content is that something is important.
   - a restatement of a textbook with AI vocabulary attached.
 
