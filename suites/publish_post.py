@@ -83,6 +83,17 @@ def _inline(s: str) -> str:
 def to_blocks(md: str) -> str:
     out, i = [], 0
     lines = md.split("\n")
+    # Drop a leading H1. WordPress renders the post title itself, so a source
+    # file that opens with "# Title" -- which it should, to stay readable as
+    # markdown -- would otherwise show the title twice on the published page.
+    # Only the FIRST heading, and only if it is level 1: a later H1 is the
+    # author structuring the body and is theirs to keep.
+    for j, ln in enumerate(lines):
+        if not ln.strip():
+            continue
+        if ln.lstrip().startswith("# "):
+            lines = lines[j + 1:]
+        break
     while i < len(lines):
         ln = lines[i]
         st = ln.strip()
