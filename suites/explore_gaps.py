@@ -331,7 +331,23 @@ If the gap you are proposing into is a threat-modelling one, the dated
 observable is still required and is usually of this shape: "when an incident of
 class X is next publicly reported by DATE, the reporting shows it was stopped
 at / got through stage N." A threat model that cannot be checked against an
-incident is a diagram, not a model."""
+incident is a diagram, not a model.
+
+A CONDITIONAL OBSERVABLE MUST SAY WHAT A NON-OCCURRENCE MEANS. If your
+observable waits on an incident being disclosed, the claim is unfalsifiable by
+the incident simply never being disclosed -- and for many of these the absence
+is ambiguous between "the behaviour does not occur" and "it occurs and is not
+disclosed." State which, and attach the date:
+
+  WEAK:   "When an agentic incident is next disclosed, the log shows X."
+  BETTER: "When an agentic incident of class C is next publicly disclosed, the
+           disclosure shows X. If no such incident is disclosed by DATE, that
+           counts as <the claim failing | evidence of non-disclosure rather
+           than non-occurrence, distinguished by whether instrumented
+           deployment at scale is publicly known to exist>."
+
+Every candidate whose observable begins "when" must carry that second clause,
+or it will be rejected."""
 
 
 def existing_models() -> str:
@@ -434,10 +450,24 @@ def score(c: dict, taken: set) -> tuple:
     # what separates a checkable event from a trend wearing a verb.
     dated = re.search(r"\b(by|before|on|at)\s+\d{4}-\d{2}-\d{2}|\b\d{4}-\d{2}-\d{2}", low)
     actor = re.search(r"\b(a named|the |any )\w+", low)
-    if trendy and not (dated and actor):
-        bad.append("observable reads as a trend, not a dated event with an actor")
-    elif not dated:
-        bad.append("observable names no date — cannot be resolved on a day")
+    # A CONDITIONAL observable — "when X next happens, Y will be true" — is a
+    # legitimate and often better form: the date lives in resolve_by, and the
+    # observable says what to check when the trigger fires. Rejecting these for
+    # "naming no date" cut 10 of 11 in the first batch, including the shape the
+    # ship case demands. The requirement is that the claim can be RESOLVED on a
+    # day, which a conditional with a resolve_by can be: if the trigger has not
+    # fired by then, that is itself an outcome.
+    conditional = re.search(r"\b(when|if|once)\b.{0,80}\b(next|first|is |are )", low)
+    if trendy and not (dated or conditional):
+        bad.append("observable reads as a trend, not an event")
+    elif not (dated or conditional):
+        bad.append("observable is neither dated nor conditional — cannot be resolved")
+    # A conditional still needs to say what happens if the trigger never fires,
+    # or it is unfalsifiable by simply never occurring.
+    if conditional and not dated and not re.search(
+            r"\bno (such|incident|disclosure|case|report)\b|\bnone\b|\bdoes not (occur|fire|happen)\b|"
+            r"\babsence\b|\bfails to\b|\bnever\b", low):
+        bad.append("conditional observable does not say what a non-occurrence means")
     if len(str(c.get("switch_off") or "")) < 20:
         bad.append("no switch-off answer — the AI may be decoration")
     if not c.get("rival"):

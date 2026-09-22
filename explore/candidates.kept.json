@@ -1,0 +1,149 @@
+{
+ "generated": "2026-09-22",
+ "candidates": [
+  {
+   "slug": "hedge-strip-carry-distance",
+   "title": "Uncertainty markers stripped from AI-assisted text let an error travel more review layers before a sourcing check fires",
+   "mechanism": "Human-authored uncertainty (hedged phrasing, qualifiers) correlates with actual author confidence, so reviewers use register as a free confidence signal; AI-generated text is register-flat regardless of grounding, so that signal goes to zero and a wrong claim rides the same fluent register as a right one through more approval layers before anyone opens a source.",
+   "aspect": "institutions",
+   "e_span": [
+    8,
+    11
+   ],
+   "kind": "attributor",
+   "observable": "By 2027-09-30, a publicly disclosed internal-document incident (military, clinical, or financial) names the specific review layer (e.g. 'second-line sign-off', 'attending review') at which AI origin or a fabricated source was first identified, in a report from the affected institution or a named journalist.",
+   "resolve_by": "2027-09-30",
+   "switch_off": "Without frontier AI, hedge density in a human-drafted memo still tracks the drafter's actual confidence, so reviewers reading register as a confidence proxy remains a valid check; there is no flattening to defeat.",
+   "rival": "The incident reflects ordinary understaffed review chains that already let human-authored errors through multiple layers, unrelated to any AI-specific register effect.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "provenance-blank-catch-lag",
+   "title": "Internal artefacts with no AI-provenance marker take longer to catch a sourcing error than marked ones inside the same institution",
+   "mechanism": "When an artefact carries no marker distinguishing AI-drafted from human-drafted passages, a reviewer applies the human-authored sourcing-check rate to it; that rate is calibrated to human error patterns, not to fabrication that looks identical in register whether sourced or invented, so an unmarked AI-origin error survives longer inside the same chain than a marked one would.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "tracer",
+   "observable": "By 2027-12-31, a named institution (hospital system, bank, law firm, or defense contractor) publishes an internal policy adding an AI-provenance marking requirement to draft documents, citing a specific prior incident as the reason in the policy text or an accompanying memo.",
+   "resolve_by": "2027-12-31",
+   "switch_off": "Without frontier AI, there is no artefact class whose authorship needs marking at all, since every draft is human-authored and the existing sourcing-check rate is already calibrated to it.",
+   "rival": "The policy is adopted as part of a generic new-tool onboarding checklist applied to any recently introduced software, independent of any measured difference in catch time.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "clinical-narrative-confidence-flatten",
+   "title": "AI-drafted clinical note narratives carry the same certainty register whether the underlying evidence is strong or thin, unlike physician-authored notes",
+   "mechanism": "Physician-authored assessment sections vary phrasing ('likely', 'cannot rule out', 'consistent with') in proportion to diagnostic confidence, and downstream clinicians use that variation to calibrate how much independent verification to do; an AI-drafted assessment section renders every finding in the same declarative register regardless of the strength of the underlying data, removing the cue a downstream reader relies on without any new error being introduced by the AI itself.",
+   "aspect": "life",
+   "e_span": [
+    7,
+    10
+   ],
+   "kind": "classifier",
+   "observable": "By 2027-06-30, a named hospital system or health system publishes a clinical documentation policy requiring a distinct confidence-qualifier field or visual flag on AI-drafted assessment text, separate from the narrative itself.",
+   "resolve_by": "2027-06-30",
+   "switch_off": "Without frontier AI, a physician's own hedging language is the confidence signal and downstream readers already rely on it correctly; there is no flattening because the same person who assessed the evidence chose the words.",
+   "rival": "The policy is a standard EHR vendor feature rollout applied to all templated note sections, not a response to any AI-specific confidence-flattening problem.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "memo-citation-check-rate-gap",
+   "title": "Financial risk memos apply a lower per-citation verification rate to AI-drafted sourcing than to analyst-drafted sourcing, until a named loss event changes the rate",
+   "mechanism": "A model-risk-management review process built for quantitative model outputs (SR 11-7 style) checks numbers and assumptions but was never built to spot-check narrative citations inside a memo, so an AI-drafted narrative section with fabricated or misattributed sourcing passes the same review gate that a human-drafted section with similarly wrong sourcing would also have passed -- the gate simply never checked citations in either case, and AI drafting raises the volume of narrative text moving through it.",
+   "aspect": "economy-markets",
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "tracker",
+   "observable": "By 2027-12-31, a named bank or asset manager discloses (in a regulatory filing, internal audit summary reported by a named news outlet, or public statement) a risk-memo error traced to AI-drafted narrative text, stating the review stage at which it was caught.",
+   "resolve_by": "2027-12-31",
+   "switch_off": "Without frontier AI, narrative sourcing in a risk memo is analyst-drafted at the same low volume as before, so the existing citation-check gap in MRM process is never exercised at a rate that produces a disclosed incident.",
+   "rival": "The disclosed error is an ordinary analyst sourcing mistake later mislabeled as AI-related in reporting, with no AI drafting actually involved in the erroneous passage.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "doctrine-verification-step-timing",
+   "title": "A named institution adds a source-verification step to its AI-use doctrine only after its own first disclosed incident, not ahead of one",
+   "mechanism": "Institutions writing AI-use doctrine before experiencing an internal incident tend to specify authorization and output-review generally but not a citation- or source-verification step specifically, because the failure mode of fluent-but-fabricated sourcing is not salient until an artefact using it has already crossed a decision gate; the verification step is added reactively, naming the incident, rather than proactively.",
+   "aspect": "institutions",
+   "e_span": [
+    10,
+    13
+   ],
+   "kind": "timer",
+   "observable": "By 2028-03-15, a named defense, intelligence, or law-enforcement agency publishes a doctrine or SOP revision adding a named source-verification checkpoint for AI-assisted analytic products, and the revision text or accompanying announcement cites a specific prior internal incident as the trigger.",
+   "resolve_by": "2028-03-15",
+   "switch_off": "Without frontier AI, analytic doctrine already requires sourcing verification for human-drafted assessments under existing tradecraft standards (e.g. ICD 203), so there is no new gap for a doctrine revision to close.",
+   "rival": "The doctrine revision is issued as a scheduled periodic update to tradecraft standards unrelated to any specific incident, with the incident citation added for institutional justification after the fact.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "filing-sourcing-check-domain-gap",
+   "title": "Criminal-justice filings catch AI-fabricated citations earlier in the review chain than clinical or intelligence artefacts do, because citations in filings are independently checkable against a public case database and the others are not",
+   "mechanism": "A citation in a legal filing can be checked by any reader against a public, structured case-law database in minutes, making fabrication the cheapest possible thing to catch mechanically; a citation or data point in a clinical note or intelligence assessment has no equivalent public, structured, queryable ground truth, so the same fabrication register survives to a later review layer or is never checked at all -- the gap is the existence of a cheap external check, not any difference in reviewer diligence.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "attributor",
+   "observable": "By 2027-06-30, comparing any two publicly disclosed AI-sourcing-error incidents (one in a court filing, one in a clinical or intelligence artefact) reported by that date, the filing incident is caught at an earlier-numbered review stage (counting from initial draft) than the clinical or intelligence incident, as stated in each disclosure.",
+   "resolve_by": "2027-06-30",
+   "switch_off": "Without frontier AI, filings and clinical notes are both human-drafted and each domain's existing citation-checking infrastructure (or lack of it) still determines catch rate for ordinary human sourcing errors, so the cross-domain gap persists but has nothing to do with AI fluency.",
+   "rival": "The apparent gap is a reporting-visibility artifact: legal errors are public record by default and clinical or intelligence errors are not, so more legal incidents are disclosed regardless of true relative catch rates.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "intel-assessment-confidence-decouple",
+   "title": "Confidence-language words in an AI-assisted intelligence assessment stop correlating with the source-reliability rating of the evidence cited beneath them",
+   "mechanism": "Existing tradecraft standards require an analyst to write confidence language ('high confidence', 'we assess') that tracks a source-reliability rating assigned to the underlying reporting; when an AI drafts the confidence language, it can select conventionally appropriate hedge words from training-pattern fluency without the words being derived from the specific source-reliability rating attached in that instance, decoupling the two without any tradecraft rule being broken on its face.",
+   "aspect": "states-geopolitics",
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "classifier",
+   "observable": "By 2027-09-30, a named intelligence oversight body (inspector general, congressional committee, or equivalent) publishes a report finding at least one instance where AI-assisted assessment confidence language did not match the source-reliability rating recorded for the cited reporting.",
+   "resolve_by": "2027-09-30",
+   "switch_off": "Without frontier AI, an analyst who writes the confidence language is the same person who read and rated the source, so the two are generated from the same act of judgment and cannot decouple.",
+   "rival": "The mismatch found is an ordinary analyst tradecraft error of the kind oversight bodies have documented for decades, with AI drafting incidental to the specific report reviewed.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "review-layer-count-vs-catch-probability",
+   "title": "Adding more human review layers to an AI-drafted decision artefact does not raise the probability that a fabricated citation is caught, unlike for human-drafted artefacts",
+   "mechanism": "For a human-drafted artefact, each additional reviewer is a roughly independent chance to notice an inconsistency because human writing errors vary in kind across drafts; for an AI-drafted artefact, every reviewer is reading output with the same fluency and register, so added reviewers do not add independent detection chances at the rate expected from headcount -- the marginal catch probability per added layer is measurably lower for AI-drafted artefacts than the institution's own historical rate for human-drafted ones.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    12
+   ],
+   "kind": "tracer",
+   "observable": "By 2028-01-31, a named institution's own post-incident review (published or reported by a named outlet) states the number of review layers an AI-drafted artefact with a sourcing error passed through uncaught, and that number exceeds the institution's stated or historical average layers-to-catch for human-drafted errors of comparable severity.",
+   "resolve_by": "2028-01-31",
+   "switch_off": "Without frontier AI, added review layers for a human-drafted artefact retain their expected independent-detection effect, since each reviewer is reading text produced by a distinct human judgment process rather than one uniform generation process.",
+   "rival": "The extra layers passed through is explained by ordinary reviewer fatigue and rubber-stamping under deadline pressure, a known effect in human-only review chains with no AI drafting involved.",
+   "region": "confident error inside a decision chain"
+  },
+  {
+   "slug": "disclosed-vs-systematic-catch-ratio",
+   "title": "Across publicly disclosed AI-sourcing-error incidents in consequential decision artefacts, most are caught by an accidental downstream discovery rather than by a designed verification step",
+   "mechanism": "A verification step designed specifically to catch AI-drafted fabrication (citation cross-check, provenance flag, mandatory source-pull) is a deliberate process addition; absent that addition, an error surfaces only when someone downstream happens to pull the source for an unrelated reason (a journalist fact-checking a leak, a defendant's counsel checking a cited case, a second clinician re-ordering a test) -- the mechanism claims the accidental route dominates the disclosed record until a domain crosses a threshold of prior incidents.",
+   "aspect": "institutions",
+   "e_span": [
+    8,
+    11
+   ],
+   "kind": "classifier",
+   "observable": "By 2027-12-31, of all publicly disclosed AI-sourcing-error incidents in military, clinical, legal, or financial decision artefacts reported since 2026-09-22, a majority (as stated in each report's own account of discovery) describe the catch as an incidental downstream discovery rather than a designed verification step.",
+   "resolve_by": "2027-12-31",
+   "switch_off": "Without frontier AI, sourcing errors in these artefacts are human-drafted at a lower rate and lower volume, and existing designed verification steps (peer review, case-check, second read) were built for that lower rate, so the accidental-vs-designed ratio has no AI-specific driver to shift it.",
+   "rival": "The high share of accidental catches simply reflects that most institutions have not yet had time to build a designed verification step for any new tool, independent of whether the tool is AI or something else entirely.",
+   "region": "confident error inside a decision chain"
+  }
+ ]
+}
