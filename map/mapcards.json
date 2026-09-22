@@ -1,5 +1,5 @@
 {
- "built": "2026-09-16",
+ "built": "2026-09-21",
  "unmapped": [],
  "phantom": [],
  "projection": {
@@ -53,7 +53,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-frontier-cadence",
@@ -78,7 +78,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-compute-buildout",
@@ -103,7 +103,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-lab-revealed-priorities",
@@ -128,7 +128,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-us-policy-direction",
@@ -153,7 +153,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-china-strategy",
@@ -178,7 +178,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-capex-signal",
@@ -203,7 +203,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-open-weights-lag",
@@ -228,7 +228,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-incident-severity",
@@ -253,7 +253,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-regulation-teeth",
@@ -278,7 +278,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-scaling-orthodoxy",
@@ -303,7 +303,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-bubble-thesis",
@@ -328,7 +328,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-influence-chain",
@@ -353,7 +353,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-adoption-phases",
@@ -378,7 +378,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-labor-attribution",
@@ -403,7 +403,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-rising-powers",
@@ -428,7 +428,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-liability-pricing",
@@ -453,7 +453,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-courts-decide",
@@ -478,7 +478,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-chokepoint-physics",
@@ -503,7 +503,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-benchmark-legitimacy",
@@ -528,7 +528,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-option-space",
@@ -554,7 +554,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-china-argument",
@@ -579,7 +579,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-public-backlash",
@@ -604,7 +604,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-rsi-timeline",
@@ -629,7 +629,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-compute-concentration",
@@ -654,7 +654,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-cyber-offense-defense",
@@ -679,7 +679,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "ai-expert-calibration",
@@ -704,7 +704,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "expert-amodei",
@@ -729,7 +729,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "expert-dylan-patel",
@@ -754,7 +754,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "expert-sheehan",
@@ -779,7 +779,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "expert-dwarkesh",
@@ -804,7 +804,7 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
   },
   {
    "model": "expert-campbell",
@@ -829,11 +829,327 @@
     "attribution_share": 0
    },
    "tier": "declared",
-   "updated": "2026-09-16"
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "ai-pressure",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "ai-capability-tracker",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "ai-possibility-finder",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "ai-oversight-lag",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "overton-tracker",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "pattern-candidates",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "pattern-evaluator",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 1,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "lab-moves",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "attention-substrate",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "pressure-model",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "canon",
+   "instance": "this-instance",
+   "kind": "forecaster",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "ai-pressure-field",
+   "instance": "this-instance",
+   "kind": "decision-model",
+   "aspects": [
+    "institutions",
+    "states-geopolitics",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 9,
+    "graded": 1,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "graded",
+   "updated": "2026-09-21"
+  },
+  {
+   "model": "adjacent-possible",
+   "instance": "this-instance",
+   "kind": "timer",
+   "aspects": [
+    "technology-tools",
+    "economy-markets",
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "mechanism": "",
+   "record": {
+    "open": 0,
+    "graded": 0,
+    "supported": 0,
+    "refuted": 0,
+    "mean_brier": null,
+    "attribution_share": 0
+   },
+   "tier": "declared",
+   "updated": "2026-09-21"
   }
  ],
  "coverage": {
-  "cells_covered": 40,
+  "cells_covered": 42,
   "cells_total": 180,
   "empty_floors": [
    "E0",

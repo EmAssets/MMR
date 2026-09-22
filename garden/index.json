@@ -7,12 +7,14 @@
  "rules": "https://modelmeetsreality.xyz/modelgarden/RULES.md",
  "submit": "https://modelmeetsreality.xyz/modelgarden/#submit",
  "submitted_count": 0,
- "first_party_count": 43,
- "count": 43,
- "count_note": "43 models listed, ALL first-party (the operator's own, flagged first_party:true). submitted_count is 0: no third party has submitted yet, and first-party listings never increase it. Listed under the amendment proposed 2026-09-21, comment window closing 2026-10-05 per R3. 2 further models are withheld (attention-substrate, canon) because their MODEL.md has no falsifiable-consequences section and they are therefore not listable.",
+ "first_party_count": 44,
+ "count": 44,
+ "count_note": "44 models listed, ALL first-party (the operator's own, flagged first_party:true). submitted_count is 0: no third party has submitted yet, and first-party listings never increase it. Every card here passed suites.validate_card, the same check the submission page tells authors to run. 1 withheld, named in withheld_not_listable with the reason.",
  "withheld_not_listable": [
-  "attention-substrate",
-  "canon"
+  {
+   "model": "canon",
+   "why": "MODEL.md states no premises"
+  }
  ],
  "amendment": "https://modelmeetsreality.xyz/modelgarden/AMENDMENT-2026-09-21.md",
  "models": [
@@ -25,8 +27,16 @@
    "license": "CC-BY-4.0",
    "kind": "timer",
    "mechanism": "how a new capability becomes a new category — substitution first, then combination with independently-made tools, then categories that collapse if the tool is removed",
+   "aspects": [
+    "technology-tools",
+    "economy-markets",
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -174,8 +184,14 @@
    "license": "CC-BY-4.0",
    "kind": "tracker",
    "mechanism": "lead and lag orderings between observable AI capability signals",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -870,8 +886,14 @@
    "license": "CC-BY-4.0",
    "kind": "forecaster",
    "mechanism": "how late human correction arrives in loops where AI systems act on each other",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -902,8 +924,14 @@
    "license": "CC-BY-4.0",
    "kind": "finder",
    "mechanism": "tool categories that became possible only because of a specific AI capability",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -934,8 +962,14 @@
    "license": "CC-BY-4.0",
    "kind": "decision-model",
    "mechanism": "which option AI labs and regulators take when public commitments conflict",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -966,8 +1000,16 @@
    "license": "CC-BY-4.0",
    "kind": "decision-model",
    "mechanism": "what each AI-domain entity is under installed pressure to do, as a resultant-vector field over publicly documented stakes",
+   "aspects": [
+    "institutions",
+    "states-geopolitics",
+    "technology-tools"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "early",
     "graded_n": 1,
@@ -1227,6 +1269,44 @@
   },
   {
    "spec": "v1",
+   "model": "attention-substrate",
+   "title": "The Attention Substrate",
+   "author": "EmAssets",
+   "repo": "https://github.com/EmAssets/attention-substrate",
+   "license": "CC-BY-4.0",
+   "kind": "forecaster",
+   "mechanism": "the model (v5.1)",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
+   "level": 0,
+   "derived": {
+    "evidence": "untested",
+    "graded_n": 0,
+    "hits_n": 0,
+    "activity": "active",
+    "last_touched": "2026-09-16"
+   },
+   "declared": {},
+   "use": false,
+   "record": {
+    "open": 0,
+    "graded": 0
+   },
+   "record_provenance": "self-graded",
+   "freeze": {
+    "frozen": 0,
+    "of": 0,
+    "unfrozen": 0
+   },
+   "first_party": true
+  },
+  {
+   "spec": "v1",
    "model": "expert-amodei",
    "title": "Model of Amodei's Model —",
    "author": "EmAssets",
@@ -1429,8 +1509,14 @@
    "license": "CC-BY-4.0",
    "kind": "decision-model",
    "mechanism": "what frontier AI labs choose when capability, compliance and positioning conflict",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -1499,8 +1585,14 @@
    "license": "CC-BY-4.0",
    "kind": "tracker",
    "mechanism": "movement of policy positions from unthinkable to policy, with the canon Overton card as the named rival",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -1531,8 +1623,14 @@
    "license": "CC-BY-4.0",
    "kind": "generator",
    "mechanism": "proposes patterns that appear at more than one level of organization, from source content",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -1563,8 +1661,14 @@
    "license": "CC-BY-4.0",
    "kind": "adversary",
    "mechanism": "kills cross-layer pattern candidates that are analogy rather than mechanism",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
@@ -1595,8 +1699,14 @@
    "license": "CC-BY-4.0",
    "kind": "forecaster",
    "mechanism": "pressure in consciousness is generated by the self's model of reality. Choices under pressure are made over the risks the model identified; a dilemma is the model returning no good branch. **v2 (author's three moves):** the somatic channel ",
+   "aspects": [
+    "science-epistemics"
+   ],
+   "e_span": [
+    9,
+    13
+   ],
    "level": 0,
-   "aspects": [],
    "derived": {
     "evidence": "untested",
     "graded_n": 0,
