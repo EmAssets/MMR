@@ -150,9 +150,16 @@ Return STRICT JSON:
 
 
 def _call(model_hint, prompt, dry):
+    """Always a dict. arena._call is contracted to return one, but a caller
+    that trusts a contract without checking is one upstream change from a
+    NoneType crash mid-loop -- which is what happened here on the first real
+    run, after two of three roles had already done their work."""
     from suites import arena as A
     A._load_env()
-    return A._call(model_hint, prompt, dry)
+    got = A._call(model_hint, prompt, dry)
+    if not isinstance(got, dict):
+        return {"_error": "backend returned %s, not a dict" % type(got).__name__}
+    return got
 
 
 def run(report_path: Path, max_rounds: int, model_hint: str, dry: bool) -> dict:

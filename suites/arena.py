@@ -769,12 +769,24 @@ def _call(model_hint: str, prompt: str, dry: bool) -> dict:
     if not str(txt).strip():
         return {"_error": "backend returned empty text"}
     try:
-        return parse_json(txt)
+        parsed = parse_json(txt)
+        # parse_json is typed Optional[dict] and returns None for output it
+        # cannot use -- bare "null" among others. Returning that to a caller
+        # breaks the contract this function's docstring states and every caller
+        # relies on: a dict, always, carrying _error or _unparsed when the call
+        # did not produce usable JSON. Found when a caller did body.get() on it.
+        if isinstance(parsed, dict):
+            return parsed
+        return {"_unparsed": str(txt)[:800],
+                "_note": "backend returned valid JSON that was not an object (%s)"
+                         % type(parsed).__name__}
     except Exception:
         m = re.search(r"\{.*\}", txt, re.S)
         if m:
             try:
-                return json.loads(m.group(0))
+                got = json.loads(m.group(0))
+                if isinstance(got, dict):
+                    return got
             except ValueError:
                 pass
         return {"_unparsed": txt[:800]}
