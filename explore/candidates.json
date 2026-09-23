@@ -796,6 +796,491 @@
    "switch_off": "Without frontier AI there is no 'undated monitoring gap' or 'unnamed internal model' category for a redaction pattern to expose; a conventional breach's redacted fields (which server, which credential) do not map onto a distinct AI-deployment attack surface a prober would target differently than a generic system.",
    "rival": "Attackers always target whatever surface is easiest regardless of any prior operator disclosure, since public disclosures are read by defenders far more than by the specific attacker planning the next probe.",
    "region": "what stays unknown · the shape of the redaction"
+  },
+  {
+   "slug": "district-ai-hold-durability",
+   "title": "Whether a district's AI tool withdrawal outlasts the news cycle that produced it",
+   "mechanism": "A school district publicly disabling deployed AI tools (e.g. NYC DOE disabling AI components in 38 previously-approved programs, LAUSD restricting student GenAI access, both for 2026-27) is a costly act only if it survives past the semester it was announced in; districts have reversed such bans within months before (NYC's 2023 ChatGPT ban was lifted the same school year). The conversion claim: districts that announce a hold under public pressure re-enable at a rate above 50% within 18 months, making the initial ban itself the cheap, sentiment-priced act and continuation-without-re-enabling the actual costly one.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "Of NYC DOE and LAUSD's 2026-27 GenAI restrictions, check on 2027-09-01 (start of the following school year) whether either district has issued a procurement or policy action re-enabling any of the specifically disabled tools/programs. If neither district has re-enabled any tool by that date, the hold counts as durable (costly); if either has re-enabled, that district's hold counts as reversed (cheap). If no public procurement or policy record exists either way by 2027-09-01, that counts as non-disclosure, not durability, and the claim is undecided for that district.",
+   "resolve_by": "2027-09-01",
+   "switch_off": "Without frontier generative AI there is no tool class capable of producing the disablement-worthy capability (open-ended text/image generation available to a minor) that districts are reacting to; the specific 38-program disablement and the hold/reversal dynamic have no referent for any prior school technology ban.",
+   "rival": "The hold or reversal tracks ordinary budget and procurement cycles (vendor contract renewal dates) rather than anything about AI-specific pressure converting into sustained action.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "moratorium-vote-conversion-rate",
+   "title": "The pass rate of local AI-datacentre moratorium votes against organized local opposition",
+   "mechanism": "Local opposition to a datacentre siting (noise, water, power-price, land-value complaints) is a costly act only when it results in a council actually blocking or pausing a permit; two recent named votes (Hamilton, ON: 10-6 against a one-year pause, July 2026; Greensboro, NC: 5-4 against a moratorium, July 2026) both failed despite organized turnout. The conversion claim: of council-level AI-datacentre moratorium or pause votes logged in a public tracker (e.g. datacenterbans.com) between 2026-09-22 and resolve date, fewer than 1 in 3 pass, meaning organized local opposition converts to a blocking vote at a low, specific, checkable rate rather than the rate its news coverage implies.",
+   "aspect": "infrastructure-logistics",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "On 2028-03-01, pull every council-level vote on an AI/hyperscale-datacentre moratorium, pause, or siting denial recorded in datacenterbans.com (or an equivalent public tracker, named at resolution time) between 2026-09-22 and 2028-03-01. If fewer than 1 in 3 of the logged votes passed a moratorium/denial, the claim holds. If the tracker logs zero qualifying votes in the window, that counts as the claim being untestable for this period, not as either outcome.",
+   "resolve_by": "2028-03-01",
+   "switch_off": "Without frontier AI there is no GW-scale, water-intensive training/inference buildout driving this specific wave of siting proposals; the moratorium votes being tracked would not exist as a class, only ordinary industrial or warehouse siting fights with a different cost profile and different opposition base.",
+   "rival": "Moratorium votes fail at the same rate any anti-development zoning measure fails against incumbent tax-revenue and jobs arguments, regardless of what the facility is; the datacentre framing is not doing the causal work.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "ai-clause-strike-or-trade",
+   "title": "Whether a named bargaining unit's AI clause survives to ratification or gets traded away",
+   "mechanism": "AI-specific bargaining demands (human-in-the-loop requirements, advance-notice clauses, human-taught-course requirements) are cheap while at the proposal stage; University of Pittsburgh's unions proposed a human-taught-course clause and the university's counterproposal removed it (as of mid-2026). The conversion claim: when a named unit with an active AI-specific demand reaches a ratification vote or authorizes a strike, the AI clause is traded away for compensation gains (ratified without it) far more often than it survives to become a strike issue or a ratified clause — because AI provisions are the cheapest line item for a bargaining unit to concede.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "Track the University of Pittsburgh faculty/staff union contract (or, if that cycle resolves before AI terms are settled, the next named unit with a publicly stated AI-specific demand) through its next ratification vote or strike-authorization vote by 2028-03-01. If the unit ratifies a contract that drops the AI-specific clause it originally proposed, that counts as conversion failure (traded away). If the unit takes a strike-authorization vote naming the AI clause as a stated issue, or ratifies a contract retaining a binding AI clause, that counts as conversion. If no ratification or strike vote occurs by 2028-03-01, the claim is undecided for that unit.",
+   "resolve_by": "2028-03-01",
+   "switch_off": "Without frontier generative AI there is no capability (auto-grading, AI-taught coursework, algorithmic monitoring) for a human-in-the-loop or human-taught clause to name; the specific clause being traded has no referent, unlike generic job-security or wage clauses which predate AI entirely.",
+   "rival": "AI clauses get dropped in bargaining for the same reason any non-wage, non-headcount demand gets dropped: it's the easiest line to concede when core economic terms are contested, independent of what the clause is about.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "chatbot-privacy-class-certification",
+   "title": "Whether Lim v. OpenAI reaches class certification rather than staying an individual claim",
+   "mechanism": "A filed class-action complaint is cheap — filing costs nothing about the defendant's exposure. A certified class is costly: it converts a single plaintiff's claim into a court-recognized common injury across everyone who used the product in a defined window, exposing the defendant to aggregate liability rather than one settlement. Lim v. OpenAI (N.D. Cal., filed 2026-05-05, alleging undisclosed Meta Pixel/Google Analytics tracking in ChatGPT.com) is a live, named test of whether 'my prompts were tracked' converts from an individual grievance into a certified class.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "By 2028-01-01, check the N.D. Cal. docket for Lim v. OpenAI Global, LLC for a ruling on class certification. If the court certifies a class (in whole or part), that counts as conversion. If the court denies certification, that counts as conversion failure. If no certification ruling has issued by 2028-01-01 (case settled, dismissed, or still pending), that counts as not-yet-decided, not as failure — this claim is about the certification decision only, not about the underlying merits or any settlement amount.",
+   "resolve_by": "2028-01-01",
+   "switch_off": "Without frontier conversational AI there is no ChatGPT.com prompt stream to track via embedded pixels, and no class of claimed injury ('my conversational queries were shared with ad networks') for a court to certify; ordinary web-tracking class actions exist but name a different injury (browsing history, not conversational disclosure).",
+   "rival": "Certification turns on ordinary Rule 23 commonality/predominance doctrine applied to any tracking-pixel case (there is a large body of non-AI tracking-pixel litigation with its own certification rate) rather than on anything specific to AI or to public sentiment about chatbots.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "subscription-churn-named-disclosure",
+   "title": "Whether any named consumer AI subscription product discloses a churn or revenue effect tied to a public controversy",
+   "mechanism": "AI subscription products have near-zero switching cost (cancel-anytime, no contract, competing free tiers), which is the one property that makes consumer refusal cheap to execute and therefore rare to matter — most 'backlash' shows up as social-media sentiment with no corresponding disclosed number. The conversion claim: among AI-product companies that disclose subscriber/revenue metrics (10-Q, 10-K, or investor letter), a churn or revenue-guidance figure is explicitly attributed by the company itself to a specific named controversy (not attributed by outside analysts) in fewer than 2 disclosed instances in the window — because switching cost is so low that dissatisfied users churn continuously for many reasons, making any one controversy's contribution unmeasurable and thus never isolated in a disclosure.",
+   "aspect": "economy-markets",
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "classifier",
+   "observable": "By 2028-03-01, check SEC filings (10-Q/10-K) and investor communications from public companies selling a consumer AI subscription product (e.g. Microsoft Copilot, Character.AI's disclosed metrics if any, Perplexity if it files) for any instance where the company itself attributes a churn/revenue-guidance figure to a named public controversy. If fewer than 2 such self-attributed instances appear across all disclosing companies in the window, the claim holds — sentiment-to-revenue attribution stays something outside analysts infer, never something the company discloses. This claim is about disclosed attributions only; companies that do not break out AI-product subscriber metrics at all are outside its population.",
+   "resolve_by": "2028-03-01",
+   "switch_off": "Without frontier AI there is no near-zero-switching-cost subscription category of this specific kind (a chat interface with no data lock-in, unlike e.g. a bank or a mobile carrier); the mechanism claim is specifically about switching cost, which is a property of this product class, not of 'controversial products' generally.",
+   "rival": "Companies never self-attribute revenue swings to a specific controversy regardless of product category, because doing so creates litigation and investor-relations risk; the silence is a general disclosure-avoidance norm, not evidence about whether AI backlash specifically failed to convert.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "crawler-block-reallow-rate",
+   "title": "The rate at which publishers who default-blocked AI crawlers opt back in once payment is offered",
+   "mechanism": "Cloudflare's 2026-09-15 default change blocks AI training/agent crawlers on ad-supported pages for all new and existing free-tier sites — a platform-compelled default, not a publisher choice, so the block itself is cheap (it costs the publisher nothing to do nothing). The costly act is publishers opting back in once Cloudflare's evolving Pay Per Crawl / Pay Per Use payment mechanism is live: re-allowing costs the publisher the leverage of the block. The conversion claim: publisher re-allow rates for AI crawlers, once a live per-use payment is available, will be disclosed by Cloudflare as low (opt-back-in publishers stay a minority of the blocked population), because most publishers value denying training data over the disclosed per-crawl payment.",
+   "aspect": "attention-media",
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "tracker",
+   "observable": "By 2027-06-01, check Cloudflare's own published radar/transparency data (or equivalent disclosed aggregate statistics from Cloudflare) for the fraction of default-blocked, ad-supported sites that have re-enabled AI crawler access under Pay Per Crawl/Pay Per Use since 2026-09-15. If the disclosed re-allow fraction is below 20%, the claim holds. This claim's population is sites for which Cloudflare discloses aggregate opt-in/opt-out data; if Cloudflare has not published any such aggregate figure by 2027-06-01, that counts as non-disclosure and the claim is undecided, not confirmed.",
+   "resolve_by": "2027-06-01",
+   "switch_off": "Without frontier AI there is no training/agent crawler category for Cloudflare's ad-supported-page default to apply to, and no Pay Per Crawl mechanism (it exists specifically to price AI training access to content, unlike search-crawler allowlisting which long predates it and is already free by default).",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "boycott-disclosed-effect-null",
+   "title": "Whether any named AI-company boycott call converts into a disclosed financial effect",
+   "mechanism": "Boycott calls against AI labs or AI-integrated products (e.g. over labor practices, copyright, safety incidents) are cheap to issue and easy to measure in reach (signatures, hashtag volume) but a boycott is a costly act only when the target discloses a measurable financial effect. The conversion claim: no named consumer or enterprise boycott of a frontier AI lab or AI-integrated product converts into a company-disclosed revenue or user-count effect large enough to be flagged as material in a public filing within the window — cheap collective refusal signals (petition counts, pledge counts) do not reach the threshold companies are required to disclose.",
+   "aspect": "economy-markets",
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "classifier",
+   "observable": "By 2028-03-01, check public filings and investor disclosures from OpenAI (if it becomes a disclosing entity), Anthropic, Google DeepMind's parent, Microsoft, and Meta for any statement attributing a material financial effect to a named boycott campaign against an AI product or lab. If no such disclosure exists by that date, the claim holds — this is a claim about the disclosed-conversion population, and if none of these companies discloses AI-specific boycott effects at all (as opposed to disclosing effects with no boycott attribution), that absence itself counts as non-conversion, distinguished from non-disclosure only if a company explicitly states it does not track or is unable to attribute such effects.",
+   "resolve_by": "2028-03-01",
+   "switch_off": "Without frontier AI there is no product/lab of this kind to organize a boycott against with an AI-specific grievance (labor displacement by a generative model, copyright ingestion, chatbot-linked harm); ordinary consumer boycotts of non-AI products and their disclosure rates are a different population entirely, which is precisely why this claim restricts itself to AI-specific campaigns.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "viral-to-act-lag",
+   "title": "How long, if ever, a viral AI-harm story takes to produce its first costly act",
+   "mechanism": "A viral story about AI harm (the Coxon case reached roughly 172 million views with no measurable costly act resulting) generates attention (E9) instantly but a costly act (E10+: policy change, withdrawal, litigation, compelled disclosure) lags or never arrives. The conversion claim: measuring from first-viral-peak (top-of-week trending/view-count peak) to first disclosed costly act (any of: product default change, service restriction, litigation filing naming the case, legislative hearing citing it by name) for the next AI-harm story to cross a comparable viral threshold (>50M documented views/impressions across platforms) after 2026-09-22, the lag is either absent entirely by 12 months post-peak, or when present, exceeds 60 days — attention converts to action, when it converts at all, on a timescale far longer than the viral spike itself, never within the same news cycle.",
+   "aspect": "attention-media",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "timer",
+   "observable": "Identify the next AI-harm story after 2026-09-22 that is documented (via a platform's own analytics disclosure or a named third-party tracker) to cross 50 million cumulative views/impressions. Measure the interval from its documented view-count peak to the first disclosed costly act naming that specific case (as defined above). If measured by 2028-03-01 no qualifying viral story has occurred, that counts as the claim untested, not confirmed. If a qualifying story occurs and produces a costly act within 60 days of peak, the claim fails; if no costly act occurs within 12 months, or one occurs only after 60+ days, the claim holds.",
+   "resolve_by": "2028-03-01",
+   "switch_off": "Without frontier AI there is no category of 'AI-harm story' generating this specific attention-to-action gap; viral harm stories about other product categories (automotive recalls, food safety) have their own documented and generally much shorter lag because a regulator or recall mechanism is already pre-built for those categories, which is exactly the comparison this claim is implicitly making.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "never-converting-signal-classifier",
+   "title": "Which classes of cheap AI-sentiment signal structurally never produce a disclosed costly act",
+   "mechanism": "Not all cheap signals are equally likely to convert: a change.org petition and a platform-native 'report' or opt-out click differ in cost to the signaler and traceability to a responsible actor. The conversion claim: petition/pledge-signature counts and hashtag-volume signals (zero-cost, non-binding, no responsible party obligated to act) convert to a disclosed costly act at a measurably lower rate than platform-mediated signals with a named responsible party (in-app opt-outs a platform must aggregate, formal comment-period submissions to a regulator) — because the latter creates a paper trail and a named recipient obligated to respond, while the former creates neither.",
+   "aspect": "attention-media",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "classifier",
+   "observable": "By 2028-03-01, compile every AI-related change.org-style petition or hashtag campaign that exceeded 1 million signatures/uses since 2026-09-22 (via the platform's own public count) and every AI-related formal regulatory comment-period submission batch exceeding 10,000 submissions in the same window. If fewer than 5% of the petition/hashtag class produced a disclosed costly act (as defined in the ai-clause-strike-or-trade / district-ai-hold-durability / boycott-disclosed-effect-null sense: a named actor changing a default, withdrawing access, or being compelled) within 12 months, while the regulatory-comment class converts at a materially higher rate, the claim holds. If no campaign in either class reaches the size threshold by 2028-03-01, the claim is untested for that class, not confirmed.",
+   "resolve_by": "2028-03-01",
+   "switch_off": "Without frontier AI, petitions and comment periods about it don't exist as a class, but the underlying mechanism (zero-cost signals vs. named-recipient signals convert at different rates) is a general feature of collective action — what's AI-specific here is only the population being classified, so this candidate is retained only because every other candidate in this batch needs it as the reference classifier the others' 'costly act' definitions point back to; if it read as a general political-science claim with AI examples swapped in, it would fail the switch-off test, and its switch_off is honest that the mechanism, not the domain, generalizes.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "compelled-opt-out-rate-disclosure",
+   "title": "Whether any platform is compelled (not volunteering) to publish an AI feature opt-out rate",
+   "mechanism": "Platforms voluntarily publishing an opt-out rate for an AI feature (e.g. 'X% of users disabled AI summaries') is a cheap PR act with no cost to the platform since they choose what to disclose and when. A compelled disclosure — required by a regulator, a court order, or a binding settlement term — is costly because the platform loses control over the number and its framing. The conversion claim: by the resolve date, at least one platform's AI-feature opt-out rate has been made public specifically because a regulator, court, or settlement required disclosure (not because the platform chose to publish it), and that compelled figure differs from any previously voluntarily-disclosed figure from the same platform by a margin large enough to indicate the voluntary number was not the same as the compelled one.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "By 2028-03-01, check for any regulatory order, court filing, or settlement (e.g. arising from an FTC action, a state AG settlement, or discovery in litigation such as Lim v. OpenAI or a similar case) that compels a named platform to publish an AI-feature opt-out or usage rate. If such a compelled figure is published and it diverges from any prior voluntarily-disclosed figure from the same platform, the claim holds. If no compelled disclosure occurs by 2028-03-01, that counts as the claim failing to find a conversion in this window — distinguished from 'no gap exists between voluntary and compelled numbers,' which cannot be assessed without at least one compelled figure to compare.",
+   "resolve_by": "2028-03-01",
+   "switch_off": "Without frontier AI there is no 'AI feature opt-out rate' as a category a regulator could compel; opt-out rates for non-AI features (cookie consent, email marketing) already have an established compelled-disclosure regime (GDPR-style) that predates and does not depend on AI, which is precisely the contrast this claim is testing — whether AI features get folded into that existing regime or stay in the voluntary-PR category.",
+   "region": "the collective as an actor · costly acts, not sentiment"
+  },
+  {
+   "slug": "front-claim-unfalsifiable-persistence",
+   "title": "The METR-as-front claim persists past its resolve date because the referent is uninspectable, not because it is true",
+   "mechanism": "A claim about a lab-internal arrangement (whether METR was offered or would accept employee-like access, and on what terms) has no public document that can close it, so it neither gets adopted by a powerful actor nor dies -- it just keeps circulating. The mechanism is closure-by-referent: claims about inspectable objects (a filing, a product default) get killed by an inspection; claims about a private arrangement between a lab and an evaluator cannot be, so they are structurally undead regardless of their truth value.",
+   "aspect": "attention-media",
+   "e_span": [
+    10,
+    12
+   ],
+   "kind": "tracker",
+   "observable": "By 2027-06-30, track whether the 'METR is a front for regulatory capture' claim (as circulated after Amodei's 2026-09-12 essay) has been (a) formally rebutted in a named legal letter, press statement or testimony from METR, Anthropic or a rival lab, (b) adopted as a stated position by any sitting legislator or regulator in a hearing transcript or filed comment, or (c) neither. If no such rebuttal or adoption occurs by 2027-06-30, that itself counts as the claim remaining in the undead state the mechanism predicts, distinguished from refutation by the absence of any public document naming METR's actual arrangement with any lab.",
+   "resolve_by": "2027-06-30",
+   "switch_off": "Remove frontier AI and the referent becomes an ordinary contractual relationship between an auditor and an audited firm, which gets disclosed in a proxy statement, an SEC filing, or a beat reporter's sourcing within a normal news cycle -- the closure mechanism that keeps most claims from going undead. The lab-internal, no-disclosure-obligation status of AI safety evaluator arrangements is what removes that closure route.",
+   "rival": "METR is a small, low-budget nonprofit that nobody with subpoena power or a legal budget considers worth the cost of a formal rebuttal, so the silence reflects institutional irrelevance rather than any special unfalsifiability produced by AI being the subject. A defamation-adjacent claim about any obscure nonprofit shows the same non-response pattern regardless of domain.",
+   "confidence": 0.55,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "agent-transcript-quoted-in-legislation",
+   "title": "Machine-generated transcript text quoted in a bill loses its hedges by the time it reaches enrolled text",
+   "mechanism": "A quoted human source can be re-contacted and will correct a misquote; a quoted agent transcript has no author who can object, so a legislative drafter's paraphrase of an agent message is free to drop qualifiers an equivalent human quote could not lose without objection. The mechanism is authorlessness: text generated by a model, once quoted in a bill, mutates toward the drafter's argument at a rate a human quote does not, because no correction channel exists on the source side.",
+   "aspect": "institutions",
+   "e_span": [
+    10,
+    11
+   ],
+   "kind": "tracer",
+   "observable": "By 2027-03-31, compare the agent-message text quoted in the introduced version of the Ban Artificial Superintelligence Act against the same passage in whatever version (committee-reported, floor-passed, or enrolled) exists by that date. If the bill has not advanced past introduction by 2027-03-31, that counts as the claim untested rather than failed, distinguished from failure by checking whether ANY committee markup of the bill occurred in the period -- markup with no textual change to the quoted passage is a different finding (stability, not absence of opportunity) from no markup at all.",
+   "resolve_by": "2027-03-31",
+   "switch_off": "Remove frontier AI and the quoted material is a human witness's statement in testimony, which is verbatim-transcribed by court reporters and has a correction mechanism (the witness's own subsequent testimony or a formal errata process) that agent transcripts lack. The absence of a correcting author is specific to machine-generated text being the quoted unit.",
+   "rival": "Legislative drafters routinely simplify and shorten quoted source material of any kind to fit a bill's rhetorical structure, and hedge-stripping in bill text is a generic drafting convention rather than something specific to the quoted material having been produced by a model. A quoted newspaper excerpt in the same bill would show comparable compression.",
+   "confidence": 0.4,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "outlet-attribution-withdrawal",
+   "title": "A mainstream outlet withdraws or narrows an attribution made when covering the Coxon-Amodei sequence",
+   "mechanism": "When a claim crosses from social circulation into a mainstream outlet's copy, the outlet's own correction process becomes the observable ground truth the platform post never had -- corrections desks operate on outlet-published text, not on tweets. The mechanism is a threshold effect: mutation that would run forever on a platform gets tested the moment it is picked up by a corrections-bound outlet, and either survives fact-check or gets walked back.",
+   "aspect": "attention-media",
+   "e_span": [
+    10,
+    11
+   ],
+   "kind": "tracer",
+   "observable": "By 2027-01-31, check whether any outlet that reported the Coxon resignation, Amodei's essay, or the labeled reactions to it (Altman, Musk, Sacks, Huang, Trump) withdraws or narrows a specific attribution -- for example, attributing 'insincere agreement' or a specific percentage estimate to the wrong named individual. If no outlet issues such a withdrawal by 2027-01-31, that counts as no misattribution having crossed into corrections-bound copy, distinguished from misattribution existing but going uncorrected by checking whether any reader-submitted correction request on the relevant articles is publicly logged (e.g. a published corrections column entry) versus none being filed at all.",
+   "resolve_by": "2027-01-31",
+   "switch_off": "Remove frontier AI and the sequence is a resignation letter and a policy essay from any industry figure -- misattribution of a quote between two named executives during a fast-moving news cycle is a generic journalism failure mode, not one that depends on the subject being AI. What is AI-specific is only the referent (the pacing-the-frontier dispute), which the switch-off test says is decoration unless the observable is about the mutation mechanism itself -- which here it is: cross-outlet quote reassignment during rapid amplification, tested against corrections process.",
+   "rival": "Outlets misattribute quotes between prominent people who make similar statements in the same news cycle regardless of subject matter, at a background rate driven by deadline pressure rather than anything about the claim's content or its AI subject matter.",
+   "confidence": 0.3,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "ai-summary-hedge-strip-rate",
+   "title": "AI-generated summaries of the Amodei essay strip hedges at a higher rate than human-written summaries of the same text",
+   "mechanism": "A machine summarization layer (search AI overviews, chatbot-generated recaps) compresses source text without the professional norm a human summarizer follows of preserving a source's stated uncertainty; the mechanism is that a summarization model optimizes for concision against a token budget, not against hedge-preservation, so a qualified claim ('embedded third-party evaluators such as METR') is more likely to appear unqualified ('METR will audit labs') in a machine summary than in a competing human-written summary of the same passage.",
+   "aspect": "attention-media",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "classifier",
+   "observable": "By 2026-12-31, collect five machine-generated summaries (search AI overviews or chatbot outputs, queried with a neutral prompt asking to summarize Amodei's 'We Must Pace the Frontier') and five human-written summaries (news articles) of the same essay, and score each for whether Amodei's stated hedges ('such as', 'proposing', conditional framing) survive into the summary. If fewer than five of either type are collectable by 2026-12-31 because the essay has fallen out of indexed circulation, that counts as the claim untested, distinguished from tested-and-failed by whether any summaries of either type exist at all in that window.",
+   "resolve_by": "2026-12-31",
+   "switch_off": "Remove frontier AI and there is no machine summarization layer to test -- human editors summarizing other humans' essays already preserve or drop hedges at some rate, but the candidate's mechanism is specifically that an automated summarizer optimizes concision against a token budget with no norm-trained pressure to preserve a source's qualifiers, which only exists once a model is the summarizing unit.",
+   "rival": "Any summary, human or machine, drops nuance under space constraints, and headline-driven journalism has stripped hedges from cited essays for a hundred years; the comparison would show the same gap between any short-form and long-form treatment of the same source regardless of who or what produced the short form.",
+   "confidence": 0.6,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "provenance-requirement-for-quoted-model-output",
+   "title": "A legislature or regulator imposes a provenance-labeling requirement specifically for quoted machine-generated text used as legislative or regulatory evidence",
+   "mechanism": "Once at least one quoted agent transcript has entered binding text (the Ban Artificial Superintelligence Act's use of agent messages), the precedent creates pressure for a rule requiring that quoted machine output be labeled or sourced to a verifiable log before it can be entered into a legislative record or regulatory filing -- the mechanism is that unlabeled machine-generated quotes are the first authorless quoted-text problem legislatures have faced at scale, and institutions that write procedural rules for evidence respond to a first instance by writing a rule.",
+   "aspect": "institutions",
+   "e_span": [
+    10,
+    11
+   ],
+   "kind": "forecaster",
+   "observable": "By 2027-09-30, a U.S. federal or state legislative body, or a named regulator (SEC, FTC, EU AI Office, EU Commission), adopts a procedural rule, drafting guideline, or enacted requirement mandating that quoted AI-agent-generated text entered into a hearing record, bill, or regulatory filing be accompanied by a verifiable log citation or provenance disclaimer. If no such rule is adopted by 2027-09-30, that counts as the claim failing, distinguished from the precedent simply not having propagated yet by checking whether any committee discussion (not a passed rule) raised the provenance question in the period -- discussion with no rule is weaker disconfirmation than no discussion at all.",
+   "resolve_by": "2027-09-30",
+   "switch_off": "Remove frontier AI and there is no authorless quoted-text category for institutions to write a rule about -- provenance rules for quoted evidence already exist for human testimony (perjury, sworn statement) and documents (chain of custody), but nothing analogous exists for text with no accountable author, which is what an agent transcript is.",
+   "rival": "Legislative procedural rules lag any new evidentiary category by years regardless of urgency, and institutions that have not yet written comparable rules for other novel evidence types (e.g. deepfake video, already years old as a problem) are unlikely to move faster for text specifically, so the null result reflects generic institutional lag rather than anything about this claim's undead status.",
+   "confidence": 0.25,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "assimilation-of-decade-estimate-to-coxon",
+   "title": "The alignment lead's '>10% within the decade' estimate gets reattributed to Coxon himself in at least one subsequent mainstream account",
+   "mechanism": "Serial retelling assimilates a claim to its most memorable source: Coxon's resignation post is the named, personified, high-volume node, while the alignment lead's numeric estimate is a lower-volume secondary post -- the mechanism predicts the estimate migrates onto Coxon's name in retellings because a retelling compresses two people making related claims into the one the audience already has a face for.",
+   "aspect": "attention-media",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracer",
+   "observable": "By 2027-03-31, check whether any outlet, video, or social post with more than 100,000 views attributes the '>10% chance within the next decade' estimate to Coxon rather than to the Anthropic alignment science lead who made it. If no such misattribution is found by 2027-03-31, that counts as the assimilation mechanism failing to manifest at the sampled scale, distinguished from misattribution occurring below the 100,000-view threshold (unobserved, not absent) by explicitly restricting the claim's population to indexed public content above that threshold.",
+   "resolve_by": "2027-03-31",
+   "switch_off": "Remove frontier AI and the two-source, one-gets-remembered pattern still requires two real people making related claims in one news cycle -- the mechanism (serial-reproduction assimilation to the more memorable source) is textbook social psychology and would run identically for any two-actor sequence. This candidate does not pass the switch-off test as an AI-specific mechanism; it is included only if paired explicitly with the disclosure that the AI content here is the referent, not the mechanism, and should be dropped unless the fleet wants one deliberately-marked textbook case for calibration.",
+   "rival": "Serial reproduction reliably compresses a two-person story to its more famous or more visually available party regardless of subject matter; this is Allport-Postman's original finding from the 1940s and requires no AI-specific explanation at all.",
+   "confidence": 0.5,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "letter-signatory-count-vs-cited-count",
+   "title": "A cited signatory count for an AI-risk open letter diverges from the letter's own published count by the time it reaches a regulatory filing",
+   "mechanism": "A signatory count is a hard number attached to a circulating claim, unlike a framing or an argument -- which makes it the rare piece of this region's traffic that is falsifiable against a primary source without interpretation. The mechanism is that a number gets rounded, inflated, or frozen at its first-reported value as it moves through citation chains, so a regulatory filing or hearing statement citing the '1,100-signature Pacing the Frontier letter' may cite a stale or rounded figure rather than the letter's current published count.",
+   "aspect": "institutions",
+   "e_span": [
+    10,
+    11
+   ],
+   "kind": "tracer",
+   "observable": "By 2027-06-30, identify any regulatory comment letter, hearing statement, or bill text that cites a specific signatory count for the 'Pacing the Frontier' employee letter, and compare the cited number against the count published on the letter's own hosting page as of the citation date. If no filing or hearing cites a specific count by 2027-06-30, that counts as the claim untested, distinguished from tested-and-matching by requiring at least one such citation to exist in the window for the comparison to run at all.",
+   "resolve_by": "2027-06-30",
+   "switch_off": "Remove frontier AI and a signature count on any open letter (climate, AI, trade policy) still drifts through citation the same way -- the mechanism is generic to any counted collective act cited secondhand. This candidate is a general citation-drift claim with an AI-letter referent, not an AI-specific mechanism, and is included as a deliberately marked boundary case rather than a confident switch-off pass.",
+   "rival": "Citation drift on any numeric fact is a generic feature of how numbers move through secondhand sourcing, independent of whether the underlying letter concerns AI, and reflects citation laziness rather than anything about argument mutation specific to this domain.",
+   "confidence": 0.35,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "conspiracy-framing-adoption-by-officeholder",
+   "title": "A sitting legislator or regulator adopts the 'regulatory capture' framing of the Amodei proposal in an official capacity, converting it from circulating claim to institutional position",
+   "mechanism": "A framing crosses from circulation to position at the moment an actor who can act on it uses it in an official document or statement rather than a personal post -- the mechanism to track is the format of the adoption (floor speech, comment letter, subpoena request, press release from an official office) because format is what distinguishes 'agreeing personally' from 'making it a basis for action'.",
+   "aspect": "institutions",
+   "e_span": [
+    10,
+    11
+   ],
+   "kind": "tracker",
+   "observable": "By 2027-06-30, a sitting U.S. member of Congress, a state attorney general, or a named FTC/DOJ official uses the 'regulatory capture' or 'cartel formation' framing (as first advanced by David Sacks against Amodei's pacing proposal) in an official floor statement, comment letter, subpoena, or press release from their office. If no such adoption occurs by 2027-06-30, that counts as the framing failing to convert from circulation to position within the window, distinguished from adoption existing but undetected by restricting the claim's population to filings and statements indexed in Congress.gov, regulations.gov, or a named official press office by that date.",
+   "resolve_by": "2027-06-30",
+   "switch_off": "Remove frontier AI and the referent (a pacing/audit proposal) becomes an ordinary industry self-regulation proposal, and 'regulatory capture' framings against industry self-regulation proposals cross into official statements routinely and often -- this is a generic feature of antitrust-adjacent political rhetoric, not one this candidate can claim as AI-specific in its mechanism. It is retained because the object being tracked -- claim-to-position conversion via format -- is the region's core mechanism, not the AI-capture content, and the switch_off honestly concedes the referent is ordinary while the tracked conversion event is not tied to AI mechanically either.",
+   "rival": "Capture and cartel framings are the default opposition rhetoric against any industry coordination proposal, AI or otherwise, and officeholders adopt whichever framing is politically available to them regardless of the proposal's underlying technical content.",
+   "confidence": 0.45,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "platform-label-on-mutated-claim",
+   "title": "A platform applies a fact-check label or Community Note specifically to a mutated version of one of the four Coxon-circulation claims",
+   "mechanism": "Community-note and fact-check systems act on specific claim instances, not on a framing in the abstract, so the mechanism to track is whether the labeling apparatus catches a MUTATED downstream instance of a claim (e.g. a version alleging Coxon's post proves coordination, rather than the original weaker claim about insincere agreement) or only ever labels the original -- which would show the labeling system's blind spot is specifically at the mutation boundary, not at the claim's first appearance.",
+   "aspect": "attention-media",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracer",
+   "observable": "By 2027-01-31, identify whether any platform (X/Community Notes, Meta's fact-check partners, YouTube) attaches a correction label to a post repeating one of the four circulating claims (METR-as-front, regulatory capture, insincere rival-lab agreement, coordination), and if so, whether the labeled post is closer in wording to the original claim as first stated or to a demonstrably mutated downstream version. If no label is applied to any instance by 2027-01-31, that counts as the labeling apparatus not engaging with this claim set in the window, distinguished from the claims having died out on their own by checking whether posts repeating any of the four claims are still being made (unlabeled) as of that date.",
+   "resolve_by": "2027-01-31",
+   "switch_off": "Remove frontier AI and Community Notes / fact-check labeling still applies to viral claims about any industry dispute -- the platform mechanism is generic. What is specific to this region is the mutation-boundary test (original vs. downstream-mutated wording), which requires a claim that actually mutated in transit, and the Coxon four are the AI-specific referent providing that test case rather than the mechanism itself.",
+   "rival": "Fact-checking systems are triggered by report volume and virality thresholds, not by the semantic distance between a claim and its original form, so any labeling pattern observed would track engagement metrics rather than anything about mutation specifically.",
+   "confidence": 0.4,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "rival-lab-agreement-sincerity-test",
+   "title": "Altman's or Musk's public agreement with 'pacing the frontier' is tested against a subsequent action that would be costly if the agreement were insincere",
+   "mechanism": "A circulating claim of insincere agreement is currently untestable because it is a claim about intent; the mechanism this candidate tracks is not sincerity itself but whether the claim gets OPERATIONALIZED by anyone into a testable prediction -- specifically, whether any commentator or outlet names a concrete action (e.g. a compute-scaling announcement, a release-timeline decision) that would be inconsistent with a genuine pacing commitment, and whether that named lab then takes or avoids that action.",
+   "aspect": "institutions",
+   "e_span": [
+    10,
+    11
+   ],
+   "kind": "forecaster",
+   "observable": "By 2027-03-31, check whether OpenAI or xAI takes an action publicly named (by any outlet or commentator, on record, before 2026-12-31) as one that would be inconsistent with the 'pacing the frontier' commitment Altman or Musk publicly agreed with -- for example, a frontier model release or a compute-scaling announcement exceeding a pace publicly flagged as inconsistent. If no such action-in-advance naming occurs by 2026-12-31, this candidate fails outright as untestable; if named but the flagged action does not occur by 2027-03-31, that counts as no operationalized test having been triggered, distinguished from the commitment being kept by confirming the lab took no action of the flagged kind during the window at all.",
+   "resolve_by": "2027-03-31",
+   "switch_off": "Remove frontier AI and there is no pacing commitment to test an action against -- the mechanism (converting a sincerity dispute into an action-based test by having a third party pre-name the disqualifying action) is generic to any public commitment dispute, but the specific commitment and disqualifying action here (compute scaling, release cadence) only exist because frontier AI development has those observable levers.",
+   "rival": "Labs make and break pacing-adjacent public commitments routinely for competitive and PR reasons unconnected to whether the original agreement was sincere, so any subsequent action would be explained by ordinary competitive pressure rather than by resolving anything about the sincerity claim.",
+   "confidence": 0.3,
+   "region": "the collective as an actor · what arguments propagate and which mutate"
+  },
+  {
+   "slug": "roster-vs-node-citation",
+   "title": "which document a binding response cites: the rolling roster or the named signatory's own text",
+   "mechanism": "A demand can circulate as a roster (a signature count with no frozen version) or as a single high-status signatory's own authored text on the same subject. When an institution responds in binding or quasi-binding language, the phrase it engages with reveals whether the roster or the node did the work, regardless of which the institution or commentary claims moved it.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "tracer",
+   "observable": "Dario Amodei is both a signatory of the 'Pacing the Frontier' employee letter (July 2026, 1,386+ signatories as of 2026-09-22, no downloadable roster) and author of a separate essay 'We Must Pace the Frontier' (~2026-09-12) proposing embedded third-party evaluators. By 2027-09-22, when a national government, the EU AI Office, or a standards body (ISO/IEC, NIST) next issues binding or quasi-binding text addressing frontier-pacing mechanisms, record whether the text's operative language echoes the essay's specific mechanism (named third-party evaluator with access) or cites the letter's signatory count or roster. If no such binding text is issued by that date, the claim fails outright — binding regulatory/standards text is itself the public record and its absence is directly observable, not merely undisclosed.",
+   "resolve_by": "2027-09-22",
+   "switch_off": "Without frontier AI there is no scenario where one person is simultaneously a mass-letter signatory and the sole author of a competing single-node mechanism text on the same demand — that duality only exists because frontier labs are small enough that senior researchers personally author both collective and individual interventions.",
+   "rival": "The institution was already going to write third-party-evaluator language regardless of either document, because embedded evaluators are the standard governance template from other high-risk industries and would appear in the text either way.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "roster-count-citation-vintage",
+   "title": "does anyone citing the letter's size ever cite a dated, verifiable count rather than the headline round number",
+   "mechanism": "pacingthefrontier.com shows a rolling signatory count (1,386 as of 2026-09-22) with only 20 names displayed and no downloadable full roster, so any external citation of a round number is citing a figure nobody re-verified after the source began climbing. A citer who instead states a dated snapshot did verification work a citer of the round number did not — and that verification effort is itself the trace of whether the roster is being treated as a collective actor or as a headline prop.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "classifier",
+   "observable": "By 2027-03-22, collect every instance of a US congressional record, EU/UK parliamentary record, or federal/EU regulatory docket citing the letter's signatory count in text tied to a policy action. Classify each as a static round number carried from launch or a dated snapshot. If fewer than 3 such policy-tied citations exist by that date, the claim fails for lack of a test set.",
+   "resolve_by": "2027-03-22",
+   "switch_off": "The letter's signatories are drawn from the same handful of frontier labs the demand targets, so the roster's size is a claim about internal headcount at those specific firms; without frontier AI there is no coherent 'signatory of frontier labs' population for a citation to verify or fail to verify in the first place.",
+   "rival": "Journalists and staffers default to round numbers for readability regardless of subject matter; this is a general reporting convention and says nothing about whether the roster or a node moved anyone.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "senior-signatory-employer-action",
+   "title": "does a signatory's own employer take a distinguishable, costly action toward that named employee, and do OpenAI/Anthropic in fact hold a dated formal endorsement",
+   "mechanism": "The 'Pacing the Frontier' signatories are largely employees of the firms the demand targets. A costly act toward a specific named senior signatory — not a general company statement — tests whether the insider-signatory structure has teeth, and the observable's first step (checking each lab's own site for a dated endorsement) establishes endorsement status directly rather than importing it from aggregator coverage.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "By 2027-06-22: (1) determine, from each lab's own published statements, which of OpenAI, Anthropic, Google DeepMind, and Meta AI issued a dated formal corporate endorsement of the letter, and which did not. (2) Among non-founder senior signatories reported in press coverage (e.g. Jakub Pachocki, Mark Chen, Shengjia Zhao, Anca Dragan), track whether any experiences an employer action specifically citable to the letter: a scope/title change, a named internal memo response, or a departure whose public statement references the letter. If no such action toward any tracked signatory occurs by that date, the claim fails — an action this visible at this seniority is routinely reported, so its absence over nine months is informative rather than merely undisclosed.",
+   "resolve_by": "2027-06-22",
+   "switch_off": "Without frontier AI labs there is no configuration where the addressee of a public policy demand and the employer of its most prominent signatories are the same handful of firms; this specific employer-employee-demander triangle is a structural feature of a market this concentrated and this new.",
+   "rival": "Senior researchers at these firms have volatile tenure for unrelated reasons (compensation, compute allocation, competing offers), so any action in a nine-month window is likely regardless of the letter and cannot be attributed to it without the action itself naming the letter.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "adopted-text-warrant-check",
+   "title": "when a regulator names the letter, does it cite the count or a named signatory's credential",
+   "mechanism": "When a regulatory or legislative body's binding or quasi-binding text explicitly names the letter, the specific warrant it cites — a bare aggregate number, a named subset of signatories, or a specific signatory's credential — is a direct act distinguishing whether the body treats the roster as a collective actor or is citing a known individual's standing.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    11
+   ],
+   "kind": "attributor",
+   "observable": "By 2027-09-22, when a national government body (US Congress, a federal agency docket, EU Parliament/Council, or UK Parliament) first names 'Pacing the Frontier' or the July 2026 employee letter in a bill text, committee report, or regulatory docket's stated basis, record whether the citation includes a bare number, a named subset of signatories, or neither. If the letter is never named in such a binding-adjacent document by that date, that counts as the claim failing — committee reports and docket bases are public by default and a body that used the letter as its basis would ordinarily say so.",
+   "resolve_by": "2027-09-22",
+   "switch_off": "The specific letter, the specific frontier-pacing demand, and the specific signatory set (employees of the firms being regulated) only exist because frontier AI development exists; remove it and there is no letter with this target-equals-signatory structure to cite.",
+   "rival": "Legislative and regulatory text routinely name-check any prominent open letter in a subject area as a rhetorical gesture of having 'heard stakeholders' — the citation type may just track the drafter's house style, not anything about the letter itself.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "engagement-poll-divergence-compelled",
+   "title": "a platform's compelled engagement disclosure shows lab-affiliated-account concentration diverging from public poll sentiment on the same framing",
+   "mechanism": "Public polling on an AI-pacing question is compared against a platform's own engagement metrics only when the platform is compelled to release them. Where both exist for the same window and framing, whether engagement concentrates in accounts affiliated with the frontier labs themselves (vs. a broad public distribution) versus what the poll finds the public believes tests whether lab-adjacent amplification or public sentiment better predicts institutional attention.",
+   "aspect": "attention-media",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "forecaster",
+   "observable": "By 2028-03-22, track whether any platform releases engagement data under compulsion (an EU DSA Article 40 researcher-access grant, a US court discovery order, or a mandated DSA systemic-risk transparency report) covering the 'Pacing the Frontier' letter or its framing in the 2026-2027 window. If released, compare the share of engagement from accounts identifiable as affiliated with a frontier AI lab (employee, official, or investor accounts) against a public poll's reported agreement rate on the same pacing question. If no compelled release naming this framing occurs by that date, the claim fails for lack of a test case — this is a claim about the disclosed-and-compelled subset of platform activity, not about all platform activity.",
+   "resolve_by": "2028-03-22",
+   "switch_off": "The concentration being measured is specifically in accounts affiliated with frontier AI labs discussing their own employer's pacing demand — without frontier AI there is no lab-affiliated-account population whose engagement share on this exact question could be measured against public sentiment.",
+   "rival": "Any polarizing topic typically shows high engagement concentration in a small set of already-prominent accounts as a structural feature of platform follower-graph power laws, independent of whether those accounts are lab-affiliated; this would appear for any topic tested this way.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "rsp-revision-cites-letter",
+   "title": "a named lab revises its responsible-scaling or safety policy and the changelog names the letter",
+   "mechanism": "A lab whose own employees are signatories can respond to the letter by revising its own binding safety-policy document (RSP, frontier safety framework, or preparedness framework) to add an external trigger or evaluator-access clause it did not previously grant, giving up unilateral discretion it currently holds. The revision's changelog or accompanying statement naming the letter or its demand is a direct, costly, dated act — the lab conceded ground rather than merely commented.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "By 2027-06-22, check whether any of OpenAI, Anthropic, Google DeepMind, or Meta AI publishes a dated revision to its RSP/frontier-safety-framework/preparedness-framework that (a) adds a new external-party evaluator access or pacing-trigger clause not present in the prior version, and (b) the revision's own text, changelog, or accompanying announcement names the July 2026 letter or its 'pace the frontier' demand. If no such named, ground-conceding revision occurs by that date, the claim fails — RSP-type documents are published with version history by design, so a qualifying revision, if made, would be traceable and its absence is directly observable.",
+   "resolve_by": "2027-06-22",
+   "switch_off": "A responsible-scaling policy that names external evaluator access as a discretion a lab could grant or withhold only exists because frontier AI training runs are the object being paced; without frontier AI there is no unilateral discretion of this kind for a policy revision to concede.",
+   "rival": "Labs revise safety policies on their own internal cadence in response to their own research progress and competitive pressure, and might add similar clauses regardless of the letter — the changelog naming the letter is the only thing that distinguishes attribution from coincidental timing, which is why the observable requires the name to appear in the lab's own text.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "lab-declines-external-evaluator-access",
+   "title": "a lab whose staff signed the letter publicly declines the external-evaluator-access arrangement the essay proposed",
+   "mechanism": "The negative side of granting access: a lab with signatories among its senior staff can, in a dated public statement, RFI response, or policy document, decline or reject an external third-party evaluator access arrangement of the kind Amodei's essay proposed (naming METR or an equivalent body). A refusal that references the proposal is a costly, public act of withholding access it was specifically asked to grant — the actor gives something up by saying no on the record rather than staying silent.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracker",
+   "observable": "By 2027-09-22, check whether any of OpenAI, Anthropic, Google DeepMind, or Meta AI issues a dated public statement, RFI/consultation response, or policy document explicitly declining or rejecting an embedded third-party evaluator access arrangement, where that statement references the essay's proposal or the letter's pacing demand by name. If no lab issues such a named refusal by that date, the claim fails — a formal decline of this kind is normally issued in response to an active proposal on the record (an RFI, a public proposal with named authorship) rather than silently, so its absence over the window is directly observable rather than merely undisclosed.",
+   "resolve_by": "2027-09-22",
+   "switch_off": "The specific thing being declined — embedded access to verify training-pipeline alignment and safety commitments — is an artifact of frontier AI training runs existing as an object to grant or deny access to; without frontier AI there is no evaluator-access arrangement of this kind for a lab to decline.",
+   "rival": "Labs routinely decline unsolicited third-party proposals through informal channels (a spokesperson comment, silence) rather than a dated formal statement, so the absence of a *named* refusal may reflect institutional communication style rather than anything about whether the letter or essay had force.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "roster-freeze-or-frozen-download",
+   "title": "does the rolling signature site ever close the form or publish a frozen, dated, downloadable roster",
+   "mechanism": "pacingthefrontier.com currently shows a continuously growing count (1,386 as of 2026-09-22) with only 20 of the signatories visible and no downloadable full list — a structure that makes the roster impossible to verify or audit at any fixed point. Closing the form or publishing a complete, dated, downloadable roster is a costly act because it exposes the full signatory set to scrutiny (employer identification, seniority distribution, attrition) that an open-ended, partially-visible count avoids.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "timer",
+   "observable": "By 2027-03-22, check whether pacingthefrontier.com (or a successor page under the same campaign) either closes new signatures with a final dated count, or publishes a complete downloadable roster (not just the current 20-name preview) at any point. If neither occurs by that date, the claim fails, and the correct reading is that the campaign's organizers judge an unverifiable, ever-growing count as more useful than a closed, auditable one — not that the campaign became inactive, which would be a separate, checkable fact (no new visible names added).",
+   "resolve_by": "2027-03-22",
+   "switch_off": "The specific asset being withheld from freeze — a headcount of frontier-lab employees willing to be publicly named as demanding pacing of their own employer's work — only has this particular scrutiny cost (career risk at a concentrated set of employers) because those employers are frontier AI labs; a rolling petition on an issue with no identifiable employer-signatory link carries no comparable freeze cost.",
+   "rival": "Most open-letter platforms never publish a downloadable roster or close signatures, regardless of subject, simply because the tooling (typeform-style continuous collection) is the default and closing it takes deliberate engineering effort nobody has prioritized — the non-freeze may reflect tooling inertia rather than any strategic choice about auditability.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "signatory-name-removed-from-roster",
+   "title": "a name visible on the roster preview is later absent, traceable via archived snapshots",
+   "mechanism": "Because the roster preview (20 of 1,386 names as of 2026-09-22) is a live, editable web page rather than a fixed document, a name present in an archived snapshot and absent from a later snapshot is a traceable withdrawal — the only costly signatory-level act observable without a full downloadable list, since the population is restricted to whichever names happen to be in the rotating preview at each snapshot.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "tracer",
+   "observable": "Starting from an archived snapshot of the 20 visible names on pacingthefrontier.com taken on or near 2026-09-22, check by 2027-09-22 whether any of those specific names is absent from a later archived snapshot of the visible preview while the total count has increased (ruling out the name simply rotating out of a random preview sample). If the site's preview mechanism is confirmed to rotate names randomly rather than showing a fixed subset, this claim is untestable by this method and fails for lack of a valid population — the claim covers only names in a preview mechanism that is confirmed fixed or append-only, not the full 1,386.",
+   "resolve_by": "2027-09-22",
+   "switch_off": "A named individual's public withdrawal from a demand addressed at their own employer is costly specifically because that employer is a frontier AI lab with a concentrated, reputationally visible workforce; withdrawal from a large, anonymous-employer petition carries no comparable individually-traceable cost.",
+   "rival": "A name's disappearance from a small rotating preview sample out of 1,386 total is far more likely to be a display/sampling artifact of the website's preview logic than an actual withdrawal, which is why the observable requires ruling out random rotation before counting a disappearance as meaningful.",
+   "region": "the collective as an actor · where the direction actually comes from"
+  },
+  {
+   "slug": "lag-letter-vs-essay-institutional-response",
+   "title": "does a binding-adjacent action follow the roster or the single-authored essay faster",
+   "mechanism": "The employee letter (roster-based, July 2026, no single named mechanism) and Amodei's essay (single-authored, ~September 2026, names embedded third-party evaluators) made different-shaped demands on the same topic six weeks apart from an overlapping signatory. Measuring which is followed more quickly by the next binding-adjacent institutional action tests whether specificity from one node or size from many nodes better predicts response speed.",
+   "aspect": "institutions",
+   "e_span": [
+    9,
+    10
+   ],
+   "kind": "timer",
+   "observable": "By 2027-03-22, record the date of the first US congressional hearing, bill introduction, or federal/EU agency RFI or docket opening that explicitly references either the letter or the essay in its record. Compute the lag from each document's publication date to that first referencing action. If no such action references either document by that date, the claim fails — congressional records and federal/EU dockets are public by default, so a referencing action, if taken, would appear there.",
+   "resolve_by": "2027-03-22",
+   "switch_off": "The comparison requires two same-topic, same-window documents from an overlapping signatory network, one a mass roster and one a single specified mechanism, produced six weeks apart by people employed at the same handful of firms — this pairing is a coincidence of the frontier AI lab structure and does not arise without it.",
+   "rival": "Congressional and agency attention to a policy area is driven by an independent hearing calendar set before either document existed; whichever document happens to exist when a previously-scheduled hearing occurs gets name-checked regardless of its content or structure.",
+   "region": "the collective as an actor · where the direction actually comes from"
   }
  ]
 }
