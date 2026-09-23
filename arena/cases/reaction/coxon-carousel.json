@@ -1,0 +1,41 @@
+{
+ "spec": "tweet-carousel-v1",
+ "verified_via": "publish.twitter.com oEmbed",
+ "tweets": [
+  {
+   "text": "I resigned from Anthropic today. I spent the last three years doing pretraining research at both OpenAI and Anthropic. Neither company is acting responsibly. They are racing straight to self-improving superintelligence and gambling with our lives. More thoughts below.",
+   "author": "Jacob Coxon",
+   "handle": "hilbertspaess",
+   "url": "https://x.com/hilbertspaess/status/2097476196791709843",
+   "date": "September 9, 2026"
+  },
+  {
+   "text": "We Must Pace the Frontier: I’ve written a new essay on why the AI industry should slow down, with a three-part plan for doing so.\n\nAnthropic is unilaterally committing to the first of these steps. We’ll provide third-party evaluators with permanent, employee-level access to our…",
+   "author": "Dario Amodei",
+   "handle": "DarioAmodei",
+   "url": "https://x.com/DarioAmodei/status/2098773920774074715",
+   "date": "September 12, 2026"
+  },
+  {
+   "author": "Evan Hubinger",
+   "handle": "EvanHub",
+   "date": "September 9, 2026",
+   "url": "https://x.com/EvanHub/status/2097497037956891126",
+   "text": "Jacob is correct here—we really do earnestly believe AI could kill all humans! I personally think it is >10% within the next decade. I believe Anthropic is trying its best, but we do not yet have a plan to solve alignment for superintelligence and are not clearly on track to."
+  },
+  {
+   "author": "Sam Altman",
+   "handle": "sama",
+   "date": "September 12, 2026",
+   "url": "https://x.com/sama/status/2098811563415150910",
+   "text": "I agree with Dario that we need to pace the frontier. This has been a primary topic of discussions we've had at OpenAI in recent weeks.\n\nCommitting to having independent evaluators with employee-like access is a great idea, and we will do the same. We'll have more to share soon."
+  },
+  {
+   "author": "Elon Musk",
+   "handle": "elonmusk",
+   "date": "September 12, 2026",
+   "url": "https://x.com/elonmusk/status/2098789109980332057",
+   "text": "Dario is right"
+  }
+ ]
+}

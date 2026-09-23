@@ -100,6 +100,35 @@ def to_blocks(md: str) -> str:
         if not st:
             i += 1
             continue
+        # Raw passthrough. A line that opens a Gutenberg block comment or an
+        # HTML-block fence is authored HTML meant to reach WordPress verbatim --
+        # a carousel, a quote card with a <cite>. Everything between the fence
+        # markers is emitted unescaped. Without this the converter ran _inline
+        # over it and turned <cite> into &lt;cite&gt;.
+        if st == "<!--raw-->" or st == "<!-- raw -->":
+            i += 1
+            body = []
+            while i < len(lines) and lines[i].strip() not in ("<!--/raw-->", "<!-- /raw -->"):
+                body.append(lines[i])
+                i += 1
+            i += 1
+            out.append("\n".join(body))
+            continue
+        if st.startswith("<!-- wp:") and st.endswith("-->"):
+            # A block that begins with a wp: comment is authored Gutenberg;
+            # gather to its closing comment and pass through untouched.
+            body = [lines[i]]
+            opener = re.match(r"<!--\s*wp:([a-z/-]+)", st).group(1).split("/")[0]
+            i += 1
+            close = "<!-- /wp:%s -->" % opener
+            while i < len(lines):
+                body.append(lines[i])
+                if lines[i].strip() == close:
+                    i += 1
+                    break
+                i += 1
+            out.append("\n".join(body))
+            continue
         if st.startswith("```"):
             lang = st[3:].strip()
             body = []
