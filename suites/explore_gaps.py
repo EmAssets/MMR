@@ -265,6 +265,58 @@ REGIONS = [
      "institution publishing an error-rate or appeal-volume change, a regulator "
      "requiring a human reviewer at a named step, a class action over correlated "
      "automated decisions."),
+    # The collective appears in the Coxon onion TWICE -- as the loudest node
+    # (172M views) and as the conspiracy readings -- and is marked as deciding
+    # nothing in both cases. That tension is the model, not a gap to paper over:
+    # what does a public that cannot decide actually DO, and when does it
+    # become an input to someone who can?
+    #
+    # The trap is that "collective consciousness" invites interiority at scale.
+    # A claim about what "the public thinks" is a claim about millions of minds
+    # and is unfalsifiable. A claim about what a public DID -- what it paid for,
+    # refused, showed up to, stopped buying, voted on, or sued over -- is a fact.
+    ("the collective as an actor · costly acts, not sentiment",
+     "The public as an entity that ACTS, distinguished from the public as a sentiment "
+     "reading. Polls, likes and reposts cost nothing and are the cheapest signal "
+     "available; the fleet already has ai-public-backlash treating sentiment as a "
+     "leading indicator of legislation. This is the other question: what does a "
+     "collective do that COSTS IT SOMETHING, and what does that predict? Candidate "
+     "acts with a price attached: consumer refusal measurable in a named company's "
+     "disclosed revenue or churn, a strike or work stoppage with a named bargaining "
+     "unit and AI-specific demands, a class action with a named plaintiff class, "
+     "school or district bans, a datacentre siting refusal at a named council vote, a "
+     "boycott with a disclosed financial effect, an opt-out rate a platform is forced "
+     "to publish. The mechanism to model is CONVERSION: which cheap signals convert "
+     "into costly ones, at what rate, and which never do. 172 million views converted "
+     "into no measurable act in the Coxon case, and that is a finding about the "
+     "conversion rate, not about the public's feelings."),
+    ("the collective as an actor · what arguments propagate and which mutate",
+     "Not what the public believes but which ARGUMENTS spread, in what form, and how "
+     "they change in transit. Observable without interiority: the same claim can be "
+     "tracked across platforms, outlets and hearing transcripts, and what changes is "
+     "recorded text. The Coxon case gives four claims that circulated -- METR as a "
+     "front, regulatory capture, insincere agreement by rival labs, coordination -- "
+     "none of which any actor with power adopted, and all of which persisted. Model "
+     "the mutation: which framings survive contact with a mainstream outlet, which "
+     "get adopted by an actor with power and thereby become a position rather than a "
+     "claim in circulation, which get cited in legislation (the Ban Artificial "
+     "Superintelligence Act quoted agent messages directly), and which stay in "
+     "circulation indefinitely without ever being adopted or refuted. A claim that no "
+     "powerful actor will touch but nobody can kill is a distinct object worth naming."),
+    ("the collective as an actor · where the direction actually comes from",
+     "Whether a 'collective direction' exists at all, or whether the appearance of one "
+     "is produced by a small number of amplifying nodes. Testable rather than "
+     "asserted: for a given AI-risk position, what fraction of its public volume "
+     "traces to fewer than ten accounts, outlets or figures? The 1,100-signature "
+     "'Pacing the Frontier' employee letter is a collective act with named "
+     "signatories and a countable size; 172 million views is a volume with no roster. "
+     "Model which of these moves anything. Related observable: when a collective "
+     "position IS adopted by an institution, does the adopted version match what "
+     "circulated, or the version held by the small set of amplifiers? Candidate "
+     "observables: a named body citing a specific circulated framing in binding text; "
+     "a petition or open letter with a disclosed signatory count producing a named "
+     "institutional response; a measured divergence between a poll result and a "
+     "platform's own engagement data on the same question."),
     ("human ecosystems · trust, verification and the cost of checking",
      "What happens to institutions whose function depends on verification being cheaper "
      "than fabrication -- identity, provenance, peer review, evidence in court, "
@@ -394,7 +446,15 @@ disclosed." State which, and attach the date:
            deployment at scale is publicly known to exist>."
 
 Every candidate whose observable begins "when" must carry that second clause,
-or it will be rejected."""
+or it will be rejected.
+
+WATCH FOR THE SAMPLING FILTER BEING THE OUTCOME. A challenge panel reviewing an
+earlier batch found that every candidate in a region conditioned on "publicly
+disclosed", which means an actor that detects, contains and never discloses is
+removed from the test set of all of them at once. If your observable depends on
+something becoming public, say so in the candidate, and say what population the
+claim is therefore about: the disclosed cases, not all cases. A claim that reads
+as being about incidence while measuring disclosure is the failure to avoid."""
 
 
 def existing_models() -> str:
