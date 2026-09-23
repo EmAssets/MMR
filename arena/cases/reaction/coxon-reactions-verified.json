@@ -1,0 +1,63 @@
+{
+ "spec": "reaction-additions-v1",
+ "as_of": "2026-09-23",
+ "note": "Additions to the Coxon reaction map from a research pass, each with its evidence tier. Only oEmbed-verified posts are eligible for the tweet carousel; the rest inform the analysis layers and are marked. The reply-sentiment stats (42.5/39.9/17.6) and the '28.9K likes' figure are EXCLUDED: they trace to an unnamed 'sampled dataset' with no primary source.",
+ "verified_oembed": [
+  {
+   "handle": "elonmusk",
+   "date": "2026-09-09",
+   "text": "Seems like a setup",
+   "url": "https://x.com/elonmusk/status/2097866303633752463",
+   "re": "the resignation",
+   "note": "Musk's FIRST reaction, skeptical. Distinct from his 2026-09-12 'Dario is right' on the essay."
+  }
+ ],
+ "reported_quoted_not_oembed": [
+  {
+   "who": "Samuel Marks",
+   "text": "AI developers believe their technology could cause human extinction (or similarly bad outcomes). This could happen in the next few years.",
+   "re": "the resignation",
+   "src": "AOL, quoting the post"
+  },
+  {
+   "who": "Anna Wang",
+   "text": "There is not yet a viable scientific plan to solve risks from recursively self-improving AI",
+   "re": "the resignation",
+   "src": "AOL"
+  },
+  {
+   "who": "Drake Thomas",
+   "text": "Things are moving way too fast, we don't have anywhere near the degree of assurance we'll want for ASI",
+   "re": "the resignation",
+   "src": "AOL"
+  },
+  {
+   "who": "Jacob Coxon (reply to Musk)",
+   "text": "I'm real and these are my real beliefs. You could ask your xAI researchers about me if you hadn't fired them.",
+   "re": "Musk's setup post",
+   "src": "AOL"
+  },
+  {
+   "who": "Bill Ackman",
+   "text": "Interesting.",
+   "re": "a quoted claim the episode was a coordinated op",
+   "src": "AOL"
+  },
+  {
+   "who": "Tim Sweeney",
+   "text": "[called the sequence 'choreographed' — exact quote not captured]",
+   "re": "the resignation and its reaction",
+   "src": "multiple outlets, paraphrased"
+  }
+ ],
+ "correction": {
+  "what": "Musk appears TWICE with opposite valence, on different days and different objects.",
+  "sep_9": "'Seems like a setup' / 'psy op' — skeptical of the RESIGNATION",
+  "sep_12": "'Dario is right' — agreeing with the ESSAY",
+  "why_it_matters": "The reaction map had only the agreement. The event actually split: an insider-corroboration cluster (Hubinger, Marks, Wang, Thomas), a legislative cluster (Sanders), and a SUSPICION cluster (Musk, Sweeney, Ackman) calling the rollout coordinated. Musk crossed from the second to the agreement side over three days."
+ },
+ "excluded_unsourced": [
+  "reply sentiment 42.5% agree / 39.9% disagree / 17.6% mixed — 'a later analysis sampled 2,480 replies', no primary",
+  "'pleasant read before bed', 28.9K likes — 'the captured dataset', no primary"
+ ]
+}

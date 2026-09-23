@@ -36,6 +36,15 @@
    "date": "September 12, 2026",
    "url": "https://x.com/elonmusk/status/2098789109980332057",
    "text": "Dario is right"
+  },
+  {
+   "author": "Elon Musk",
+   "handle": "elonmusk",
+   "date": "September 9, 2026",
+   "url": "https://x.com/elonmusk/status/2097866303633752463",
+   "text": "Seems like a setup",
+   "note": "his first reaction — skeptical of the resignation, three days before agreeing with the essay"
   }
- ]
+ ],
+ "note": "Verified via X oEmbed. Musk appears twice on purpose: 'Seems like a setup' (Sep 9, on the resignation) and 'Dario is right' (Sep 12, on the essay) are different posts on different days, and the shift between them is the point."
 }
