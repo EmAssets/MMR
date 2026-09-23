@@ -25,6 +25,7 @@ THE FILTER, applied in code rather than by the model that proposed them:
 from __future__ import annotations
 
 import argparse
+import collections
 import datetime
 import json
 import re
@@ -326,6 +327,21 @@ Each candidate must name a DATED OBSERVABLE resolving within 18 months of
 {today} -- a specific, checkable event, not a trend. "Adoption increases" is not
 an observable. "X publishes Y by DATE" is.
 
+PREFER AN OBSERVABLE THAT RESOLVES ON A COSTLY ACT. A claim that resolves when
+someone PUBLISHES or MENTIONS something is checkable but weak: publishing is
+cheap, so the claim carries little when it lands. A claim that resolves when
+someone CHANGES A DEFAULT, WITHDRAWS a product, REVOKES access, PAYS, or is
+COMPELLED carries much more, because the actor had to give something up.
+
+  weak:    "a lab publishes a report describing X"
+  better:  "a named product changes its default permission from X to Y"
+  better:  "a named provider withdraws or restricts a capability"
+  better:  "a regulator, court or insurer imposes a requirement naming X"
+
+Weak observables are accepted, but a set of candidates that are all
+publication-resolved is a set that will teach you very little. Aim for at least
+half to resolve on something the actor would rather not do.
+
 Do NOT propose:
   - anything requiring a claim about what a person or company believes, wants or
     fears. This fleet bans interiority everywhere.
@@ -506,6 +522,47 @@ def score(c: dict, taken: set) -> tuple:
     return (not bad, bad)
 
 
+# Passing the filter is not the same as being worth building. The first batch
+# kept 45%; after the prompt fix the rate went to 94%, which is a sign the bar
+# measures form rather than force. Strength is scored separately and reported,
+# never used to auto-reject: a weak-but-valid candidate is a judgement call for
+# a person, and silently dropping it would hide the fact that a whole region
+# produced only weak ones.
+def strength(c: dict) -> tuple:
+    """(score 0-5, notes). Higher is a claim worth more when it resolves."""
+    s, notes = 0, []
+    obs = str(c.get("observable") or "")
+    low = obs.lower()
+
+    # Does resolving it change anything, or is it a formality? A claim about a
+    # document being published is weaker than one about a decision or a number.
+    if re.search(r"\b(halt|block|withdraw|recall|suspend|revoke|fine|penalt|"
+                 r"injunction|settle|resign|terminat)", low):
+        s += 2; notes.append("resolves on a costly act")
+    elif re.search(r"\b(require|mandat|bind|enforce|condition)", low):
+        s += 1; notes.append("resolves on a binding requirement")
+    else:
+        notes.append("resolves on a publication or statement only")
+
+    # Could it resolve either way, or is one side near-certain? A claim nobody
+    # would bet against carries no information when it lands.
+    conf = c.get("confidence")
+    if isinstance(conf, (int, float)) and 0.25 <= conf <= 0.85:
+        s += 1; notes.append("genuinely uncertain")
+
+    # Is the rival explanation a real competitor, or a strawman?
+    rival = str(c.get("rival") or "")
+    if len(rival) > 60:
+        s += 1; notes.append("rival is specified, not gestured at")
+
+    # Does it name a specific actor, or any-member-of-a-class? "a named lab"
+    # is checkable; "some provider somewhere" is not, in practice.
+    if re.search(r"\b(openai|anthropic|google|deepmind|meta|microsoft|nvidia|"
+                 r"hugging ?face|nist|fda|sec |eu |commission)", low):
+        s += 1; notes.append("names a specific actor")
+    return (s, notes)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Propose and filter model candidates.")
     ap.add_argument("--propose", action="store_true")
@@ -571,9 +628,25 @@ def main() -> None:
             print("\n  why candidates were cut:")
             for k, v in sorted(reasons.items(), key=lambda kv: -kv[1]):
                 print("    %3d  %s" % (v, k))
+        scored = []
+        for c, _ in kept:
+            s, notes = strength(c)
+            c["strength"] = s
+            c["strength_notes"] = notes
+            scored.append(c)
+        scored.sort(key=lambda x: -x["strength"])
+        dist = collections.Counter(c["strength"] for c in scored)
+        print("\n  strength of the survivors (form passed; force is separate):")
+        for s in sorted(dist, reverse=True):
+            print("    %d/5  %d candidate(s)" % (s, dist[s]))
+        weak = [c for c in scored if c["strength"] <= 1]
+        if weak:
+            print("  %d at 0-1/5 — valid but low-value; a person should decide:"
+                  % len(weak))
+            for c in weak[:4]:
+                print("      %s" % c["slug"])
         out = OUT / "candidates.kept.json"
-        out.write_text(json.dumps({"generated": TODAY,
-                                   "candidates": [c for c, _ in kept]},
+        out.write_text(json.dumps({"generated": TODAY, "candidates": scored},
                                   ensure_ascii=False, indent=1), encoding="utf-8")
         print("\n  -> %s" % out)
         return
