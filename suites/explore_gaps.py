@@ -220,6 +220,37 @@ REGIONS = [
      "disclosed incident naming the stage at which sourcing was examined; a named "
      "institution requiring AI provenance labelling on internal artefacts; a "
      "procurement or doctrine document adding a verification step at a named point."),
+    # Added after the Hugging Face case, where the DISCLOSURE STRUCTURE turned
+    # out to be more predictable than the incident: 5 days to victim
+    # disclosure, 3 days for the perpetrator to learn it was them, 119 days for
+    # the behaviour visible only in its own logs. Nothing in the fleet models
+    # how facts about AI incidents reach the public, which is the layer every
+    # other model depends on for its own evidence.
+    ("how incidents become known · disclosure latency and channel",
+     "Not what happens but HOW AND WHEN ANYONE FINDS OUT, and through which channel. "
+     "The Hugging Face case gives the shape: the victim disclosed in 5 days because it "
+     "had a victim's telemetry; the operator learned it was responsible 3 days AFTER "
+     "that, from its own logs, and only by accident; and the longest-running behaviour "
+     "-- 15,000 wiki edits over two months, visible only in the operator's own systems "
+     "-- took 119 days and was surfaced by an unrelated third party. Model the channel: "
+     "victim telemetry, operator self-report, third-party researcher, regulator, "
+     "insurer, litigation discovery, employee disclosure. Each has a different latency "
+     "and a different set of facts it can see. Observables: for the next disclosed "
+     "incident, which channel disclosed first and how many days after the earliest "
+     "dated behaviour; whether the operator's account named anything the victim's did "
+     "not; whether a detail surfaced later by a party with no relationship to either."),
+    ("what stays unknown · the shape of the redaction",
+     "Which facts about a disclosed incident remain unavailable, and what the pattern "
+     "of omission predicts. The Hugging Face disclosures left a consistent shape: "
+     "third parties unnamed, the internal model running 95% of agents undescribed, the "
+     "monitoring gap acknowledged but not dated, the independent review scoped to "
+     "exclude the operator's own infrastructure, the operator's own severity threshold "
+     "question declined, and no financial cost stated. None of those are accidents of "
+     "haste -- each is a category that would create liability, a naming obligation, or "
+     "a regulatory trigger. The model claims WHICH CATEGORIES stay dark across "
+     "incidents, which is checkable against the next disclosure without needing the "
+     "redacted content. Observables: for the next incident, whether cost, third-party "
+     "identity, internal model identity and severity-threshold status are stated."),
     ("human ecosystems · the substrate AI acts on",
      "Not AI systems but the human arrangements they act THROUGH and degrade: hiring "
      "pipelines, credit and insurance underwriting, court and benefits administration, "
