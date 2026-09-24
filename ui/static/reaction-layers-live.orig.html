@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="An interactive map of who was actually responding to whom. Pivot any actor to the centre and read their dossier, references and pressure field.">
+<meta property="og:title" content="Who Was Looking At What">
+<meta property="og:description" content="Opposite positions, same room, no edge between them. Each ring is one hop of reaction.">
+<meta property="og:type" content="article">
+<style>
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>Who Was Looking At What</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#f7f6f3; --panel:#ffffff; --sunk:#efede8;
+    --ink:#14171c; --ink-2:#4a5058; --ink-3:#7c838d;
+    --rule:#ddd9d2; --rule-2:#c9c4bb;
+    --teal:#0f7a5f; --teal-soft:#d3ebe2;
+    --amber:#9a6a10; --violet:#6b4a9e; --coral:#a93f3c; --slate:#5a6472;
+    --shadow:0 1px 2px rgba(20,23,28,.06), 0 8px 24px rgba(20,23,28,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0d1014; --panel:#151920; --sunk:#10141a;
+      --ink:#e9eaec; --ink-2:#a2aab5; --ink-3:#6f7883;
+      --rule:#242a33; --rule-2:#333b46;
+      --teal:#4fc3a1; --teal-soft:#16302a;
+      --amber:#e0a33e; --violet:#b58ce0; --coral:#e06c75; --slate:#8b96a5;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0d1014; --panel:#151920; --sunk:#10141a;
+    --ink:#e9eaec; --ink-2:#a2aab5; --ink-3:#6f7883;
+    --rule:#242a33; --rule-2:#333b46;
+    --teal:#4fc3a1; --teal-soft:#16302a;
+    --amber:#e0a33e; --violet:#b58ce0; --coral:#e06c75; --slate:#8b96a5;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.3);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font:400 16px/1.6 "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:1080px; margin:0 auto; padding-block:clamp(28px,5vw,56px); padding-left:20px; padding-right:20px}
+
+  .eyebrow{
+    font:500 11px/1 "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
+    margin:0 0 14px;
+  }
+  h1{
+    font:400 clamp(34px,6.2vw,62px)/1.02 "Instrument Serif", Georgia, serif;
+    margin:0 0 16px; letter-spacing:-.012em; text-wrap:balance; max-width:16ch;
+  }
+  .lede{
+    font-size:clamp(16px,2.1vw,19px); line-height:1.62; color:var(--ink-2);
+    max-width:62ch; margin:0 0 10px;
+  }
+  .lede em{font-style:italic; color:var(--ink)}
+
+  .frame{
+    margin-top:clamp(28px,4vw,44px);
+    border:1px solid var(--rule); border-radius:3px;
+    background:var(--panel); box-shadow:var(--shadow); overflow:hidden;
+  }
+  .frame-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+    flex-wrap:wrap; padding:14px 18px; border-bottom:1px solid var(--rule);
+    background:var(--sunk);
+  }
+  .frame-head h2{
+    font:500 13px/1.3 "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing:.04em; margin:0; color:var(--ink);
+  }
+  .readout{
+    font:400 12px/1.3 "IBM Plex Mono", ui-monospace, monospace;
+    color:var(--ink-3); font-variant-numeric:tabular-nums;
+  }
+  .readout b{color:var(--teal); font-weight:500}
+
+  .stage{position:relative; width:100%; aspect-ratio:1/1; max-height:70vh; touch-action:none; cursor:grab}
+  .stage:active{cursor:grabbing}
+  svg{width:100%; height:100%; display:block}
+  .ring{fill:none; stroke:var(--rule); stroke-width:1}
+  .ring.near{stroke:var(--rule-2)}
+  .rlab{fill:var(--ink-3); font:500 10px "IBM Plex Mono", monospace; letter-spacing:.1em}
+  .rnote{fill:var(--ink-3); font:400 9.5px "IBM Plex Sans", sans-serif; opacity:.85}
+  .edge{stroke:var(--rule-2); stroke-width:1; fill:none; opacity:.6}
+  .edge.hot{stroke:var(--teal); stroke-width:1.8; opacity:1}
+  .nd{cursor:pointer}
+  .nd circle{stroke:var(--panel); stroke-width:2.5; transition:r .22s ease}
+  .nd text{fill:var(--ink); font:500 11.5px "IBM Plex Sans", sans-serif; pointer-events:none}
+  .nd.hub circle{stroke:var(--teal); stroke-width:3}
+  .nd.hub text{font-weight:600}
+  .nd.mute{opacity:.28}
+  .nd.mute text{fill:var(--ink-3)}
+
+  .bar{
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    padding:12px 18px; border-top:1px solid var(--rule); background:var(--sunk);
+  }
+  .bar-2{padding-top:0; border-top:none}
+  .barlab{
+    font:500 10px "IBM Plex Mono", monospace; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-3); flex:none;
+  }
+  .picker{display:flex; gap:6px; flex-wrap:wrap}
+  .chip{
+    font:500 12px "IBM Plex Sans", sans-serif; cursor:pointer;
+    background:var(--panel); color:var(--ink-2); border:1px solid var(--rule);
+    border-radius:2px; padding:7px 10px; min-height:36px;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:border-color .15s, color .15s;
+  }
+  .chip:hover{border-color:var(--teal); color:var(--teal)}
+  .chip:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .chip[aria-pressed="true"]{
+    background:var(--teal-soft); border-color:var(--teal); color:var(--teal); font-weight:600;
+  }
+  .chip .dot{width:7px; height:7px; border-radius:50%; flex:none}
+  button{
+    font:500 13px "IBM Plex Sans", sans-serif; cursor:pointer;
+    background:var(--panel); color:var(--ink); border:1px solid var(--rule-2);
+    border-radius:2px; padding:9px 14px; min-height:40px;
+    transition:border-color .15s, color .15s;
+  }
+  button:hover{border-color:var(--teal); color:var(--teal)}
+  button:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  button.on{background:var(--teal); border-color:var(--teal); color:var(--panel)}
+  .hint{font-size:12.5px; color:var(--ink-3)}
+
+  .inspector{
+    border-top:1px solid var(--rule); padding:18px;
+    display:grid; grid-template-columns:1fr; gap:14px; min-height:150px;
+    background:var(--panel);
+  }
+  @media (min-width:720px){ .inspector{grid-template-columns:1.15fr .85fr} }
+  .tags{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:9px}
+  .tag{
+    font:500 10px "IBM Plex Mono", monospace; letter-spacing:.07em; text-transform:uppercase;
+    border:1px solid var(--rule-2); border-radius:2px; padding:3px 7px; color:var(--ink-3);
+  }
+  .tag.lay{border-color:var(--teal); color:var(--teal)}
+  .insp-name{font:400 25px/1.2 "Instrument Serif", Georgia, serif; margin:0 0 7px}
+  .insp-act{font-size:14.5px; line-height:1.55; color:var(--ink-2); margin:0 0 12px}
+  .routed{font-size:13px; color:var(--ink-3); margin-bottom:5px}
+  .routed b{color:var(--ink); font-weight:500}
+  .quote{
+    border-left:2px solid var(--teal); background:var(--sunk);
+    padding:11px 13px; font:400 12.5px/1.6 "IBM Plex Mono", monospace;
+    color:var(--ink-2); border-radius:0 2px 2px 0;
+  }
+  .qlab{
+    font:500 9.5px "IBM Plex Mono", monospace; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-3); margin-bottom:6px;
+  }
+  .empty{color:var(--ink-3); font-size:14px; font-style:italic; align-self:center}
+  .tag.src{cursor:help}
+  .caveat{
+    margin:11px 0 0; padding:9px 11px; border-left:2px solid var(--amber);
+    background:var(--sunk); font-size:13px; line-height:1.5; color:var(--ink-2);
+  }
+  .refs{list-style:none; margin:0; padding:0; display:grid; gap:5px}
+  .refs li{font-size:13px; line-height:1.45}
+  .refs a{color:var(--teal); text-decoration:none; border-bottom:1px solid transparent}
+  .refs a:hover{border-bottom-color:var(--teal)}
+  .refs a:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .srckey{
+    display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;
+    font-size:12px; color:var(--ink-3);
+  }
+  .srckey b{font-weight:500}
+  .postlink{
+    display:inline-flex; align-items:baseline; gap:7px;
+    font-size:13.5px; color:var(--teal); text-decoration:none;
+    border:1px solid var(--teal); border-radius:2px; padding:8px 11px;
+    min-height:38px; align-items:center;
+  }
+  .postlink:hover{background:var(--teal-soft)}
+  .postlink:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .nopost{
+    font-size:13px; color:var(--ink-3); border:1px dashed var(--rule-2);
+    border-radius:2px; padding:8px 11px; line-height:1.45;
+  }
+  .nopost-why{font-size:12px; color:var(--ink-3); opacity:.85}
+  .pmark{font-family:"IBM Plex Mono", monospace; opacity:.7}
+  .tweet{
+    border:1px solid var(--rule-2); border-radius:3px; padding:13px 15px;
+    background:var(--sunk);
+  }
+  .tw-head{display:flex; gap:7px; align-items:baseline; flex-wrap:wrap; margin-bottom:8px}
+  .tw-name{font-weight:600; font-size:14px; color:var(--ink)}
+  .tw-handle{font:400 12.5px "IBM Plex Mono", monospace; color:var(--ink-3)}
+  .tw-body{
+    margin:0 0 10px; font-size:15px; line-height:1.55; color:var(--ink);
+  }
+  .tw-foot{
+    display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    align-items:center; padding-top:9px; border-top:1px solid var(--rule);
+    font:400 12px "IBM Plex Mono", monospace; color:var(--ink-3);
+  }
+  .tw-foot a{color:var(--teal); text-decoration:none}
+  .tw-foot a:hover{text-decoration:underline}
+  .tw-foot a:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+  .doss{margin-top:16px; padding-top:14px; border-top:1px solid var(--rule)}
+  .doss-none{
+    font-size:13px; color:var(--ink-3); font-style:italic; line-height:1.5;
+  }
+  .known{list-style:none; margin:0; padding:0; display:grid; gap:7px}
+  .known li{
+    font-size:13.5px; line-height:1.5; color:var(--ink-2);
+    padding-left:13px; position:relative;
+  }
+  .known li::before{
+    content:"\2013"; position:absolute; left:0; color:var(--ink-3);
+  }
+  .known a{color:var(--teal); text-decoration:none; font-size:12px; white-space:nowrap}
+  .known a:hover{text-decoration:underline}
+  .unsourced{
+    font:400 11px "IBM Plex Mono", monospace; color:var(--amber); white-space:nowrap;
+  }
+  .risk{margin:0; font-size:13.5px; line-height:1.55; color:var(--ink-2)}
+  .claims{list-style:none; margin:9px 0 0; padding:0; display:grid; gap:6px}
+  .claims li{
+    display:flex; justify-content:space-between; gap:11px; flex-wrap:wrap;
+    font-size:13px; line-height:1.45; padding:7px 9px;
+    background:var(--sunk); border-left:2px solid var(--teal); border-radius:0 2px 2px 0;
+  }
+  .cl-text{color:var(--ink-2); flex:1 1 15rem}
+  .cl-date{
+    font:500 11px "IBM Plex Mono", monospace; color:var(--teal);
+    white-space:nowrap; align-self:center;
+  }
+  #updated{
+    font:400 11px "IBM Plex Mono", monospace; color:var(--ink-3);
+  }
+  .nd.faded{opacity:.16}
+  .nd.faded text{fill:var(--ink-3)}
+  .toggle{
+    display:inline-flex; align-items:center; gap:7px; cursor:pointer;
+    font-size:12.5px; color:var(--ink-2); min-height:36px;
+  }
+  .toggle input{width:15px; height:15px; accent-color:var(--teal); cursor:pointer}
+  .power-line{
+    margin:11px 0 0; padding:9px 11px; border-left:2px solid var(--teal);
+    background:var(--sunk); font-size:13px; line-height:1.5; color:var(--ink-2);
+  }
+  .power-line b{color:var(--ink); font-weight:600}
+  .pf-head{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-bottom:6px}
+  .pf-band{
+    font:600 10px "IBM Plex Mono", monospace; letter-spacing:.09em; text-transform:uppercase;
+    border:1px solid; border-radius:2px; padding:3px 8px;
+  }
+  .pf-tot{font:400 11.5px "IBM Plex Mono", monospace; color:var(--ink-3)}
+  .pf-target{margin:0; font-size:12.5px; line-height:1.45; color:var(--ink-3)}
+  .pf-target b{color:var(--ink-2); font-weight:500}
+  .pf-dist{list-style:none; margin:0; padding:0; display:grid; gap:5px}
+  .pf-dist li{
+    position:relative; display:flex; gap:9px; align-items:baseline;
+    font-size:12.5px; line-height:1.4; padding:6px 9px; overflow:hidden;
+    background:var(--sunk); border-radius:2px;
+  }
+  .pf-bar{
+    position:absolute; left:0; top:0; bottom:0; background:var(--teal);
+    opacity:.14; pointer-events:none;
+  }
+  .pf-pct{
+    font:600 12px "IBM Plex Mono", monospace; color:var(--teal);
+    min-width:2.6rem; position:relative; font-variant-numeric:tabular-nums;
+  }
+  .pf-out{color:var(--ink-2); position:relative; flex:1}
+  .pf-vecs{list-style:none; margin:0; padding:0; display:grid; gap:9px}
+  .pf-vecs li{
+    padding:9px 11px; background:var(--sunk); border-left:2px solid var(--rule-2);
+    border-radius:0 2px 2px 0;
+  }
+  .pf-src{
+    font-size:12.5px; font-weight:500; color:var(--ink); line-height:1.4;
+    display:flex; gap:7px; align-items:baseline; flex-wrap:wrap;
+  }
+  .pf-sev{
+    font:600 9.5px "IBM Plex Mono", monospace; letter-spacing:.07em;
+    text-transform:uppercase; color:var(--amber);
+  }
+  .pf-push{font-size:12.5px; color:var(--teal); margin-top:3px; line-height:1.4}
+  .pf-cons{font-size:12px; color:var(--ink-3); margin-top:4px; line-height:1.45}
+  .pf-dem{
+    font:400 11px "IBM Plex Mono", monospace; color:var(--ink-3);
+    margin-top:4px; opacity:.85;
+  }
+
+  .grid{display:grid; gap:18px; margin-top:clamp(30px,4vw,46px)}
+  @media (min-width:760px){ .grid{grid-template-columns:repeat(3,1fr)} }
+  .note h3{
+    font:500 11px/1 "IBM Plex Mono", monospace; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--teal); margin:0 0 9px;
+  }
+  .note p{margin:0; font-size:14.5px; line-height:1.62; color:var(--ink-2)}
+  .note p + p{margin-top:9px}
+
+  .foot{
+    margin-top:clamp(32px,4vw,48px); padding-top:20px; border-top:1px solid var(--rule);
+    font-size:13.5px; line-height:1.65; color:var(--ink-3); max-width:70ch;
+  }
+  .foot b{color:var(--ink-2); font-weight:500}
+  .key{display:flex; gap:14px; flex-wrap:wrap; margin-top:12px; font-size:12px; color:var(--ink-3)}
+  .sw{display:inline-block; width:9px; height:9px; border-radius:50%; vertical-align:0}
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+</style>
+
+<div class="page">
+  <p class="eyebrow" id="eyebrow">Reaction structure · one event, 14 acts</p>
+  <h1 id="pagetitle">Who was looking at what</h1>
+  <div id="lede-default">
+  <p class="lede">
+    On 9 September 2026 an Anthropic safety researcher resigned, forfeited his equity, and posted
+    why. The post reached 172 million views. Then everyone reacted — but <em>not to the same
+    thing.</em>
+  </p>
+  <p class="lede">
+    Sacks attacked “the proposal.” Altman and Musk agreed with “pacing the frontier.” Those are
+    Dario Amodei’s words, from an essay published three days later. They were not responding to the
+    resignation at all. Each ring below is one hop of reaction — and <em>any</em> of the fourteen can
+    hold the centre. Stand with someone and the rings recount from where they stood.
+  </p>
+  </div>
+  <div id="lede-case" hidden><p class="lede" id="lede-case-text"></p></div>
+
+  <div class="frame">
+    <div class="frame-head">
+      <h2 id="hub">centred on — Jacob Coxon</h2>
+      <span class="readout" id="readout"></span>
+      <span id="updated"></span>
+    </div>
+    <div class="stage" id="stage"><svg id="svg" role="img" aria-label="Concentric rings of reaction layers"></svg></div>
+    <div class="bar">
+      <span class="barlab">stand with</span>
+      <div class="picker" id="picker"></div>
+    </div>
+    <div class="bar bar-2">
+      <label class="toggle"><input type="checkbox" id="poweronly"> emphasise the six who decide</label>
+      <span class="hint">or tap anyone in the diagram · drag to rotate · scroll or pinch to zoom</span>
+    </div>
+    <div class="inspector" id="insp"></div>
+  </div>
+
+  <div class="grid">
+    <div class="note">
+      <h3>The finding</h3>
+      <p>Four of the loudest voices sit on ring 2, not ring 1. They were arguing about an audit
+      regime that did not exist when the post went up.</p>
+      <p>Read as responses to the resignation, the event looks like a referendum on one man
+      quitting. It had already become something else.</p>
+      <p style="color:var(--amber)">Four of those six rest on a single commentary video. Select one
+      to see what backs it.</p>
+    </div>
+    <div class="note">
+      <h3>Jensen Huang</h3>
+      <p>Reported as “Trump brought Huang on stage” — one scene, so most accounts treat it as one
+      act. It is two.</p>
+      <p>Huang argued against <em>the pacing position</em>, which is Amodei’s framing. He reaches
+      the centre through the essay, not through Trump. Same ring, different route.</p>
+    </div>
+    <div class="note">
+      <h3>Who actually decides</h3>
+      <p>Six of the fourteen can change what happens by <em>deciding</em> rather than persuading:
+      five lab or chip CEOs, and a head of state. They are drawn larger, with an outer ring.</p>
+      <p>Coxon is not one of them — and that is the point. His act was giving up a position
+      inside one of those companies, which is why it carried.</p>
+      <p>Centre one and the panel shows the <em>pressure field</em> they stand in: named sources,
+      what each pushes toward, and what happens to them if they refuse.</p>
+    </div>
+    <div class="note">
+      <h3>The commentator</h3>
+      <p>A 14-minute video summarised the resignation, the essay, the reactions to the essay and
+      the conspiracy readings — then added its own.</p>
+      <p>Stand with <em>The PrimeTime</em> and the resignation lands three rings out. That is how
+      much interpretation sits between a viewer and the act.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <b>How a ring is assigned.</b> Every edge says what an act references, and carries the
+    sentence that licenses it — shown in the panel whenever you select someone. Distance is then
+    plain arithmetic: hops from the centre. Nothing decides that Sacks is “ring 2”; it falls out of
+    the edges, and re-centring recomputes it.
+    <br><br>
+    <b>What this is not.</b> A ring is not importance, and not agreement — Altman agreeing and Sacks
+    attacking sit on the same ring, because both were reading the same document. It is also not the
+    emergence floor: a head of state can sit two hops out.
+    <br><br>
+    <b>Standing of the reading.</b> Each edge is an inference from what an act publicly referenced,
+    never from anyone’s stated intent. Some will be wrong. The quote is attached so you can overrule
+    it rather than take it on trust.
+    <br><br>
+    <b>Where this reading is thinnest.</b> Select any actor and the panel names the references behind
+    that act, tagged by how well sourced it is. The Altman, Musk, Sacks and Trump/Huang reactions rest
+    on a <em>single</em> commentary video and were not traced to primary posts — and those are four of
+    the six acts on ring 2, which is where this page’s main claim lives.
+    <br><br>
+    <b>Only two acts carry the post itself.</b> Coxon’s resignation and Amodei’s announcement, shown
+    in full. The text is verbatim from X’s own embed API rather than a live widget: the widget loads
+    a tracker into your browser to display 280 characters, and it breaks if the post is later
+    deleted — at which point a page like this would quietly lose the evidence it rests on. The
+    other twelve are described in reporting or in the video, and I could not locate the original
+    posts; two of them were remarks on a stage rather than posts at all. Each panel says which case it
+    is rather than leaving the link quietly absent. <em>If you have a URL for any of them, that is the
+    single most useful correction to this page</em> — the edges are inferences from what each act
+    referenced, so a primary post is what would confirm or break one.
+    <div class="srckey">
+      <span><b style="color:var(--teal)">primary source</b> — the actor’s own post or page</span>
+      <span><b style="color:var(--slate)">reported</b> — two or more independent outlets</span>
+      <span><b style="color:var(--amber)">single source</b> — one video, untraced</span>
+    </div>
+    <div class="key" id="key"></div>
+  </div>
+</div>
+
+<script>
+/* `src` is the tier of evidence behind the ACT, and it is not decoration.
+   "primary" = traceable to the actor's own post or page. "reported" = two or
+   more independent outlets. "single" = one commentary video, not traced to a
+   primary source by me.
+
+   Four of the six ring-2 acts are "single" — and those four carry this page's
+   headline finding. Stating that on the node, rather than in a footnote nobody
+   reaches, is the difference between a source list and an honest one. */
+let NODES = [
+ {id:"coxon",label:"Jacob Coxon",kind:"person",date:"2026-09-09",to:null,src:"primary",
+  act:"Resigns from Anthropic, forfeits equity, and posts that the companies are racing to self-improving superintelligence and gambling with our lives.",
+  ev:"Jacob Coxon, an Anthropic safety researcher, resigns and posts publicly: “I resigned from Anthropic today… Neither company is acting responsibly.”",
+  post:["@hilbertspaess — the resignation post","https://x.com/hilbertspaess/status/2097476196791709843"],
+  tweet:{text:"I resigned from Anthropic today. I spent the last three years doing pretraining research at both OpenAI and Anthropic. Neither company is acting responsibly. They are racing straight to self-improving superintelligence and gambling with our lives. More thoughts below.",author:"Jacob Coxon",handle:"hilbertspaess",date:"September 9, 2026",url:"https://x.com/hilbertspaess/status/2097476196791709843"},
+  refs:[["The resignation post (@hilbertspaess)","https://x.com/hilbertspaess/status/2097476196791709843"],
+        ["Axios — the equity forfeiture","https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"],
+        ["NBC News — the internal Slack post first","https://www.nbcnews.com/tech/tech-news/anthropic-safety-researcher-resigned-warning-rapid-ai-development-gamb-rcna596767"],
+        ["PBS NewsHour","https://www.pbs.org/newshour/science/anthropic-researchers-resignation-sends-warning-about-the-dangers-of-ai-development"]]},
+ {id:"audience",label:"Mass online audience",kind:"public",date:"within 24 hours",to:"coxon",src:"reported",
+  act:"Amplifies the post to ~172M views, ~800k likes, ~200k reposts within 24 hours.",
+  ev:"A mass online audience amplifies the resignation post.",
+  nopost:"not one post — an aggregate of views, likes and reposts on Coxon’s thread, linked above",
+  refs:[["The post itself — counts visible on the thread","https://x.com/hilbertspaess/status/2097476196791709843"],
+        ["Deadline","https://deadline.com/2026/09/anthropic-jacob-coxon-resignation-artificial-intelligence-1237072134/"],
+        ["CoinDesk","https://www.coindesk.com/markets/2026/09/09/anthropic-researcher-quits-with-a-warning-on-ai-that-echoes-the-terminator-script"]]},
+ {id:"science-lead",label:"Alignment science lead",kind:"person",date:"shortly after",to:"coxon",src:"reported",
+  act:"Publicly endorses the post: “Jacob here is correct… greater than 10% chance within the next decade.”",
+  ev:"An Anthropic alignment science lead publicly endorses the resignation post.",
+  nopost:"an X post endorsing the resignation; quoted in reporting, URL not on file",
+  refs:[["PBS NewsHour","https://www.pbs.org/newshour/science/anthropic-researchers-resignation-sends-warning-about-the-dangers-of-ai-development"],
+        ["Axios","https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"]]},
+ {id:"team-lead",label:"Alignment team lead",kind:"person",date:"shortly after",to:"coxon",src:"reported",
+  act:"States publicly that Coxon was a senior researcher they had pitched to stay.",
+  ev:"A second Anthropic alignment team lead states publicly that Coxon was a senior researcher they had pitched to stay, responding to his departure.",
+  nopost:"an X post about the departure; quoted in reporting, URL not on file",
+  refs:[["NBC News","https://www.nbcnews.com/tech/tech-news/anthropic-safety-researcher-resigned-warning-rapid-ai-development-gamb-rcna596767"],
+        ["Axios","https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview"]]},
+ {id:"deepseek",label:"DeepSeek engineer",kind:"person",date:"after",to:"coxon",src:"single",
+  act:"Publicly attacks Anthropic in extreme terms.",
+  ev:"A DeepSeek engineer publicly attacks Anthropic in extreme terms, responding to the resignation post.",
+  nopost:"an X post attacking Anthropic; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"amodei",label:"Dario Amodei",kind:"person",date:"~2026-09-12",to:"coxon",src:"primary",
+  act:"Publishes “We Must Pace the Frontier,” proposing embedded third-party evaluators such as METR with employee-like access.",
+  ev:"It follows the resignation and the reaction to it.",
+  post:["@DarioAmodei — the announcement post","https://x.com/DarioAmodei/status/2098773920774074715"],
+  tweet:{text:"We Must Pace the Frontier: I’ve written a new essay on why the AI industry should slow down, with a three-part plan for doing so.\n\nAnthropic is unilaterally committing to the first of these steps. We’ll provide third-party evaluators with permanent, employee-level access to our…",author:"Dario Amodei",handle:"DarioAmodei",date:"September 12, 2026",url:"https://x.com/DarioAmodei/status/2098773920774074715"},
+  refs:[["“We Must Pace the Frontier” — the essay","https://darioamodei.com/post/we-must-pace-the-frontier"],
+        ["Amodei’s announcement post","https://x.com/DarioAmodei/status/2098773920774074715"],
+        ["Zvi Mowshowitz — the most detailed independent reading","https://thezvi.substack.com/p/we-must-pace-the-frontier"],
+        ["Forbes","https://www.forbes.com/sites/johnwerner/2026/09/17/amodei-cites-recursive-self-improvement-in-september-essay/"]],
+  caveat:"The essay page carries no dateline. The 12 September date is confirmed by the timestamp on the announcement post below, not by the essay itself."},
+ {id:"altman",label:"Sam Altman",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Publicly agrees with pacing the frontier.",
+  ev:"Sam Altman publicly agrees with pacing the frontier, the position set out in Amodei’s essay.",
+  nopost:"an X post agreeing with pacing; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"musk",label:"Elon Musk",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Publicly agrees with pacing the frontier.",
+  ev:"Elon Musk publicly agrees with pacing the frontier, the position set out in Amodei’s essay.",
+  nopost:"an X post agreeing with pacing; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"sacks",label:"David Sacks",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Attacks the proposal as cartel-formation and attacks METR’s independence.",
+  ev:"David Sacks publicly attacks the proposal as cartel-formation and attacks METR’s independence, responding to Amodei’s essay.",
+  nopost:"X posts attacking the proposal and METR; described in the video, URL not on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"metr",label:"METR",kind:"organization",date:"after",to:"amodei",src:"primary",
+  act:"Named as the evaluator that would hold the gate, without having sought the role. Issues no public act.",
+  ev:"METR is named in Amodei’s proposal as the evaluator that would hold the gate, without having sought that role. It issues no public act.",
+  nopost:"no act, so no post. It was named in someone else’s essay and said nothing publicly",
+  refs:[["The essay that names it","https://darioamodei.com/post/we-must-pace-the-frontier"],
+        ["METR — Wikipedia","https://en.wikipedia.org/wiki/METR"],
+        ["METR — 80,000 Hours listing","https://jobs.80000hours.org/organisations/model-evaluation-and-threat-research"]],
+  caveat:"METR has said nothing publicly about being named. Its position here is the absence of an act, not a quiet one."},
+ {id:"trump",label:"Donald Trump",kind:"state",date:"after",to:"amodei",src:"single",
+  act:"Argues for acceleration and against Amodei’s pacing position, bringing Jensen Huang on stage.",
+  ev:"Donald Trump argues publicly for acceleration and against Amodei’s pacing position, bringing Jensen Huang on stage.",
+  nopost:"remarks on stage, not a post; no clip URL on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]]},
+ {id:"huang",label:"Jensen Huang",kind:"person",date:"after",to:"amodei",src:"single",
+  act:"Argues on stage for acceleration, against the pacing position set out in the essay.",
+  ev:"Jensen Huang argues on stage for acceleration, against the pacing position set out in Amodei’s essay.",
+  nopost:"remarks on stage, not a post; no clip URL on file",
+  refs:[["“Slow Down or Die” — The PrimeTime (the only source I have)","https://youtu.be/W8IVKMGbUZE"]],
+  caveat:"Reported as one scene with Trump. Separating the two acts is my reading, and it is the reading this diagram most depends on."},
+ {id:"conspiracy",label:"Conspiracy readings",kind:"public",date:"after",to:"amodei",src:"single",
+  act:"Claims circulate that the proposal is a regulatory-capture play and that the other leaders’ agreement is insincere.",
+  ev:"These are claims about the reactions, not about the resignation.",
+  nopost:"not one post — claims circulating across many accounts; the video is where I saw them collected",
+  refs:[["“Slow Down or Die” — where these are advanced","https://youtu.be/W8IVKMGbUZE"]],
+  caveat:"Placed here as claims that circulated. Nothing on this page adopts them, and none is evidence of anyone’s intent."},
+ {id:"primetime",label:"The PrimeTime",kind:"press",date:"2026-09-19",to:"conspiracy",src:"primary",
+  act:"A 14-minute commentary video summarising the resignation, the essay, the reactions and the conspiracy readings — then layering its own reading on top.",
+  ev:"A commentary video summarises the resignation, the essay, the reactions to the essay and the conspiracy readings, and layers its own reading on top of them.",
+  nopost:"a video, not a post — the URL is in the references below",
+  refs:[["“Slow Down or Die” — The PrimeTime, 19 Sept 2026","https://youtu.be/W8IVKMGbUZE"]],
+  caveat:"Auto-captioned and unreliable on proper nouns. Used for chronology and for which reactions existed, not for quotes."}
+];
+
+const SRC_META = {
+  primary:  {label:"primary source", tone:"--teal",  note:"traceable to the actor’s own post or page"},
+  reported: {label:"reported",       tone:"--slate", note:"two or more independent outlets"},
+  single:   {label:"single source",  tone:"--amber", note:"one commentary video; not traced to a primary post"}
+};
+
+const KIND = {person:"--teal", organization:"--slate", state:"--amber", press:"--violet", public:"--coral"};
+const KIND_LABEL = {person:"individual", organization:"organisation", state:"head of state", press:"commentary", public:"crowd"};
+const RING_NOTE = {
+  1:"read the act itself",
+  2:"read a response to it",
+  3:"read the responses to the responses",
+  4:"read the commentary on those",
+  5:"further out still"
+};
+
+const svg = document.getElementById("svg");
+const byId = id => NODES.find(n => n.id === id);
+let hub = "coxon", sel = null, rot = -Math.PI/2, zoom = 1, powerOnly = false;
+
+function cssv(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+function layersFrom(id){
+  const adj = {}; NODES.forEach(n => adj[n.id] = new Set());
+  NODES.forEach(n => { if (n.to && adj[n.to]){ adj[n.id].add(n.to); adj[n.to].add(n.id); } });
+  const d = {[id]:0}; let f = [id];
+  while (f.length){
+    const nx = [];
+    for (const c of f) for (const m of [...adj[c]].sort())
+      if (!(m in d)){ d[m] = d[c] + 1; nx.push(m); }
+    f = nx;
+  }
+  return d;
+}
+
+function draw(){
+  const d = layersFrom(hub);
+  const max = Math.max(1, ...Object.values(d));
+  const S = 1000, C = S/2, step = (C - 92) / (max + .3);
+  const rings = {};
+  NODES.forEach(n => { const k = d[n.id]; if (k !== undefined) (rings[k] = rings[k] || []).push(n); });
+
+  const pos = {};
+  Object.keys(rings).map(Number).sort((a,b)=>a-b).forEach(k => {
+    const ns = rings[k].slice().sort((a,b) => a.label.localeCompare(b.label));
+    const r = k * step * zoom;
+    ns.forEach((n,i) => {
+      const a = (i/ns.length) * Math.PI*2 + rot + (k % 2 ? Math.PI/ns.length : 0);
+      pos[n.id] = k === 0 ? {x:C, y:C} : {x:C + r*Math.cos(a), y:C + r*Math.sin(a)};
+    });
+  });
+
+  let s = "";
+  for (let k = 1; k <= max; k++){
+    const r = k * step * zoom;
+    if (r > C*1.5) continue;
+    s += `<circle class="ring${k===1?' near':''}" cx="${C}" cy="${C}" r="${r.toFixed(1)}"/>`;
+    // Ring captions sit on the lower-left diagonal, where nodes are sparsest,
+    // rather than straight up from the centre where they collided with node
+    // labels. Anchored end-on so longer captions grow away from the diagram.
+    const ang = Math.PI * 0.78;
+    const lx = C + r * Math.cos(ang), ly = C + r * Math.sin(ang);
+    s += `<text class="rlab" x="${lx.toFixed(1)}" y="${(ly-4).toFixed(1)}" text-anchor="end">RING ${k}</text>`;
+    if (RING_NOTE[k]) s += `<text class="rnote" x="${lx.toFixed(1)}" y="${(ly+9).toFixed(1)}" text-anchor="end">${esc(RING_NOTE[k])}</text>`;
+  }
+  NODES.forEach(n => {
+    if (!n.to || !pos[n.id] || !pos[n.to]) return;
+    const hot = sel && (n.id === sel || n.to === sel);
+    s += `<path class="edge${hot?' hot':''}" d="M${pos[n.id].x.toFixed(1)},${pos[n.id].y.toFixed(1)} Q${C},${C} ${pos[n.to].x.toFixed(1)},${pos[n.to].y.toFixed(1)}"/>`;
+  });
+  NODES.forEach(n => {
+    const p = pos[n.id]; if (!p) return;
+    const isHub = n.id === hub;
+    const rel = sel && sel !== n.id && n.to !== sel && !NODES.some(m => m.id === sel && m.to === n.id);
+    const col = cssv(KIND[n.kind] || "--slate");
+    const rad = isHub ? 14 : 8.5;
+    const anch = p.x > C+14 ? "start" : p.x < C-14 ? "end" : "middle";
+    const dx = anch === "start" ? rad+7 : anch === "end" ? -(rad+7) : 0;
+    const dy = anch === "middle" ? (p.y < C ? -(rad+9) : rad+18) : 4.5;
+    const sm = SRC_META[n.src] || SRC_META.reported;
+    // A hollow ring marks a single-sourced act, so the weakest evidence is
+    // visible on the diagram rather than only after selecting each node.
+    const thin = n.src === "single";
+    // Power reads as SIZE plus an outer ring. It is a separate axis from
+    // sourcing and from kind, so it gets its own channel rather than competing
+    // for the fill colour those already use.
+    const pw = !!n.power;
+    const dim = powerOnly && !pw;
+    const r2 = isHub ? rad : pw ? rad + 2.5 : rad - 1;
+    s += `<g class="nd${isHub?" hub":""}${rel?" mute":""}${dim?" faded":""}" data-id="${n.id}" tabindex="0" role="button" aria-label="${esc(n.label)}, ring ${d[n.id]}, ${esc(sm.label)}${pw?", holds power":""}">`
+      + (pw ? `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${(r2+4.5).toFixed(1)}"`
+              + ` fill="none" stroke="${col}" stroke-width="1" opacity=".45"/>` : "")
+      + `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r2}" fill="${thin ? "none" : col}"`
+      + (thin ? ` stroke="${col}" stroke-width="2.5" stroke-dasharray="3 2.5"` : "") + `/>`
+      + `<text x="${(p.x+dx).toFixed(1)}" y="${(p.y+dy).toFixed(1)}" text-anchor="${anch}"`
+      + (pw ? ` style="font-weight:600"` : "") + `>${esc(n.label)}</text></g>`;
+  });
+
+  svg.setAttribute("viewBox", `0 0 ${S} ${S}`);
+  svg.innerHTML = s;
+  svg.querySelectorAll(".nd").forEach(g => {
+    g.addEventListener("click", () => pick(g.dataset.id));
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); pick(g.dataset.id); } });
+  });
+
+  document.getElementById("hub").textContent = "centred on — " + byId(hub).label;
+  const far = Object.entries(d).sort((a,b) => b[1]-a[1])[0];
+  const withPost = NODES.filter(n => n.post).length;
+  document.getElementById("readout").innerHTML =
+    `<b>${max}</b> rings · <b>${NODES.length}</b> acts · `
+    + `<b>${withPost}</b> link to the original post · `
+    + `furthest: ${esc(byId(far[0]).label)} at ring <b>${far[1]}</b>`;
+  document.querySelectorAll(".chip").forEach(c =>
+    c.setAttribute("aria-pressed", String(c.dataset.id === hub)));
+}
+
+/* Every actor is a centre. The first build offered two preset buttons and hid
+   the rest behind "tap a node, then press a button in the panel" — two steps to
+   reach the page's main idea, which meant most readers never found out that
+   pivoting was the point. */
+function buildPicker(){
+  // Order by distance from the SEED, not from a hardcoded slug. "coxon" was
+  // baked in here; on any other case every comparison became NaN and the picker
+  // rendered empty, which reads as "this case has no actors".
+  const seed = (NODES.find(n => !n.to) || NODES[0] || {}).id;
+  const dseed = seed ? layersFrom(seed) : {};
+  const order = NODES.slice().sort((a,b) => {
+    const da = dseed[a.id], db = dseed[b.id];
+    if (da !== db) return (da === undefined) - (db === undefined) || da - db;
+    return a.label.localeCompare(b.label);
+  });
+  document.getElementById("picker").innerHTML = order.map(n =>
+    `<button class="chip" data-id="${n.id}" aria-pressed="${n.id === hub}">`
+    + `<span class="dot" style="background:${cssv(KIND[n.kind] || "--slate")}"></span>`
+    + `${esc(n.label)}</button>`).join("");
+  document.querySelectorAll(".chip").forEach(c =>
+    c.addEventListener("click", () => { rot = -Math.PI/2; zoom = 1; centre(c.dataset.id); }));
+}
+
+function pick(id){
+  sel = sel === id ? null : id;
+  const el = document.getElementById("insp");
+  if (!sel){ renderEmpty(); draw(); return; }
+  const n = byId(id), d = layersFrom(hub), tgt = n.to ? byId(n.to) : null;
+  const sm = SRC_META[n.src] || SRC_META.reported;
+  el.innerHTML =
+    `<div><div class="tags">`
+    + `<span class="tag lay">ring ${d[n.id]}</span>`
+    + `<span class="tag">${esc(KIND_LABEL[n.kind] || n.kind)}</span>`
+    + `<span class="tag">${esc(n.date)}</span>`
+    + `<span class="tag src" style="border-color:${cssv(sm.tone)};color:${cssv(sm.tone)}"`
+    + ` title="${esc(sm.note)}">${esc(sm.label)}</span>`
+    + (n.power ? `<span class="tag lay">decides</span>` : "") + `</div>`
+    + `<h3 class="insp-name">${esc(n.label)}</h3>`
+    + (n.power ? `<p class="power-line"><b>Holds power.</b> ${n.power}</p>` : "")
+    + `<p class="insp-act">${esc(n.act)}</p>`
+    + (tgt ? `<div class="routed">reading <b>${esc(tgt.label)}</b></div>`
+           : `<div class="routed">the originating act — reading nobody</div>`)
+    + (n.caveat ? `<p class="caveat">${esc(n.caveat)}</p>` : "")
+    + (n.id !== hub
+        ? `<button style="margin-top:12px" onclick="rot=-Math.PI/2; zoom=1; centre('${n.id}')">Stand with ${esc(n.label)}</button>`
+        : `<div class="routed" style="margin-top:12px">— currently at the centre</div>`)
+    + `</div>`
+    + `<div><div class="qlab">the act itself</div>`
+    + (n.tweet ? tweetCard(n.tweet)
+       : n.post
+        ? `<a class="postlink" href="${esc(n.post[1])}" target="_blank" rel="noopener noreferrer">`
+          + `<span class="pmark">↗</span> ${esc(n.post[0])}</a>`
+        : `<div class="nopost"><span class="pmark">—</span> no post URL on file`
+          + (n.nopost ? `<br><span class="nopost-why">${esc(n.nopost)}</span>` : "") + `</div>`)
+    + `<div class="qlab" style="margin-top:14px">the sentence that places them</div>`
+    + `<div class="quote">${esc(n.ev)}</div>`
+    + `<div class="qlab" style="margin-top:14px">references for this act</div>`
+    + `<ul class="refs">` + (n.refs || []).map(r =>
+        `<li><a href="${esc(r[1])}" target="_blank" rel="noopener noreferrer">${esc(r[0])}</a></li>`
+      ).join("") + `</ul>`
+    + (n.id === hub ? dossierCard(n) + pressureCard(n) : "")
+    + `</div>`;
+  draw();
+}
+
+/* The post, rendered from its text rather than embedded through X's widget.
+   The widget needs platform.twitter.com, which this page's host blocks and
+   which loads a tracker into every reader's browser to display 280 characters.
+   The text below is verbatim from X's own oEmbed API, and the card links out,
+   so nothing is paraphrased and nothing is hidden. */
+function tweetCard(t){
+  return `<div class="tweet">`
+    + `<div class="tw-head"><span class="tw-name">${esc(t.author)}</span>`
+    + `<span class="tw-handle">@${esc(t.handle)}</span></div>`
+    + `<p class="tw-body">${esc(t.text).replace(/\n/g, "<br>")}</p>`
+    + `<div class="tw-foot"><span>${esc(t.date)}</span>`
+    + `<a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">view on X ↗</a></div>`
+    + `</div>`;
+}
+
+/* What is known about the centred actor, with a source per line, plus their
+   position on AI risk where a public act establishes one.
+
+   Written only where sourced material exists. An actor with no dossier gets a
+   blank that says so — inventing a plausible position is precisely what this
+   project exists to avoid, and a confident paragraph about someone's views is
+   the easiest thing in the world to generate and the hardest to retract. */
+function dossierCard(n){
+  const d = n.dossier;
+  if (!d) return `<div class="doss doss-none">Nothing on file for `
+    + `${esc(n.label)} beyond the act above. That is a gap in this reading, `
+    + `not a judgement about them.</div>`;
+  let s = `<div class="doss">`;
+  if (d.known && d.known.length){
+    s += `<div class="qlab">what is known</div><ul class="known">`
+      + d.known.map(k => `<li>${esc(k[0])}`
+        + (k[1] ? ` <a href="${esc(k[1])}" target="_blank" rel="noopener noreferrer">source ↗</a>`
+                : ` <span class="unsourced">no link on file</span>`)
+        + `</li>`).join("") + `</ul>`;
+  }
+  if (d.risk){
+    s += `<div class="qlab" style="margin-top:13px">position on AI risk</div>`
+      + `<p class="risk">${esc(d.risk)}</p>`;
+  }
+  if (d.claims && d.claims.length){
+    s += `<ul class="claims">` + d.claims.map(c =>
+      `<li><span class="cl-text">${esc(c[0])}</span>`
+      + `<span class="cl-date">${esc(c[1])}</span></li>`).join("") + `</ul>`;
+  }
+  if (d.cost){
+    s += `<div class="qlab" style="margin-top:13px">what the act cost them</div>`
+      + `<p class="risk">${esc(d.cost)}</p>`;
+  }
+  return s + `</div>`;
+}
+
+/* The pressure field the actor is standing in.
+   Computed, not asserted: every vector names a source, what it pushes toward,
+   and THE CONSEQUENCE of not complying — which is what separates a pressure
+   from an opinion. Severity, credibility and timescale feed plain arithmetic
+   that produces the distribution.
+
+   The fields are computed for INSTITUTIONS. A CEO sits inside one and is not
+   identical to it, so the card says whose field it is rather than implying the
+   number describes the person. */
+function pressureCard(n){
+  const p = n.pressure;
+  if (!p) return "";
+  if (p.none) return `<div class="doss"><div class="qlab">pressure on them</div>`
+    + `<p class="doss-none">${esc(p.none)}</p></div>`;
+  const band = String(p.band || "");
+  const tone = band === "saturated" ? "--miss" : band === "high" ? "--amber"
+             : band === "moderate" ? "--slate" : "--ink-3";
+  let s = `<div class="doss"><div class="qlab">the pressure field they stand in</div>`
+    + `<div class="pf-head">`
+    + `<span class="pf-band" style="border-color:${cssv(tone)};color:${cssv(tone)}">`
+    + `${esc(band)}</span>`
+    + `<span class="pf-tot">total ${esc(p.total)}</span>`
+    + (p.tension != null ? `<span class="pf-tot">tension ${esc(p.tension)}</span>` : "")
+    + `</div>`
+    + `<p class="pf-target">computed for <b>${esc(p.target)}</b> — not for this person alone</p>`;
+  if (p.dist && p.dist.length){
+    s += `<div class="qlab" style="margin-top:11px">what the field pushes toward, next 45 days</div>`
+      + `<ul class="pf-dist">` + p.dist.map(([k, v]) =>
+        `<li><span class="pf-bar" style="width:${Math.round(v*100)}%"></span>`
+        + `<span class="pf-pct">${Math.round(v*100)}%</span>`
+        + `<span class="pf-out">${esc(k)}</span></li>`).join("") + `</ul>`;
+  }
+  if (p.vectors && p.vectors.length){
+    s += `<div class="qlab" style="margin-top:12px">the strongest vectors</div>`
+      + `<ul class="pf-vecs">` + p.vectors.map(v =>
+        `<li><div class="pf-src">${esc(v.source)}`
+        + (v.severity ? `<span class="pf-sev">${esc(v.severity)}</span>` : "") + `</div>`
+        + `<div class="pf-push">→ ${esc(v.push)}</div>`
+        + (v.consequence ? `<div class="pf-cons">if refused: ${esc(v.consequence)}</div>` : "")
+        + (v.demonstrated ? `<div class="pf-dem">demonstrated ${esc(v.demonstrated)}</div>` : "")
+        + `</li>`).join("") + `</ul>`;
+  }
+  return s + `</div>`;
+}
+
+function renderEmpty(){
+  document.getElementById("insp").innerHTML =
+    `<p class="empty">Select anyone in the diagram to see what they were reading, and the sentence that places them there.</p>`;
+}
+
+/* Centring someone opens their dossier. A blog link that drops a reader onto
+   an actor should land them on who that actor is, not on an empty panel that
+   needs a second tap to become useful. */
+function centre(id){
+  hub = id; sel = null; draw();
+  pick(id);
+  if (history.replaceState) {
+    try { history.replaceState(null, "", "#actor=" + id); } catch(_){}
+  }
+}
+function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+
+(function(){
+  const st = document.getElementById("stage");
+  const pts = new Map(); let pinch = 0, drag = null, moved = 0;
+  const gap = () => { const [a,b] = [...pts.values()]; return Math.hypot(a.x-b.x, a.y-b.y); };
+  st.addEventListener("pointerdown", e => {
+    pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    try { st.setPointerCapture(e.pointerId); } catch(_){}
+    if (pts.size === 2){ pinch = gap(); drag = null; } else { drag = {x:e.clientX}; moved = 0; }
+  });
+  st.addEventListener("pointermove", e => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    if (pts.size === 2){
+      const g = gap();
+      if (pinch > 0){ zoom = Math.max(.55, Math.min(1.9, zoom * (g/pinch))); draw(); }
+      pinch = g; e.preventDefault(); return;
+    }
+    if (!drag) return;
+    moved += Math.abs(e.clientX - drag.x);
+    rot += (e.clientX - drag.x) * .006;
+    drag = {x:e.clientX}; draw(); e.preventDefault();
+  });
+  const end = e => {
+    pts.delete(e.pointerId);
+    try { st.releasePointerCapture(e.pointerId); } catch(_){}
+    if (pts.size < 2) pinch = 0;
+    drag = pts.size === 1 ? {x:[...pts.values()][0].x} : null;
+  };
+  st.addEventListener("pointerup", end);
+  st.addEventListener("pointercancel", end);
+  st.addEventListener("click", e => { if (moved > 8){ e.stopPropagation(); moved = 0; } }, true);
+  st.addEventListener("wheel", e => {
+    e.preventDefault();
+    zoom = Math.max(.55, Math.min(1.9, zoom * (e.deltaY > 0 ? .93 : 1.07)));
+    draw();
+  }, {passive:false});
+})();
+
+document.getElementById("key").innerHTML = Object.keys(KIND_LABEL).map(k =>
+  `<span><span class="sw" style="background:${cssv(KIND[k])}"></span> ${esc(KIND_LABEL[k])}</span>`).join("")
+  + `<span><span class="sw" style="background:transparent;border:2px dashed ${cssv("--amber")}"></span>`
+  + ` hollow = single source</span>`
+  + `<span><span class="sw" style="background:${cssv("--teal")};box-shadow:0 0 0 2px var(--ground),0 0 0 3px ${cssv("--teal")}"></span>`
+  + ` ringed = decides</span>`;
+
+/* #actor=<id> centres that actor on load, so the blog can link straight to a
+   vantage point. Unknown ids fall back to the seed rather than erroring. */
+function actorFromHash(){
+  const m = /[#&]actor=([a-z0-9-]{1,40})/.exec(location.hash || "");
+  return m && NODES.some(n => n.id === m[1]) ? m[1] : null;
+}
+
+function boot(){
+  buildPicker();
+  const pw = document.getElementById("poweronly");
+  if (pw && !pw.dataset.bound){
+    pw.dataset.bound = "1";
+    // Dims rather than removes. Filtering these nodes OUT would collapse the
+    // diagram to two rings with all five on one of them, because everyone with
+    // power responded to the same essay -- the layering only exists because the
+    // people without power are in it.
+    pw.addEventListener("change", () => { powerOnly = pw.checked; draw(); });
+  }
+  const want = actorFromHash();
+  if (want){ centre(want); } else { renderEmpty(); draw(); }
+}
+
+/* Data lives beside the page so new analysis is one upload, not a republish of
+   every surface. The baked-in copy above is the fallback: if the fetch fails,
+   is malformed, or returns something without nodes, the last known good data
+   renders instead of an empty frame. A visualisation that silently empties is
+   worse than one that is a few days stale. */
+(function(){
+  // ?case=<slug> selects a different event. The default file stays where it is
+  // so every link already published keeps working; a new case is a new file
+  // beside it, not a migration.
+  const m = /[?&]case=([a-z0-9-]{1,40})/.exec(location.search || "");
+  const url = m ? "reaction-layers-" + m[1] + ".json" : "reaction-layers.json";
+  fetch(url, {cache: "no-cache"})
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => {
+      if (!d || !Array.isArray(d.nodes) || !d.nodes.length) throw new Error("no nodes");
+      NODES = d.nodes;
+      if (d.updated){
+        const el = document.getElementById("updated");
+        if (el) el.textContent = "data updated " + d.updated;
+      }
+      // A case file supplies its own framing. The default prose stays in the
+      // page for the Coxon event, so every link already published is unchanged;
+      // another case swaps the title and lede rather than inheriting copy that
+      // describes a different event.
+      if (d.case && d.case !== "coxon-resignation"){
+        if (d.title){
+          document.getElementById("pagetitle").textContent = d.title;
+          document.title = d.title;
+        }
+        document.getElementById("eyebrow").textContent =
+          "Reaction structure · one event, " + d.nodes.length + " acts";
+        document.getElementById("lede-default").hidden = true;
+        const lc = document.getElementById("lede-case");
+        if (d.lede){
+          document.getElementById("lede-case-text").textContent = d.lede;
+          lc.hidden = false;
+        }
+      }
+      // The data file may name its own centre. Fall back to the seed, and only
+      // keep the current hub if the new data actually contains it -- otherwise
+      // a case switch leaves the page centred on a node that no longer exists.
+      const want = d.center && NODES.some(n => n.id === d.center) ? d.center : null;
+      hub = want || (NODES.some(n => n.id === hub) ? hub
+                     : (NODES.find(n => !n.to) || NODES[0]).id);
+      const pk = document.getElementById("picker");
+      pk.innerHTML = "";
+      delete pk.dataset.filled;
+      boot();
+      draw();   // the readout is written by draw(); without this it keeps the
+                // baked-in fallback's numbers after the fetch replaces NODES
+    })
+    .catch(() => { /* keep the baked copy; boot() already ran below */ });
+  boot();
+})();
+</script>
+
+</body>
+</html>
