@@ -108,8 +108,7 @@ function mmRender(){
   const live = new Set(); edges.forEach(e => { live.add(e.a); live.add(e.b); });
   const nodes = MM.nodes.filter(n => live.has(n.id) || MM.showAll);
   const P = {}; MM.nodes.forEach(n => P[n.id] = mmProject(n));
-  let svg = `<svg viewBox="0 0 ${MM_W} ${MM_H}" style="width:100%;height:auto;display:block;`+
-    `cursor:grab" id="mmsvg">`;
+  let svg = '';   // inner content only; the <svg> element itself persists (see below)
   // paint far-to-near so nearer elements overlap correctly
   edges.slice().sort((a,b) => (P[a.a].depth+P[a.b].depth) - (P[b.a].depth+P[b.b].depth))
     .forEach(e => {
@@ -160,7 +159,6 @@ no public trace of considering: ${(os.unevidenced_options||[]).slice(0,4).join('
         `fill:var(--ink);opacity:${(p.depth-0.55).toFixed(2)};pointer-events:none">`+
         `${esc(n.name.length>22?n.name.slice(0,21)+'…':n.name)}</text>`;
   });
-  svg += '</svg>';
   const legend = Object.entries(KIND_COLOR).map(([k,c]) =>
     `<span style="margin-right:.7rem"><span style="display:inline-block;width:.65rem;`+
     `height:.65rem;border-radius:50%;background:${c};vertical-align:-.05rem"></span> ${k}</span>`).join('');
@@ -169,10 +167,21 @@ no public trace of considering: ${(os.unevidenced_options||[]).slice(0,4).join('
     `width:.65rem;height:.65rem;border-radius:50%;border:2px dashed #d98a5a;`+
     `vertical-align:-.05rem"></span> option gap (${nOS} actors · ring thickness = `+
     `share of held options with no public trace)</span>` : '';
-  $('#mmbody').innerHTML = svg +
-    `<p class="muted" style="font-size:.75rem;margin-top:.4rem">${legend}${osLegend}</p>`+
-    `<p class="muted" style="font-size:.75rem">${nodes.length} nodes · ${edges.length} of `+
-    `${MM.edges.length} edges shown · size = fragments · depth = distance</p>`;
+  /* One <svg> for the life of the map. Rebuilding it on every frame destroyed the
+     element that held the pointer capture and the drag listeners, so a touch (or
+     mouse) gesture died on its first re-render -- and auto-rotate re-renders every
+     60 ms, so on a phone nothing ever moved. Only the contents are replaced now. */
+  let el = document.getElementById('mmsvg');
+  if (!el){
+    $('#mmbody').innerHTML =
+      `<svg viewBox="0 0 ${MM_W} ${MM_H}" style="width:100%;height:auto;display:block;cursor:grab" id="mmsvg"></svg>`+
+      `<p class="muted" id="mmlegend" style="font-size:.75rem;margin-top:.4rem"></p>`+
+      `<p class="muted" id="mmstat" style="font-size:.75rem"></p>`;
+    el = document.getElementById('mmsvg');
+  }
+  el.innerHTML = svg;
+  $('#mmlegend').innerHTML = legend + osLegend;
+  $('#mmstat').textContent = `${nodes.length} nodes · ${edges.length} of ${MM.edges.length} edges shown · size = fragments · depth = distance`;
   mmBindDrag();
 }
 
