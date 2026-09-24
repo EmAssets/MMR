@@ -264,6 +264,9 @@ def main():
     # while entity ids are actors ("amazon", "china"). Zero matches usually means
     # the two namespaces have not been reconciled, not that nothing is watched.
     node_ids = {n["id"] for n in d["nodes"]}
+    # --show skips build(), which is where watches was bound; read it here so
+    # the orphan report works on a loaded file too.
+    watches, _ = declared_watches()
     orphan = sorted(set(watches) - node_ids)
     if orphan:
         print()
