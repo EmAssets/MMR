@@ -1385,6 +1385,19 @@ function mmRender(){
   const live = new Set(); edges.forEach(e => { live.add(e.a); live.add(e.b); });
   const nodes = MM.nodes.filter(n => live.has(n.id) || MM.showAll);
   const P = {}; MM.nodes.forEach(n => P[n.id] = mmProject(n));
+  // labels are drawn in viewBox units; on a phone the whole drawing is squeezed into
+  // ~350px, so scale the type by drawing-units-per-rendered-pixel (capped) to keep it
+  // readable on screen. mmK is read again below when deciding which labels to show.
+  // the element must exist before it is measured, or the first frame is drawn at factor 1
+  let el = document.getElementById('mmsvg');
+  if (!el){
+    $('#mmbody').innerHTML =
+      `<svg viewBox="0 0 ${MM_W} ${MM_H}" style="width:100%;height:auto;display:block;cursor:grab" id="mmsvg"></svg>`+
+      `<p class="muted" id="mmlegend" style="font-size:.75rem;margin-top:.4rem"></p>`+
+      `<p class="muted" id="mmstat" style="font-size:.75rem"></p>`;
+    el = document.getElementById('mmsvg');
+  }
+  const mmK = Math.min(3.2, Math.max(1, MM_W / (el.getBoundingClientRect().width || MM_W)));
   let svg = '';   // inner content only; the <svg> element itself persists (see below)
   // paint far-to-near so nearer elements overlap correctly
   edges.slice().sort((a,b) => (P[a.a].depth+P[a.b].depth) - (P[b.a].depth+P[b.b].depth))
@@ -1430,9 +1443,9 @@ no public trace of considering: ${(os.unevidenced_options||[]).slice(0,4).join('
         `
 (gap is not unawareness -- see ai-option-space)` : '')+
       `</title></circle>`;
-    if (mmHits ? hit : (n.fragments >= 14 || p.depth > 1.02))
+    if (mmHits ? hit : (n.fragments >= (mmK >= 2 ? 30 : 14) || p.depth > (mmK >= 2 ? 1.08 : 1.02)))
       svg += `<text x="${p.px.toFixed(1)}" y="${(p.py - r - 4).toFixed(1)}" `+
-        `text-anchor="middle" style="font-size:${(9.5*p.depth).toFixed(1)}px;`+
+        `text-anchor="middle" style="font-size:${(9.5*p.depth*mmK).toFixed(1)}px;`+
         `fill:var(--ink);opacity:${(p.depth-0.55).toFixed(2)};pointer-events:none">`+
         `${esc(n.name.length>22?n.name.slice(0,21)+'…':n.name)}</text>`;
   });
@@ -1448,14 +1461,6 @@ no public trace of considering: ${(os.unevidenced_options||[]).slice(0,4).join('
      element that held the pointer capture and the drag listeners, so a touch (or
      mouse) gesture died on its first re-render -- and auto-rotate re-renders every
      60 ms, so on a phone nothing ever moved. Only the contents are replaced now. */
-  let el = document.getElementById('mmsvg');
-  if (!el){
-    $('#mmbody').innerHTML =
-      `<svg viewBox="0 0 ${MM_W} ${MM_H}" style="width:100%;height:auto;display:block;cursor:grab" id="mmsvg"></svg>`+
-      `<p class="muted" id="mmlegend" style="font-size:.75rem;margin-top:.4rem"></p>`+
-      `<p class="muted" id="mmstat" style="font-size:.75rem"></p>`;
-    el = document.getElementById('mmsvg');
-  }
   el.innerHTML = svg;
   $('#mmlegend').innerHTML = legend + osLegend;
   $('#mmstat').textContent = `${nodes.length} nodes · ${edges.length} of ${MM.edges.length} edges shown · size = fragments · depth = distance`;
