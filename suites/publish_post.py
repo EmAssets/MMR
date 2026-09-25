@@ -38,13 +38,24 @@ for _s in (sys.stdout, sys.stderr):
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# The site, from the deploy tooling that already talks to it. Overridable by env
-# so this file carries no assumption that cannot be changed without editing it.
+# The site comes from the environment (or .env) and nowhere else. This file is
+# public; a host, account name or path written here is published with it.
+try:
+    from suites.grade_claims import _load_env
+    _load_env()
+except Exception:
+    pass
 SSH_HOST = os.environ.get("WP_SSH_HOST", "")
 SSH_PORT = os.environ.get("WP_SSH_PORT", "22")
 SSH_USER = os.environ.get("WP_SSH_USER", "")
-SSH_KEY = os.environ.get("WP_SSH_KEY", str(Path.home() / ".ssh" / "emergencemachine"))
-WP_ROOT = os.environ.get("WP_ROOT", "domains/emergencemachine.com/public_html")
+SSH_KEY = os.environ.get("WP_SSH_KEY", "")
+WP_ROOT = os.environ.get("WP_ROOT", "")
+WP_SITE_URL = os.environ.get("WP_SITE_URL", "").rstrip("/")
+_missing = [k for k, v in (("WP_SSH_HOST", SSH_HOST), ("WP_SSH_USER", SSH_USER),
+                           ("WP_SSH_KEY", SSH_KEY), ("WP_ROOT", WP_ROOT)) if not v]
+if _missing and __name__ == "__main__":
+    # A missing setting is FATAL, never a quiet no-op (the same rule as API keys).
+    raise SystemExit("publish_post: set %s in the environment or .env" % ", ".join(_missing))
 
 # The byline. wp-cli over SSH has no logged-in user, so a post created without
 # this lands with post_author=0 -- no byline at all, which WordPress renders as
@@ -357,8 +368,7 @@ def main() -> None:
             print("id %s  status %s  modified %s" % (r["ID"], r["post_status"],
                                                     r.get("post_modified")))
             print("  %s" % r.get("post_title"))
-            print("  edit: https://emergencemachine.com/wp-admin/post.php?post=%s&action=edit"
-                  % r["ID"])
+            print("  edit: %s/wp-admin/post.php?post=%s&action=edit" % (WP_SITE_URL or "<WP_SITE_URL>", r["ID"]))
         return
 
     if not a.file:
@@ -463,7 +473,7 @@ def main() -> None:
         print("  yoast: focus keyphrase %r" % a.focus_kw)
     print("  %s (id %s), status DRAFT, author %s (%s)"
           % (action, pid, a.author, author_id))
-    print("  review at: https://emergencemachine.com/wp-admin/post.php?post=%s&action=edit" % pid)
+    print("  review at: %s/wp-admin/post.php?post=%s&action=edit" % (WP_SITE_URL or "<WP_SITE_URL>", pid))
     print("  it stays a draft until you publish it yourself -- this tool cannot.")
 
 

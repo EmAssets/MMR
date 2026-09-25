@@ -12,13 +12,14 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$HERE"
 fail=0
 
-# Names gated from anything a stranger receives.
+# Names gated from anything a stranger receives. series/ (the blog posts) and
+# ui/static/ (pages the posts embed) link to the blog deliberately and are exempt.
 GATED='meta-copilot|emergencemachine|nationAtlas|LexiconAtlas|roleatlas|copilot-template'
 # Credential shapes. Not exhaustive -- a shape check is a backstop, not a promise.
 KEYS='sk-or-v1-[A-Za-z0-9]{20,}|sk-ant-[A-Za-z0-9-]{20,}|AIza[0-9A-Za-z_-]{30,}|ghp_[A-Za-z0-9]{30,}'
 
 echo "==> gated names"
-if git grep -InE "$GATED" -- . ':!scripts/preflight.sh' ':!docs/INSTALL_TEST*' >/tmp/_pf 2>/dev/null; then
+if git grep -InE "$GATED" -- . ':!scripts/preflight.sh' ':!docs/INSTALL_TEST*' ':!series/*' ':!ui/static/*' >/tmp/_pf 2>/dev/null; then
   sed 's/^/    /' /tmp/_pf | head -20; fail=1
 else
   echo "    none"

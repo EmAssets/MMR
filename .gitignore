@@ -16,3 +16,5 @@ publish/
 
 # wrangler local state (auth cache, build temp) — never publishable
 .wrangler/
+# pulled copies of live blog posts, kept locally for safe edits; not engine
+series/live/
