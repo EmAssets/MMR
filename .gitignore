@@ -18,3 +18,6 @@ publish/
 .wrangler/
 # pulled copies of live blog posts, kept locally for safe edits; not engine
 series/live/
+
+# blog post sources live in ../mmr-series (private sibling repo, never pushed)
+series/
